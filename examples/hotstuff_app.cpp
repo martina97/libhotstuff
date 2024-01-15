@@ -149,12 +149,24 @@ int main(int argc, char **argv) {
     std::cout << "Hello, world!" << std::endl;
     Config config("hotstuff.conf");     // classe che gestisce le opzioni di configurazione per un'applicazione
     std::cout << "---- DOPO CONFIG ---- " << std::endl;
-    ElapsedTime elapsed;
-    elapsed.start();
+    ElapsedTime elapsed;    //serve a calcolare il tempo trascorso e il tempo della CPU tra due punti nel codice
+    elapsed.start();    //tempo di inizio
     std::cout << "---- DOPO elapsed.start() ---- " << std::endl;
     std::cout << "Elapsed time: " << elapsed.elapsed_sec << " seconds\n";
     std::cout << "CPU time: " << elapsed.cpu_elapsed_sec << " seconds\n";
 
+    /*
+     * creazione di oggetti OptValInt/OptValDouble/etc
+     * ad esempio "opt_blk_size" serve a gestire l'opzione "block-size" di tipo intero:
+     Qui viene creato un oggetto di tipo OptValInt chiamato opt_blk_size utilizzando il metodo statico create della classe OptValInt.
+     Questo metodo è un modo per creare un'istanza di OptValInt con un valore predefinito (in questo caso 1).
+
+     * L'opzione viene quindi aggiunta all'oggetto Config usando il metodo add_opt.
+     * config.add_opt("block-size", opt_blk_size, Config::SET_VAL);
+     * Successivamente, l'opzione "block-size" viene aggiunta all'oggetto Config (config) utilizzando
+     * il metodo add_opt. Questo metodo richiede il nome dell'opzione, l'oggetto optval_t associato
+     * (in questo caso, opt_blk_size), e l'azione associata all'opzione (Config::SET_VAL).
+     */
     auto opt_blk_size = Config::OptValInt::create(1);
     auto opt_parent_limit = Config::OptValInt::create(-1);
     auto opt_stat_period = Config::OptValDouble::create(10);
@@ -202,6 +214,13 @@ int main(int argc, char **argv) {
     config.add_opt("max-rep-msg", opt_max_rep_msg, Config::SET_VAL, 'S', "the maximum replica message size");
     config.add_opt("max-cli-msg", opt_max_cli_msg, Config::SET_VAL, 'S', "the maximum client message size");
     config.add_opt("help", opt_help, Config::SWITCH_ON, 'h', "show this help info");
+    std::cout << "---- DOPO  config.add_opt ---- " << std::endl;
+    std::cout << "opt_blk_size->get(): " << opt_blk_size->get() << std::endl;
+    //opt_blk_size->get()
+
+
+
+
 }
 
 
