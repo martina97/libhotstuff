@@ -72,11 +72,11 @@
 	"dependencies" : 
 	[
 		{
-			"backtrace" : 2,
-			"id" : "libsecp256k1::@6890427a1f51a3e7e1df"
+			"id" : "hotstuff::@6890427a1f51a3e7e1df"
 		},
 		{
-			"id" : "hotstuff::@6890427a1f51a3e7e1df"
+			"backtrace" : 2,
+			"id" : "libsecp256k1::@6890427a1f51a3e7e1df"
 		},
 		{
 			"backtrace" : 3,
