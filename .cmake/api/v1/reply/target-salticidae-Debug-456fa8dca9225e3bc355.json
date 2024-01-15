@@ -1,0 +1,185 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "salticidae/CMakeFiles/salticidae.dir/src/type.cpp.o"
+		},
+		{
+			"path" : "salticidae/CMakeFiles/salticidae.dir/src/util.cpp.o"
+		},
+		{
+			"path" : "salticidae/CMakeFiles/salticidae.dir/src/event.cpp.o"
+		},
+		{
+			"path" : "salticidae/CMakeFiles/salticidae.dir/src/crypto.cpp.o"
+		},
+		{
+			"path" : "salticidae/CMakeFiles/salticidae.dir/src/stream.cpp.o"
+		},
+		{
+			"path" : "salticidae/CMakeFiles/salticidae.dir/src/msg.cpp.o"
+		},
+		{
+			"path" : "salticidae/CMakeFiles/salticidae.dir/src/netaddr.cpp.o"
+		},
+		{
+			"path" : "salticidae/CMakeFiles/salticidae.dir/src/conn.cpp.o"
+		},
+		{
+			"path" : "salticidae/CMakeFiles/salticidae.dir/src/network.cpp.o"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"include_directories"
+		],
+		"files" : 
+		[
+			"salticidae/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 33,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 32,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -W -Wall -Wextra -pedantic -Wsuggest-override -std=gnu++14 -fPIC -fdiagnostics-color=always"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 2,
+					"path" : "/home/martina/CLionProjects/libhotstuff/salticidae/include"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "14"
+			},
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8
+			]
+		}
+	],
+	"id" : "salticidae::@83427a79185b1d2caf84",
+	"name" : "salticidae",
+	"paths" : 
+	{
+		"build" : "salticidae",
+		"source" : "salticidae"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "salticidae/src/type.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "salticidae/src/util.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "salticidae/src/event.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "salticidae/src/crypto.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "salticidae/src/stream.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "salticidae/src/msg.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "salticidae/src/netaddr.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "salticidae/src/conn.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "salticidae/src/network.cpp",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "OBJECT_LIBRARY"
+}

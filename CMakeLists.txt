@@ -28,18 +28,18 @@ find_package(Threads REQUIRED)
 include(ExternalProject)
 include_directories(secp256k1/include)
 ExternalProject_Add(libsecp256k1
-    SOURCE_DIR secp256k1
-    CONFIGURE_COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/secp256k1/autogen.sh
-    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/secp256k1/configure --disable-shared --with-pic --with-bignum=no --enable-module-recovery
-    BUILD_COMMAND make
-    INSTALL_COMMAND ""
-    BUILD_IN_SOURCE 1)
+        SOURCE_DIR secp256k1
+        CONFIGURE_COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/secp256k1/autogen.sh
+        COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/secp256k1/configure --disable-shared --with-pic --with-bignum=no --enable-module-recovery
+        BUILD_COMMAND make
+        INSTALL_COMMAND ""
+        BUILD_IN_SOURCE 1)
 
 add_library(secp256k1 STATIC IMPORTED)
 set_target_properties(
-    secp256k1
-    PROPERTIES IMPORTED_LOCATION
-    ${CMAKE_CURRENT_SOURCE_DIR}/secp256k1/.libs/libsecp256k1.a)
+        secp256k1
+        PROPERTIES IMPORTED_LOCATION
+        ${CMAKE_CURRENT_SOURCE_DIR}/secp256k1/.libs/libsecp256k1.a)
 add_dependencies(secp256k1 libsecp256k1)
 
 # add libraries
@@ -47,14 +47,14 @@ add_dependencies(secp256k1 libsecp256k1)
 include_directories(./)
 include_directories(include)
 add_library(hotstuff
-    OBJECT
-    src/util.cpp
-    src/client.cpp
-    src/crypto.cpp
-    src/entity.cpp
-    src/consensus.cpp
-    src/hotstuff.cpp
-    )
+        OBJECT
+        src/util.cpp
+        src/client.cpp
+        src/crypto.cpp
+        src/entity.cpp
+        src/consensus.cpp
+        src/hotstuff.cpp
+)
 
 option(BUILD_SHARED "build shared library." OFF)
 if(BUILD_SHARED)
@@ -90,17 +90,17 @@ endif()
 
 # build tools
 add_executable(hotstuff-keygen
-    src/hotstuff_keygen.cpp)
+        src/hotstuff_keygen.cpp)
 target_link_libraries(hotstuff-keygen hotstuff_static)
 
 add_executable(hotstuff-tls-keygen
-    src/hotstuff_tls_keygen.cpp)
+        src/hotstuff_tls_keygen.cpp)
 target_link_libraries(hotstuff-tls-keygen hotstuff_static)
 
 find_package(Doxygen)
 if (DOXYGEN_FOUND)
     add_custom_target(doc
-        ${DOXYGEN_EXECUTABLE} doc/doxygen.conf WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+            ${DOXYGEN_EXECUTABLE} doc/doxygen.conf WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 endif(DOXYGEN_FOUND)
 
 #set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -no-pie -pg")
@@ -108,7 +108,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -W -Wall -Wextra -pedant
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -W -Wall -Wextra -pedantic -Wsuggest-override")
 
 macro(remove_cxx_flag flag)
-  string(REPLACE "${flag}" "" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
+    string(REPLACE "${flag}" "" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
 endmacro()
 
 remove_cxx_flag("-DNDEBUG")

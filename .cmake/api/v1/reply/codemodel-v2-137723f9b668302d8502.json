@@ -1,0 +1,226 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.9"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						3,
+						4,
+						5,
+						6,
+						7
+					]
+				},
+				{
+					"build" : "salticidae",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-salticidae-Debug-9716ac99002b7bc0ff6e.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.9"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "salticidae",
+					"targetIndexes" : 
+					[
+						8,
+						9,
+						10
+					]
+				},
+				{
+					"build" : "test",
+					"jsonFile" : "directory-test-Debug-451c0598f41488bb20b9.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.9"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "test",
+					"targetIndexes" : 
+					[
+						11
+					]
+				},
+				{
+					"build" : "examples",
+					"jsonFile" : "directory-examples-Debug-1c8b83b621b6ef38a245.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.9"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "examples",
+					"targetIndexes" : 
+					[
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0,
+						2,
+						3
+					],
+					"name" : "hotstuff",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						11
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "Salticidae",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						8,
+						9,
+						10
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "hotstuff::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-hotstuff-Debug-0c8ee3bcd21b4fa8aead.json",
+					"name" : "hotstuff",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "hotstuff-app::@714eac15f71a94114fdf",
+					"jsonFile" : "target-hotstuff-app-Debug-795888901090fd9882f4.json",
+					"name" : "hotstuff-app",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "hotstuff-client::@714eac15f71a94114fdf",
+					"jsonFile" : "target-hotstuff-client-Debug-91eb4f8106c7394d4217.json",
+					"name" : "hotstuff-client",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "hotstuff-keygen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-hotstuff-keygen-Debug-43688f06c7ecb9a4fd27.json",
+					"name" : "hotstuff-keygen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "hotstuff-tls-keygen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-hotstuff-tls-keygen-Debug-2ccfede75326efcf3a0f.json",
+					"name" : "hotstuff-tls-keygen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "hotstuff_shared::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-hotstuff_shared-Debug-b76297170207c6d70a4a.json",
+					"name" : "hotstuff_shared",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "hotstuff_static::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-hotstuff_static-Debug-c05bb11a418ed2b30840.json",
+					"name" : "hotstuff_static",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "libsecp256k1::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-libsecp256k1-Debug-761d8fca9217b6f96563.json",
+					"name" : "libsecp256k1",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "salticidae::@83427a79185b1d2caf84",
+					"jsonFile" : "target-salticidae-Debug-456fa8dca9225e3bc355.json",
+					"name" : "salticidae",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "salticidae_shared::@83427a79185b1d2caf84",
+					"jsonFile" : "target-salticidae_shared-Debug-f1390c5b9e3382ff281f.json",
+					"name" : "salticidae_shared",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "salticidae_static::@83427a79185b1d2caf84",
+					"jsonFile" : "target-salticidae_static-Debug-e6a940ba34a421ba7129.json",
+					"name" : "salticidae_static",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "test_secp256k1::@36f028580bb02cc8272a",
+					"jsonFile" : "target-test_secp256k1-Debug-974eece669e1af26e9cd.json",
+					"name" : "test_secp256k1",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/martina/CLionProjects/libhotstuff",
+		"source" : "/home/martina/CLionProjects/libhotstuff"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}
