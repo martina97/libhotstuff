@@ -1,0 +1,10 @@
+Hello, world!
+---- DOPO CONFIG ---- 
+---- DOPO elapsed.start() ---- 
+Elapsed time: 0 seconds
+CPU time: 5.54191e-310 seconds
+---- DOPO  config.add_opt ---- 
+opt_privkey->get(): 
+2024-01-16 16:27:49.860619 [net info] loaded configuration from hotstuff.conf
+2024-01-16 16:27:49.860735 [net info] loading extra configuration from ./hotstuff-sec1.conf
+---- STO QUA ---- 

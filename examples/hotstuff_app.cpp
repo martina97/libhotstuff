@@ -215,8 +215,19 @@ int main(int argc, char **argv) {
     config.add_opt("max-cli-msg", opt_max_cli_msg, Config::SET_VAL, 'S', "the maximum client message size");
     config.add_opt("help", opt_help, Config::SWITCH_ON, 'h', "show this help info");
     std::cout << "---- DOPO  config.add_opt ---- " << std::endl;
-    std::cout << "opt_blk_size->get(): " << opt_blk_size->get() << std::endl;
+    std::cout << "opt_privkey->get(): " << opt_privkey->get() << std::endl;
     //opt_blk_size->get()
+
+    EventContext ec;
+    config.parse(argc, argv);
+    if (opt_help->get())
+    {
+        config.print_help();
+        exit(0);
+    }
+    std::cout << "---- STO QUA ---- " << std::endl;
+
+
 
 
 
@@ -225,6 +236,7 @@ int main(int argc, char **argv) {
 
 
 int main2(int argc, char **argv) {
+    std::cout << "---- DOPO  config.add_opt ---- " << std::endl;
 
     Config config("hotstuff.conf");
 
@@ -328,41 +340,41 @@ int main2(int argc, char **argv) {
     {
         auto tls_priv_key = new salticidae::PKey(
                 salticidae::PKey::create_privkey_from_der(
-                    hotstuff::from_hex(opt_tls_privkey->get())));
+                        hotstuff::from_hex(opt_tls_privkey->get())));
         auto tls_cert = new salticidae::X509(
                 salticidae::X509::create_from_der(
-                    hotstuff::from_hex(opt_tls_cert->get())));
+                        hotstuff::from_hex(opt_tls_cert->get())));
         repnet_config
-            .enable_tls(true)
-            .tls_key(tls_priv_key)
-            .tls_cert(tls_cert);
+                .enable_tls(true)
+                .tls_key(tls_priv_key)
+                .tls_cert(tls_cert);
     }
     repnet_config
-        .burst_size(opt_repburst->get())
-        .nworker(opt_repnworker->get());
+            .burst_size(opt_repburst->get())
+            .nworker(opt_repnworker->get());
     clinet_config
-        .burst_size(opt_cliburst->get())
-        .nworker(opt_clinworker->get());
+            .burst_size(opt_cliburst->get())
+            .nworker(opt_clinworker->get());
     papp = new HotStuffApp(opt_blk_size->get(),
-                        opt_stat_period->get(),
-                        opt_imp_timeout->get(),
-                        idx,
-                        hotstuff::from_hex(opt_privkey->get()),
-                        plisten_addr,
-                        NetAddr("0.0.0.0", client_port),
-                        std::move(pmaker),
-                        ec,
-                        opt_nworker->get(),
-                        repnet_config,
-                        clinet_config);
+                           opt_stat_period->get(),
+                           opt_imp_timeout->get(),
+                           idx,
+                           hotstuff::from_hex(opt_privkey->get()),
+                           plisten_addr,
+                           NetAddr("0.0.0.0", client_port),
+                           std::move(pmaker),
+                           ec,
+                           opt_nworker->get(),
+                           repnet_config,
+                           clinet_config);
     std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> reps;
     for (auto &r: replicas)
     {
         auto p = split_ip_port_cport(std::get<0>(r));
         reps.push_back(std::make_tuple(
-            NetAddr(p.first),
-            hotstuff::from_hex(std::get<1>(r)),
-            hotstuff::from_hex(std::get<2>(r))));
+                NetAddr(p.first),
+                hotstuff::from_hex(std::get<1>(r)),
+                hotstuff::from_hex(std::get<2>(r))));
     }
     auto shutdown = [&](int) { papp->stop(); };
     salticidae::SigEvent ev_sigint(ec, shutdown);
