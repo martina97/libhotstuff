@@ -146,7 +146,7 @@ salticidae::BoxObj<HotStuffApp> papp = nullptr;
 
 
 int main(int argc, char **argv) {
-    std::cout << "Hello, world!" << std::endl;
+    std::cout << "Hello, world!!!!!!" << std::endl;
     Config config("hotstuff.conf");     // classe che gestisce le opzioni di configurazione per un'applicazione
     std::cout << "---- DOPO CONFIG ---- " << std::endl;
     ElapsedTime elapsed;    //serve a calcolare il tempo trascorso e il tempo della CPU tra due punti nel codice
@@ -226,8 +226,57 @@ int main(int argc, char **argv) {
         exit(0);
     }
     std::cout << "---- STO QUA ---- " << std::endl;
+    auto idx = opt_idx->get();
+    std::cout << "idx: " <<idx<< std::endl;
+
+    auto client_port = opt_client_port->get();
+    std::cout << "client_port: " <<client_port<< std::endl;
+
+    //Dichiaro una variabile replicas che è un vettore di tuple.
+    //La tupla ha tre elementi, ognuno di tipo std::string
+    //Il vettore replicas può contenere più di queste tuple.
+    std::vector<std::tuple<std::string, std::string, std::string>> replicas;
 
 
+    // Ottieni il vettore di stringhe e stampa i valori
+    /*
+    const auto& prova = opt_replicas->get();
+    for (const auto& s : prova) {
+        std::cout << "STO dentro questa cosa : "  << std::endl;
+
+        std::cout << s << std::endl;
+    }
+    */
+
+
+
+    //opt_replicas->get() è un vettore che contiene le righe del file hotstuff.conf, quelle con scritto replicas= ...
+    // replicas è un vettore di 4 elementi, ognuno una tupla di 3 elementi, ad esempio:
+    //valore1: 127.0.0.1:10000;20000, valore2: 039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23, valore3: 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
+    //valore1: 127.0.0.1:10001;20001, valore2: 0278740a5bec75e333b3c93965b1609163b15d2e3c2fdef141d4859ec70c238e7a, valore3: c261250345ebcd676a0edeea173526608604f626b2e8bc4fd2142d3bde1d44d5
+    //valore1: 127.0.0.1:10002;20002, valore2: 0269eb606576a315a630c2483deed35cc4bd845abae1c693f97c440c89503fa92e, valore3: 065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
+    //valore1: 127.0.0.1:10003;20003, valore2: 03e6911bf17e632eecdfa0dc9fc6efc9ddca60c0e3100db469a3d3d62008044a53, valore3: 6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
+
+    for (const auto &s: opt_replicas->get())
+    {
+        std::cout << "STO dentro if : "  << std::endl;
+
+        auto res = trim_all(split(s, ","));
+        if (res.size() != 3)
+            throw HotStuffError("invalid replica info");
+        replicas.push_back(std::make_tuple(res[0], res[1], res[2]));
+    }
+
+    std::cout << "STO QUAAAAAA: "  << std::endl;
+
+
+    // Stampa il contenuto del vettore
+    for (const auto& replica : replicas) {
+        std::cout << "valore1: " << std::get<0>(replica) << ", "
+                  << "valore2: " << std::get<1>(replica) << ", "
+                  << "valore3: " << std::get<2>(replica) << std::endl;
+    }
+    std::cout << "STO QUAAAAAA: "  << std::endl;
 
 
 
