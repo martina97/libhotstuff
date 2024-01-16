@@ -257,6 +257,7 @@ int main(int argc, char **argv) {
     //valore1: 127.0.0.1:10002;20002, valore2: 0269eb606576a315a630c2483deed35cc4bd845abae1c693f97c440c89503fa92e, valore3: 065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
     //valore1: 127.0.0.1:10003;20003, valore2: 03e6911bf17e632eecdfa0dc9fc6efc9ddca60c0e3100db469a3d3d62008044a53, valore3: 6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
 
+    //ggg
     for (const auto &s: opt_replicas->get())
     {
         std::cout << "STO dentro if : "  << std::endl;
