@@ -5,19 +5,11 @@ Elapsed time: 5.46653e-307 seconds
 CPU time: 4.42381e-307 seconds
 ---- DOPO  config.add_opt ---- 
 opt_privkey->get(): 
-2024-01-16 17:11:51.470304 [net info] loaded configuration from hotstuff.conf
-2024-01-16 17:11:51.470405 [net info] loading extra configuration from ./hotstuff-sec3.conf
+2024-01-17 12:47:14.865462 [net info] loaded configuration from hotstuff.conf
+2024-01-17 12:47:14.865541 [net info] loading extra configuration from ./hotstuff-sec3.conf
 ---- STO QUA ---- 
 idx: 3
 client_port: -1
-STO dentro questa cosa : 
-127.0.0.1:10000;20000, 039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23, 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
-STO dentro questa cosa : 
-127.0.0.1:10001;20001, 0278740a5bec75e333b3c93965b1609163b15d2e3c2fdef141d4859ec70c238e7a, c261250345ebcd676a0edeea173526608604f626b2e8bc4fd2142d3bde1d44d5
-STO dentro questa cosa : 
-127.0.0.1:10002;20002, 0269eb606576a315a630c2483deed35cc4bd845abae1c693f97c440c89503fa92e, 065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
-STO dentro questa cosa : 
-127.0.0.1:10003;20003, 03e6911bf17e632eecdfa0dc9fc6efc9ddca60c0e3100db469a3d3d62008044a53, 6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
 STO dentro if : 
 STO dentro if : 
 STO dentro if : 
@@ -28,3 +20,4 @@ valore1: 127.0.0.1:10001;20001, valore2: 0278740a5bec75e333b3c93965b1609163b15d2
 valore1: 127.0.0.1:10002;20002, valore2: 0269eb606576a315a630c2483deed35cc4bd845abae1c693f97c440c89503fa92e, valore3: 065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
 valore1: 127.0.0.1:10003;20003, valore2: 03e6911bf17e632eecdfa0dc9fc6efc9ddca60c0e3100db469a3d3d62008044a53, valore3: 6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
 STO QUAAAAAA: 
+boh127.0.0.1:10003;20003

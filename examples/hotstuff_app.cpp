@@ -257,7 +257,6 @@ int main(int argc, char **argv) {
     //valore1: 127.0.0.1:10002;20002, valore2: 0269eb606576a315a630c2483deed35cc4bd845abae1c693f97c440c89503fa92e, valore3: 065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
     //valore1: 127.0.0.1:10003;20003, valore2: 03e6911bf17e632eecdfa0dc9fc6efc9ddca60c0e3100db469a3d3d62008044a53, valore3: 6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
 
-    //ggg
     for (const auto &s: opt_replicas->get())
     {
         std::cout << "STO dentro if : "  << std::endl;
@@ -280,6 +279,24 @@ int main(int argc, char **argv) {
     std::cout << "STO QUAAAAAA: "  << std::endl;
 
 
+    //Verifico se l'indice idx è compreso tra 0 e replicas.size() - 1.
+    // Se l'indice non è valido, lancia un'eccezione HotStuffError indicando che l'indice della replica è fuori intervallo.
+    if (!(0 <= idx && (size_t)idx < replicas.size()))
+        //throw HotStuffError("replica idx out of range");
+        //TODO: SCOMMENTARE
+        std::cout << "HotStuffError(\"replica idx out of range\") "  << std::endl;
+
+   // std::get<0>(replicas[idx])  contiene il primo valore della tupla, cioè:
+   // 127.0.0.1:10000;20000 --> replica 0
+   // 127.0.0.1:10001;20001 --> replica 1
+   // 127.0.0.1:10002;20002 --> replica 2
+   // 127.0.0.1:10003;20003 --> replica 3
+    std::cout << "boh" << std::get<0>(replicas[idx]) << std::endl;
+
+    // Se l'indice è valido, questa riga estrae il primo elemento della tupla corrispondente all'indice idx nel vettore replicas.
+    // Presumibilmente, questo primo elemento rappresenta l'indirizzo di binding della replica.
+    // Il risultato viene memorizzato nella stringa binding_addr.
+    std::string binding_addr = std::get<0>(replicas[idx]);
 
 
 }
@@ -359,6 +376,7 @@ int main2(int argc, char **argv) {
         replicas.push_back(std::make_tuple(res[0], res[1], res[2]));
     }
 
+    //qui
     if (!(0 <= idx && (size_t)idx < replicas.size()))
         throw HotStuffError("replica idx out of range");
     std::string binding_addr = std::get<0>(replicas[idx]);
