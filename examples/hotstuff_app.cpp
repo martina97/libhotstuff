@@ -291,7 +291,7 @@ int main(int argc, char **argv) {
    // 127.0.0.1:10001;20001 --> replica 1
    // 127.0.0.1:10002;20002 --> replica 2
    // 127.0.0.1:10003;20003 --> replica 3
-    std::cout << "boh" << std::get<0>(replicas[idx]) << std::endl;
+    std::cout << "ciaoooo " << std::get<0>(replicas[idx]) << std::endl;
 
     // Se l'indice è valido, questa riga estrae il primo elemento della tupla corrispondente all'indice idx nel vettore replicas.
     // Presumibilmente, questo primo elemento rappresenta l'indirizzo di binding della replica.

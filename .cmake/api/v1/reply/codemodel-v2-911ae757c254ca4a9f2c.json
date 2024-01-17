@@ -13,7 +13,6 @@
 						3
 					],
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.9"
@@ -26,13 +25,13 @@
 						3,
 						4,
 						5,
-						6
+						6,
+						7
 					]
 				},
 				{
 					"build" : "salticidae",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-salticidae-Debug-34894f33c2650c95a033.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.9"
@@ -42,13 +41,13 @@
 					"source" : "salticidae",
 					"targetIndexes" : 
 					[
-						7,
-						8
+						8,
+						9,
+						10
 					]
 				},
 				{
 					"build" : "test",
-					"jsonFile" : "directory-test-Debug-451c0598f41488bb20b9.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.9"
@@ -58,12 +57,11 @@
 					"source" : "test",
 					"targetIndexes" : 
 					[
-						9
+						11
 					]
 				},
 				{
 					"build" : "examples",
-					"jsonFile" : "directory-examples-Debug-1c8b83b621b6ef38a245.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.9"
@@ -78,7 +76,7 @@
 					]
 				}
 			],
-			"name" : "Debug",
+			"name" : "Release",
 			"projects" : 
 			[
 				{
@@ -102,7 +100,8 @@
 						4,
 						5,
 						6,
-						9
+						7,
+						11
 					]
 				},
 				{
@@ -114,8 +113,9 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						7,
-						8
+						8,
+						9,
+						10
 					]
 				}
 			],
@@ -124,70 +124,84 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "hotstuff::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-hotstuff-Debug-8a9ca5f4b1de6be3bfd7.json",
+					"jsonFile" : "target-hotstuff-Release-91244764f1e3463156bc.json",
 					"name" : "hotstuff",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 3,
 					"id" : "hotstuff-app::@714eac15f71a94114fdf",
-					"jsonFile" : "target-hotstuff-app-Debug-1bd6534eff0c12b1008a.json",
+					"jsonFile" : "target-hotstuff-app-Release-561fa048cb79dc57491c.json",
 					"name" : "hotstuff-app",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 3,
 					"id" : "hotstuff-client::@714eac15f71a94114fdf",
-					"jsonFile" : "target-hotstuff-client-Debug-a66bc8a5667a3df82cc8.json",
+					"jsonFile" : "target-hotstuff-client-Release-d59c46710a360390bc87.json",
 					"name" : "hotstuff-client",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "hotstuff-keygen::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-hotstuff-keygen-Debug-43688f06c7ecb9a4fd27.json",
+					"jsonFile" : "target-hotstuff-keygen-Release-87d6ac53da6bfeb9c678.json",
 					"name" : "hotstuff-keygen",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "hotstuff-tls-keygen::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-hotstuff-tls-keygen-Debug-2ccfede75326efcf3a0f.json",
+					"jsonFile" : "target-hotstuff-tls-keygen-Release-c69569730826cf8b8cf9.json",
 					"name" : "hotstuff-tls-keygen",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
+					"id" : "hotstuff_shared::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-hotstuff_shared-Release-6c7cd24cb002347f0f5e.json",
+					"name" : "hotstuff_shared",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
 					"id" : "hotstuff_static::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-hotstuff_static-Debug-c05bb11a418ed2b30840.json",
+					"jsonFile" : "target-hotstuff_static-Release-9f1720641ef624965f20.json",
 					"name" : "hotstuff_static",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "libsecp256k1::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-libsecp256k1-Debug-761d8fca9217b6f96563.json",
+					"jsonFile" : "target-libsecp256k1-Release-b52a3cb4863e3d781752.json",
 					"name" : "libsecp256k1",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 1,
 					"id" : "salticidae::@83427a79185b1d2caf84",
-					"jsonFile" : "target-salticidae-Debug-4f276efeb257a551ae2e.json",
+					"jsonFile" : "target-salticidae-Release-e82965bd0c6d6bf47884.json",
 					"name" : "salticidae",
 					"projectIndex" : 1
 				},
 				{
 					"directoryIndex" : 1,
+					"id" : "salticidae_shared::@83427a79185b1d2caf84",
+					"jsonFile" : "target-salticidae_shared-Release-f1390c5b9e3382ff281f.json",
+					"name" : "salticidae_shared",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
 					"id" : "salticidae_static::@83427a79185b1d2caf84",
-					"jsonFile" : "target-salticidae_static-Debug-e6a940ba34a421ba7129.json",
+					"jsonFile" : "target-salticidae_static-Release-e6a940ba34a421ba7129.json",
 					"name" : "salticidae_static",
 					"projectIndex" : 1
 				},
 				{
 					"directoryIndex" : 2,
 					"id" : "test_secp256k1::@36f028580bb02cc8272a",
-					"jsonFile" : "target-test_secp256k1-Debug-65ea674492ba47806847.json",
+					"jsonFile" : "target-test_secp256k1-Release-28d6cbec1c4161caae76.json",
 					"name" : "test_secp256k1",
 					"projectIndex" : 0
 				}
@@ -203,6 +217,6 @@
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 6
+		"minor" : 2
 	}
 }
