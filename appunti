@@ -1,0 +1,25 @@
+La struttura NetAddr sembra rappresentare un indirizzo di rete in un formato che combina l'indirizzo IP e la porta. Ecco una spiegazione delle principali funzionalità e costruttori della struttura:
+
+NetAddr(): Costruttore predefinito che inizializza l'indirizzo IP e la porta a zero.
+
+NetAddr(uint32_t ip, uint16_t port): Costruttore che consente di specificare direttamente l'indirizzo IP e la porta.
+
+NetAddr(const std::string &_addr, uint16_t _port): Costruttore che accetta una stringa rappresentante l'indirizzo IP e imposta la porta.
+
+void set_by_ip_port(const std::string &_addr, uint16_t _port): Metodo che imposta l'indirizzo IP e la porta a partire da una stringa rappresentante l'indirizzo IP e un valore di porta.
+
+NetAddr(const std::string &ip_port_addr): Costruttore che accetta una stringa nel formato "indirizzo_ip:porta" e imposta l'indirizzo IP e la porta.
+
+NetAddr(const struct sockaddr_in *addr_sock): Costruttore che costruisce un oggetto NetAddr da un indirizzo di socket in formato UNIX.
+
+bool operator==(const NetAddr &other) const: Operatore di uguaglianza che confronta due oggetti NetAddr basandosi su indirizzo IP e porta.
+
+bool operator!=(const NetAddr &other) const: Operatore di disuguaglianza che confronta due oggetti NetAddr basandosi su indirizzo IP e porta.
+
+operator std::string() const: Conversione implicita in una stringa che rappresenta l'oggetto NetAddr nel formato "indirizzo_ip:porta".
+
+bool is_null() const: Restituisce true se sia l'indirizzo IP che la porta sono zero, altrimenti false.
+
+void serialize(DataStream &s) const: Serializza l'oggetto NetAddr usando un oggetto DataStream.
+
+void unserialize(DataStream &s): Deserializza l'oggetto NetAddr da un oggetto DataStream.

@@ -287,16 +287,64 @@ int main(int argc, char **argv) {
         std::cout << "HotStuffError(\"replica idx out of range\") "  << std::endl;
 
    // std::get<0>(replicas[idx])  contiene il primo valore della tupla, cioè:
-   // 127.0.0.1:10000;20000 --> replica 0
-   // 127.0.0.1:10001;20001 --> replica 1
-   // 127.0.0.1:10002;20002 --> replica 2
-   // 127.0.0.1:10003;20003 --> replica 3
-    std::cout << "ciaoooo " << std::get<0>(replicas[idx]) << std::endl;
+   // replicas[0] = 127.0.0.1:10000;20000 --> replica 0 --> lo scrive in log0
+   // replicas[1] = 127.0.0.1:10001;20001 --> replica 1 --> lo scrive in log1
+   // replicas[2] = 127.0.0.1:10002;20002 --> replica 2 --> lo scrive in log2
+   // replicas[3] = 127.0.0.1:10003;20003 --> replica 3 --> lo scrive in log3
 
     // Se l'indice è valido, questa riga estrae il primo elemento della tupla corrispondente all'indice idx nel vettore replicas.
     // Presumibilmente, questo primo elemento rappresenta l'indirizzo di binding della replica.
     // Il risultato viene memorizzato nella stringa binding_addr.
     std::string binding_addr = std::get<0>(replicas[idx]);
+    std::cout << "binding_addr " << binding_addr << std::endl;
+
+    /*
+     * Se `client_port` è -1, viene fatto un tentativo di estrarre la porta dal valore di `binding_addr` usando la
+     * funzione `split_ip_port_cport(binding_addr)` e il risultato viene assegnato a `p`.
+     * Successivamente, viene tentato di convertire la stringa della porta a un numero intero usando `stoi(p.second, &idx)`.
+     * Se la conversione va a buon fine, il valore risultante della porta viene assegnato a `client_port`.
+     * Se la conversione fallisce (ad esempio, se la stringa della porta non rappresenta un numero valido),
+     * viene generata un'eccezione di tipo `HotStuffError` con il messaggio "client port not specified".
+     * */
+    if (client_port == -1)
+    {
+        auto p = split_ip_port_cport(binding_addr);
+        std::cout << "p.first: " << p.first << std::endl;
+        std::cout << "p.second: " << p.second << std::endl;
+        /*
+         * ad esempio per la replica 0:
+         * p.first: 127.0.0.1:10000 --> indirizzo IP
+         * p.second: 20000          --> porta
+         */
+
+        size_t idx;
+        try {
+            client_port = stoi(p.second, &idx);
+            std::cout << "client_port: " << client_port << std::endl;
+        } catch (std::invalid_argument &) {
+            throw HotStuffError("client port not specified");
+        }
+    }
+    /*
+     * plisten_addr viene creato con l'indirizzo IP ottenuto da binding_addr e con la porta inizializzata a zero (valore predefinito).
+     * L'oggetto NetAddr rappresenta quindi un indirizzo IP associato a una determinata porta.
+     */
+    NetAddr plisten_addr{split_ip_port_cport(binding_addr).first};
+    std::cout << "sto qua dopo plisten_addr " << std::endl;
+
+    std::cout << "IP Address: " << std::string(plisten_addr) << std::endl;  //IP Address: <NetAddr 127.0.0.1:10000>
+    std::cout << "Port: " << ntohs(plisten_addr.port) << std::endl; //Port: 10000
+
+    auto parent_limit = opt_parent_limit->get();
+    std::cout << "parent_limit: " << parent_limit << std::endl;
+    hotstuff::pacemaker_bt pmaker; //pacemaker_bt è BoxObj<PaceMaker>
+    if (opt_pace_maker->get() == "dummy")
+        pmaker = new hotstuff::PaceMakerDummyFixed(opt_fixed_proposer->get(), parent_limit);
+    else
+        pmaker = new hotstuff::PaceMakerRR(ec, parent_limit, opt_base_timeout->get(), opt_prop_delay->get());
+
+    std::cout << "sto qua dopo opt_pace_maker " << std::endl;
+
 
 
 }
@@ -380,6 +428,7 @@ int main2(int argc, char **argv) {
     if (!(0 <= idx && (size_t)idx < replicas.size()))
         throw HotStuffError("replica idx out of range");
     std::string binding_addr = std::get<0>(replicas[idx]);
+    //
     if (client_port == -1)
     {
         auto p = split_ip_port_cport(binding_addr);
@@ -393,6 +442,7 @@ int main2(int argc, char **argv) {
 
     NetAddr plisten_addr{split_ip_port_cport(binding_addr).first};
 
+    //
     auto parent_limit = opt_parent_limit->get();
     hotstuff::pacemaker_bt pmaker;
     if (opt_pace_maker->get() == "dummy")
@@ -400,6 +450,7 @@ int main2(int argc, char **argv) {
     else
         pmaker = new hotstuff::PaceMakerRR(ec, parent_limit, opt_base_timeout->get(), opt_prop_delay->get());
 
+    //
     HotStuffApp::Net::Config repnet_config;
     ClientNetwork<opcode_t>::Config clinet_config;
     repnet_config.max_msg_size(opt_max_rep_msg->get());

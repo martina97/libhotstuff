@@ -81,7 +81,7 @@ struct MsgRespBlock {
 using promise::promise_t;
 
 class HotStuffBase;
-using pacemaker_bt = BoxObj<class PaceMaker>;
+using pacemaker_bt = BoxObj<class PaceMaker>; //Definisce un alias pacemaker_bt per BoxObj<class PaceMaker>. Questo potrebbe essere utilizzato per semplificare la dichiarazione di oggetti di tipo BoxObj<class PaceMaker>
 
 template<EntityType ent_type>
 class FetchContext: public promise_t {

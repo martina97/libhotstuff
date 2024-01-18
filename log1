@@ -5,8 +5,8 @@ Elapsed time: 0 seconds
 CPU time: 0 seconds
 ---- DOPO  config.add_opt ---- 
 opt_privkey->get(): 
-2024-01-17 14:59:29.559853 [net info] loaded configuration from hotstuff.conf
-2024-01-17 14:59:29.559916 [net info] loading extra configuration from ./hotstuff-sec1.conf
+2024-01-18 14:34:32.793711 [net info] loaded configuration from hotstuff.conf
+2024-01-18 14:34:32.793775 [net info] loading extra configuration from ./hotstuff-sec1.conf
 ---- STO QUA ---- 
 idx: 1
 client_port: -1
@@ -20,4 +20,12 @@ valore1: 127.0.0.1:10001;20001, valore2: 0278740a5bec75e333b3c93965b1609163b15d2
 valore1: 127.0.0.1:10002;20002, valore2: 0269eb606576a315a630c2483deed35cc4bd845abae1c693f97c440c89503fa92e, valore3: 065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
 valore1: 127.0.0.1:10003;20003, valore2: 03e6911bf17e632eecdfa0dc9fc6efc9ddca60c0e3100db469a3d3d62008044a53, valore3: 6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
 STO QUAAAAAA: 
-ciaoooo 127.0.0.1:10001;20001
+binding_addr 127.0.0.1:10001;20001
+p.first: 127.0.0.1:10001
+p.second: 20001
+client_port: 20001
+sto qua dopo plisten_addr 
+IP Address: <NetAddr 127.0.0.1:10001>
+Port: 10001
+parent_limit: -1
+sto qua dopo opt_pace_maker 
