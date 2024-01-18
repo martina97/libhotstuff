@@ -80,6 +80,7 @@ class HotStuffApp: public HotStuff {
     /** The listen address for client RPC */
     NetAddr clisten_addr;
 
+    /** Una mappa non ordinata per tenere traccia degli articoli non confermati. Le chiavi sono di tipo uint256_t e i valori sono promise_t. */
     std::unordered_map<const uint256_t, promise_t> unconfirmed;
 
     using conn_t = ClientNetwork<opcode_t>::conn_t;
@@ -92,8 +93,10 @@ class HotStuffApp: public HotStuff {
     salticidae::BoxObj<salticidae::ThreadCall> resp_tcall;
     salticidae::BoxObj<salticidae::ThreadCall> req_tcall;
 
+    /** Metodo per gestire i comandi di richiesta del client. Richiede un oggetto MsgReqCmd e un oggetto connessione (conn_t) come parametri.*/
     void client_request_cmd_handler(MsgReqCmd &&, const conn_t &);
 
+    /** Metodo statico per analizzare un comando da un flusso di dati. Crea un oggetto CommandDummy e lo legge dallo stream. */
     static command_t parse_cmd(DataStream &s) {
         auto cmd = new CommandDummy();
         s >> *cmd;
@@ -259,7 +262,7 @@ int main(int argc, char **argv) {
 
     for (const auto &s: opt_replicas->get())
     {
-        std::cout << "STO dentro if : "  << std::endl;
+        //std::cout << "STO dentro if : "  << std::endl;
 
         auto res = trim_all(split(s, ","));
         if (res.size() != 3)
@@ -267,7 +270,6 @@ int main(int argc, char **argv) {
         replicas.push_back(std::make_tuple(res[0], res[1], res[2]));
     }
 
-    std::cout << "STO QUAAAAAA: "  << std::endl;
 
 
     // Stampa il contenuto del vettore
@@ -276,7 +278,6 @@ int main(int argc, char **argv) {
                   << "valore2: " << std::get<1>(replica) << ", "
                   << "valore3: " << std::get<2>(replica) << std::endl;
     }
-    std::cout << "STO QUAAAAAA: "  << std::endl;
 
 
     //Verifico se l'indice idx è compreso tra 0 e replicas.size() - 1.
@@ -335,17 +336,40 @@ int main(int argc, char **argv) {
     std::cout << "IP Address: " << std::string(plisten_addr) << std::endl;  //IP Address: <NetAddr 127.0.0.1:10000>
     std::cout << "Port: " << ntohs(plisten_addr.port) << std::endl; //Port: 10000
 
+
+    // CONFIGURAZIONE PACEMAKER
     auto parent_limit = opt_parent_limit->get();
     std::cout << "parent_limit: " << parent_limit << std::endl;
+    std::cout << "opt_fixed_proposer->get(): " << opt_fixed_proposer->get() << std::endl;
+    std::cout << "opt_base_timeout->get(): " << opt_base_timeout->get() << std::endl;
+    std::cout << "opt_prop_delay->get(): " << opt_prop_delay->get() << std::endl;
+    std::cout << "opt_pace_maker->get(): " << opt_pace_maker->get() << std::endl;
     hotstuff::pacemaker_bt pmaker; //pacemaker_bt è BoxObj<PaceMaker>
-    if (opt_pace_maker->get() == "dummy")
+
+    //seleziono un oggetto PaceMaker in base a una condizione specifica.
+    if (opt_pace_maker->get() == "dummy") {
+        std::cout << "PaceMakerDummyFixed " << std::endl;
+        /** creo un oggetto PaceMakerDummyFixed con il proposer fissato e il limite parent specificato */
         pmaker = new hotstuff::PaceMakerDummyFixed(opt_fixed_proposer->get(), parent_limit);
-    else
+    } else {
+        std::cout << "PaceMakerRR " << std::endl;
+        /** creo un oggetto PaceMakerRR con l'oggetto EventContext (ec), il limite parent specificato, il timeout di base (opt_base_timeout->get()) e il ritardo del proposer (opt_prop_delay->get())*/
         pmaker = new hotstuff::PaceMakerRR(ec, parent_limit, opt_base_timeout->get(), opt_prop_delay->get());
+    }
+
 
     std::cout << "sto qua dopo opt_pace_maker " << std::endl;
+    std::cout << "pmaker->get_proposer() " << pmaker->get_proposer() <<std::endl;   //ora il proposer è la replica 0, quindi su ogni file di log id_proposer=0
 
+    // -------- FINE PACEMAKER --------
 
+    /*
+     * Dichiaro un oggetto della classe Config associata alla classe Net all'interno della classe HotStuffApp.
+     * HotStuffApp::Net::Config: fa riferimento alla classe Config definita all'interno della classe Net, che è nidificata all'interno della classe HotStuffApp.
+     * Crea un oggetto di configurazione (repnet_config) destinato a configurare le impostazioni relative alla rete associate alla classe HotStuffApp::Net.
+     */
+    HotStuffApp::Net::Config repnet_config;
+    ClientNetwork<opcode_t>::Config client_config;
 
 }
 
@@ -452,6 +476,7 @@ int main2(int argc, char **argv) {
 
     //
     HotStuffApp::Net::Config repnet_config;
+    //
     ClientNetwork<opcode_t>::Config clinet_config;
     repnet_config.max_msg_size(opt_max_rep_msg->get());
     clinet_config.max_msg_size(opt_max_cli_msg->get());
