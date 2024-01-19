@@ -377,6 +377,8 @@ int main(int argc, char **argv) {
 
 In sintesi, "client_config" è un'istanza della classe di configurazione ("Config") per la specializzazione "ClientNetwork" che utilizza il tipo "opcode_t" per i codici operativi dei messaggi. Questa istanza può essere utilizzata per configurare e inizializzare un oggetto "ClientNetwork".*/
     ClientNetwork<opcode_t>::Config client_config;
+
+    /** setto dimensione max dei msgs che possono essere inviati/ricevuti sulle reti corrispondendi */
     repnet_config.max_msg_size(opt_max_rep_msg->get());
     client_config.max_msg_size(opt_max_cli_msg->get());
     std::cout << "opt_max_rep_msg->get() " << opt_max_rep_msg->get() <<std::endl;   //ora il proposer è la replica 0, quindi su ogni file di log id_proposer=0
