@@ -369,7 +369,37 @@ int main(int argc, char **argv) {
      * Crea un oggetto di configurazione (repnet_config) destinato a configurare le impostazioni relative alla rete associate alla classe HotStuffApp::Net.
      */
     HotStuffApp::Net::Config repnet_config;
+
+    /** Dichiaro un'istanza della classe "Config" associata alla specializzazione del modello "ClientNetwork" che utilizza il tipo "opcode_t" come parametro del modello "OpcodeType".
+     * `ClientNetwork<opcode_t>`: specifica la specializzazione del modello `ClientNetwork` con il tipo `opcode_t`.
+     * `::Config`: accede al tipo nidificato `Config` all'interno della classe `ClientNetwork<opcode_t>`.
+     * `client_config;`: dichiara un'istanza della classe `Config` con il nome `client_config`.
+
+In sintesi, "client_config" è un'istanza della classe di configurazione ("Config") per la specializzazione "ClientNetwork" che utilizza il tipo "opcode_t" per i codici operativi dei messaggi. Questa istanza può essere utilizzata per configurare e inizializzare un oggetto "ClientNetwork".*/
     ClientNetwork<opcode_t>::Config client_config;
+    repnet_config.max_msg_size(opt_max_rep_msg->get());
+    client_config.max_msg_size(opt_max_cli_msg->get());
+    std::cout << "opt_max_rep_msg->get() " << opt_max_rep_msg->get() <<std::endl;   //ora il proposer è la replica 0, quindi su ogni file di log id_proposer=0
+    std::cout << "opt_max_cli_msg->get() " << opt_max_cli_msg->get() <<std::endl;   //ora il proposer è la replica 0, quindi su ogni file di log id_proposer=0
+
+    std::cout << "-----------------------\n" << std::endl;
+    std::cout << "opt_tls_privkey == " << opt_tls_privkey->get() << std::endl;
+    std::cout << "opt_notls == " << opt_notls->get() << std::endl;  //0
+
+    // opt_tls_privkey è il campo tls-privkey nel file hotstuff-sec{i}.conf, diverso per ogni replica
+    if (!opt_tls_privkey->get().empty() && !opt_notls->get())
+    {
+        auto tls_priv_key = new salticidae::PKey(
+                salticidae::PKey::create_privkey_from_der(
+                        hotstuff::from_hex(opt_tls_privkey->get())));
+        auto tls_cert = new salticidae::X509(
+                salticidae::X509::create_from_der(
+                        hotstuff::from_hex(opt_tls_cert->get())));
+        repnet_config
+                .enable_tls(true)
+                .tls_key(tls_priv_key)
+                .tls_cert(tls_cert);
+    }
 
 }
 
@@ -480,6 +510,8 @@ int main2(int argc, char **argv) {
     ClientNetwork<opcode_t>::Config clinet_config;
     repnet_config.max_msg_size(opt_max_rep_msg->get());
     clinet_config.max_msg_size(opt_max_cli_msg->get());
+    //
+
     if (!opt_tls_privkey->get().empty() && !opt_notls->get())
     {
         auto tls_priv_key = new salticidae::PKey(
