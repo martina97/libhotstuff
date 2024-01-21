@@ -791,6 +791,19 @@ int main() {
     std::cout << "clisten_addr --> IP Address: " <<  std::string(NetAddr("0.0.0.0", client_port)) << std::endl;
     std::cout << "clisten_addr --> Port: " <<  ntohs(NetAddr("0.0.0.0", client_port).port) << std::endl;
     std::cout << "opt_nworker->get(): " <<   opt_nworker->get() << std::endl;
+
+    papp = new HotStuffApp(opt_blk_size->get(),
+                           opt_stat_period->get(),
+                           opt_imp_timeout->get(),
+                           idx,
+                           hotstuff::from_hex(opt_privkey->get()),
+                           plisten_addr,
+                           NetAddr("0.0.0.0", client_port),
+                           std::move(pmaker),
+                           ec,
+                           opt_nworker->get(),
+                           repnet_config,
+                           clinet_config);
 }
 
 
