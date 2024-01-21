@@ -375,12 +375,14 @@ int main(int argc, char **argv) {
      */
     HotStuffApp::Net::Config repnet_config;
 
-    /** Dichiaro un'istanza della classe "Config" associata alla specializzazione del modello "ClientNetwork" che utilizza il tipo "opcode_t" come parametro del modello "OpcodeType".
+    /** Dichiaro un'istanza della classe "Config" associata alla specializzazione del modello "ClientNetwork" che
+     * utilizza il tipo "opcode_t" come parametro del modello "OpcodeType".
      * `ClientNetwork<opcode_t>`: specifica la specializzazione del modello `ClientNetwork` con il tipo `opcode_t`.
      * `::Config`: accede al tipo nidificato `Config` all'interno della classe `ClientNetwork<opcode_t>`.
      * `client_config;`: dichiara un'istanza della classe `Config` con il nome `client_config`.
-
-In sintesi, "client_config" è un'istanza della classe di configurazione ("Config") per la specializzazione "ClientNetwork" che utilizza il tipo "opcode_t" per i codici operativi dei messaggi. Questa istanza può essere utilizzata per configurare e inizializzare un oggetto "ClientNetwork".*/
+     * In sintesi, "client_config" è un'istanza della classe di configurazione ("Config") per la specializzazione
+     * "ClientNetwork" che utilizza il tipo "opcode_t" per i codici operativi dei messaggi. Questa istanza può essere
+     * utilizzata per configurare e inizializzare un oggetto "ClientNetwork".*/
     ClientNetwork<opcode_t>::Config client_config;
 
     /** setto dimensione max dei msgs che possono essere inviati/ricevuti sulle reti corrispondendi */
@@ -404,6 +406,7 @@ In sintesi, "client_config" è un'istanza della classe di configurazione ("Confi
          * 2. converto la chiave con codifica esadecimale in un `bytearray_t' (vettore di byte)
          * 3. creo un oggetto `salticidae::PKey` da una chiave privata codificata DER. Accetta "bytearray_t" (chiave codificata DER) come argomento.
          */
+        // ###########################      CREAZIONE CHIAVE PRIVATA   ###########################
         auto tls_priv_key = new salticidae::PKey(
                 salticidae::PKey::create_privkey_from_der(
                         hotstuff::from_hex(opt_tls_privkey->get())));
@@ -419,10 +422,32 @@ In sintesi, "client_config" è un'istanza della classe di configurazione ("Confi
         std::cout << "opt_tls_cert->get(): " << opt_tls_cert->get() << std::endl;
         // opt_tls_cert->get() è il campo tls-cert nel file hotstuff-sec{i}.conf
 
+        // ###########################      CREAZIONE CERTIFICATO   ###########################
 
         auto tls_cert = new salticidae::X509(
                 salticidae::X509::create_from_der(
                         hotstuff::from_hex(opt_tls_cert->get())));
+
+        bytearray_t cert_der = tls_cert->get_der();
+        // Iterate through the bytes in privkey_der and print them in hexadecimal format
+        std::cout << "Print the hexadecimal representation of the certificate: ";
+        for (const auto &byte : cert_der) {
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)byte;
+        }
+        // Reset the output stream to decimal mode
+        std::cout << std::dec << std::endl;
+
+         bytearray_t pubkey_cert_der = tls_cert->get_pubkey().get_pubkey_der();
+        // Iterate through the bytes in privkey_der and print them in hexadecimal format
+        std::cout << "Print the hexadecimal representation of the pubkey_cert_der: ";
+        for (const auto &byte : pubkey_cert_der) {
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)byte;
+        }
+        // Reset the output stream to decimal mode
+        std::cout << std::dec << std::endl;
+
+        // ##############################################
+
         repnet_config
                 .enable_tls(true)
                 .tls_key(tls_priv_key)
@@ -430,6 +455,18 @@ In sintesi, "client_config" è un'istanza della classe di configurazione ("Confi
 
     }
 
+    std::cout << "opt_repburst->get() =" << opt_repburst->get() << std::endl;
+    std::cout << "opt_repnworker->get() =" << opt_repnworker->get() << std::endl;
+
+    repnet_config
+            .burst_size(opt_repburst->get())    //100
+            .nworker(opt_repnworker->get());    //1
+
+    std::cout << "opt_cliburst->get() =" << opt_cliburst->get() << std::endl;
+    std::cout << "opt_clinworker->get() =" << opt_clinworker->get() << std::endl;
+    client_config
+            .burst_size(opt_cliburst->get())    //1000
+            .nworker(opt_clinworker->get());    //8
 }
 
 
