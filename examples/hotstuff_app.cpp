@@ -153,8 +153,18 @@ std::pair<std::string, std::string> split_ip_port_cport(const std::string &s) {
 salticidae::BoxObj<HotStuffApp> papp = nullptr;
 
 
-int main(int argc, char **argv) {
+int main3(int argc, char **argv) {
     std::cout << "Hello, world!!!!!!" << std::endl;
+    // Print the number of command-line arguments (argc)
+
+    std::cout << "argc: " << argc << std::endl;
+
+    // Print each command-line argument (argv)
+    for (int i = 0; i < argc; ++i) {
+        std::cout << "argv[" << i << "]: " << argv[i] << std::endl;
+    }
+
+
     Config config("hotstuff.conf");     // classe che gestisce le opzioni di configurazione per un'applicazione
     std::cout << "---- DOPO CONFIG ---- " << std::endl;
     ElapsedTime elapsed;    //serve a calcolare il tempo trascorso e il tempo della CPU tra due punti nel codice
@@ -288,9 +298,9 @@ int main(int argc, char **argv) {
     //Verifico se l'indice idx è compreso tra 0 e replicas.size() - 1.
     // Se l'indice non è valido, lancia un'eccezione HotStuffError indicando che l'indice della replica è fuori intervallo.
     if (!(0 <= idx && (size_t)idx < replicas.size()))
-        //throw HotStuffError("replica idx out of range");
+        throw HotStuffError("replica idx out of range");
         //TODO: SCOMMENTARE
-        std::cout << "HotStuffError(\"replica idx out of range\") "  << std::endl;
+        //std::cout << "HotStuffError(\"replica idx out of range\") "  << std::endl;
 
    // std::get<0>(replicas[idx])  contiene il primo valore della tupla, cioè:
    // replicas[0] = 127.0.0.1:10000;20000 --> replica 0 --> lo scrive in log0
@@ -379,15 +389,15 @@ int main(int argc, char **argv) {
      * utilizza il tipo "opcode_t" come parametro del modello "OpcodeType".
      * `ClientNetwork<opcode_t>`: specifica la specializzazione del modello `ClientNetwork` con il tipo `opcode_t`.
      * `::Config`: accede al tipo nidificato `Config` all'interno della classe `ClientNetwork<opcode_t>`.
-     * `client_config;`: dichiara un'istanza della classe `Config` con il nome `client_config`.
-     * In sintesi, "client_config" è un'istanza della classe di configurazione ("Config") per la specializzazione
+     * `clinet_config;`: dichiara un'istanza della classe `Config` con il nome `clinet_config`.
+     * In sintesi, "clinet_config" è un'istanza della classe di configurazione ("Config") per la specializzazione
      * "ClientNetwork" che utilizza il tipo "opcode_t" per i codici operativi dei messaggi. Questa istanza può essere
      * utilizzata per configurare e inizializzare un oggetto "ClientNetwork".*/
-    ClientNetwork<opcode_t>::Config client_config;
+    ClientNetwork<opcode_t>::Config clinet_config;
 
     /** setto dimensione max dei msgs che possono essere inviati/ricevuti sulle reti corrispondendi */
     repnet_config.max_msg_size(opt_max_rep_msg->get());
-    client_config.max_msg_size(opt_max_cli_msg->get());
+    clinet_config.max_msg_size(opt_max_cli_msg->get());
     std::cout << "opt_max_rep_msg->get() " << opt_max_rep_msg->get() <<std::endl;   //ora il proposer è la replica 0, quindi su ogni file di log id_proposer=0
     std::cout << "opt_max_cli_msg->get() " << opt_max_cli_msg->get() <<std::endl;   //ora il proposer è la replica 0, quindi su ogni file di log id_proposer=0
 
@@ -464,9 +474,323 @@ int main(int argc, char **argv) {
 
     std::cout << "opt_cliburst->get() =" << opt_cliburst->get() << std::endl;
     std::cout << "opt_clinworker->get() =" << opt_clinworker->get() << std::endl;
-    client_config
+    clinet_config
             .burst_size(opt_cliburst->get())    //1000
             .nworker(opt_clinworker->get());    //8
+
+
+    std::cout << "------" << std::endl;
+    
+    std::cout << "opt_blk_size->get() =" << opt_blk_size->get() << std::endl;
+    std::cout << "opt_stat_period->get() =" << opt_stat_period->get() << std::endl;
+    std::cout << "opt_imp_timeout->get() =" << opt_imp_timeout->get() << std::endl;
+    std::cout << "idx =" << idx << std::endl;
+
+    std::cout << "Print the hexadecimal representation of the hotstuff::from_hex(opt_privkey->get(): ";
+    for (const auto &byte : hotstuff::from_hex(opt_privkey->get())) {
+        std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)byte;
+    }
+    std::cout << std::dec << std::endl;
+    std::cout << "plisten_addr --> IP Address: " << std::string(plisten_addr) << std::endl;  //IP Address: <NetAddr 127.0.0.1:10000>
+    std::cout << "plisten_addr --> Port: " << ntohs(plisten_addr.port) << std::endl; //Port: 10000
+
+    std::cout << "clisten_addr --> IP Address: " <<  std::string(NetAddr("0.0.0.0", client_port)) << std::endl;
+    std::cout << "clisten_addr --> Port: " <<  ntohs(NetAddr("0.0.0.0", client_port).port) << std::endl;
+    std::cout << "opt_nworker->get(): " <<   opt_nworker->get() << std::endl;
+
+
+
+    /*
+    papp = new HotStuffApp(opt_blk_size->get(),
+                           opt_stat_period->get(),
+                           opt_imp_timeout->get(),
+                           idx,
+                           hotstuff::from_hex(opt_privkey->get()),
+                           plisten_addr,
+                           NetAddr("0.0.0.0", client_port),
+                           std::move(pmaker),
+                           ec,
+                           opt_nworker->get(),
+                           repnet_config,
+                           clinet_config);
+                           */
+
+
+}
+
+
+int main() {
+    std::cout << "Hello, world!!!!!!" << std::endl;
+    // Print the number of command-line arguments (argc)
+
+    int argc = 3;
+
+    char *argv[] = {
+            "../examples/hotstuff-app",
+            "--conf",
+            "../hotstuff-sec2.conf" //togliere un . se faccio da terminale
+    };
+
+    std::cout << "argc: " << argc << std::endl;
+
+    // Print each command-line argument (argv)
+
+    for (int i = 0; i < argc; ++i) {
+        std::cout << "argv[" << i << "]: " << argv[i] << std::endl;
+    }
+    Config config("../hotstuff.conf");     // classe che gestisce le opzioni di configurazione per un'applicazione
+    //todo: scommentare riga dopo se terminale
+    // Config config("../hotstuff.conf");     // classe che gestisce le opzioni di configurazione per un'applicazione
+    std::cout << "---- DOPO CONFIG ---- " << std::endl;
+    ElapsedTime elapsed;    //serve a calcolare il tempo trascorso e il tempo della CPU tra due punti nel codice
+    elapsed.start();    //tempo di inizio
+    std::cout << "---- DOPO elapsed.start() ---- " << std::endl;
+    std::cout << "Elapsed time: " << elapsed.elapsed_sec << " seconds\n";
+    std::cout << "CPU time: " << elapsed.cpu_elapsed_sec << " seconds\n";
+
+    auto opt_blk_size = Config::OptValInt::create(1);
+    auto opt_parent_limit = Config::OptValInt::create(-1);
+    auto opt_stat_period = Config::OptValDouble::create(10);
+    auto opt_replicas = Config::OptValStrVec::create();
+    auto opt_idx = Config::OptValInt::create(0);
+    auto opt_client_port = Config::OptValInt::create(-1);
+    auto opt_privkey = Config::OptValStr::create();
+    auto opt_tls_privkey = Config::OptValStr::create();
+    auto opt_tls_cert = Config::OptValStr::create();
+    auto opt_help = Config::OptValFlag::create(false);
+    auto opt_pace_maker = Config::OptValStr::create("dummy");
+    auto opt_fixed_proposer = Config::OptValInt::create(1);
+    auto opt_base_timeout = Config::OptValDouble::create(1);
+    auto opt_prop_delay = Config::OptValDouble::create(1);
+    auto opt_imp_timeout = Config::OptValDouble::create(11);
+    auto opt_nworker = Config::OptValInt::create(1);
+    auto opt_repnworker = Config::OptValInt::create(1);
+    auto opt_repburst = Config::OptValInt::create(100);
+    auto opt_clinworker = Config::OptValInt::create(8);
+    auto opt_cliburst = Config::OptValInt::create(1000);
+    auto opt_notls = Config::OptValFlag::create(false);
+    auto opt_max_rep_msg = Config::OptValInt::create(4 << 20); // 4M by default
+    auto opt_max_cli_msg = Config::OptValInt::create(65536); // 64K by default
+
+    config.add_opt("block-size", opt_blk_size, Config::SET_VAL);
+    config.add_opt("parent-limit", opt_parent_limit, Config::SET_VAL);
+    config.add_opt("stat-period", opt_stat_period, Config::SET_VAL);
+    config.add_opt("replica", opt_replicas, Config::APPEND, 'a', "add an replica to the list");
+    config.add_opt("idx", opt_idx, Config::SET_VAL, 'i', "specify the index in the replica list");
+    config.add_opt("cport", opt_client_port, Config::SET_VAL, 'c', "specify the port listening for clients");
+    config.add_opt("privkey", opt_privkey, Config::SET_VAL);
+    config.add_opt("tls-privkey", opt_tls_privkey, Config::SET_VAL);
+    config.add_opt("tls-cert", opt_tls_cert, Config::SET_VAL);
+    config.add_opt("pace-maker", opt_pace_maker, Config::SET_VAL, 'p', "specify pace maker (dummy, rr)");
+    config.add_opt("proposer", opt_fixed_proposer, Config::SET_VAL, 'l', "set the fixed proposer (for dummy)");
+    config.add_opt("base-timeout", opt_base_timeout, Config::SET_VAL, 't', "set the initial timeout for the Round-Robin Pacemaker");
+    config.add_opt("prop-delay", opt_prop_delay, Config::SET_VAL, 't', "set the delay that follows the timeout for the Round-Robin Pacemaker");
+    config.add_opt("imp-timeout", opt_imp_timeout, Config::SET_VAL, 'u', "set impeachment timeout (for sticky)");
+    config.add_opt("nworker", opt_nworker, Config::SET_VAL, 'n', "the number of threads for verification");
+    config.add_opt("repnworker", opt_repnworker, Config::SET_VAL, 'm', "the number of threads for replica network");
+    config.add_opt("repburst", opt_repburst, Config::SET_VAL, 'b', "");
+    config.add_opt("clinworker", opt_clinworker, Config::SET_VAL, 'M', "the number of threads for client network");
+    config.add_opt("cliburst", opt_cliburst, Config::SET_VAL, 'B', "");
+    config.add_opt("notls", opt_notls, Config::SWITCH_ON, 's', "disable TLS");
+    config.add_opt("max-rep-msg", opt_max_rep_msg, Config::SET_VAL, 'S', "the maximum replica message size");
+    config.add_opt("max-cli-msg", opt_max_cli_msg, Config::SET_VAL, 'S', "the maximum client message size");
+    config.add_opt("help", opt_help, Config::SWITCH_ON, 'h', "show this help info");
+    std::cout << "---- DOPO  config.add_opt ---- " << std::endl;
+    std::cout << "opt_privkey->get(): " << opt_privkey->get() << std::endl;
+
+    EventContext ec;
+    config.parse(argc, argv);
+    if (opt_help->get())
+    {
+        config.print_help();
+        exit(0);
+    }
+    std::cout << "---- STO QUA ---- " << std::endl;
+    auto idx = opt_idx->get();
+    std::cout << "idx: " <<idx<< std::endl;
+
+    auto client_port = opt_client_port->get();
+    std::cout << "client_port: " <<client_port<< std::endl;
+
+    std::vector<std::tuple<std::string, std::string, std::string>> replicas;
+    replicas.push_back(std::make_tuple("127.0.0.1:10000;20000",
+                                       "039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23",
+                                       "542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420"));
+
+    replicas.push_back(std::make_tuple("127.0.0.1:10001;20001",
+                                       "0278740a5bec75e333b3c93965b1609163b15d2e3c2fdef141d4859ec70c238e7a",
+                                       "c261250345ebcd676a0edeea173526608604f626b2e8bc4fd2142d3bde1d44d5"));
+
+    replicas.push_back(std::make_tuple("127.0.0.1:10002;20002",
+                                       "0269eb606576a315a630c2483deed35cc4bd845abae1c693f97c440c89503fa92e",
+                                       "065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78"));
+
+    replicas.push_back(std::make_tuple("127.0.0.1:10003;20003",
+                                       "03e6911bf17e632eecdfa0dc9fc6efc9ddca60c0e3100db469a3d3d62008044a53",
+                                       "6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651"));
+
+    // Access the elements
+    for (const auto& replica : replicas) {
+        std::cout << "valore1: " << std::get<0>(replica)
+                  << ", valore2: " << std::get<1>(replica)
+                  << ", valore3: " << std::get<2>(replica) << std::endl;
+    }
+    if (!(0 <= idx && (size_t)idx < replicas.size()))
+        throw HotStuffError("replica idx out of range");
+
+    std::string binding_addr = std::get<0>(replicas[idx]);
+    std::cout << "binding_addr " << binding_addr << std::endl;
+
+    if (client_port == -1)
+    {
+        auto p = split_ip_port_cport(binding_addr);
+        std::cout << "p.first: " << p.first << std::endl;
+        std::cout << "p.second: " << p.second << std::endl;
+        /*
+         * ad esempio per la replica 0:
+         * p.first: 127.0.0.1:10000 --> indirizzo IP
+         * p.second: 20000          --> porta
+         */
+
+        size_t idx;
+        try {
+            client_port = stoi(p.second, &idx);
+            std::cout << "client_port: " << client_port << std::endl;
+        } catch (std::invalid_argument &) {
+            throw HotStuffError("client port not specified");
+        }
+    }
+    NetAddr plisten_addr{split_ip_port_cport(binding_addr).first};
+    std::cout << "sto qua dopo plisten_addr " << std::endl;
+
+    std::cout << "IP Address: " << std::string(plisten_addr) << std::endl;  //IP Address: <NetAddr 127.0.0.1:10000>
+    std::cout << "Port: " << ntohs(plisten_addr.port) << std::endl; //Port: 10000
+// CONFIGURAZIONE PACEMAKER
+    auto parent_limit = opt_parent_limit->get();
+    std::cout << "parent_limit: " << parent_limit << std::endl;
+    std::cout << "opt_fixed_proposer->get(): " << opt_fixed_proposer->get() << std::endl;
+    std::cout << "opt_base_timeout->get(): " << opt_base_timeout->get() << std::endl;
+    std::cout << "opt_prop_delay->get(): " << opt_prop_delay->get() << std::endl;
+    std::cout << "opt_pace_maker->get(): " << opt_pace_maker->get() << std::endl;
+    hotstuff::pacemaker_bt pmaker; //pacemaker_bt è BoxObj<PaceMaker>
+
+    //seleziono un oggetto PaceMaker in base a una condizione specifica.
+    if (opt_pace_maker->get() == "dummy") {
+        std::cout << "PaceMakerDummyFixed " << std::endl;
+        /** creo un oggetto PaceMakerDummyFixed con il proposer fissato e il limite parent specificato */
+        pmaker = new hotstuff::PaceMakerDummyFixed(opt_fixed_proposer->get(), parent_limit);
+    } else {
+        std::cout << "PaceMakerRR " << std::endl;
+        /** creo un oggetto PaceMakerRR con l'oggetto EventContext (ec), il limite parent specificato, il timeout di base (opt_base_timeout->get()) e il ritardo del proposer (opt_prop_delay->get())*/
+        pmaker = new hotstuff::PaceMakerRR(ec, parent_limit, opt_base_timeout->get(), opt_prop_delay->get());
+    }
+
+
+    std::cout << "sto qua dopo opt_pace_maker " << std::endl;
+    std::cout << "pmaker->get_proposer() " << pmaker->get_proposer() <<std::endl;   //ora il proposer è la replica 0, quindi su ogni file di log id_proposer=0
+
+    // -------- FINE PACEMAKER --------
+
+    HotStuffApp::Net::Config repnet_config;
+    ClientNetwork<opcode_t>::Config clinet_config;
+    /** setto dimensione max dei msgs che possono essere inviati/ricevuti sulle reti corrispondendi */
+    repnet_config.max_msg_size(opt_max_rep_msg->get());
+    clinet_config.max_msg_size(opt_max_cli_msg->get());
+    std::cout << "opt_max_rep_msg->get() " << opt_max_rep_msg->get() <<std::endl;   //ora il proposer è la replica 0, quindi su ogni file di log id_proposer=0
+    std::cout << "opt_max_cli_msg->get() " << opt_max_cli_msg->get() <<std::endl;   //ora il proposer è la replica 0, quindi su ogni file di log id_proposer=0
+
+    std::cout << "-----------------------\n" << std::endl;
+    std::cout << "opt_tls_privkey == " << opt_tls_privkey->get() << std::endl;
+    std::cout << "opt_notls == " << opt_notls->get() << std::endl;  //0
+
+    if (!opt_tls_privkey->get().empty() && !opt_notls->get())
+    {
+        /**
+         * Creo chiave privata TLS usando il metodo `create_privkey_from_der` della classe `salticidae::PKey`.
+         * La chiave privata con codifica DER viene fornita come input a questo metodo, la quale è stata caricata da una stringa con codifica esadecimale (`opt_tls_privkey->get()`).
+         * 1. prendo la chiave privata TLS da opt_tls_privkey->get())
+         * 2. converto la chiave con codifica esadecimale in un `bytearray_t' (vettore di byte)
+         * 3. creo un oggetto `salticidae::PKey` da una chiave privata codificata DER. Accetta "bytearray_t" (chiave codificata DER) come argomento.
+         */
+        // ###########################      CREAZIONE CHIAVE PRIVATA   ###########################
+        auto tls_priv_key = new salticidae::PKey(
+                salticidae::PKey::create_privkey_from_der(
+                        hotstuff::from_hex(opt_tls_privkey->get())));
+
+        bytearray_t privkey_der = tls_priv_key->get_privkey_der();
+        bytearray_t pubkey_der = tls_priv_key->get_pubkey_der();
+
+
+        printKeyDER(privkey_der, "priv");
+        printKeyDER(pubkey_der, "pub");
+
+
+        std::cout << "opt_tls_cert->get(): " << opt_tls_cert->get() << std::endl;
+        // opt_tls_cert->get() è il campo tls-cert nel file hotstuff-sec{i}.conf
+
+        // ###########################      CREAZIONE CERTIFICATO   ###########################
+
+        auto tls_cert = new salticidae::X509(
+                salticidae::X509::create_from_der(
+                        hotstuff::from_hex(opt_tls_cert->get())));
+
+        bytearray_t cert_der = tls_cert->get_der();
+        // Iterate through the bytes in privkey_der and print them in hexadecimal format
+        std::cout << "Print the hexadecimal representation of the certificate: ";
+        for (const auto &byte : cert_der) {
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)byte;
+        }
+        // Reset the output stream to decimal mode
+        std::cout << std::dec << std::endl;
+
+        bytearray_t pubkey_cert_der = tls_cert->get_pubkey().get_pubkey_der();
+        // Iterate through the bytes in privkey_der and print them in hexadecimal format
+        std::cout << "Print the hexadecimal representation of the pubkey_cert_der: ";
+        for (const auto &byte : pubkey_cert_der) {
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)byte;
+        }
+        // Reset the output stream to decimal mode
+        std::cout << std::dec << std::endl;
+
+        // ##############################################
+
+        repnet_config
+                .enable_tls(true)
+                .tls_key(tls_priv_key)
+                .tls_cert(tls_cert);
+
+    }
+
+    std::cout << "opt_repburst->get() =" << opt_repburst->get() << std::endl;
+    std::cout << "opt_repnworker->get() =" << opt_repnworker->get() << std::endl;
+
+    repnet_config
+            .burst_size(opt_repburst->get())    //100
+            .nworker(opt_repnworker->get());    //1
+    std::cout << "opt_cliburst->get() =" << opt_cliburst->get() << std::endl;
+    std::cout << "opt_clinworker->get() =" << opt_clinworker->get() << std::endl;
+    clinet_config
+            .burst_size(opt_cliburst->get())    //1000
+            .nworker(opt_clinworker->get());    //8
+
+    std::cout << "------" << std::endl;
+
+    std::cout << "opt_blk_size->get() =" << opt_blk_size->get() << std::endl;
+    std::cout << "opt_stat_period->get() =" << opt_stat_period->get() << std::endl;
+    std::cout << "opt_imp_timeout->get() =" << opt_imp_timeout->get() << std::endl;
+    std::cout << "idx =" << idx << std::endl;
+
+    std::cout << "Print the hexadecimal representation of the hotstuff::from_hex(opt_privkey->get(): ";
+    for (const auto &byte : hotstuff::from_hex(opt_privkey->get())) {
+        std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)byte;
+    }
+    std::cout << std::dec << std::endl;
+    std::cout << "plisten_addr --> IP Address: " << std::string(plisten_addr) << std::endl;  //IP Address: <NetAddr 127.0.0.1:10000>
+    std::cout << "plisten_addr --> Port: " << ntohs(plisten_addr.port) << std::endl; //Port: 10000
+
+    std::cout << "clisten_addr --> IP Address: " <<  std::string(NetAddr("0.0.0.0", client_port)) << std::endl;
+    std::cout << "clisten_addr --> Port: " <<  ntohs(NetAddr("0.0.0.0", client_port).port) << std::endl;
+    std::cout << "opt_nworker->get(): " <<   opt_nworker->get() << std::endl;
 }
 
 
@@ -678,6 +1002,7 @@ HotStuffApp::HotStuffApp(uint32_t blk_size,
                         size_t nworker,
                         const Net::Config &repnet_config,
                         const ClientNetwork<opcode_t>::Config &clinet_config):
+
     HotStuff(blk_size, idx, raw_privkey,
             plisten_addr, std::move(pmaker), ec, nworker, repnet_config),
     stat_period(stat_period),
@@ -685,6 +1010,10 @@ HotStuffApp::HotStuffApp(uint32_t blk_size,
     ec(ec),
     cn(req_ec, clinet_config),
     clisten_addr(clisten_addr) {
+
+    std::cout << "siamo qui2" << std::endl;
+
+
     /* prepare the thread used for sending back confirmations */
     resp_tcall = new salticidae::ThreadCall(resp_ec);
     req_tcall = new salticidae::ThreadCall(req_ec);
@@ -786,4 +1115,11 @@ void HotStuffApp::print_stat() const {
 }
 
 
+/*
+int main(int argc, char **argv) {
+    mainTerminal(argc, argv);
+    //mainCLion(argc, argv);
+}
+
+ */
 

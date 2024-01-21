@@ -75,10 +75,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-O3  -W -Wall -Wextra -pedantic -Wsuggest-override -fPIC"
-				},
-				{
-					"fragment" : "-std=gnu++17"
+					"fragment" : "-g -W -Wall -Wextra -pedantic -Wsuggest-override -std=gnu++17 -fPIC -fdiagnostics-color=always"
 				}
 			],
 			"includes" : 
