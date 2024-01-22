@@ -570,6 +570,18 @@ int main(int argc, char **argv) {
         std::cout << "----" << std::endl;
 
     }
+    auto shutdown = [&](int) { papp->stop(); }; //stopping all threads.
+    salticidae::SigEvent ev_sigint(ec, shutdown);
+    salticidae::SigEvent ev_sigterm(ec, shutdown);
+
+    ev_sigint.add(SIGINT);
+    ev_sigterm.add(SIGTERM);
+
+    papp->start(reps);
+    /*
+    elapsed.stop(true);
+     */
+    return 0;
 
 
 }
@@ -860,6 +872,48 @@ int main3() {
                            opt_nworker->get(),
                            repnet_config,
                            clinet_config);
+    std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> reps;
+    for (auto &r: replicas)
+    {
+        auto p = split_ip_port_cport(std::get<0>(r));
+        std::cout << " p.first == " << p.first << std::endl;
+        std::cout << " p.second == " << p.second << std::endl;
+
+        reps.push_back(std::make_tuple(
+                NetAddr(p.first),
+                hotstuff::from_hex(std::get<1>(r)),
+                hotstuff::from_hex(std::get<2>(r))));
+    }
+    std::cout << "\n--------\nCONTENUTO VETTORE reps:" << std::endl;
+
+    for (const auto& rep : reps) {
+
+        auto ip_addr = std::string(std::get<0>(rep));
+        bytearray_t arr1 = std::get<1>(rep);
+        bytearray_t arr2 = std::get<2>(rep);
+
+
+        std::cout << "valore1: " << ip_addr << std::endl;
+        std::cout << "valore2: ";
+        for (const auto &byte : arr1) {
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)byte;
+        }
+        std::cout << std::dec << std::endl;
+        std::cout << "valore3: ";
+        for (const auto &byte : arr2) {
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)byte;
+        }
+        std::cout << std::dec << std::endl;
+        std::cout << "----" << std::endl;
+
+    }
+    auto shutdown = [&](int) { papp->stop(); }; //stopping all threads.
+    salticidae::SigEvent ev_sigint(ec, shutdown);
+    salticidae::SigEvent ev_sigterm(ec, shutdown);
+    ev_sigint.add(SIGINT);
+    ev_sigterm.add(SIGTERM);
+    papp->start(reps);
+    return 0;
 }
 
 
@@ -1116,6 +1170,8 @@ void HotStuffApp::client_request_cmd_handler(MsgReqCmd &&msg, const conn_t &conn
 }
 
 void HotStuffApp::start(const std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> &reps) {
+    std::cout << "---\n------- Sono in HotStuffApp::start ------ " << std::endl;
+    
     ev_stat_timer = TimerEvent(ec, [this](TimerEvent &) {
         HotStuff::print_stat();
         HotStuffApp::print_stat();

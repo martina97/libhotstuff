@@ -416,10 +416,16 @@ HotStuffBase::~HotStuffBase() {}
 void HotStuffBase::start(
         std::vector<std::tuple<NetAddr, pubkey_bt, uint256_t>> &&replicas,
         bool ec_loop) {
+    std::cout << " #############  STO IN HotStuffBase::start    #############  " << std::endl;
+
     for (size_t i = 0; i < replicas.size(); i++)
     {
         auto &addr = std::get<0>(replicas[i]);
-        auto cert_hash = std::move(std::get<2>(replicas[i]));
+        std::cout << "addr.operator std::string() == " << addr.operator std::string() << std::endl;
+
+        auto cert_hash = std::move(std::get<2>(replicas[i]));   //542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
+        std::cout << "cert_hash.to_hex() == " << cert_hash.to_hex() << std::endl;
+
         valid_tls_certs.insert(cert_hash);
         auto peer = pn.enable_tls ? salticidae::PeerId(cert_hash) : salticidae::PeerId(addr);
         HotStuffCore::add_replica(i, peer, std::move(std::get<1>(replicas[i])));
@@ -430,6 +436,8 @@ void HotStuffBase::start(
             pn.set_peer_addr(peer, addr);
             pn.conn_peer(peer);
         }
+        std::cout << " #############   " << std::endl;
+
     }
 
     /* ((n - 1) + 1 - 1) / 3 */

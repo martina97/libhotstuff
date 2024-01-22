@@ -5,12 +5,12 @@ argv[1]: --conf
 argv[2]: ./hotstuff-sec2.conf
 ---- DOPO CONFIG ---- 
 ---- DOPO elapsed.start() ---- 
-Elapsed time: 6.95332e-310 seconds
-CPU time: 1.4822e-323 seconds
+Elapsed time: 4.67275e-310 seconds
+CPU time: 1.1106e-310 seconds
 ---- DOPO  config.add_opt ---- 
 opt_privkey->get(): 
-2024-01-22 12:54:01.168945 [net info] loaded configuration from hotstuff.conf
-2024-01-22 12:54:01.169038 [net info] loading extra configuration from ./hotstuff-sec2.conf
+2024-01-22 19:29:46.109111 [net info] loaded configuration from hotstuff.conf
+2024-01-22 19:29:46.109199 [net info] loading extra configuration from ./hotstuff-sec2.conf
 ---- STO QUA ---- 
 idx: 2
 client_port: -1
@@ -61,11 +61,25 @@ plisten_addr --> Port: 10002
 clisten_addr --> IP Address: <NetAddr 0.0.0.0:20002>
 clisten_addr --> Port: 20002
 opt_nworker->get(): 1
-2024-01-22 12:54:01.221964 [net info] starting all threads...
-2024-01-22 12:54:01.222443 [net info] listening to 10002
+--------  PRINT d.digest()    -------- 
+6b7d92eaae70399143faebc71d4a82259e327c5c6164486f325e051fe807df56
+get_hash_s = 67e2162c7832a9d07947f8a1633dcff7ec7c1195a9fadfcc7a5d46e6547b5048
+--------  PRINT d.digest()    -------- 
+6b7d92eaae70399143faebc71d4a82259e327c5c6164486f325e051fe807df56
+2024-01-22 19:29:46.127574 [net info] starting all threads...
+2024-01-22 19:29:46.137721 [net info] listening to 10002
+SIAMO IN   PeerId(const X509 &cert) 
+--------  PRINT d.digest()    -------- 
+065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
+get_hash_s = c072866301ca96068bb6695ac57b1dbae0b0a0b1e3c13e0a734c7dbf984dc258
+--------  PRINT d.digest()    -------- 
+065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
+2024-01-22 19:29:46.144698 [net info] accepted <Conn fd=27 addr=<NetAddr 127.0.0.1:57764> mode=passive>
 siamo qui2
-2024-01-22 12:54:01.242213 [net info] starting all threads...
-2024-01-22 12:54:01.244219 [net info] listening to 20002
+2024-01-22 19:29:46.157982 [net info] starting all threads...
+2024-01-22 19:29:46.158059 [net info] accepted <Conn fd=39 addr=<NetAddr 127.0.0.1:57770> mode=passive>
+2024-01-22 19:29:46.158099 [net info] c072866301: setup connection <Conn fd=27 addr=<NetAddr 127.0.0.1:57764> mode=passive>
+2024-01-22 19:29:46.158385 [net info] listening to 20002
  p.first == 127.0.0.1:10000
  p.second == 20000
  p.first == 127.0.0.1:10001
@@ -85,6 +99,7 @@ valore1: <NetAddr 127.0.0.1:10001>
 valore2: 0278740a5bec75e333b3c93965b1609163b15d2e3c2fdef141d4859ec70c238e7a
 valore3: c261250345ebcd676a0edeea173526608604f626b2e8bc4fd2142d3bde1d44d5
 ----
+2024-01-22 19:29:46.158621 [net info] accepted <Conn fd=85 addr=<NetAddr 127.0.0.1:57784> mode=passive>
 valore1: <NetAddr 127.0.0.1:10002>
 valore2: 0269eb606576a315a630c2483deed35cc4bd845abae1c693f97c440c89503fa92e
 valore3: 065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
@@ -93,5 +108,111 @@ valore1: <NetAddr 127.0.0.1:10003>
 valore2: 03e6911bf17e632eecdfa0dc9fc6efc9ddca60c0e3100db469a3d3d62008044a53
 valore3: 6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
 ----
-2024-01-22 12:54:01.245593 [net info] stopping all threads...
-2024-01-22 12:54:01.253391 [net info] stopping all threads...
+---
+------- Sono in HotStuffApp::start ------ 
+2024-01-22 19:29:46.158722 [hotstuff info] ** starting the system with parameters **
+2024-01-22 19:29:46.158734 [hotstuff info] blk_size = 1
+2024-01-22 19:29:46.158744 [hotstuff info] conns = 0
+2024-01-22 19:29:46.158753 [hotstuff info] ** starting the event loop...
+val1.operator std::string() = <NetAddr 127.0.0.1:10000>
+ ------- PRINT VAL2 ------ 
+039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23
+ ------- PRINT VAL3 ------ 
+542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
+val1.operator std::string() = <NetAddr 127.0.0.1:10001>
+ ------- PRINT VAL2 ------ 
+0278740a5bec75e333b3c93965b1609163b15d2e3c2fdef141d4859ec70c238e7a
+ ------- PRINT VAL3 ------ 
+c261250345ebcd676a0edeea173526608604f626b2e8bc4fd2142d3bde1d44d5
+val1.operator std::string() = <NetAddr 127.0.0.1:10002>
+ ------- PRINT VAL2 ------ 
+0269eb606576a315a630c2483deed35cc4bd845abae1c693f97c440c89503fa92e
+ ------- PRINT VAL3 ------ 
+065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
+val1.operator std::string() = <NetAddr 127.0.0.1:10003>
+ ------- PRINT VAL2 ------ 
+03e6911bf17e632eecdfa0dc9fc6efc9ddca60c0e3100db469a3d3d62008044a53
+ ------- PRINT VAL3 ------ 
+6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
+---- sono dentro start ----
+STAMPO ELEMENTI REPS
+valore1->to_hex() = 039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23
+prova->to_hex() = 039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23
+valore1->to_hex() = 0278740a5bec75e333b3c93965b1609163b15d2e3c2fdef141d4859ec70c238e7a
+prova->to_hex() = 0278740a5bec75e333b3c93965b1609163b15d2e3c2fdef141d4859ec70c238e7a
+valore1->to_hex() = 0269eb606576a315a630c2483deed35cc4bd845abae1c693f97c440c89503fa92e
+prova->to_hex() = 0269eb606576a315a630c2483deed35cc4bd845abae1c693f97c440c89503fa92e
+valore1->to_hex() = 03e6911bf17e632eecdfa0dc9fc6efc9ddca60c0e3100db469a3d3d62008044a53
+prova->to_hex() = 03e6911bf17e632eecdfa0dc9fc6efc9ddca60c0e3100db469a3d3d62008044a53
+ #############  STO IN HotStuffBase::start    #############  
+addr.operator std::string() == <NetAddr 127.0.0.1:10000>
+cert_hash.to_hex() == 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
+ #############   
+addr.operator std::string() == <NetAddr 127.0.0.1:10001>
+cert_hash.to_hex() == c261250345ebcd676a0edeea173526608604f626b2e8bc4fd2142d3bde1d44d5
+ #############   
+addr.operator std::string() == <NetAddr 127.0.0.1:10002>
+cert_hash.to_hex() == 065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
+ #############   
+addr.operator std::string() == <NetAddr 127.0.0.1:10003>
+cert_hash.to_hex() == 6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
+ #############   
+2024-01-22 19:29:46.159377 [hotstuff proto] Pacemaker: stop rotation at 0
+--------  PRINT d.digest()    -------- 
+c261250345ebcd676a0edeea173526608604f626b2e8bc4fd2142d3bde1d44d5
+get_hash_s = 8f99d5fd84396a49b65e315e395ed1ee34919a9bc7468a8fc181a5ecae6fc16e
+--------  PRINT d.digest()    -------- 
+c261250345ebcd676a0edeea173526608604f626b2e8bc4fd2142d3bde1d44d5
+2024-01-22 19:29:46.163052 [net info] c072866301: lost connection <Conn fd=27 addr=<NetAddr 127.0.0.1:57764> mode=passive>
+2024-01-22 19:29:46.164678 [net info] created <Conn fd=27 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-01-22 19:29:46.166881 [net info] created <Conn fd=91 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2024-01-22 19:29:46.167757 [net info] created <Conn fd=93 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2024-01-22 19:29:46.172064 [net info] connected to remote <Conn fd=27 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-01-22 19:29:46.172240 [net info] connected to remote <Conn fd=91 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2024-01-22 19:29:46.172293 [net info] connected to remote <Conn fd=93 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2024-01-22 19:29:46.172337 [net info] c072866301: setup connection <Conn fd=39 addr=<NetAddr 127.0.0.1:57770> mode=passive>
+--------  PRINT d.digest()    -------- 
+542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
+get_hash_s = 1218f70519903cbe2fb6bfffcf8583ad81d54bbc4e4d5e3e9392715254f23e92
+--------  PRINT d.digest()    -------- 
+542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
+2024-01-22 19:29:46.173066 [net info] c072866301: lost connection <Conn fd=39 addr=<NetAddr 127.0.0.1:57770> mode=passive>
+2024-01-22 19:29:46.176569 [net info] c072866301: setup connection <Conn fd=85 addr=<NetAddr 127.0.0.1:57784> mode=passive>
+--------  PRINT d.digest()    -------- 
+6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
+get_hash_s = 8b974d4b2f91291d435fb0e58b22f5dcb04f49de44029d7b9e29550081e069a9
+--------  PRINT d.digest()    -------- 
+6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
+2024-01-22 19:29:46.176749 [net info] c072866301: lost connection <Conn fd=85 addr=<NetAddr 127.0.0.1:57784> mode=passive>
+2024-01-22 19:29:46.186038 [net info] c072866301: setup connection <Conn fd=27 addr=<NetAddr 127.0.0.1:10000> mode=active>
+SIAMO IN   PeerId(const X509 &cert) 
+--------  PRINT d.digest()    -------- 
+542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
+get_hash_s = 1218f70519903cbe2fb6bfffcf8583ad81d54bbc4e4d5e3e9392715254f23e92
+--------  PRINT d.digest()    -------- 
+542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
+2024-01-22 19:29:46.186513 [hotstuff warn] network async error: peer id does not match the record
+
+2024-01-22 19:29:46.186598 [net info] c072866301: setup connection <Conn fd=91 addr=<NetAddr 127.0.0.1:10001> mode=active>
+SIAMO IN   PeerId(const X509 &cert) 
+--------  PRINT d.digest()    -------- 
+c261250345ebcd676a0edeea173526608604f626b2e8bc4fd2142d3bde1d44d5
+get_hash_s = 8f99d5fd84396a49b65e315e395ed1ee34919a9bc7468a8fc181a5ecae6fc16e
+--------  PRINT d.digest()    -------- 
+c261250345ebcd676a0edeea173526608604f626b2e8bc4fd2142d3bde1d44d5
+2024-01-22 19:29:46.186721 [hotstuff warn] network async error: peer id does not match the record
+
+2024-01-22 19:29:46.186754 [net info] c072866301: setup connection <Conn fd=93 addr=<NetAddr 127.0.0.1:10003> mode=active>
+SIAMO IN   PeerId(const X509 &cert) 
+--------  PRINT d.digest()    -------- 
+6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
+get_hash_s = 8b974d4b2f91291d435fb0e58b22f5dcb04f49de44029d7b9e29550081e069a9
+--------  PRINT d.digest()    -------- 
+6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
+2024-01-22 19:29:46.186854 [hotstuff warn] network async error: peer id does not match the record
+
+2024-01-22 19:29:46.186988 [net info] c072866301: lost connection <Conn fd=27 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-01-22 19:29:46.187054 [net info] c072866301: lost connection <Conn fd=91 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2024-01-22 19:29:46.187111 [net info] c072866301: lost connection <Conn fd=93 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2024-01-22 19:29:47.848654 [net info] stopping all threads...
+2024-01-22 19:29:47.854788 [net info] stopping all threads...
