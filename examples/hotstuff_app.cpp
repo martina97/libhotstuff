@@ -153,7 +153,7 @@ std::pair<std::string, std::string> split_ip_port_cport(const std::string &s) {
 salticidae::BoxObj<HotStuffApp> papp = nullptr;
 
 
-int main3(int argc, char **argv) {
+int main(int argc, char **argv) {
     std::cout << "Hello, world!!!!!!" << std::endl;
     // Print the number of command-line arguments (argc)
 
@@ -500,7 +500,8 @@ int main3(int argc, char **argv) {
 
 
 
-    /*
+    // qui chiama pn.start() e cn.start() --> inizio ad ascoltare
+
     papp = new HotStuffApp(opt_blk_size->get(),
                            opt_stat_period->get(),
                            opt_imp_timeout->get(),
@@ -513,13 +514,68 @@ int main3(int argc, char **argv) {
                            opt_nworker->get(),
                            repnet_config,
                            clinet_config);
-                           */
+
+    std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> reps;
+    //reps contiene tutte le info del file hotstuff.conf:
+    //valore1: <NetAddr 127.0.0.1:10000>
+    //valore2: 039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23
+    //valore3: 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
+    //----
+    //valore1: <NetAddr 127.0.0.1:10001>
+    //valore2: 0278740a5bec75e333b3c93965b1609163b15d2e3c2fdef141d4859ec70c238e7a
+    //valore3: c261250345ebcd676a0edeea173526608604f626b2e8bc4fd2142d3bde1d44d5
+    //----
+    //valore1: <NetAddr 127.0.0.1:10002>
+    //valore2: 0269eb606576a315a630c2483deed35cc4bd845abae1c693f97c440c89503fa92e
+    //valore3: 065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
+    //----
+    //valore1: <NetAddr 127.0.0.1:10003>
+    //valore2: 03e6911bf17e632eecdfa0dc9fc6efc9ddca60c0e3100db469a3d3d62008044a53
+    //valore3: 6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
+    //----
+
+    for (auto &r: replicas)
+    {
+        auto p = split_ip_port_cport(std::get<0>(r));
+        std::cout << " p.first == " << p.first << std::endl;
+        std::cout << " p.second == " << p.second << std::endl;
+        
+        reps.push_back(std::make_tuple(
+                NetAddr(p.first),
+                hotstuff::from_hex(std::get<1>(r)),
+                hotstuff::from_hex(std::get<2>(r))));
+    }
+
+    // Stampa il contenuto del vettore reps
+    std::cout << "\n--------\nCONTENUTO VETTORE reps:" << std::endl;
+
+    for (const auto& rep : reps) {
+
+        auto ip_addr = std::string(std::get<0>(rep));
+        bytearray_t arr1 = std::get<1>(rep);
+        bytearray_t arr2 = std::get<2>(rep);
+
+
+        std::cout << "valore1: " << ip_addr << std::endl;
+        std::cout << "valore2: ";
+        for (const auto &byte : arr1) {
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)byte;
+        }
+        std::cout << std::dec << std::endl;
+        std::cout << "valore3: ";
+        for (const auto &byte : arr2) {
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)byte;
+        }
+        std::cout << std::dec << std::endl;
+        std::cout << "----" << std::endl;
+
+    }
 
 
 }
 
 
-int main() {
+int main3() {
     std::cout << "Hello, world!!!!!!" << std::endl;
     // Print the number of command-line arguments (argc)
 
@@ -528,7 +584,7 @@ int main() {
     char *argv[] = {
             "../examples/hotstuff-app",
             "--conf",
-            "../hotstuff-sec2.conf" //togliere un . se faccio da terminale
+            "../hotstuff-sec2.conf" //todo: togliere un . se faccio da terminale
     };
 
     std::cout << "argc: " << argc << std::endl;
@@ -540,7 +596,7 @@ int main() {
     }
     Config config("../hotstuff.conf");     // classe che gestisce le opzioni di configurazione per un'applicazione
     //todo: scommentare riga dopo se terminale
-    // Config config("../hotstuff.conf");     // classe che gestisce le opzioni di configurazione per un'applicazione
+    //Config config("hotstuff.conf");     // classe che gestisce le opzioni di configurazione per un'applicazione
     std::cout << "---- DOPO CONFIG ---- " << std::endl;
     ElapsedTime elapsed;    //serve a calcolare il tempo trascorso e il tempo della CPU tra due punti nel codice
     elapsed.start();    //tempo di inizio
@@ -1128,11 +1184,5 @@ void HotStuffApp::print_stat() const {
 }
 
 
-/*
-int main(int argc, char **argv) {
-    mainTerminal(argc, argv);
-    //mainCLion(argc, argv);
-}
 
- */
 
