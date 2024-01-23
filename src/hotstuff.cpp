@@ -428,6 +428,13 @@ void HotStuffBase::start(
 
         valid_tls_certs.insert(cert_hash);
         auto peer = pn.enable_tls ? salticidae::PeerId(cert_hash) : salticidae::PeerId(addr);
+        std::cout << " ---  peer.to_hex() = " <<  peer.to_hex() << std::endl;
+        bytearray_t peer_to_bytes = peer.to_bytes();
+        printKeyDER(peer_to_bytes, "peer_to_bytes ");
+        std::cout << "get_hex(peer_to_bytes) = " << get_hex(peer_to_bytes) << std::endl;
+
+
+
         HotStuffCore::add_replica(i, peer, std::move(std::get<1>(replicas[i])));
         if (addr != listen_addr)
         {

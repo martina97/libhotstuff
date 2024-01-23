@@ -306,6 +306,8 @@ class HotStuff: public HotStuffBase {
     void start(const std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> &replicas, bool ec_loop = false) {
         std::vector<std::tuple<NetAddr, pubkey_bt, uint256_t>> reps;
         for (auto &r: replicas) {
+
+            //  ------ STAMPO VALORI IN REPLICAS ------- //
             NetAddr val1 = std::get<0>(r);  //<NetAddr 127.0.0.1:10000>
             std::cout << "val1.operator std::string() = " << val1.operator std::string() << std::endl;
 
@@ -329,6 +331,7 @@ class HotStuff: public HotStuffBase {
             // Reset the output stream to decimal mode
             std::cout << std::dec << std::endl;
 
+            //  ------ FINE STAMPO VALORI IN REPLICAS ------- //
             reps.push_back(
                     std::make_tuple(
                             std::get<0>(r), //<NetAddr 127.0.0.1:10000>
@@ -345,7 +348,7 @@ class HotStuff: public HotStuffBase {
 
         }*/
         for (auto& tup: reps) {
-            NetAddr valore = std::get<0>(tup);
+
             BoxObj<PubKey, salticidae::default_delete<PubKey>> &valore1 = std::get<1>(tup);
             std::cout <<  "valore1->to_hex() = " << valore1->to_hex() << std::endl;
             PubKey *prova = valore1.get();
