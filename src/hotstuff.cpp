@@ -377,6 +377,8 @@ HotStuffBase::HotStuffBase(uint32_t blk_size,
 }
 
 void HotStuffBase::do_broadcast_proposal(const Proposal &prop) {
+    std::cout << "do_broadcast_proposal" << std::endl;
+
     //MsgPropose prop_msg(prop);
     pn.multicast_msg(MsgPropose(prop), peers);
     //for (const auto &replica: peers)
@@ -384,6 +386,8 @@ void HotStuffBase::do_broadcast_proposal(const Proposal &prop) {
 }
 
 void HotStuffBase::do_vote(ReplicaID last_proposer, const Vote &vote) {
+    std::cout << "DO VOTE" << std::endl;
+    
     pmaker->beat_resp(last_proposer)
             .then([this, vote](ReplicaID proposer) {
         if (proposer == get_id())
@@ -397,6 +401,8 @@ void HotStuffBase::do_vote(ReplicaID last_proposer, const Vote &vote) {
 }
 
 void HotStuffBase::do_consensus(const block_t &blk) {
+    std::cout << " DO CONSENSUS" << std::endl;
+    
     pmaker->on_consensus(blk);
 }
 
@@ -480,15 +486,18 @@ void HotStuffBase::start(
         std::cout << "PeerId: " << peer.to_hex() << std::endl;
     }
 
-
+    // N = 3F+1 --> F = (N-1)/3
     /* ((n - 1) + 1 - 1) / 3 */
-    uint32_t nfaulty = peers.size() / 3;
+    uint32_t nfaulty = peers.size() / 3; //nfaulty = 1
+    std::cout << "nfaulty == " << nfaulty << std::endl;
+    
     if (nfaulty == 0)
         LOG_WARN("too few replicas in the system to tolerate any failure");
-    on_init(nfaulty);
+    on_init(nfaulty);//Chiamata per inizializzare il protocollo, dovrebbe essere chiamata una volta prima di tutte le altre funzioni.
     pmaker->init(this);
     if (ec_loop)
         ec.dispatch();
+
 
     cmd_pending.reg_handler(ec, [this](cmd_queue_t &q) {
         std::pair<uint256_t, commit_cb_t> e;

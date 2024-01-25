@@ -582,9 +582,9 @@ int main(int argc, char **argv) {
     ev_sigterm.add(SIGTERM);
 
     papp->start(reps);
-    /*
+
     elapsed.stop(true);
-     */
+
     return 0;
 
 

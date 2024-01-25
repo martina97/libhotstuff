@@ -16,8 +16,21 @@
 
 #ifndef _HOTSTUFF_CRYPTO_H
 #define _HOTSTUFF_CRYPTO_H
-
+#include <iostream>
 #include <openssl/rand.h>
+#include <queue>
+#include <iostream>
+#include <unordered_map>
+#include <unordered_set>
+#include <iostream>
+#include <cstring>
+#include <cassert>
+#include <algorithm>
+#include <random>
+#include <unistd.h>
+#include <signal.h>
+#include <iostream>
+#include <iomanip>
 
 #include "secp256k1.h"
 #include "salticidae/crypto.h"
@@ -112,7 +125,9 @@ class PartCertDummy: public PartCert {
 };
 
 class QuorumCertDummy: public QuorumCert {
+
     uint256_t obj_hash;
+
     public:
     QuorumCertDummy() {}
     QuorumCertDummy(const ReplicaConfig &, const uint256_t &obj_hash):

@@ -276,6 +276,7 @@ class HotStuff: public HotStuffBase {
     }
 
     quorum_cert_bt create_quorum_cert(const uint256_t &blk_hash) override {
+        std::cout <<  " ----- create_quorum_cert ---- "  << std::endl;
         return new QuorumCertType(get_config(), blk_hash);
     }
 

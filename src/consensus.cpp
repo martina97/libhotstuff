@@ -92,6 +92,8 @@ void HotStuffCore::update_hqc(const block_t &_hqc, const quorum_cert_bt &qc) {
 }
 
 void HotStuffCore::update(const block_t &nblk) {
+    std::cout << "UPDATEEEEEEEEEEEEEEEEEEE" << std::endl;
+    
     /* nblk = b*, blk2 = b'', blk1 = b', blk = b */
 #ifndef HOTSTUFF_TWO_STEP
     /* three-step HotStuff */
@@ -143,6 +145,8 @@ void HotStuffCore::update(const block_t &nblk) {
         const block_t &blk = *it;
         blk->decision = 1;
         do_consensus(blk);
+        std::cout << "DO CONSENSUSSSSS" << std::endl;
+        
         LOG_PROTO("commit %s", std::string(*blk).c_str());
         for (size_t i = 0; i < blk->cmds.size(); i++)
             do_decide(Finality(id, 1, i, blk->height,
@@ -249,9 +253,17 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
 }
 /*** end HotStuff protocol logic ***/
 void HotStuffCore::on_init(uint32_t nfaulty) {
+    std::cout << "SONO IN on_init" << std::endl;
     config.nmajority = config.nreplicas - nfaulty;
-    b0->qc = create_quorum_cert(b0->get_hash());
-    b0->qc->compute();
+    std::cout << "config.nmajority  == " << config.nmajority << std::endl;
+    std::cout << "b0->get_hash().to_hex() == " << b0->get_hash().to_hex() << std::endl;
+
+
+    // b0->qc è quorum_cert_bt , ossia QuorumCert
+    b0->qc = create_quorum_cert(b0->get_hash());    //Create a quorum certificate that proves 2f+1 votes for a block.
+    std::cout << " b0->qc.get()->to_hex() = " << b0->qc.get()->to_hex() << std::endl;
+
+    b0->qc->compute();  //todo: vedere issue su THRESHOLD SIGNATURES
     b0->self_qc = b0->qc->clone();
     b0->qc_ref = b0;
     hqc = std::make_pair(b0, b0->qc->clone());

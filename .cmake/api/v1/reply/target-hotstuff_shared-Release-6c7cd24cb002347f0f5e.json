@@ -17,8 +17,7 @@
 		],
 		"files" : 
 		[
-			"CMakeLists.txt",
-			"salticidae/CMakeLists.txt"
+			"CMakeLists.txt"
 		],
 		"nodes" : 
 		[
@@ -36,15 +35,6 @@
 				"file" : 0,
 				"line" : 64,
 				"parent" : 0
-			},
-			{
-				"file" : 1
-			},
-			{
-				"command" : 1,
-				"file" : 1,
-				"line" : 55,
-				"parent" : 3
 			},
 			{
 				"command" : 2,
@@ -81,11 +71,11 @@
 	"dependencies" : 
 	[
 		{
-			"backtrace" : 5,
-			"id" : "libsecp256k1::@6890427a1f51a3e7e1df"
+			"id" : "hotstuff::@6890427a1f51a3e7e1df"
 		},
 		{
-			"id" : "hotstuff::@6890427a1f51a3e7e1df"
+			"backtrace" : 3,
+			"id" : "libsecp256k1::@6890427a1f51a3e7e1df"
 		},
 		{
 			"backtrace" : 2,
@@ -117,7 +107,6 @@
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 4,
 				"fragment" : "-luv",
 				"role" : "libraries"
 			},
@@ -127,12 +116,10 @@
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 4,
 				"fragment" : "-lssl",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 4,
 				"fragment" : "-lpthread",
 				"role" : "libraries"
 			}

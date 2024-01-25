@@ -17,8 +17,7 @@
 		],
 		"files" : 
 		[
-			"CMakeLists.txt",
-			"salticidae/CMakeLists.txt"
+			"CMakeLists.txt"
 		],
 		"nodes" : 
 		[
@@ -36,21 +35,6 @@
 				"file" : 0,
 				"line" : 98,
 				"parent" : 0
-			},
-			{
-				"command" : 1,
-				"file" : 0,
-				"line" : 68,
-				"parent" : 0
-			},
-			{
-				"file" : 1
-			},
-			{
-				"command" : 1,
-				"file" : 1,
-				"line" : 55,
-				"parent" : 4
 			},
 			{
 				"command" : 2,
@@ -90,25 +74,28 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -W -Wall -Wextra -pedantic -Wsuggest-override -std=gnu++17 -fdiagnostics-color=always"
+					"fragment" : "-O3  -W -Wall -Wextra -pedantic -Wsuggest-override"
+				},
+				{
+					"fragment" : "-std=gnu++17"
 				}
 			],
 			"includes" : 
 			[
 				{
-					"backtrace" : 7,
+					"backtrace" : 4,
 					"path" : "/home/martina/CLionProjects/libhotstuff/salticidae/include"
 				},
 				{
-					"backtrace" : 8,
+					"backtrace" : 5,
 					"path" : "/home/martina/CLionProjects/libhotstuff/secp256k1/include"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"path" : "/home/martina/CLionProjects/libhotstuff/."
 				},
 				{
-					"backtrace" : 10,
+					"backtrace" : 7,
 					"path" : "/home/martina/CLionProjects/libhotstuff/include"
 				}
 			],
@@ -130,12 +117,12 @@
 	"dependencies" : 
 	[
 		{
-			"backtrace" : 6,
-			"id" : "libsecp256k1::@6890427a1f51a3e7e1df"
-		},
-		{
 			"backtrace" : 2,
 			"id" : "hotstuff_static::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 3,
+			"id" : "libsecp256k1::@6890427a1f51a3e7e1df"
 		},
 		{
 			"backtrace" : 2,
@@ -148,7 +135,7 @@
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "-g -W -Wall -Wextra -pedantic -Wsuggest-override",
+				"fragment" : "-O3  -W -Wall -Wextra -pedantic -Wsuggest-override",
 				"role" : "flags"
 			},
 			{
@@ -161,32 +148,26 @@
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 3,
 				"fragment" : "salticidae/libsalticidae.a",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 5,
 				"fragment" : "-luv",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 5,
 				"fragment" : "-lssl",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 5,
 				"fragment" : "-lpthread",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 3,
 				"fragment" : "secp256k1/.libs/libsecp256k1.a",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 3,
 				"fragment" : "-lcrypto",
 				"role" : "libraries"
 			}
