@@ -284,7 +284,9 @@ void HotStuffCore::add_replica(ReplicaID rid, const PeerId &peer_id,
                                 pubkey_bt &&pub_key) {
     config.add_replica(rid,
             ReplicaInfo(rid, peer_id, std::move(pub_key)));
-    b0->voted.insert(rid);
+    //aggiungo l'id della replica nell'insieme "voted", che memorizza gli id di tutte le
+    //repliche che hanno votato per il blocco b0
+    b0->voted.insert(rid);  /** b0 = genesis block, ossia blocco iniziale blockchain */
 }
 
 promise_t HotStuffCore::async_qc_finish(const block_t &blk) {

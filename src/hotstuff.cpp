@@ -427,11 +427,18 @@ void HotStuffBase::start(
         std::cout << "cert_hash.to_hex() == " << cert_hash.to_hex() << std::endl;
 
         valid_tls_certs.insert(cert_hash);
+        /**
+         * Il PeerId viene costruito in base al fatto che TLS sia abilitato (pn.enable_tls). Se TLS è abilitato,
+         * utilizza l'hash del certificato TLS (cert_hash) per costruire PeerId. Se TLS non è abilitato, utilizza
+         * l'hash dell'indirizzo di rete (addr) per costruire il PeerId.
+
+        Quando TLS è abilitato, PeerId viene costruito utilizzando l'hash del certificato
+         TLS (cert_hash) e il valore risultante 1218f70519903cbe2fb6bfffcf8583ad81d54bbc4e4d5e3e9392715254f23e92
+         è l'ID peer (per replica 0).
+         */
         auto peer = pn.enable_tls ? salticidae::PeerId(cert_hash) : salticidae::PeerId(addr);
         std::cout << " ---  peer.to_hex() = " <<  peer.to_hex() << std::endl;
-        bytearray_t peer_to_bytes = peer.to_bytes();
         //printKeyDER(peer_to_bytes, "peer_to_bytes ");
-        std::cout << "get_hex(peer_to_bytes) = " << get_hex(peer_to_bytes) << std::endl;
         auto peer_id = pn.get_peer_id();
         std::cout << "peer_id = " << peer_id.to_hex() << std::endl;
         auto pn_cert = pn.get_cert();
@@ -440,12 +447,26 @@ void HotStuffBase::start(
         std::cout << "pn_cert.pub == " <<get_hex(pn_cert->get_pubkey().get_pubkey_der())<< std::endl;
 
 
+        //auto pubkey = std::move(std::get<1>(replicas[i]));
+        //std::cout << "  pubkey->to_hex() = = "<<  pubkey->to_hex() << std::endl;
+        //std::cout << "  pubkey.get()->to_hex() = = "<<  pubkey.get()->to_hex() << std::endl;
 
 
 
+        /**Add a replica to the current configuration. This should only be called before running
+         * HotStuffCore protocol. */
         HotStuffCore::add_replica(i, peer, std::move(std::get<1>(replicas[i])));
+
+        std::cout << "listen_addr.operator std::string() = "<< listen_addr.operator std::string() << std::endl;
+
         if (addr != listen_addr)
         {
+            std::cout << " ---- addr != listen_addr ------" << std::endl;
+
+            // è diverso quando sto nel ciclo relativo a una replica diversa, infatti io
+            // sto ciclando per tutte le repliche nel vettore replicas
+
+            //se diversa metto anche gli altri peer nelle strutture che mi servono!
             peers.push_back(peer);
             pn.add_peer(peer);
             pn.set_peer_addr(peer, addr);
@@ -453,7 +474,12 @@ void HotStuffBase::start(
         }
         std::cout << " #############   " << std::endl;
 
+    } //fine for
+
+    for (const auto& peer : peers) {
+        std::cout << "PeerId: " << peer.to_hex() << std::endl;
     }
+
 
     /* ((n - 1) + 1 - 1) / 3 */
     uint32_t nfaulty = peers.size() / 3;

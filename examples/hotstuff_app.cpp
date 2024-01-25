@@ -430,6 +430,7 @@ int main(int argc, char **argv) {
 
 
         std::cout << "opt_tls_cert->get(): " << opt_tls_cert->get() << std::endl;
+
         // opt_tls_cert->get() è il campo tls-cert nel file hotstuff-sec{i}.conf
 
         // ###########################      CREAZIONE CERTIFICATO   ###########################
@@ -439,6 +440,7 @@ int main(int argc, char **argv) {
                         hotstuff::from_hex(opt_tls_cert->get())));
 
         bytearray_t cert_der = tls_cert->get_der();
+
         // Iterate through the bytes in privkey_der and print them in hexadecimal format
         std::cout << "Print the hexadecimal representation of the certificate: ";
         for (const auto &byte : cert_der) {
