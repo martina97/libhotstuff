@@ -18,18 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-# Aggiungi tutti i file .h dalla cartella "include"
-file(GLOB HEADER_FILES "../include/*.h")
-# Aggiungi la directory "include" ai percorsi di inclusione
-include_directories(include)
-# Aggiungi anche i file .h dalla cartella "salticidae/include/salticidae"
-file(GLOB SALTICIDAE_HEADER_FILES "../salticidae/include/salticidae/*.h")
-include_directories(salticidae/include)
-
-# Unisci i due elenchi di file .h
-set(ALL_HEADER_FILES ${HEADER_FILES} ${SALTICIDAE_HEADER_FILES})
-
-add_executable(hotstuff-app hotstuff_app.cpp ${ALL_HEADER_FILES})
+add_executable(hotstuff-app hotstuff_app.cpp)
 target_link_libraries(hotstuff-app hotstuff_static)
 
 add_executable(hotstuff-client hotstuff_client.cpp)

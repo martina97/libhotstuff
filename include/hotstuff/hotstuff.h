@@ -19,18 +19,9 @@
 #define _HOTSTUFF_CORE_H
 
 #include <queue>
-#include <iostream>
 #include <unordered_map>
 #include <unordered_set>
 #include <iostream>
-#include <cstring>
-#include <cassert>
-#include <algorithm>
-#include <random>
-#include <unistd.h>
-#include <signal.h>
-#include <iostream>
-#include <iomanip>
 
 #include "salticidae/util.h"
 #include "salticidae/network.h"
@@ -91,7 +82,7 @@ struct MsgRespBlock {
 using promise::promise_t;
 
 class HotStuffBase;
-using pacemaker_bt = BoxObj<class PaceMaker>; //Definisce un alias pacemaker_bt per BoxObj<class PaceMaker>. Questo potrebbe essere utilizzato per semplificare la dichiarazione di oggetti di tipo BoxObj<class PaceMaker>
+using pacemaker_bt = BoxObj<class PaceMaker>;
 
 template<EntityType ent_type>
 class FetchContext: public promise_t {
@@ -276,7 +267,6 @@ class HotStuff: public HotStuffBase {
     }
 
     quorum_cert_bt create_quorum_cert(const uint256_t &blk_hash) override {
-        std::cout <<  " ----- create_quorum_cert ---- "  << std::endl;
         return new QuorumCertType(get_config(), blk_hash);
     }
 
@@ -305,60 +295,16 @@ class HotStuff: public HotStuffBase {
                     netconfig) {}
 
     void start(const std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> &replicas, bool ec_loop = false) {
+        std::cout << "STO QUAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
+        
         std::vector<std::tuple<NetAddr, pubkey_bt, uint256_t>> reps;
-        for (auto &r: replicas) {
-
-            //  ------ STAMPO VALORI IN REPLICAS ------- //
-            NetAddr val1 = std::get<0>(r);  //<NetAddr 127.0.0.1:10000>
-            std::cout << "val1.operator std::string() = " << val1.operator std::string() << std::endl;
-
-           bytearray_t val2 = std::get<1>(r);
-           bytearray_t val3= std::get<2>(r);
-           std::cout << " ------- PRINT VAL2 ------ " << std::endl;
-
-            for (const auto &byte : val2) {
-                std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)byte;
-            }
-
-            // Reset the output stream to decimal mode
-            std::cout << std::dec << std::endl;
-
-            std::cout << " ------- PRINT VAL3 ------ " << std::endl;
-
-            for (const auto &byte : val3) {
-                std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)byte;
-            }
-
-            // Reset the output stream to decimal mode
-            std::cout << std::dec << std::endl;
-
-            //  ------ FINE STAMPO VALORI IN REPLICAS ------- //
+        for (auto &r: replicas)
             reps.push_back(
-                    std::make_tuple(
-                            std::get<0>(r), //<NetAddr 127.0.0.1:10000>
-                            new PubKeyType(std::get<1>(r)), //039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23
-                            uint256_t(std::get<2>(r))   //542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
-                    ));
-        }
-
-        std::cout << "---- sono dentro start ----" << std::endl;
-        std::cout << "STAMPO ELEMENTI REPS" << std::endl;
-        /*
-        for (const auto& rep : reps) {
-            auto first = std::string(std::get<0>(rep));
-
-        }*/
-        for (auto& tup: reps) {
-
-            BoxObj<PubKey, salticidae::default_delete<PubKey>> &valore1 = std::get<1>(tup);
-            std::cout <<  "valore1->to_hex() = " << valore1->to_hex() << std::endl;
-            PubKey *prova = valore1.get();
-            std::cout <<  "prova->to_hex() = " << prova->to_hex() << std::endl;
-
-        }
-
-
-
+                std::make_tuple(
+                    std::get<0>(r),
+                    new PubKeyType(std::get<1>(r)),
+                    uint256_t(std::get<2>(r))
+                ));
         HotStuffBase::start(std::move(reps), ec_loop);
     }
 };

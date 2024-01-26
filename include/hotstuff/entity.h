@@ -66,14 +66,6 @@ class ReplicaConfig {
     ReplicaConfig(): nreplicas(0), nmajority(0) {}
 
     void add_replica(ReplicaID rid, const ReplicaInfo &info) {
-        std::cout << "---- STO IN ADD_REPLICA ----- " << std::endl;
-
-        /**
-         * "replica_map" è una "std::unordered_map" utilizzata per archiviare informazioni sulle repliche nel contesto
-         * del protocollo di consenso HotStuff.
-         * key = ReplicaID
-         * value = ReplicaInfo
-         */
         replica_map.insert(std::make_pair(rid, info));
         nreplicas++;
     }

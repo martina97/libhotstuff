@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright 2018 VMware
  * Copyright 2018 Ted Yin
  *
@@ -122,7 +122,7 @@ class HotStuffApp: public HotStuff {
     void print_stat() const;
 #endif
 
-    public:
+public:
     HotStuffApp(uint32_t blk_size,
                 double stat_period,
                 double impeach_timeout,
@@ -299,14 +299,14 @@ int main(int argc, char **argv) {
     // Se l'indice non è valido, lancia un'eccezione HotStuffError indicando che l'indice della replica è fuori intervallo.
     if (!(0 <= idx && (size_t)idx < replicas.size()))
         throw HotStuffError("replica idx out of range");
-        //TODO: SCOMMENTARE
-        //std::cout << "HotStuffError(\"replica idx out of range\") "  << std::endl;
+    //TODO: SCOMMENTARE
+    //std::cout << "HotStuffError(\"replica idx out of range\") "  << std::endl;
 
-   // std::get<0>(replicas[idx])  contiene il primo valore della tupla, cioè:
-   // replicas[0] = 127.0.0.1:10000;20000 --> replica 0 --> lo scrive in log0
-   // replicas[1] = 127.0.0.1:10001;20001 --> replica 1 --> lo scrive in log1
-   // replicas[2] = 127.0.0.1:10002;20002 --> replica 2 --> lo scrive in log2
-   // replicas[3] = 127.0.0.1:10003;20003 --> replica 3 --> lo scrive in log3
+    // std::get<0>(replicas[idx])  contiene il primo valore della tupla, cioè:
+    // replicas[0] = 127.0.0.1:10000;20000 --> replica 0 --> lo scrive in log0
+    // replicas[1] = 127.0.0.1:10001;20001 --> replica 1 --> lo scrive in log1
+    // replicas[2] = 127.0.0.1:10002;20002 --> replica 2 --> lo scrive in log2
+    // replicas[3] = 127.0.0.1:10003;20003 --> replica 3 --> lo scrive in log3
 
     // Se l'indice è valido, questa riga estrae il primo elemento della tupla corrispondente all'indice idx nel vettore replicas.
     // Presumibilmente, questo primo elemento rappresenta l'indirizzo di binding della replica.
@@ -424,12 +424,14 @@ int main(int argc, char **argv) {
         bytearray_t privkey_der = tls_priv_key->get_privkey_der();
         bytearray_t pubkey_der = tls_priv_key->get_pubkey_der();
 
+        std::cout << "priv_key_der = " << hotstuff::get_hex(privkey_der) << std::endl;
 
-        printKeyDER(privkey_der, "private key");
-        printKeyDER(pubkey_der, "public key");
+        //printKeyDER(privkey_der, "private key");
+        //printKeyDER(pubkey_der, "public key");
+        std::cout << "get_hex(privkey_der) = " <<hotstuff::get_hex(privkey_der) << std::endl;
+        std::cout << "get_hex(pubkey_der) = " <<hotstuff::get_hex(pubkey_der) << std::endl;
 
-
-        std::cout << "opt_tls_cert->get(): " << opt_tls_cert->get() << std::endl;
+        std::cout << "opt_tls_cert = " << opt_tls_cert->get() << std::endl;
 
         // opt_tls_cert->get() è il campo tls-cert nel file hotstuff-sec{i}.conf
 
@@ -440,25 +442,10 @@ int main(int argc, char **argv) {
                         hotstuff::from_hex(opt_tls_cert->get())));
 
         bytearray_t cert_der = tls_cert->get_der();
+        std::cout << "get_hex(cert_der) = "<<hotstuff::get_hex(cert_der) << std::endl;
 
-        // Iterate through the bytes in privkey_der and print them in hexadecimal format
-        std::cout << "Print the hexadecimal representation of the certificate: ";
-        for (const auto &byte : cert_der) {
-            std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)byte;
-        }
-        // Reset the output stream to decimal mode
-        std::cout << std::dec << std::endl;
-
-         bytearray_t pubkey_cert_der = tls_cert->get_pubkey().get_pubkey_der();
-        // Iterate through the bytes in privkey_der and print them in hexadecimal format
-        std::cout << "Print the hexadecimal representation of the pubkey_cert_der: ";
-        for (const auto &byte : pubkey_cert_der) {
-            std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)byte;
-        }
-        // Reset the output stream to decimal mode
-        std::cout << std::dec << std::endl;
-
-        // ##############################################
+        bytearray_t pubkey_cert_der = tls_cert->get_pubkey().get_pubkey_der();
+        std::cout << "get_hex(pubkey_cert_der) = "<<hotstuff::get_hex(pubkey_cert_der) << std::endl;
 
         repnet_config
                 .enable_tls(true)
@@ -482,7 +469,7 @@ int main(int argc, char **argv) {
 
 
     std::cout << "------" << std::endl;
-    
+
     std::cout << "opt_blk_size->get() =" << opt_blk_size->get() << std::endl;
     std::cout << "opt_stat_period->get() =" << opt_stat_period->get() << std::endl;
     std::cout << "opt_imp_timeout->get() =" << opt_imp_timeout->get() << std::endl;
@@ -543,7 +530,7 @@ int main(int argc, char **argv) {
         auto p = split_ip_port_cport(std::get<0>(r));
         std::cout << " p.first == " << p.first << std::endl;
         std::cout << " p.second == " << p.second << std::endl;
-        
+
         reps.push_back(std::make_tuple(
                 NetAddr(p.first),
                 hotstuff::from_hex(std::get<1>(r)),
@@ -1112,25 +1099,25 @@ int main2(int argc, char **argv) {
 }
 
 HotStuffApp::HotStuffApp(uint32_t blk_size,
-                        double stat_period,
-                        double impeach_timeout,
-                        ReplicaID idx,
-                        const bytearray_t &raw_privkey,
-                        NetAddr plisten_addr,
-                        NetAddr clisten_addr,
-                        hotstuff::pacemaker_bt pmaker,
-                        const EventContext &ec,
-                        size_t nworker,
-                        const Net::Config &repnet_config,
-                        const ClientNetwork<opcode_t>::Config &clinet_config):
+                         double stat_period,
+                         double impeach_timeout,
+                         ReplicaID idx,
+                         const bytearray_t &raw_privkey,
+                         NetAddr plisten_addr,
+                         NetAddr clisten_addr,
+                         hotstuff::pacemaker_bt pmaker,
+                         const EventContext &ec,
+                         size_t nworker,
+                         const Net::Config &repnet_config,
+                         const ClientNetwork<opcode_t>::Config &clinet_config):
 
-    HotStuff(blk_size, idx, raw_privkey,
-            plisten_addr, std::move(pmaker), ec, nworker, repnet_config),
-    stat_period(stat_period),
-    impeach_timeout(impeach_timeout),
-    ec(ec),
-    cn(req_ec, clinet_config),
-    clisten_addr(clisten_addr) {
+        HotStuff(blk_size, idx, raw_privkey,
+                 plisten_addr, std::move(pmaker), ec, nworker, repnet_config),
+        stat_period(stat_period),
+        impeach_timeout(impeach_timeout),
+        ec(ec),
+        cn(req_ec, clinet_config),
+        clisten_addr(clisten_addr) {
 
     std::cout << "siamo qui2" << std::endl;
 
@@ -1169,7 +1156,7 @@ void HotStuffApp::client_request_cmd_handler(MsgReqCmd &&msg, const conn_t &conn
 
 void HotStuffApp::start(const std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> &reps) {
     std::cout << "---\n------- Sono in HotStuffApp::start ------ " << std::endl;
-    
+
     ev_stat_timer = TimerEvent(ec, [this](TimerEvent &) {
         HotStuff::print_stat();
         HotStuffApp::print_stat();
@@ -1231,14 +1218,13 @@ void HotStuffApp::print_stat() const {
         size_t nrb = conn->get_nrecvb();
         conn->clear_msgstat();
         HOTSTUFF_LOG_INFO("%s: %u(%u), %u(%u)",
-            std::string(conn->get_addr()).c_str(), ns, nsb, nr, nrb);
+                          std::string(conn->get_addr()).c_str(), ns, nsb, nr, nrb);
         _nsent += ns;
         _nrecv += nr;
     }
     HOTSTUFF_LOG_INFO("--- end client msg. ---");
 #endif
 }
-
 
 
 
