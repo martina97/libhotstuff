@@ -17,6 +17,8 @@
 
 #include <cassert>
 #include <stack>
+#include <iostream>
+#include <ostream>
 
 #include "hotstuff/util.h"
 #include "hotstuff/consensus.h"

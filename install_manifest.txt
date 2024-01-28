@@ -1,0 +1,16 @@
+/usr/local/lib/libsalticidae.so
+/usr/local/lib/libsalticidae.a
+/usr/local/include/salticidae/buffer.h
+/usr/local/include/salticidae/endian.h
+/usr/local/include/salticidae/network.h
+/usr/local/include/salticidae/crypto.h
+/usr/local/include/salticidae/conn.h
+/usr/local/include/salticidae/stream.h
+/usr/local/include/salticidae/ref.h
+/usr/local/include/salticidae/type.h
+/usr/local/include/salticidae/config.h
+/usr/local/include/salticidae/event.h
+/usr/local/include/salticidae/msg.h
+/usr/local/include/salticidae/util.h
+/usr/local/include/salticidae/queue.h
+/usr/local/include/salticidae/netaddr.h
