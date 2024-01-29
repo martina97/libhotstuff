@@ -24,8 +24,9 @@ using hotstuff::pubkey_bt;
 
 int main(int argc, char **argv) {
     Config config("hotstuff.conf");
+
     privkey_bt priv_key;
-    auto opt_n = Config::OptValInt::create(1);
+    auto opt_n = Config::OptValInt::create(4);
     auto opt_algo = Config::OptValStr::create("secp256k1");
     config.add_opt("num", opt_n, Config::SET_VAL);
     config.add_opt("algo", opt_algo, Config::SET_VAL);

@@ -264,6 +264,8 @@ class PMRoundRobinProposer: virtual public PaceMaker {
     }
 
     void proposer_schedule_next() {
+        std::cout << " STO DENTRO proposer_schedule_next" << std::endl;
+
         if (!pending_beats.empty() && !locked)
         {
             auto pm = pending_beats.front();
@@ -284,6 +286,8 @@ class PMRoundRobinProposer: virtual public PaceMaker {
                 [this](const Proposal &prop) {
             last_proposed = prop.blk;
             locked = false;
+            std::cout << "CHIAMO proposer_schedule_next DENTRO proposer_update_last_proposed" << std::endl;
+
             proposer_schedule_next();
             proposer_update_last_proposed();
         });
@@ -392,6 +396,8 @@ class PMRoundRobinProposer: virtual public PaceMaker {
         {
             promise_t pm;
             pending_beats.push(pm);
+            std::cout << "CHIAMO proposer_schedule_next DENTRO beat" << std::endl;
+
             proposer_schedule_next();
             return pm;
         }

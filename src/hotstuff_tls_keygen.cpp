@@ -15,6 +15,7 @@
  */
 
 #include <error.h>
+#include <iostream>
 #include "salticidae/util.h"
 #include "salticidae/crypto.h"
 #include "hotstuff/type.h"
@@ -25,9 +26,10 @@ using hotstuff::tls_x509_bt;
 
 int main(int argc, char **argv) {
     Config config("hotstuff.conf");
+
     tls_pkey_bt priv_key;
     tls_x509_bt pub_key;
-    auto opt_n = Config::OptValInt::create(1);
+    auto opt_n = Config::OptValInt::create(4);
     config.add_opt("num", opt_n, Config::SET_VAL);
     config.parse(argc, argv);
     int n = opt_n->get();
@@ -37,10 +39,13 @@ int main(int argc, char **argv) {
     {
         priv_key = new salticidae::PKey(salticidae::PKey::create_privkey_rsa());
         pub_key = new salticidae::X509(salticidae::X509::create_self_signed_from_pubkey(*priv_key));
-        printf("crt:%s sec:%s cid:%s\n",
+        printf("crt:%s\nsec:%s\ncid:%s\n",
                 salticidae::get_hex(pub_key->get_der()).c_str(),
                 salticidae::get_hex(priv_key->get_privkey_der()).c_str(),
                 salticidae::get_hex(salticidae::get_hash(pub_key->get_der())).c_str());
+
+        std::cout << "MAAAAH : " << salticidae::get_hex(pub_key->get_der()) << std::endl;
+
     }
     return 0;
 }

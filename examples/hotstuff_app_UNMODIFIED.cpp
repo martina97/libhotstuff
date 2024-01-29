@@ -1185,7 +1185,6 @@ void HotStuffApp::start(const std::vector<std::tuple<NetAddr, bytearray_t, bytea
             client_conns.erase(conn);
         return true;
     });
-
     req_thread = std::thread([this]() { req_ec.dispatch(); });
     resp_thread = std::thread([this]() { resp_ec.dispatch(); });
     /* enter the event main loop */

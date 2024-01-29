@@ -296,14 +296,18 @@ class HotStuff: public HotStuffBase {
 
     void start(const std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> &replicas, bool ec_loop = false) {
         std::cout << "STO QUAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
-        
+        /* VETTORE REPLICAS CONTIENE PER OGNI REPLICA:
+         *  valore1: <NetAddr 127.0.0.1:10000>
+            valore2: 039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23
+            valore3: 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
+         */
         std::vector<std::tuple<NetAddr, pubkey_bt, uint256_t>> reps;
         for (auto &r: replicas)
             reps.push_back(
                 std::make_tuple(
                     std::get<0>(r),
-                    new PubKeyType(std::get<1>(r)),
-                    uint256_t(std::get<2>(r))
+                    new PubKeyType(std::get<1>(r)), // 039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23
+                    uint256_t(std::get<2>(r))   // 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
                 ));
         HotStuffBase::start(std::move(reps), ec_loop);
     }

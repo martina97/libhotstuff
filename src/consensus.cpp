@@ -99,6 +99,8 @@ void HotStuffCore::update(const block_t &nblk) {
     /* nblk = b*, blk2 = b'', blk1 = b', blk = b */
 #ifndef HOTSTUFF_TWO_STEP
     /* three-step HotStuff */
+    std::cout << "three-step HotStuff" << std::endl;
+
     const block_t &blk2 = nblk->qc_ref;
     if (blk2 == nullptr) return;
     /* decided blk could possible be incomplete due to pruning */
@@ -118,6 +120,8 @@ void HotStuffCore::update(const block_t &nblk) {
     if (blk2->parents[0] != blk1 || blk1->parents[0] != blk) return;
 #else
     /* two-step HotStuff */
+    std::cout << "three-step HotStuff" << std::endl;
+
     const block_t &blk1 = nblk->qc_ref;
     if (blk1 == nullptr) return;
     if (blk1->decision) return;
@@ -174,15 +178,21 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds,
     const uint256_t bnew_hash = bnew->get_hash();
     bnew->self_qc = create_quorum_cert(bnew_hash);
     on_deliver_blk(bnew);
+    std::cout << "CHIAMO UPDATE DENTRO on_propose" << std::endl;
+
     update(bnew);
+    std::cout << "dopo update" << std::endl;
+    
     Proposal prop(id, bnew, nullptr);
+    std::cout << "dopo prop" << std::endl;
+    
     LOG_PROTO("propose %s", std::string(*bnew).c_str());
     if (bnew->height <= vheight)
         throw std::runtime_error("new block should be higher than vheight");
     /* self-receive the proposal (no need to send it through the network) */
     on_receive_proposal(prop);
     on_propose_(prop);
-    /* boradcast to other replicas */
+    /* broadcast to other replicas */
     do_broadcast_proposal(prop);
     return bnew;
 }
@@ -194,6 +204,8 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
     if (!self_prop)
     {
         sanity_check_delivered(bnew);
+        std::cout << "CHIAMO UPDATE DENTRO on_receive_proposal" << std::endl;
+
         update(bnew);
     }
     bool opinion = false;
@@ -221,13 +233,19 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
     if (!self_prop && bnew->qc_ref)
         on_qc_finish(bnew->qc_ref);
     on_receive_proposal_(prop);
-    if (opinion && !vote_disabled)
+    if (opinion && !vote_disabled) {
+        std::cout << "----- DO VOTE ------ " << std::endl;
+        
         do_vote(prop.proposer,
-            Vote(id, bnew->get_hash(),
-                create_part_cert(*priv_key, bnew->get_hash()), this));
+                Vote(id, bnew->get_hash(),
+                     create_part_cert(*priv_key, bnew->get_hash()), this));
+    }
 }
 
+
 void HotStuffCore::on_receive_vote(const Vote &vote) {
+    std::cout << "SONO DENTRO on_receive_vote" << std::endl;
+    
     LOG_PROTO("got %s", std::string(vote).c_str());
     LOG_PROTO("now state: %s", std::string(*this).c_str());
     block_t blk = get_delivered_blk(vote.blk_hash);
@@ -263,12 +281,14 @@ void HotStuffCore::on_init(uint32_t nfaulty) {
 
     // b0->qc è quorum_cert_bt , ossia QuorumCert
     b0->qc = create_quorum_cert(b0->get_hash());    //Create a quorum certificate that proves 2f+1 votes for a block.
-    std::cout << " b0->qc.get()->to_hex() = " << b0->qc.get()->to_hex() << std::endl;
+    std::cout << "b0->qc.get()->to_hex() = " << b0->qc.get()->to_hex() << std::endl;
 
     b0->qc->compute();  //todo: vedere issue su THRESHOLD SIGNATURES
     b0->self_qc = b0->qc->clone();
     b0->qc_ref = b0;
     hqc = std::make_pair(b0, b0->qc->clone());
+    std::cout << "FINE on_init" << std::endl;
+    
 }
 
 void HotStuffCore::prune(uint32_t staleness) {

@@ -386,17 +386,22 @@ void HotStuffBase::do_broadcast_proposal(const Proposal &prop) {
 }
 
 void HotStuffBase::do_vote(ReplicaID last_proposer, const Vote &vote) {
-    std::cout << "DO VOTE" << std::endl;
+    std::cout << "SONO DENTRO do_vote" << std::endl;
     
     pmaker->beat_resp(last_proposer)
             .then([this, vote](ReplicaID proposer) {
         if (proposer == get_id())
         {
+            std::cout << "proposer == get_id()" << std::endl;
+            
             //throw HotStuffError("unreachable line");
             on_receive_vote(vote);
         }
-        else
+        else {
+            std::cout << "SEND VOTE !!!!" << std::endl;
+            
             pn.send_msg(MsgVote(vote), get_config().get_peer_id(proposer));
+        }
     });
 }
 
@@ -495,14 +500,24 @@ void HotStuffBase::start(
         LOG_WARN("too few replicas in the system to tolerate any failure");
     on_init(nfaulty);//Chiamata per inizializzare il protocollo, dovrebbe essere chiamata una volta prima di tutte le altre funzioni.
     pmaker->init(this);
+    std::cout << "FINE PMAKER INIT" << std::endl;
+    
     if (ec_loop)
         ec.dispatch();
+    std::cout << "-----------------------------  DOPO ec.dispatch() -----------------------------" << std::endl;
 
 
+    // CI ENTRO SOLO QUANDO RUNNO IL CLIENT !!!!!!!!!!!
     cmd_pending.reg_handler(ec, [this](cmd_queue_t &q) {
+        std::this_thread::sleep_for(std::chrono::seconds(5));
+
+        std::cout << "STO DENTRO cmd_pending.reg_handler(ec, [this](cmd_queue_t &q) " << std::endl;
+        
         std::pair<uint256_t, commit_cb_t> e;
         while (q.try_dequeue(e))
         {
+            std::cout << " STO NEL WHILE q.try_dequeue(e)" << std::endl;
+            
             ReplicaID proposer = pmaker->get_proposer();
 
             const auto &cmd_hash = e.first;
