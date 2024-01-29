@@ -164,6 +164,8 @@ void HotStuffCore::update(const block_t &nblk) {
 block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds,
                             const std::vector<block_t> &parents,
                             bytearray_t &&extra) {
+    std::cout << "STO DENTRO on_propose " << std::endl;
+    
     if (parents.empty())
         throw std::runtime_error("empty parents");
     for (const auto &_: parents) tails.erase(_);

@@ -264,7 +264,7 @@ class PMRoundRobinProposer: virtual public PaceMaker {
     }
 
     void proposer_schedule_next() {
-        std::cout << " STO DENTRO proposer_schedule_next" << std::endl;
+        std::cout << "STO DENTRO proposer_schedule_next" << std::endl;
 
         if (!pending_beats.empty() && !locked)
         {
@@ -334,6 +334,8 @@ class PMRoundRobinProposer: virtual public PaceMaker {
     }
 
     void stop_rotate() {
+        std::cout << "STO DENTRO stop_rotate" << std::endl;
+        
         timer.del();
         HOTSTUFF_LOG_PROTO("Pacemaker: stop rotation at %d", proposer);
         pm_qc_finish.reject();

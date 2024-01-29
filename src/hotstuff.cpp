@@ -516,7 +516,7 @@ void HotStuffBase::start(
         std::pair<uint256_t, commit_cb_t> e;
         while (q.try_dequeue(e))
         {
-            std::cout << " STO NEL WHILE q.try_dequeue(e)" << std::endl;
+            std::cout << "STO NEL WHILE q.try_dequeue(e)" << std::endl;
             
             ReplicaID proposer = pmaker->get_proposer();
 

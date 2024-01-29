@@ -5,12 +5,12 @@ argv[1]: --conf
 argv[2]: ./hotstuff-sec2.conf
 ---- DOPO CONFIG ---- 
 ---- DOPO elapsed.start() ---- 
-Elapsed time: 6.42285e-323 seconds
-CPU time: 1.15335e-310 seconds
+Elapsed time: 4.67206e-310 seconds
+CPU time: 1.13467e-310 seconds
 ---- DOPO  config.add_opt ---- 
 opt_privkey->get(): 
-2024-01-29 16:55:45.251667 [net info] loaded configuration from hotstuff.conf
-2024-01-29 16:55:45.251733 [net info] loading extra configuration from ./hotstuff-sec2.conf
+2024-01-29 18:39:10.176009 [net info] loaded configuration from hotstuff.conf
+2024-01-29 18:39:10.176072 [net info] loading extra configuration from ./hotstuff-sec2.conf
 ---- STO QUA ---- 
 idx: 2
 client_port: -1
@@ -60,12 +60,11 @@ plisten_addr --> Port: 10002
 clisten_addr --> IP Address: <NetAddr 0.0.0.0:20002>
 clisten_addr --> Port: 20002
 opt_nworker->get(): 1
-2024-01-29 16:55:45.269255 [net info] starting all threads...
-2024-01-29 16:55:45.271812 [net info] listening to 10002
+2024-01-29 18:39:10.245285 [net info] starting all threads...
+2024-01-29 18:39:10.245607 [net info] listening to 10002
 siamo qui2
-2024-01-29 16:55:45.275375 [net info] starting all threads...
-2024-01-29 16:55:45.275757 [net info] listening to 20002
-2024-01-29 16:55:45.276881 [net info] accepted <Conn fd=82 addr=<NetAddr 127.0.0.1:53128> mode=passive>
+2024-01-29 18:39:10.254579 [net info] starting all threads...
+2024-01-29 18:39:10.255034 [net info] listening to 20002
  p.first == 127.0.0.1:10000
  p.second == 20000
  p.first == 127.0.0.1:10001
@@ -95,10 +94,10 @@ valore3: 6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
 ----
 ---
 ------- Sono in HotStuffApp::start ------ 
-2024-01-29 16:55:45.278936 [hotstuff info] ** starting the system with parameters **
-2024-01-29 16:55:45.279011 [hotstuff info] blk_size = 1
-2024-01-29 16:55:45.279053 [hotstuff info] conns = 0
-2024-01-29 16:55:45.279139 [hotstuff info] ** starting the event loop...
+2024-01-29 18:39:10.256039 [hotstuff info] ** starting the system with parameters **
+2024-01-29 18:39:10.256055 [hotstuff info] blk_size = 1
+2024-01-29 18:39:10.256065 [hotstuff info] conns = 0
+2024-01-29 18:39:10.256076 [hotstuff info] ** starting the event loop...
 STO QUAAAAAAAAAAAAAAAAAAAAAAAAAAA
  #############  STO IN HotStuffBase::start    #############  
 addr.operator std::string() == <NetAddr 127.0.0.1:10000>
@@ -115,6 +114,8 @@ cert_hash.to_hex() == c261250345ebcd676a0edeea173526608604f626b2e8bc4fd2142d3bde
  ---  peer.to_hex() = c261250345ebcd676a0edeea173526608604f626b2e8bc4fd2142d3bde1d44d5
 peer_id = 065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
 pn_cert == 308202e4308201cc020101300d06092a864886f70d01010505003039310b300906035504061302555331163014060355040a0c0d6c696273616c746963696461653112301006035504030c096c6f63616c686f7374301e170d3139303730323036353535365a170d3139303730323036353535365a3039310b300906035504061302555331163014060355040a0c0d6c696273616c746963696461653112301006035504030c096c6f63616c686f737430820120300d06092a864886f70d01010105000382010d00308201080282010100c1460bf8018ceec075d67405e96e056e2e3acf9c7c2d7d28ee6edfe9ee8fbeef0e978ac874ceff3ee770dafde1d019d9920b2ff334a3ac115bcf95e2bdc0b70faf46b8f13c46335c4815c72d75b488de46b96f8582446e886c6b7fdfb479bc40a0da03b7c4e414fde9ab44b1957e39c5e5c167ba88a233854f29404a1f35aa29994bcd7a62b57fc2000850c37569a8a1bfa75e6e06c54c40633e0fee1672c1f97689aabee650285a41fd6df24f20cd94733aeccdae68debba30a3588b71625f9ec7669d3f4c51317192f5acdee9b968d1a6db4a98a9c0eeef63a969c2ecaba95a9ddfd5841d996977696e41a541393ba40ae44b71c00129a25b30f6c44e89d8d020111300d06092a864886f70d01010505000382010100706c7eb29939c38cfcbab592c62a3572e05dcaa4d54e24cce74a244972e74ac8ed6e0b3eb1add0d4de6007d392ac75a7fb9836a9a1d937d0b2c3f01a6b1994ac317328527c763eae26a6ca647752badcd09e73364ac7828d375b4966e510de1cdbd01a5be047e45533f5a3d81df00ffe9d13fe5d54e18584691abb3a9a3d423d348d7714382317547338a8e83d14f404348db41c10a05e57221eda1e220b265ae4237e59ab2db1facbe8cc8d2198ca5fe2ad074bb8c7c4dd675cbe3d60b9e29f6b12ab4c587c6576e1ce2d2512be035e4692100c6c3e47d4d84dbbc865804af1bd0240fb804ef99c7038191dae2fab73a1a1ffa09f536a0fbf49fa1a3234b62a
+2024-01-29 18:39:10.259926 [net info] created <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-01-29 18:39:10.259989 [net info] connected to remote <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>
 pn_cert.pub == 308201080282010100c1460bf8018ceec075d67405e96e056e2e3acf9c7c2d7d28ee6edfe9ee8fbeef0e978ac874ceff3ee770dafde1d019d9920b2ff334a3ac115bcf95e2bdc0b70faf46b8f13c46335c4815c72d75b488de46b96f8582446e886c6b7fdfb479bc40a0da03b7c4e414fde9ab44b1957e39c5e5c167ba88a233854f29404a1f35aa29994bcd7a62b57fc2000850c37569a8a1bfa75e6e06c54c40633e0fee1672c1f97689aabee650285a41fd6df24f20cd94733aeccdae68debba30a3588b71625f9ec7669d3f4c51317192f5acdee9b968d1a6db4a98a9c0eeef63a969c2ecaba95a9ddfd5841d996977696e41a541393ba40ae44b71c00129a25b30f6c44e89d8d020111
 listen_addr.operator std::string() = <NetAddr 127.0.0.1:10002>
  ---- addr != listen_addr ------
@@ -123,10 +124,9 @@ addr.operator std::string() == <NetAddr 127.0.0.1:10002>
 cert_hash.to_hex() == 065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
  ---  peer.to_hex() = 065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
 peer_id = 065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
-2024-01-29 16:55:45.281150 [net info] created <Conn fd=85 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-01-29 16:55:45.281354 [net info] connected to remote <Conn fd=85 addr=<NetAddr 127.0.0.1:10000> mode=active>
 pn_cert == 308202e4308201cc020101300d06092a864886f70d01010505003039310b300906035504061302555331163014060355040a0c0d6c696273616c746963696461653112301006035504030c096c6f63616c686f7374301e170d3139303730323036353535365a170d3139303730323036353535365a3039310b300906035504061302555331163014060355040a0c0d6c696273616c746963696461653112301006035504030c096c6f63616c686f737430820120300d06092a864886f70d01010105000382010d00308201080282010100c1460bf8018ceec075d67405e96e056e2e3acf9c7c2d7d28ee6edfe9ee8fbeef0e978ac874ceff3ee770dafde1d019d9920b2ff334a3ac115bcf95e2bdc0b70faf46b8f13c46335c4815c72d75b488de46b96f8582446e886c6b7fdfb479bc40a0da03b7c4e414fde9ab44b1957e39c5e5c167ba88a233854f29404a1f35aa29994bcd7a62b57fc2000850c37569a8a1bfa75e6e06c54c40633e0fee1672c1f97689aabee650285a41fd6df24f20cd94733aeccdae68debba30a3588b71625f9ec7669d3f4c51317192f5acdee9b968d1a6db4a98a9c0eeef63a969c2ecaba95a9ddfd5841d996977696e41a541393ba40ae44b71c00129a25b30f6c44e89d8d020111300d06092a864886f70d01010505000382010100706c7eb29939c38cfcbab592c62a3572e05dcaa4d54e24cce74a244972e74ac8ed6e0b3eb1add0d4de6007d392ac75a7fb9836a9a1d937d0b2c3f01a6b1994ac317328527c763eae26a6ca647752badcd09e73364ac7828d375b4966e510de1cdbd01a5be047e45533f5a3d81df00ffe9d13fe5d54e18584691abb3a9a3d423d348d7714382317547338a8e83d14f404348db41c10a05e57221eda1e220b265ae4237e59ab2db1facbe8cc8d2198ca5fe2ad074bb8c7c4dd675cbe3d60b9e29f6b12ab4c587c6576e1ce2d2512be035e4692100c6c3e47d4d84dbbc865804af1bd0240fb804ef99c7038191dae2fab73a1a1ffa09f536a0fbf49fa1a3234b62a
-2024-01-29 16:55:45.281584 [net info] created <Conn fd=88 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2024-01-29 18:39:10.262270 [net info] created <Conn fd=86 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2024-01-29 18:39:10.262310 [net info] connected to remote <Conn fd=86 addr=<NetAddr 127.0.0.1:10001> mode=active>
 pn_cert.pub == 308201080282010100c1460bf8018ceec075d67405e96e056e2e3acf9c7c2d7d28ee6edfe9ee8fbeef0e978ac874ceff3ee770dafde1d019d9920b2ff334a3ac115bcf95e2bdc0b70faf46b8f13c46335c4815c72d75b488de46b96f8582446e886c6b7fdfb479bc40a0da03b7c4e414fde9ab44b1957e39c5e5c167ba88a233854f29404a1f35aa29994bcd7a62b57fc2000850c37569a8a1bfa75e6e06c54c40633e0fee1672c1f97689aabee650285a41fd6df24f20cd94733aeccdae68debba30a3588b71625f9ec7669d3f4c51317192f5acdee9b968d1a6db4a98a9c0eeef63a969c2ecaba95a9ddfd5841d996977696e41a541393ba40ae44b71c00129a25b30f6c44e89d8d020111
 listen_addr.operator std::string() = <NetAddr 127.0.0.1:10002>
  #############   
@@ -134,8 +134,7 @@ addr.operator std::string() == <NetAddr 127.0.0.1:10003>
 cert_hash.to_hex() == 6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
  ---  peer.to_hex() = 6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
 peer_id = 065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
-2024-01-29 16:55:45.281991 [net info] accepted <Conn fd=90 addr=<NetAddr 127.0.0.1:53134> mode=passive>
-2024-01-29 16:55:45.282040 [net info] connected to remote <Conn fd=88 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2024-01-29 18:39:10.271847 [net info] 065b010aed: setup connection <Conn fd=86 addr=<NetAddr 127.0.0.1:10001> mode=active>
 pn_cert == 308202e4308201cc020101300d06092a864886f70d01010505003039310b300906035504061302555331163014060355040a0c0d6c696273616c746963696461653112301006035504030c096c6f63616c686f7374301e170d3139303730323036353535365a170d3139303730323036353535365a3039310b300906035504061302555331163014060355040a0c0d6c696273616c746963696461653112301006035504030c096c6f63616c686f737430820120300d06092a864886f70d01010105000382010d00308201080282010100c1460bf8018ceec075d67405e96e056e2e3acf9c7c2d7d28ee6edfe9ee8fbeef0e978ac874ceff3ee770dafde1d019d9920b2ff334a3ac115bcf95e2bdc0b70faf46b8f13c46335c4815c72d75b488de46b96f8582446e886c6b7fdfb479bc40a0da03b7c4e414fde9ab44b1957e39c5e5c167ba88a233854f29404a1f35aa29994bcd7a62b57fc2000850c37569a8a1bfa75e6e06c54c40633e0fee1672c1f97689aabee650285a41fd6df24f20cd94733aeccdae68debba30a3588b71625f9ec7669d3f4c51317192f5acdee9b968d1a6db4a98a9c0eeef63a969c2ecaba95a9ddfd5841d996977696e41a541393ba40ae44b71c00129a25b30f6c44e89d8d020111300d06092a864886f70d01010505000382010100706c7eb29939c38cfcbab592c62a3572e05dcaa4d54e24cce74a244972e74ac8ed6e0b3eb1add0d4de6007d392ac75a7fb9836a9a1d937d0b2c3f01a6b1994ac317328527c763eae26a6ca647752badcd09e73364ac7828d375b4966e510de1cdbd01a5be047e45533f5a3d81df00ffe9d13fe5d54e18584691abb3a9a3d423d348d7714382317547338a8e83d14f404348db41c10a05e57221eda1e220b265ae4237e59ab2db1facbe8cc8d2198ca5fe2ad074bb8c7c4dd675cbe3d60b9e29f6b12ab4c587c6576e1ce2d2512be035e4692100c6c3e47d4d84dbbc865804af1bd0240fb804ef99c7038191dae2fab73a1a1ffa09f536a0fbf49fa1a3234b62a
 pn_cert.pub == 308201080282010100c1460bf8018ceec075d67405e96e056e2e3acf9c7c2d7d28ee6edfe9ee8fbeef0e978ac874ceff3ee770dafde1d019d9920b2ff334a3ac115bcf95e2bdc0b70faf46b8f13c46335c4815c72d75b488de46b96f8582446e886c6b7fdfb479bc40a0da03b7c4e414fde9ab44b1957e39c5e5c167ba88a233854f29404a1f35aa29994bcd7a62b57fc2000850c37569a8a1bfa75e6e06c54c40633e0fee1672c1f97689aabee650285a41fd6df24f20cd94733aeccdae68debba30a3588b71625f9ec7669d3f4c51317192f5acdee9b968d1a6db4a98a9c0eeef63a969c2ecaba95a9ddfd5841d996977696e41a541393ba40ae44b71c00129a25b30f6c44e89d8d020111
 listen_addr.operator std::string() = <NetAddr 127.0.0.1:10002>
@@ -150,135 +149,133 @@ config.nmajority  == 3
 b0->get_hash().to_hex() == 6b7d92eaae70399143faebc71d4a82259e327c5c6164486f325e051fe807df56
 b0->qc.get()->to_hex() = 6b7d92eaae70399143faebc71d4a82259e327c5c6164486f325e051fe807df56040000000000000000000000
 FINE on_init
-2024-01-29 16:55:45.282496 [hotstuff proto] Pacemaker: stop rotation at 0
+STO DENTRO stop_rotate
+2024-01-29 18:39:10.273100 [hotstuff proto] Pacemaker: stop rotation at 0
 FINE PMAKER INIT
 -----------------------------  DOPO ec.dispatch() -----------------------------
-2024-01-29 16:55:45.283198 [net info] created <Conn fd=93 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-01-29 16:55:45.283238 [net info] connected to remote <Conn fd=93 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-01-29 16:55:45.292935 [net info] accepted <Conn fd=95 addr=<NetAddr 127.0.0.1:53142> mode=passive>
-2024-01-29 16:55:45.295306 [net info] 065b010aed: setup connection <Conn fd=93 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-01-29 16:55:45.295375 [net info] 065b010aed: setup connection <Conn fd=82 addr=<NetAddr 127.0.0.1:53128> mode=passive>
-2024-01-29 16:55:45.295408 [net info] 065b010aed: setup connection <Conn fd=85 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-01-29 16:55:45.302992 [net info] established 065b010aed <---> c261250345 (via <Conn fd=82 addr=<NetAddr 127.0.0.1:53128> mode=passive>)
-2024-01-29 16:55:45.303408 [net info] 065b010aed: setup connection <Conn fd=88 addr=<NetAddr 127.0.0.1:10001> mode=active>
-2024-01-29 16:55:45.303457 [net info] 065b010aed: setup connection <Conn fd=90 addr=<NetAddr 127.0.0.1:53134> mode=passive>
-2024-01-29 16:55:45.303525 [net info] established 065b010aed <---> 6540a0fea6 (via <Conn fd=93 addr=<NetAddr 127.0.0.1:10003> mode=active>)
-2024-01-29 16:55:45.308057 [net info] 065b010aed: ping from <Conn fd=93 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-01-29 16:55:45.308097 [net info] 065b010aed: setup connection <Conn fd=95 addr=<NetAddr 127.0.0.1:53142> mode=passive>
-2024-01-29 16:55:45.308606 [net info] established 065b010aed <---> 542865a568 (via <Conn fd=85 addr=<NetAddr 127.0.0.1:10000> mode=active>)
-2024-01-29 16:55:45.308720 [net info] 065b010aed: lost connection <Conn fd=90 addr=<NetAddr 127.0.0.1:53134> mode=passive>
-2024-01-29 16:55:45.308997 [net info] 065b010aed: ping from <Conn fd=85 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-01-29 16:55:45.309201 [net info] 065b010aed: lost connection <Conn fd=93 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-01-29 16:55:45.309239 [net info] ended 065b010aed <-/-> 6540a0fea6 (via <Conn fd=93 addr=<NetAddr 127.0.0.1:10003> mode=active>)
-2024-01-29 16:55:45.309372 [net info] established 065b010aed <---> 6540a0fea6 (via <Conn fd=95 addr=<NetAddr 127.0.0.1:53142> mode=passive>)
-2024-01-29 16:55:45.309913 [net info] 065b010aed: ping from <Conn fd=95 addr=<NetAddr 127.0.0.1:53142> mode=passive>
-2024-01-29 16:55:45.311313 [net info] 065b010aed: lost connection <Conn fd=82 addr=<NetAddr 127.0.0.1:53128> mode=passive>
-2024-01-29 16:55:45.311358 [net info] ended 065b010aed <-/-> c261250345 (via <Conn fd=82 addr=<NetAddr 127.0.0.1:53128> mode=passive>)
-2024-01-29 16:55:45.311991 [net info] established 065b010aed <---> c261250345 (via <Conn fd=88 addr=<NetAddr 127.0.0.1:10001> mode=active>)
-2024-01-29 16:55:45.312070 [net info] 065b010aed: ping from <Conn fd=88 addr=<NetAddr 127.0.0.1:10001> mode=active>
-2024-01-29 16:55:45.312216 [net info] 065b010aed: ping from <Conn fd=88 addr=<NetAddr 127.0.0.1:10001> mode=active>
-2024-01-29 16:55:48.953463 [net info] accepted <Conn fd=82 addr=<NetAddr 127.0.0.1:54482> mode=passive>
+2024-01-29 18:39:10.279198 [net info] created <Conn fd=89 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2024-01-29 18:39:10.279279 [net info] 065b010aed: setup connection <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-01-29 18:39:10.279424 [net info] connected to remote <Conn fd=89 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2024-01-29 18:39:10.279497 [net info] 065b010aed: lost connection <Conn fd=86 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2024-01-29 18:39:10.284691 [net info] 065b010aed: setup connection <Conn fd=89 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2024-01-29 18:39:10.293460 [net info] 065b010aed: lost connection <Conn fd=89 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2024-01-29 18:39:10.304783 [net info] established 065b010aed <---> 542865a568 (via <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>)
+2024-01-29 18:39:10.304843 [net info] 065b010aed: ping from <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-01-29 18:39:12.401185 [net info] accepted <Conn fd=82 addr=<NetAddr 127.0.0.1:36086> mode=passive>
+2024-01-29 18:39:12.407361 [net info] 065b010aed: setup connection <Conn fd=82 addr=<NetAddr 127.0.0.1:36086> mode=passive>
+2024-01-29 18:39:12.407727 [net info] established 065b010aed <---> 6540a0fea6 (via <Conn fd=82 addr=<NetAddr 127.0.0.1:36086> mode=passive>)
+2024-01-29 18:39:12.408152 [net info] 065b010aed: ping from <Conn fd=82 addr=<NetAddr 127.0.0.1:36086> mode=passive>
+2024-01-29 18:39:13.009477 [net info] accepted <Conn fd=88 addr=<NetAddr 127.0.0.1:36088> mode=passive>
+2024-01-29 18:39:13.017832 [net info] 065b010aed: setup connection <Conn fd=88 addr=<NetAddr 127.0.0.1:36088> mode=passive>
+2024-01-29 18:39:13.018306 [net info] 065b010aed: lost connection <Conn fd=88 addr=<NetAddr 127.0.0.1:36088> mode=passive>
+2024-01-29 18:39:13.078104 [net info] created <Conn fd=88 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2024-01-29 18:39:13.078510 [net info] connected to remote <Conn fd=88 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2024-01-29 18:39:13.083889 [net info] 065b010aed: setup connection <Conn fd=88 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2024-01-29 18:39:13.087504 [net info] established 065b010aed <---> c261250345 (via <Conn fd=88 addr=<NetAddr 127.0.0.1:10001> mode=active>)
+2024-01-29 18:39:13.087572 [net info] 065b010aed: ping from <Conn fd=88 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2024-01-29 18:39:14.295032 [net info] accepted <Conn fd=85 addr=<NetAddr 127.0.0.1:55084> mode=passive>
 STO DENTRO cmd_pending.reg_handler(ec, [this](cmd_queue_t &q) 
  STO NEL WHILE q.try_dequeue(e)
  STO NEL WHILE q.try_dequeue(e)
  STO NEL WHILE q.try_dequeue(e)
  STO NEL WHILE q.try_dequeue(e)
-2024-01-29 16:55:53.957089 [hotstuff proto] got <proposal rid=0 blk=2c460db42a>
+2024-01-29 18:39:19.298759 [hotstuff proto] got <proposal rid=0 blk=2c460db42a>
 CHIAMO UPDATE DENTRO on_receive_proposal
 UPDATEEEEEEEEEEEEEEEEEEE
 three-step HotStuff
-2024-01-29 16:55:53.957227 [hotstuff proto] now state: <hotstuff hqc=6b7d92eaae hqc.height=0 b_lock=6b7d92eaae b_exec=6b7d92eaae vheight=1 tails=1>
+2024-01-29 18:39:19.298849 [hotstuff proto] now state: <hotstuff hqc=6b7d92eaae hqc.height=0 b_lock=6b7d92eaae b_exec=6b7d92eaae vheight=1 tails=1>
 ----- DO VOTE ------ 
 SONO DENTRO do_vote
 SEND VOTE !!!!
-2024-01-29 16:55:55.252291 [hotstuff info] ===== begin stats =====
-2024-01-29 16:55:55.252428 [hotstuff info] -------- queues -------
-2024-01-29 16:55:55.252463 [hotstuff info] blk_fetch_waiting: 0
-2024-01-29 16:55:55.252492 [hotstuff info] blk_delivery_waiting: 0
-2024-01-29 16:55:55.252518 [hotstuff info] decision_waiting: 4
-2024-01-29 16:55:55.252680 [hotstuff info] -------- misc ---------
-2024-01-29 16:55:55.252722 [hotstuff info] fetched: 0
-2024-01-29 16:55:55.252749 [hotstuff info] delivered: 1
-2024-01-29 16:55:55.252776 [hotstuff info] cmd_cache: 0
-2024-01-29 16:55:55.252803 [hotstuff info] blk_cache: 2
-2024-01-29 16:55:55.252834 [hotstuff info] ------ misc (10s) -----
-2024-01-29 16:55:55.252861 [hotstuff info] fetched: 0
-2024-01-29 16:55:55.252887 [hotstuff info] delivered: 1
-2024-01-29 16:55:55.252912 [hotstuff info] decided: 0
-2024-01-29 16:55:55.252938 [hotstuff info] gened: 0
-2024-01-29 16:55:55.252964 [hotstuff info] avg. parent_size: 1.000
-2024-01-29 16:55:55.252995 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
-2024-01-29 16:55:55.253068 [hotstuff info] --- replica msg. (10s) ---
-2024-01-29 16:55:55.253203 [hotstuff info] 542865a568: 4(143), 4(135), 0
-2024-01-29 16:55:55.253291 [hotstuff info] c261250345: 4(14), 4(14), 0
-2024-01-29 16:55:55.253372 [hotstuff info] 6540a0fea6: 3(13), 3(13), 0
-2024-01-29 16:55:55.253418 [hotstuff info] sent: 11
-2024-01-29 16:55:55.253444 [hotstuff info] recv: 11
-2024-01-29 16:55:55.253469 [hotstuff info] --- replica msg. total ---
-2024-01-29 16:55:55.253493 [hotstuff info] sent: 11
-2024-01-29 16:55:55.253518 [hotstuff info] recv: 11
-2024-01-29 16:55:55.253560 [hotstuff info] ====== end stats ======
-2024-01-29 16:55:55.253597 [hotstuff info] --- client msg. (10s) ---
-2024-01-29 16:55:55.253631 [hotstuff info] <NetAddr 127.0.0.1:54482>: 0(0), 4(32)
-2024-01-29 16:55:55.253659 [hotstuff info] --- end client msg. ---
-2024-01-29 16:55:56.254651 [hotstuff proto] Pacemaker: rotate to 1
-2024-01-29 16:55:56.254743 [hotstuff info] schedule to impeach the proposer
-2024-01-29 16:55:57.259179 [hotstuff proto] got <proposal rid=1 blk=1b035e3d7e>
+2024-01-29 18:39:20.177670 [hotstuff info] ===== begin stats =====
+2024-01-29 18:39:20.177777 [hotstuff info] -------- queues -------
+2024-01-29 18:39:20.177818 [hotstuff info] blk_fetch_waiting: 0
+2024-01-29 18:39:20.177851 [hotstuff info] blk_delivery_waiting: 0
+2024-01-29 18:39:20.177884 [hotstuff info] decision_waiting: 4
+2024-01-29 18:39:20.177916 [hotstuff info] -------- misc ---------
+2024-01-29 18:39:20.177949 [hotstuff info] fetched: 0
+2024-01-29 18:39:20.177982 [hotstuff info] delivered: 1
+2024-01-29 18:39:20.178015 [hotstuff info] cmd_cache: 0
+2024-01-29 18:39:20.178050 [hotstuff info] blk_cache: 2
+2024-01-29 18:39:20.178082 [hotstuff info] ------ misc (10s) -----
+2024-01-29 18:39:20.178114 [hotstuff info] fetched: 0
+2024-01-29 18:39:20.178147 [hotstuff info] delivered: 1
+2024-01-29 18:39:20.178181 [hotstuff info] decided: 0
+2024-01-29 18:39:20.178214 [hotstuff info] gened: 0
+2024-01-29 18:39:20.178248 [hotstuff info] avg. parent_size: 1.000
+2024-01-29 18:39:20.178286 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2024-01-29 18:39:20.178328 [hotstuff info] --- replica msg. (10s) ---
+2024-01-29 18:39:20.178716 [hotstuff info] 542865a568: 4(143), 4(135), 0
+2024-01-29 18:39:20.179135 [hotstuff info] c261250345: 3(13), 3(13), 0
+2024-01-29 18:39:20.179704 [hotstuff info] 6540a0fea6: 3(13), 3(13), 0
+2024-01-29 18:39:20.179787 [hotstuff info] sent: 10
+2024-01-29 18:39:20.179826 [hotstuff info] recv: 10
+2024-01-29 18:39:20.179860 [hotstuff info] --- replica msg. total ---
+2024-01-29 18:39:20.179892 [hotstuff info] sent: 10
+2024-01-29 18:39:20.179924 [hotstuff info] recv: 10
+2024-01-29 18:39:20.179957 [hotstuff info] ====== end stats ======
+2024-01-29 18:39:20.179989 [hotstuff info] --- client msg. (10s) ---
+2024-01-29 18:39:20.180029 [hotstuff info] <NetAddr 127.0.0.1:55084>: 0(0), 4(32)
+2024-01-29 18:39:20.180064 [hotstuff info] --- end client msg. ---
+2024-01-29 18:39:21.178867 [hotstuff proto] Pacemaker: rotate to 1
+2024-01-29 18:39:21.178957 [hotstuff info] schedule to impeach the proposer
+2024-01-29 18:39:22.178816 [hotstuff proto] got <proposal rid=1 blk=1b035e3d7e>
 CHIAMO UPDATE DENTRO on_receive_proposal
 UPDATEEEEEEEEEEEEEEEEEEE
 three-step HotStuff
-2024-01-29 16:55:57.259389 [hotstuff proto] now state: <hotstuff hqc=6b7d92eaae hqc.height=0 b_lock=6b7d92eaae b_exec=6b7d92eaae vheight=2 tails=1>
+2024-01-29 18:39:22.178924 [hotstuff proto] now state: <hotstuff hqc=6b7d92eaae hqc.height=0 b_lock=6b7d92eaae b_exec=6b7d92eaae vheight=2 tails=1>
 ----- DO VOTE ------ 
 SONO DENTRO do_vote
 SEND VOTE !!!!
-2024-01-29 16:55:57.265775 [hotstuff proto] got <proposal rid=1 blk=7d5b5234da>
+2024-01-29 18:39:22.181340 [hotstuff proto] got <proposal rid=1 blk=7d5b5234da>
 CHIAMO UPDATE DENTRO on_receive_proposal
 UPDATEEEEEEEEEEEEEEEEEEE
 three-step HotStuff
-2024-01-29 16:55:57.266007 [hotstuff proto] now state: <hotstuff hqc=1b035e3d7e hqc.height=2 b_lock=6b7d92eaae b_exec=6b7d92eaae vheight=3 tails=1>
+2024-01-29 18:39:22.181437 [hotstuff proto] now state: <hotstuff hqc=1b035e3d7e hqc.height=2 b_lock=6b7d92eaae b_exec=6b7d92eaae vheight=3 tails=1>
 ----- DO VOTE ------ 
 SONO DENTRO do_vote
 SEND VOTE !!!!
-2024-01-29 16:55:57.272092 [hotstuff proto] got <proposal rid=1 blk=7af13cbb0b>
+2024-01-29 18:39:22.183512 [hotstuff proto] got <proposal rid=1 blk=7af13cbb0b>
 CHIAMO UPDATE DENTRO on_receive_proposal
 UPDATEEEEEEEEEEEEEEEEEEE
 three-step HotStuff
-2024-01-29 16:55:57.272457 [hotstuff proto] now state: <hotstuff hqc=7d5b5234da hqc.height=3 b_lock=1b035e3d7e b_exec=6b7d92eaae vheight=4 tails=1>
+2024-01-29 18:39:22.183576 [hotstuff proto] now state: <hotstuff hqc=7d5b5234da hqc.height=3 b_lock=1b035e3d7e b_exec=6b7d92eaae vheight=4 tails=1>
 ----- DO VOTE ------ 
 SONO DENTRO do_vote
 SEND VOTE !!!!
-2024-01-29 16:55:57.278088 [hotstuff proto] got <proposal rid=1 blk=37499b517c>
+2024-01-29 18:39:22.186733 [hotstuff proto] got <proposal rid=1 blk=37499b517c>
 CHIAMO UPDATE DENTRO on_receive_proposal
 UPDATEEEEEEEEEEEEEEEEEEE
 three-step HotStuff
  DO CONSENSUS
 DO CONSENSUSSSSS
-2024-01-29 16:55:57.278307 [hotstuff proto] commit <block id=2c460db42a height=1 parent=6b7d92eaae qc_ref=6b7d92eaae>
-2024-01-29 16:55:57.278385 [hotstuff info] replicated <fin decision=1 cmd_idx=0 cmd_height=1 cmd=af5570f5a1 blk=2c460db42a>
+2024-01-29 18:39:22.186804 [hotstuff proto] commit <block id=2c460db42a height=1 parent=6b7d92eaae qc_ref=6b7d92eaae>
+2024-01-29 18:39:22.186833 [hotstuff info] replicated <fin decision=1 cmd_idx=0 cmd_height=1 cmd=af5570f5a1 blk=2c460db42a>
  DO CONSENSUS
-2024-01-29 16:55:57.278508 [hotstuff proto] Pacemaker: stop rotation at 1
+STO DENTRO stop_rotate
+2024-01-29 18:39:22.186869 [hotstuff proto] Pacemaker: stop rotation at 1
 DO CONSENSUSSSSS
-2024-01-29 16:55:57.278584 [hotstuff proto] commit <block id=1b035e3d7e height=2 parent=2c460db42a qc_ref=6b7d92eaae>
-2024-01-29 16:55:57.278651 [hotstuff proto] now state: <hotstuff hqc=7af13cbb0b hqc.height=4 b_lock=7d5b5234da b_exec=1b035e3d7e vheight=5 tails=1>
+2024-01-29 18:39:22.186897 [hotstuff proto] commit <block id=1b035e3d7e height=2 parent=2c460db42a qc_ref=6b7d92eaae>
+2024-01-29 18:39:22.186918 [hotstuff proto] now state: <hotstuff hqc=7af13cbb0b hqc.height=4 b_lock=7d5b5234da b_exec=1b035e3d7e vheight=5 tails=1>
 ----- DO VOTE ------ 
 SONO DENTRO do_vote
 SEND VOTE !!!!
-2024-01-29 16:55:57.278926 [hotstuff proto] got <proposal rid=1 blk=cb16e4a510>
+2024-01-29 18:39:22.187365 [hotstuff proto] got <proposal rid=1 blk=cb16e4a510>
 CHIAMO UPDATE DENTRO on_receive_proposal
 UPDATEEEEEEEEEEEEEEEEEEE
 three-step HotStuff
-2024-01-29 16:55:57.279074 [hotstuff proto] now state: <hotstuff hqc=7af13cbb0b hqc.height=4 b_lock=7d5b5234da b_exec=1b035e3d7e vheight=6 tails=1>
+2024-01-29 18:39:22.187650 [hotstuff proto] now state: <hotstuff hqc=7af13cbb0b hqc.height=4 b_lock=7d5b5234da b_exec=1b035e3d7e vheight=6 tails=1>
 ----- DO VOTE ------ 
 SONO DENTRO do_vote
 SEND VOTE !!!!
 STO DENTRO cmd_pending.reg_handler(ec, [this](cmd_queue_t &q) 
  STO NEL WHILE q.try_dequeue(e)
-2024-01-29 16:56:04.321882 [net info] elapsed: 19.070 (wall) 0.064 (cpu)
-2024-01-29 16:56:04.322842 [net info] stopping all threads...
-2024-01-29 16:56:04.324215 [net info] stopping all threads...
-2024-01-29 16:56:04.324434 [net info] 065b010aed: lost connection <Conn fd=88 addr=<NetAddr 127.0.0.1:10001> mode=active>
-2024-01-29 16:56:04.324455 [net info] ended 065b010aed <-/-> c261250345 (via <Conn fd=88 addr=<NetAddr 127.0.0.1:10001> mode=active>)
-2024-01-29 16:56:04.324505 [net info] 065b010aed: lost connection <Conn fd=85 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-01-29 16:56:04.324520 [net info] ended 065b010aed <-/-> 542865a568 (via <Conn fd=85 addr=<NetAddr 127.0.0.1:10000> mode=active>)
-2024-01-29 16:56:04.324570 [net info] 065b010aed: lost connection <Conn fd=95 addr=<NetAddr 127.0.0.1:53142> mode=passive>
-2024-01-29 16:56:04.324588 [net info] ended 065b010aed <-/-> 6540a0fea6 (via <Conn fd=95 addr=<NetAddr 127.0.0.1:53142> mode=passive>)
+2024-01-29 18:39:27.188134 [net info] elapsed: 17.012 (wall) 0.063 (cpu)
+2024-01-29 18:39:27.189159 [net info] stopping all threads...
+2024-01-29 18:39:27.190235 [net info] stopping all threads...
+2024-01-29 18:39:27.190457 [net info] 065b010aed: lost connection <Conn fd=88 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2024-01-29 18:39:27.190480 [net info] ended 065b010aed <-/-> c261250345 (via <Conn fd=88 addr=<NetAddr 127.0.0.1:10001> mode=active>)
+2024-01-29 18:39:27.190599 [net info] 065b010aed: lost connection <Conn fd=82 addr=<NetAddr 127.0.0.1:36086> mode=passive>
+2024-01-29 18:39:27.190625 [net info] ended 065b010aed <-/-> 6540a0fea6 (via <Conn fd=82 addr=<NetAddr 127.0.0.1:36086> mode=passive>)
+2024-01-29 18:39:27.190758 [net info] 065b010aed: lost connection <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-01-29 18:39:27.190776 [net info] ended 065b010aed <-/-> 542865a568 (via <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>)
