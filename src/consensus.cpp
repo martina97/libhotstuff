@@ -47,11 +47,15 @@ HotStuffCore::HotStuffCore(ReplicaID id,
 }
 
 void HotStuffCore::sanity_check_delivered(const block_t &blk) {
+    std::cout << "---- STO IN sanity_check_delivered riga 49 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
+
     if (!blk->delivered)
         throw std::runtime_error("block not delivered");
 }
 
 block_t HotStuffCore::get_delivered_blk(const uint256_t &blk_hash) {
+    std::cout << "---- STO IN get_delivered_blk riga 56 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
+
     block_t blk = storage->find_blk(blk_hash);
     if (blk == nullptr || !blk->delivered)
         throw std::runtime_error("block not delivered");
@@ -59,6 +63,8 @@ block_t HotStuffCore::get_delivered_blk(const uint256_t &blk_hash) {
 }
 
 bool HotStuffCore::on_deliver_blk(const block_t &blk) {
+    std::cout << "---- STO IN on_deliver_blk riga 65 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
+
     if (blk->delivered)
     {
         LOG_WARN("attempt to deliver a block twice");
@@ -86,6 +92,8 @@ bool HotStuffCore::on_deliver_blk(const block_t &blk) {
 }
 
 void HotStuffCore::update_hqc(const block_t &_hqc, const quorum_cert_bt &qc) {
+    std::cout << "---- STO IN update_hqc riga 94 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
+
     if (_hqc->height > hqc.first->height)
     {
         hqc = std::make_pair(_hqc, qc->clone());
@@ -94,7 +102,7 @@ void HotStuffCore::update_hqc(const block_t &_hqc, const quorum_cert_bt &qc) {
 }
 
 void HotStuffCore::update(const block_t &nblk) {
-    std::cout << "UPDATEEEEEEEEEEEEEEEEEEE" << std::endl;
+    std::cout << "---- STO IN update riga 104 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
     
     /* nblk = b*, blk2 = b'', blk1 = b', blk = b */
 #ifndef HOTSTUFF_TWO_STEP
@@ -120,7 +128,6 @@ void HotStuffCore::update(const block_t &nblk) {
     if (blk2->parents[0] != blk1 || blk1->parents[0] != blk) return;
 #else
     /* two-step HotStuff */
-    std::cout << "three-step HotStuff" << std::endl;
 
     const block_t &blk1 = nblk->qc_ref;
     if (blk1 == nullptr) return;
@@ -150,21 +157,29 @@ void HotStuffCore::update(const block_t &nblk) {
     {
         const block_t &blk = *it;
         blk->decision = 1;
+        std::cout << "PRIMA DI DO_CONSENSUS" << std::endl;
         do_consensus(blk);
-        std::cout << "DO CONSENSUSSSSS" << std::endl;
-        
+        std::cout << "DOPO DO_CONSENSUS" << std::endl;
+
+
         LOG_PROTO("commit %s", std::string(*blk).c_str());
-        for (size_t i = 0; i < blk->cmds.size(); i++)
+        for (size_t i = 0; i < blk->cmds.size(); i++) {
+            std::cout << "prima di do_decide" << std::endl;
+            
             do_decide(Finality(id, 1, i, blk->height,
-                                blk->cmds[i], blk->get_hash()));
+                               blk->cmds[i], blk->get_hash()));
+        }
     }
     b_exec = blk;
 }
-
+/**
+Chiamata per inviare nuovi comandi da decidere (eseguire).
+"parents" deve contenere almeno un blocco e il primo blocco è il genitore effettivo, mentre gli altri sono uncles/aunts.
+ */
 block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds,
                             const std::vector<block_t> &parents,
                             bytearray_t &&extra) {
-    std::cout << "STO DENTRO on_propose " << std::endl;
+    std::cout << "---- STO IN on_propose riga 177 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
     
     if (parents.empty())
         throw std::runtime_error("empty parents");
@@ -199,7 +214,12 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds,
     return bnew;
 }
 
-void HotStuffCore::on_receive_proposal(const Proposal &prop) {
+/** Funzione chiamata alla consegna di un messaggio di proposta (PROPOSAL).
+ * Il blocco menzionato nel messaggio dovrebbe essere già consegnato.*/
+void HotStuffCore::
+on_receive_proposal(const Proposal &prop) {
+    std::cout << "---- STO IN on_receive_proposal riga 215 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
+    
     LOG_PROTO("got %s", std::string(prop).c_str());
     bool self_prop = prop.proposer == get_id();
     block_t bnew = prop.blk;
@@ -237,37 +257,57 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
     on_receive_proposal_(prop);
     if (opinion && !vote_disabled) {
         std::cout << "----- DO VOTE ------ " << std::endl;
-        
-        do_vote(prop.proposer,
+        std::cout << "PRIMA DI CREATE PART CERT" << std::endl;
+
+        //part_cert_bt boh = create_part_cert(*priv_key, bnew->get_hash());
+        //std::cout << "DOPO CREATE PART CERT" << std::endl;
+
+        const Vote vote = Vote(id, bnew->get_hash(),
+                               create_part_cert(*priv_key, bnew->get_hash()), this);
+        /*do_vote(prop.proposer,
                 Vote(id, bnew->get_hash(),
-                     create_part_cert(*priv_key, bnew->get_hash()), this));
+                     create_part_cert(*priv_key, bnew->get_hash()), this));*/
+        std::cout << "dopo aver creato il vote!!" << std::endl;
+        
+        do_vote(prop.proposer, vote);
     }
 }
 
 
 void HotStuffCore::on_receive_vote(const Vote &vote) {
-    std::cout << "SONO DENTRO on_receive_vote" << std::endl;
+    std::cout << "---- STO IN on_receive_vote riga 272 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
     
     LOG_PROTO("got %s", std::string(vote).c_str());
     LOG_PROTO("now state: %s", std::string(*this).c_str());
     block_t blk = get_delivered_blk(vote.blk_hash);
     assert(vote.cert);
     size_t qsize = blk->voted.size();
-    if (qsize >= config.nmajority) return;
+    std::cout << "config.nmajority = " << config.nmajority << std::endl;
+    std::cout << "qsize = " << blk->voted.size() << std::endl;
+
+    if (qsize >= config.nmajority) {
+        std::cout << "qsize >= config.nmajority" << std::endl;
+        return;
+    }
     if (!blk->voted.insert(vote.voter).second)
     {
         LOG_WARN("duplicate vote for %s from %d", get_hex10(vote.blk_hash).c_str(), vote.voter);
         return;
     }
+    std::cout << "qsize = " << blk->voted.size() << std::endl;
     auto &qc = blk->self_qc;
     if (qc == nullptr)
     {
         LOG_WARN("vote for block not proposed by itself");
         qc = create_quorum_cert(blk->get_hash());
     }
+    std::cout << "PRIMA DI ADD_PART!!!" << std::endl;
+    
     qc->add_part(vote.voter, *vote.cert);
     if (qsize + 1 == config.nmajority)
     {
+        std::cout << "qsize + 1 == config.nmajority" << std::endl;
+        
         qc->compute();
         update_hqc(blk, qc);
         on_qc_finish(blk);
@@ -275,7 +315,7 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
 }
 /*** end HotStuff protocol logic ***/
 void HotStuffCore::on_init(uint32_t nfaulty) {
-    std::cout << "SONO IN on_init" << std::endl;
+    std::cout << "---- STO IN on_init riga 301 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
     config.nmajority = config.nreplicas - nfaulty;
     std::cout << "config.nmajority  == " << config.nmajority << std::endl;
     std::cout << "b0->get_hash().to_hex() == " << b0->get_hash().to_hex() << std::endl;
@@ -284,8 +324,17 @@ void HotStuffCore::on_init(uint32_t nfaulty) {
     // b0->qc è quorum_cert_bt , ossia QuorumCert
     b0->qc = create_quorum_cert(b0->get_hash());    //Create a quorum certificate that proves 2f+1 votes for a block.
     std::cout << "b0->qc.get()->to_hex() = " << b0->qc.get()->to_hex() << std::endl;
+    std::cout << "b0->height = " << b0->height << std::endl;
 
-    b0->qc->compute();  //todo: vedere issue su THRESHOLD SIGNATURES
+    std::cout << "Values of b0->cmds:" << std::endl;
+    for (const auto& value : b0->cmds) {
+        std::cout << value.to_hex()<< " ";
+           // Assuming uint256_t supports ostream insertion
+    }
+    std::cout << std::endl;
+
+
+        b0->qc->compute();  //todo: vedere issue su THRESHOLD SIGNATURES
     b0->self_qc = b0->qc->clone();
     b0->qc_ref = b0;
     hqc = std::make_pair(b0, b0->qc->clone());
@@ -294,6 +343,8 @@ void HotStuffCore::on_init(uint32_t nfaulty) {
 }
 
 void HotStuffCore::prune(uint32_t staleness) {
+    std::cout << "---- STO IN prune riga 329 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
+
     block_t start;
     /* skip the blocks */
     for (start = b_exec; staleness; staleness--, start = start->parents[0])
@@ -318,6 +369,8 @@ void HotStuffCore::prune(uint32_t staleness) {
 
 void HotStuffCore::add_replica(ReplicaID rid, const PeerId &peer_id,
                                 pubkey_bt &&pub_key) {
+    std::cout << "---- STO IN add_replica riga 354 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
+
     config.add_replica(rid,
             ReplicaInfo(rid, peer_id, std::move(pub_key)));
     //aggiungo l'id della replica nell'insieme "voted", che memorizza gli id di tutte le
@@ -326,6 +379,8 @@ void HotStuffCore::add_replica(ReplicaID rid, const PeerId &peer_id,
 }
 
 promise_t HotStuffCore::async_qc_finish(const block_t &blk) {
+    std::cout << "---- STO IN async_qc_finish riga 356 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
+
     if (blk->voted.size() >= config.nmajority)
         return promise_t([](promise_t &pm) {
             pm.resolve();
@@ -337,6 +392,8 @@ promise_t HotStuffCore::async_qc_finish(const block_t &blk) {
 }
 
 void HotStuffCore::on_qc_finish(const block_t &blk) {
+    std::cout << "---- STO IN on_qc_finish riga 378 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
+
     auto it = qc_waiting.find(blk);
     if (it != qc_waiting.end())
     {
@@ -346,42 +403,56 @@ void HotStuffCore::on_qc_finish(const block_t &blk) {
 }
 
 promise_t HotStuffCore::async_wait_proposal() {
+    std::cout << "---- STO IN async_wait_proposal riga 389 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
+
     return propose_waiting.then([](const Proposal &prop) {
         return prop;
     });
 }
 
 promise_t HotStuffCore::async_wait_receive_proposal() {
+    std::cout << "---- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
+
     return receive_proposal_waiting.then([](const Proposal &prop) {
         return prop;
     });
 }
 
 promise_t HotStuffCore::async_hqc_update() {
+    std::cout << "---- STO IN async_hqc_update riga 405 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
+
     return hqc_update_waiting.then([this]() {
         return hqc.first;
     });
 }
 
 void HotStuffCore::on_propose_(const Proposal &prop) {
+    std::cout << "---- STO IN on_propose riga 413 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
+
     auto t = std::move(propose_waiting);
     propose_waiting = promise_t();
     t.resolve(prop);
 }
 
 void HotStuffCore::on_receive_proposal_(const Proposal &prop) {
+    std::cout << "---- STO IN on_receive_proposal_ riga 421 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
+
     auto t = std::move(receive_proposal_waiting);
     receive_proposal_waiting = promise_t();
     t.resolve(prop);
 }
 
 void HotStuffCore::on_hqc_update() {
+    std::cout << "---- STO IN on_hqc_update riga 429 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
+
     auto t = std::move(hqc_update_waiting);
     hqc_update_waiting = promise_t();
     t.resolve();
 }
 
 HotStuffCore::operator std::string () const {
+    std::cout << "---- STO IN std::string riga 437 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
+
     DataStream s;
     s << "<hotstuff "
       << "hqc=" << get_hex10(hqc.first->get_hash()) << " "

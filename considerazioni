@@ -1,0 +1,13 @@
+Attualmente, viene usato un elenco di firme secp256k1 come QC. L'idea è di
+ridurre l'overhead della computazione crittografica usando uno schema di threshold signature.
+
+-   Un QC in HotStuff è la prova che un blocco è stato concordato da un sottoinsieme sufficiente di nodi della rete.
+    Serve come prova che un particolare blocco ha raggiunto un certo livello di consenso.
+
+-   Le firme generate usando la curva ellittica secp256k1 vengono usate per fornire una prova crittografica
+    di proprietà o autorizzazione. Ogni replica della rete può generare una firma secp256k1 per approvare un blocco proposto.
+
+-   Quando viene proposto un blocco, ogni nodo partecipante nella rete HotStuff può verificare in modo indipendente
+    la validità del blocco e quindi generare una firma secp256k1 per approvarlo. Queste firme vengono raccolte e
+    aggregare per formare un quorum certificate per il blocco proposto.
+

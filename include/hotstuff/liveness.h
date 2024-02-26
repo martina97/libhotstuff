@@ -64,6 +64,8 @@ class PMHighTail: public virtual PaceMaker {
     const int32_t parent_limit;         /**< maximum number of parents */
 
     bool check_ancestry(const block_t &_a, const block_t &_b) {
+        std::cout << "---- STO IN check_ancestry riga 66 DENTRO liveness.h package:include->hotstuff----" << std::endl;
+
         block_t b;
         for (b = _b;
             b->get_height() > _a->get_height();
@@ -72,6 +74,8 @@ class PMHighTail: public virtual PaceMaker {
     }
     
     void reg_hqc_update() {
+        std::cout << "---- STO IN reg_hqc_update riga 76 DENTRO liveness.h package:include->hotstuff----" << std::endl;
+
         hsc->async_hqc_update().then([this](const block_t &hqc) {
             hqc_tail = hqc;
             for (const auto &tail: hsc->get_tails())
@@ -82,6 +86,8 @@ class PMHighTail: public virtual PaceMaker {
     }
 
     void reg_proposal() {
+        std::cout << "---- STO IN reg_proposal riga 88 DENTRO liveness.h package:include->hotstuff----" << std::endl;
+
         hsc->async_wait_proposal().then([this](const Proposal &prop) {
             hqc_tail = prop.blk;
             reg_proposal();
@@ -89,6 +95,8 @@ class PMHighTail: public virtual PaceMaker {
     }
 
     void reg_receive_proposal() {
+        std::cout << "---- STO IN reg_receive_proposal riga 88 DENTRO liveness.h package:include->hotstuff----" << std::endl;
+
         hsc->async_wait_receive_proposal().then([this](const Proposal &prop) {
             const auto &hqc = hsc->get_hqc();
             const auto &blk = prop.blk;
@@ -140,6 +148,8 @@ class PMWaitQC: public virtual PaceMaker {
 
     protected:
     void schedule_next() {
+        std::cout << "---- STO IN schedule_next riga 150 DENTRO liveness.h package:include->hotstuff----" << std::endl;
+
         if (!pending_beats.empty() && !locked)
         {
             auto pm = pending_beats.front();
@@ -154,6 +164,8 @@ class PMWaitQC: public virtual PaceMaker {
     }
 
     void update_last_proposed() {
+        std::cout << "---- STO IN update_last_proposed riga 166 DENTRO liveness.h package:include->hotstuff----" << std::endl;
+
         pm_wait_propose.reject();
         (pm_wait_propose = hsc->async_wait_proposal()).then(
                 [this](const Proposal &prop) {
@@ -169,16 +181,22 @@ class PMWaitQC: public virtual PaceMaker {
     size_t get_pending_size() override { return pending_beats.size(); }
 
     void init() {
+        std::cout << "---- STO IN init riga 183 DENTRO liveness.h package:include->hotstuff----" << std::endl;
+
         last_proposed = hsc->get_genesis();
         locked = false;
         update_last_proposed();
     }
 
     ReplicaID get_proposer() override {
+        std::cout << "---- STO IN get_proposer riga 191 DENTRO liveness.h package:include->hotstuff----" << std::endl;
+
         return hsc->get_id();
     }
 
     promise_t beat() override {
+        std::cout << "---- STO IN beat riga 197 DENTRO liveness.h package:include->hotstuff----" << std::endl;
+
         promise_t pm;
         pending_beats.push(pm);
         schedule_next();
@@ -186,6 +204,8 @@ class PMWaitQC: public virtual PaceMaker {
     }
 
     promise_t beat_resp(ReplicaID last_proposer) override {
+        std::cout << "---- STO IN beat_resp riga 206 DENTRO liveness.h package:include->hotstuff----" << std::endl;
+
         return promise_t([last_proposer](promise_t &pm) {
             pm.resolve(last_proposer);
         });
@@ -248,6 +268,8 @@ class PMRoundRobinProposer: virtual public PaceMaker {
     promise_t pm_qc_manual;
 
     void reg_proposal() {
+        std::cout << "---- STO IN reg_proposal riga 270 DENTRO liveness.h package:include->hotstuff----" << std::endl;
+
         hsc->async_wait_proposal().then([this](const Proposal &prop) {
             auto &pblk = prop_blk[hsc->get_id()];
             if (!pblk) pblk = prop.blk;
@@ -256,6 +278,8 @@ class PMRoundRobinProposer: virtual public PaceMaker {
     }
 
     void reg_receive_proposal() {
+        std::cout << "---- STO IN reg_receive_proposal riga 280 DENTRO liveness.h package:include->hotstuff----" << std::endl;
+
         hsc->async_wait_receive_proposal().then([this](const Proposal &prop) {
             auto &pblk = prop_blk[prop.proposer];
             if (!pblk) pblk = prop.blk;
@@ -264,7 +288,8 @@ class PMRoundRobinProposer: virtual public PaceMaker {
     }
 
     void proposer_schedule_next() {
-        std::cout << "STO DENTRO proposer_schedule_next" << std::endl;
+        std::cout << "---- STO IN proposer_schedule_next riga 290 DENTRO liveness.h package:include->hotstuff----" << std::endl;
+
 
         if (!pending_beats.empty() && !locked)
         {
@@ -281,6 +306,8 @@ class PMRoundRobinProposer: virtual public PaceMaker {
     }
 
     void proposer_update_last_proposed() {
+        std::cout << "---- STO IN proposer_update_last_proposed riga 308 DENTRO liveness.h package:include->hotstuff----" << std::endl;
+
         pm_wait_propose.reject();
         (pm_wait_propose = hsc->async_wait_proposal()).then(
                 [this](const Proposal &prop) {
@@ -294,6 +321,8 @@ class PMRoundRobinProposer: virtual public PaceMaker {
     }
 
     void do_new_consensus(int x, const std::vector<uint256_t> &cmds) {
+        std::cout << "---- STO IN do_new_consensus riga 323 DENTRO liveness.h package:include->hotstuff----" << std::endl;
+
         auto blk = hsc->on_propose(cmds, get_parents(), bytearray_t());
         pm_qc_manual.reject();
         (pm_qc_manual = hsc->async_qc_finish(blk))
@@ -309,6 +338,7 @@ class PMRoundRobinProposer: virtual public PaceMaker {
     }
 
     void on_exp_timeout(TimerEvent &) {
+        std::cout << "---- STO IN on_exp_timeout riga 340 DENTRO liveness.h package:include->hotstuff----" << std::endl;
         if (proposer == hsc->get_id())
             do_new_consensus(0, std::vector<uint256_t>{});
         timer = TimerEvent(ec, [this](TimerEvent &){ rotate(); });
@@ -318,6 +348,7 @@ class PMRoundRobinProposer: virtual public PaceMaker {
     /* role transitions */
 
     void rotate() {
+        std::cout << "---- STO IN rotate riga 350 DENTRO liveness.h package:include->hotstuff----" << std::endl;
         reg_proposal();
         reg_receive_proposal();
         prop_blk.clear();
@@ -334,7 +365,7 @@ class PMRoundRobinProposer: virtual public PaceMaker {
     }
 
     void stop_rotate() {
-        std::cout << "STO DENTRO stop_rotate" << std::endl;
+        std::cout << "---- STO IN stop_rotate riga 367 DENTRO liveness.h package:include->hotstuff----" << std::endl;
         
         timer.del();
         HOTSTUFF_LOG_PROTO("Pacemaker: stop rotation at %d", proposer);
@@ -363,6 +394,8 @@ class PMRoundRobinProposer: virtual public PaceMaker {
 
     protected:
     void on_consensus(const block_t &blk) override {
+        std::cout << "---- STO IN on_consensus riga 394 DENTRO liveness.h package:include->hotstuff----" << std::endl;
+
         timer.del();
         exp_timeout = base_timeout;
         if (prop_blk[proposer] == blk)

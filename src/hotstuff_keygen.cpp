@@ -23,6 +23,8 @@ using hotstuff::privkey_bt;
 using hotstuff::pubkey_bt;
 
 int main(int argc, char **argv) {
+    std::cout << "---- STO IN main riga 25 DENTRO hotstuff_keygen.cpp package:salticidae->include->src---- " << std::endl;
+
     Config config("hotstuff.conf");
 
     privkey_bt priv_key;

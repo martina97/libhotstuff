@@ -9,7 +9,7 @@
 		],
 		"files" : 
 		[
-			"/usr/local/share/cmake-3.20/Modules/ExternalProject.cmake",
+			"/snap/clion/265/bin/cmake/linux/x64/share/cmake-3.27/Modules/ExternalProject.cmake",
 			"CMakeLists.txt"
 		],
 		"nodes" : 
@@ -26,7 +26,7 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 3495,
+				"line" : 4129,
 				"parent" : 1
 			}
 		]

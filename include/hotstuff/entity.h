@@ -45,15 +45,18 @@ struct ReplicaInfo {
     ReplicaInfo(ReplicaID id,
                 const salticidae::PeerId &peer_id,
                 pubkey_bt &&pubkey):
-        id(id), peer_id(peer_id), pubkey(std::move(pubkey)) {}
+        id(id), peer_id(peer_id), pubkey(std::move(pubkey)) {std::cout << "---- STO IN ReplicaInfo riga 45 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+    }
 
     ReplicaInfo(const ReplicaInfo &other):
         id(other.id), peer_id(other.peer_id),
-        pubkey(other.pubkey->clone()) {}
+        pubkey(other.pubkey->clone()) {std::cout << "---- STO IN ReplicaInfo riga 51 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+    }
 
     ReplicaInfo(ReplicaInfo &&other):
         id(other.id), peer_id(other.peer_id),
-        pubkey(std::move(other.pubkey)) {}
+        pubkey(std::move(other.pubkey)) {std::cout << "---- STO IN ReplicaInfo riga 56 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+    }
 };
 
 class ReplicaConfig {
@@ -66,11 +69,15 @@ class ReplicaConfig {
     ReplicaConfig(): nreplicas(0), nmajority(0) {}
 
     void add_replica(ReplicaID rid, const ReplicaInfo &info) {
+        std::cout << "---- STO IN add_replica riga 71 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
         replica_map.insert(std::make_pair(rid, info));
         nreplicas++;
     }
 
     const ReplicaInfo &get_info(ReplicaID rid) const {
+        std::cout << "---- STO IN get_info riga 78 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
         auto it = replica_map.find(rid);
         if (it == replica_map.end())
             throw HotStuffError("rid %s not found",
@@ -79,10 +86,13 @@ class ReplicaConfig {
     }
 
     const PubKey &get_pubkey(ReplicaID rid) const {
+        std::cout << "---- STO IN get_pubkey riga 88 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
         return *(get_info(rid).pubkey);
     }
 
     const salticidae::PeerId &get_peer_id(ReplicaID rid) const {
+        std::cout << "---- STO IN get_peer_id riga 94 DENTRO entity.h package:include->hotstuff---- " << std::endl;
         return get_info(rid).peer_id;
     }
 };
@@ -110,6 +120,8 @@ using command_t = ArcObj<Command>;
 template<typename Hashable>
 inline static std::vector<uint256_t>
 get_hashes(const std::vector<Hashable> &plist) {
+    std::cout << "---- STO IN get_hashes riga 122 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
     std::vector<uint256_t> hashes;
     for (const auto &p: plist)
         hashes.push_back(p->get_hash());
@@ -173,14 +185,20 @@ class Block {
     void unserialize(DataStream &s, HotStuffCore *hsc);
 
     const std::vector<uint256_t> &get_cmds() const {
+        std::cout << "---- STO IN get_cmds riga 187 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
         return cmds;
     }
 
     const std::vector<block_t> &get_parents() const {
+        std::cout << "---- STO IN get_parents riga 193 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
         return parents;
     }
 
     const std::vector<uint256_t> &get_parent_hashes() const {
+        std::cout << "---- STO IN get_parent_hashes riga 199 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
         return parent_hashes;
     }
 
@@ -190,11 +208,17 @@ class Block {
 
     promise_t verify(const HotStuffCore *hsc, VeriPool &vpool) const;
 
-    int8_t get_decision() const { return decision; }
+    int8_t get_decision() const {
+        std::cout << "---- STO IN get_decision riga 211 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+        return decision; }
 
-    bool is_delivered() const { return delivered; }
+    bool is_delivered() const {
+        std::cout << "---- STO IN is_delivered riga 215 DENTRO entity.h package:include->hotstuff---- " << std::endl;
 
-    uint32_t get_height() const { return height; }
+        return delivered; }
+
+    uint32_t get_height() const {        std::cout << "---- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+        return height; }
 
     const quorum_cert_bt &get_qc() const { return qc; }
 
@@ -203,6 +227,8 @@ class Block {
     const bytearray_t &get_extra() const { return extra; }
 
     operator std::string () const {
+        std::cout << "---- STO IN std::string riga 229 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
         DataStream s;
         s << "<block "
           << "id="  << get_hex10(hash) << " "
@@ -224,16 +250,22 @@ class EntityStorage {
     std::unordered_map<const uint256_t, command_t> cmd_cache;
     public:
     bool is_blk_delivered(const uint256_t &blk_hash) {
+        std::cout << "---- STO IN is_blk_delivered riga 252 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
         auto it = blk_cache.find(blk_hash);
         if (it == blk_cache.end()) return false;
         return it->second->is_delivered();
     }
 
     bool is_blk_fetched(const uint256_t &blk_hash) {
+        std::cout << "---- STO IN is_blk_fetched riga 260 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
         return blk_cache.count(blk_hash);
     }
 
     block_t add_blk(Block &&_blk, const ReplicaConfig &/*config*/) {
+        std::cout << "---- STO IN add_blk riga 266 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
         //if (!_blk.verify(config))
         //{
         //    HOTSTUFF_LOG_WARN("invalid %s", std::string(_blk).c_str());
@@ -244,23 +276,33 @@ class EntityStorage {
     }
 
     const block_t &add_blk(const block_t &blk) {
+        std::cout << "---- STO IN add_blk riga 278 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
         return blk_cache.insert(std::make_pair(blk->get_hash(), blk)).first->second;
     }
 
     block_t find_blk(const uint256_t &blk_hash) {
+        std::cout << "---- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
         auto it = blk_cache.find(blk_hash);
         return it == blk_cache.end() ? nullptr : it->second;
     }
 
     bool is_cmd_fetched(const uint256_t &cmd_hash) {
+        std::cout << "---- STO IN is_cmd_fetched riga 291 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
         return cmd_cache.count(cmd_hash);
     }
 
     const command_t &add_cmd(const command_t &cmd) {
+        std::cout << "---- STO IN add_cmd riga 297 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
         return cmd_cache.insert(std::make_pair(cmd->get_hash(), cmd)).first->second;
     }
 
     command_t find_cmd(const uint256_t &cmd_hash) {
+        std::cout << "---- STO IN find_cmd riga 303 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
         auto it = cmd_cache.find(cmd_hash);
         return it == cmd_cache.end() ? nullptr: it->second;
     }
@@ -273,6 +315,8 @@ class EntityStorage {
     }
 
     bool try_release_cmd(const command_t &cmd) {
+        std::cout << "---- STO IN try_release_cmd riga 317 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
         if (cmd.get_cnt() == 2) /* only referred by cmd and the storage */
         {
             const auto &cmd_hash = cmd->get_hash();
@@ -283,6 +327,8 @@ class EntityStorage {
     }
 
     bool try_release_blk(const block_t &blk) {
+        std::cout << "---- STO IN try_release_blk riga 329 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
         if (blk.get_cnt() == 2) /* only referred by blk and the storage */
         {
             const auto &blk_hash = blk->get_hash();

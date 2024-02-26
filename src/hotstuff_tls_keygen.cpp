@@ -25,6 +25,8 @@ using hotstuff::tls_pkey_bt;
 using hotstuff::tls_x509_bt;
 
 int main(int argc, char **argv) {
+    std::cout << "---- STO IN main riga 27 DENTRO hotstuff_tls_keygen.cpp package:salticidae->include->src---- " << std::endl;
+
     Config config("hotstuff.conf");
 
     tls_pkey_bt priv_key;

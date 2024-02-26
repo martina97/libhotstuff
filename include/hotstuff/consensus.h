@@ -72,6 +72,7 @@ class HotStuffCore {
 
     HotStuffCore(ReplicaID id, privkey_bt &&priv_key);
     virtual ~HotStuffCore() {
+        std::cout << "---- STO IN HotStuffCore riga 73 DENTRO consensus.h package:include->hotstuff---- " << std::endl;
         b0->qc_ref = nullptr;
     }
 
@@ -184,11 +185,15 @@ struct Proposal: public Serializable {
         blk(blk), hsc(hsc) {}
 
     void serialize(DataStream &s) const override {
+        std::cout << "---- STO IN serialize riga 187 DENTRO consensus.h package:include->hotstuff---- " << std::endl;
+
         s << proposer
           << *blk;
     }
 
     void unserialize(DataStream &s) override {
+        std::cout << "---- STO IN unserialize riga 194 DENTRO consensus.h package:include->hotstuff---- " << std::endl;
+
         assert(hsc != nullptr);
         s >> proposer;
         Block _blk;
@@ -197,6 +202,8 @@ struct Proposal: public Serializable {
     }
 
     operator std::string () const {
+        std::cout << "---- STO IN std::string riga 204 DENTRO consensus.h package:include->hotstuff---- " << std::endl;
+
         DataStream s;
         s << "<proposal "
           << "rid=" << std::to_string(proposer) << " "
@@ -217,6 +224,7 @@ struct Vote: public Serializable {
     HotStuffCore *hsc;
 
     Vote(): cert(nullptr), hsc(nullptr) {}
+
     Vote(ReplicaID voter,
         const uint256_t &blk_hash,
         part_cert_bt &&cert,
@@ -234,22 +242,30 @@ struct Vote: public Serializable {
     Vote(Vote &&other) = default;
     
     void serialize(DataStream &s) const override {
+        std::cout << "---- STO IN serialize riga 244 DENTRO consensus.h package:include->hotstuff---- " << std::endl;
+
         s << voter << blk_hash << *cert;
     }
 
     void unserialize(DataStream &s) override {
+        std::cout << "---- STO IN unserialize riga 250 DENTRO consensus.h package:include->hotstuff---- " << std::endl;
+
         assert(hsc != nullptr);
         s >> voter >> blk_hash;
         cert = hsc->parse_part_cert(s);
     }
 
     bool verify() const {
+        std::cout << "---- STO IN verify riga 259 DENTRO consensus.h package:include->hotstuff---- " << std::endl;
+
         assert(hsc != nullptr);
         return cert->verify(hsc->get_config().get_pubkey(voter)) &&
                 cert->get_obj_hash() == blk_hash;
     }
 
     promise_t verify(VeriPool &vpool) const {
+        std::cout << "---- STO IN verify riga 267 DENTRO consensus.h package:include->hotstuff---- " << std::endl;
+
         assert(hsc != nullptr);
         return cert->verify(hsc->get_config().get_pubkey(voter), vpool).then([this](bool result) {
             return result && cert->get_obj_hash() == blk_hash;
@@ -257,6 +273,8 @@ struct Vote: public Serializable {
     }
 
     operator std::string () const {
+        std::cout << "---- STO IN std::string riga 275 DENTRO consensus.h package:include->hotstuff---- " << std::endl;
+
         DataStream s;
         s << "<vote "
           << "rid=" << std::to_string(voter) << " "

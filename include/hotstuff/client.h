@@ -76,6 +76,8 @@ class CommandDummy: public Command {
         cid(cid), n(n), hash(salticidae::get_hash(*this)) {}
 
     void serialize(DataStream &s) const override {
+        std::cout << "---- STO IN serialize DENTRO client.h package:include->hotstuff---- " << std::endl;
+
         s << cid << n;
 #if HOTSTUFF_CMD_REQSIZE > 0
         s.put_data(payload, payload + sizeof(payload));
@@ -83,6 +85,8 @@ class CommandDummy: public Command {
     }
 
     void unserialize(DataStream &s) override {
+        std::cout << "---- STO IN unserialize DENTRO client.h package:include->hotstuff---- " << std::endl;
+
         s >> cid >> n;
 #if HOTSTUFF_CMD_REQSIZE > 0
         auto base = s.get_data_inplace(HOTSTUFF_CMD_REQSIZE);
@@ -92,10 +96,14 @@ class CommandDummy: public Command {
     }
 
     const uint256_t &get_hash() const override {
+        std::cout << "---- STO IN get_hash DENTRO client.h package:include->hotstuff---- " << std::endl;
+
         return hash;
     }
 
     bool verify() const override {
+        std::cout << "---- STO IN verify DENTRO client.h package:include->hotstuff---- " << std::endl;
+
         return true;
     }
 };

@@ -111,12 +111,15 @@ class BlockDeliveryContext: public promise_t {
     BlockDeliveryContext &operator=(const BlockDeliveryContext &) = delete;
     BlockDeliveryContext(const BlockDeliveryContext &other):
         promise_t(static_cast<const promise_t &>(other)),
-        elapsed(other.elapsed) {}
+        elapsed(other.elapsed) {std::cout << "---- STO IN BlockDeliveryContext riga 112 DENTRO hotstuff.h package:include->hotstuff---- " << std::endl;
+    }
     BlockDeliveryContext(BlockDeliveryContext &&other):
         promise_t(static_cast<const promise_t &>(other)),
-        elapsed(std::move(other.elapsed)) {}
+        elapsed(std::move(other.elapsed)) {std::cout << "---- STO IN BlockDeliveryContext riga 116 DENTRO hotstuff.h package:include->hotstuff---- " << std::endl;
+    }
     template<typename Func>
     BlockDeliveryContext(Func callback): promise_t(callback) {
+        std::cout << "---- STO IN BlockDeliveryContext riga 121 DENTRO hotstuff.h package:include->hotstuff---- " << std::endl;
         elapsed.start();
     }
 };
@@ -253,24 +256,40 @@ class HotStuff: public HotStuffBase {
     protected:
 
     part_cert_bt create_part_cert(const PrivKey &priv_key, const uint256_t &blk_hash) override {
+        std::cout << "---- STO IN create_part_cert riga 258 DENTRO hotstuff.h package:include->hotstuff---- " << std::endl;
         HOTSTUFF_LOG_DEBUG("create part cert with priv=%s, blk_hash=%s",
                             get_hex10(priv_key).c_str(), get_hex10(blk_hash).c_str());
-        return new PartCertType(
-                    static_cast<const PrivKeyType &>(priv_key),
-                    blk_hash);
+        std::cout << "PRIMA DI PartCertType" << std::endl;
+
+        auto key = static_cast<const PrivKeyType &>(priv_key);
+        /*part_cert_bt certificate = new PartCertType(
+                static_cast<const PrivKeyType &>(priv_key),
+                blk_hash);*/
+        std::cout << "dopo creazione key" << std::endl;
+        
+        part_cert_bt certificate = new PartCertType(key,blk_hash);
+        std::cout << "DOPO PartCertType" << std::endl;
+        
+        return certificate;
     }
 
     part_cert_bt parse_part_cert(DataStream &s) override {
+        std::cout << "---- STO IN parse_part_cert riga 278 DENTRO hotstuff.h package:include->hotstuff---- " << std::endl;
+        
         PartCert *pc = new PartCertType();
         s >> *pc;
         return pc;
     }
 
     quorum_cert_bt create_quorum_cert(const uint256_t &blk_hash) override {
+        std::cout << "---- STO IN create_quorum_cert riga 286 DENTRO hotstuff.h package:include->hotstuff---- " << std::endl;
+
         return new QuorumCertType(get_config(), blk_hash);
     }
 
     quorum_cert_bt parse_quorum_cert(DataStream &s) override {
+        std::cout << "---- STO IN parse_quorum_cert riga 292 DENTRO hotstuff.h package:include->hotstuff---- " << std::endl;
+
         QuorumCert *qc = new QuorumCertType();
         s >> *qc;
         return qc;
@@ -295,7 +314,7 @@ class HotStuff: public HotStuffBase {
                     netconfig) {}
 
     void start(const std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> &replicas, bool ec_loop = false) {
-        std::cout << "STO QUAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
+        std::cout << "---- STO IN start riga 319 DENTRO hotstuff.h package:include->hotstuff---- " << std::endl;
         /* VETTORE REPLICAS CONTIENE PER OGNI REPLICA:
          *  valore1: <NetAddr 127.0.0.1:10000>
             valore2: 039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23
@@ -324,6 +343,8 @@ FetchContext<ent_type>::FetchContext(FetchContext && other):
         fetch_msg(std::move(other.fetch_msg)),
         ent_hash(other.ent_hash),
         replicas(std::move(other.replicas)) {
+    std::cout << "---- STO IN FetchContext riga 342 DENTRO hotstuff.h package:include->hotstuff---- " << std::endl;
+
     other.timeout.del();
     timeout = TimerEvent(hs->ec,
             std::bind(&FetchContext::timeout_cb, this, _1));
@@ -332,6 +353,8 @@ FetchContext<ent_type>::FetchContext(FetchContext && other):
 
 template<>
 inline void FetchContext<ENT_TYPE_CMD>::timeout_cb(TimerEvent &) {
+    std::cout << "---- STO IN timeout_cb riga 357 DENTRO hotstuff.h package:include->hotstuff---- " << std::endl;
+
     HOTSTUFF_LOG_WARN("cmd fetching %.10s timeout", get_hex(ent_hash).c_str());
     for (const auto &replica: replicas)
         send(replica);
@@ -340,6 +363,8 @@ inline void FetchContext<ENT_TYPE_CMD>::timeout_cb(TimerEvent &) {
 
 template<>
 inline void FetchContext<ENT_TYPE_BLK>::timeout_cb(TimerEvent &) {
+    std::cout << "---- STO IN timeout_cb riga 367 DENTRO hotstuff.h package:include->hotstuff---- " << std::endl;
+
     HOTSTUFF_LOG_WARN("block fetching %.10s timeout", get_hex(ent_hash).c_str());
     for (const auto &replica: replicas)
         send(replica);
@@ -351,6 +376,8 @@ FetchContext<ent_type>::FetchContext(
                                 const uint256_t &ent_hash, HotStuffBase *hs):
             promise_t([](promise_t){}),
             hs(hs), ent_hash(ent_hash) {
+    std::cout << "---- STO IN FetchContext riga 377 DENTRO hotstuff.h package:include->hotstuff---- " << std::endl;
+
     fetch_msg = std::vector<uint256_t>{ent_hash};
 
     timeout = TimerEvent(hs->ec,
@@ -360,17 +387,22 @@ FetchContext<ent_type>::FetchContext(
 
 template<EntityType ent_type>
 void FetchContext<ent_type>::send(const PeerId &replica) {
+    std::cout << "---- STO IN send riga 391 DENTRO hotstuff.h package:include->hotstuff---- " << std::endl;
+
     hs->part_fetched_replica[replica]++;
     hs->pn.send_msg(fetch_msg, replica);
 }
 
 template<EntityType ent_type>
 void FetchContext<ent_type>::reset_timeout() {
+    std::cout << "---- STO IN reset_timeout riga 399 DENTRO hotstuff.h package:include->hotstuff---- " << std::endl;
+
     timeout.add(salticidae::gen_rand_timeout(ent_waiting_timeout));
 }
 
 template<EntityType ent_type>
 void FetchContext<ent_type>::add_replica(const PeerId &replica, bool fetch_now) {
+    std::cout << "---- STO IN add_replica riga 406 DENTRO hotstuff.h package:include->hotstuff---- " << std::endl;
     if (replicas.empty() && fetch_now)
         send(replica);
     replicas.insert(replica);

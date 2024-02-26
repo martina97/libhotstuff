@@ -18,6 +18,7 @@
 #define _HOTSTUFF_CRYPTO_H
 
 #include <openssl/rand.h>
+#include <iostream>
 
 #include "secp256k1.h"
 #include "salticidae/crypto.h"
@@ -84,31 +85,45 @@ class PrivKeyDummy: public PrivKey {
 };
 
 class PartCertDummy: public PartCert {
+        
     uint256_t obj_hash;
     public:
-    PartCertDummy() {}
+    PartCertDummy() {std::cout << "partCertDummy2" << std::endl;}
     PartCertDummy(const uint256_t &obj_hash):
-        obj_hash(obj_hash) {}
+        obj_hash(obj_hash) {std::cout << "partCertDummy" << std::endl;
+        }
 
     void serialize(DataStream &s) const override {
+        std::cout << "---- STO IN serialize riga 96 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
         s << (uint32_t)0 << obj_hash;
     }
 
     void unserialize(DataStream &s) override {
+        std::cout << "---- STO IN unserialize riga 102 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
         uint32_t tmp;
         s >> tmp >> obj_hash;
     }
 
     PartCert *clone() override {
+        std::cout << "---- STO IN clone riga 109 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
         return new PartCertDummy(obj_hash);
     }
 
-    bool verify(const PubKey &) override { return true; }
+    bool verify(const PubKey &) override {
+        std::cout << "---- STO IN verify riga 114 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+        return true;
+    }
     promise_t verify(const PubKey &, VeriPool &) override {
+        std::cout << "---- STO IN verify riga 118 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
         return promise_t([](promise_t &pm){ pm.resolve(true); });
     }
 
-    const uint256_t &get_obj_hash() const override { return obj_hash; }
+    const uint256_t &get_obj_hash() const override {
+        std::cout << "---- STO IN get_obj_hash riga 123 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+        return obj_hash; 
+    }
 };
 
 class QuorumCertDummy: public QuorumCert {
@@ -119,15 +134,21 @@ class QuorumCertDummy: public QuorumCert {
         obj_hash(obj_hash) {}
 
     void serialize(DataStream &s) const override {
+        std::cout << "---- STO IN serialize riga 136 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
         s << (uint32_t)1 << obj_hash;
     }
 
     void unserialize(DataStream &s) override {
+        std::cout << "---- STO IN unserialize riga 142 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
         uint32_t tmp;
         s >> tmp >> obj_hash;
     }
 
     QuorumCert *clone() override {
+        std::cout << "---- STO IN clone riga 149 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
         return new QuorumCertDummy(*this);
     }
 
@@ -135,10 +156,15 @@ class QuorumCertDummy: public QuorumCert {
     void compute() override {}
     bool verify(const ReplicaConfig &) override { return true; }
     promise_t verify(const ReplicaConfig &, VeriPool &) override {
+        std::cout << "---- STO IN verify riga 158 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
         return promise_t([](promise_t &pm) { pm.resolve(true); });
     }
 
-    const uint256_t &get_obj_hash() const override { return obj_hash; }
+    const uint256_t &get_obj_hash() const override {
+        std::cout << "---- STO IN get_obj_hash riga 164 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
+        return obj_hash; }
 };
 
 
@@ -150,11 +176,14 @@ class Secp256k1Context {
     Secp256k1Context(bool sign = false):
         ctx(secp256k1_context_create(
             sign ? SECP256K1_CONTEXT_SIGN :
-                    SECP256K1_CONTEXT_VERIFY)) {}
+                    SECP256K1_CONTEXT_VERIFY)) {std::cout << "---- STO IN Secp256k1Context riga 176 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+    }
 
     Secp256k1Context(const Secp256k1Context &) = delete;
 
     Secp256k1Context(Secp256k1Context &&other): ctx(other.ctx) {
+        std::cout << "---- STO IN Secp256k1Context riga 184 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
         other.ctx = nullptr;
     }
 
@@ -191,6 +220,8 @@ class PubKeySecp256k1: public PubKey {
                                     secp256k1_default_sign_ctx);
 
     void serialize(DataStream &s) const override {
+        std::cout << "---- STO IN serialize riga 222 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
         static uint8_t output[_olen];
         size_t olen = _olen;
         (void)secp256k1_ec_pubkey_serialize(
@@ -200,6 +231,8 @@ class PubKeySecp256k1: public PubKey {
     }
 
     void unserialize(DataStream &s) override {
+        std::cout << "---- STO IN unserialize riga 233 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
         static const auto _exc = std::invalid_argument("ill-formed public key");
         try {
             if (!secp256k1_ec_pubkey_parse(
@@ -211,6 +244,7 @@ class PubKeySecp256k1: public PubKey {
     }
 
     PubKeySecp256k1 *clone() override {
+        std::cout << "---- STO IN clone riga 246 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
         return new PubKeySecp256k1(*this);
     }
 };
@@ -233,10 +267,13 @@ class PrivKeySecp256k1: public PrivKey {
         PrivKeySecp256k1(ctx) { from_bytes(raw_bytes); }
 
     void serialize(DataStream &s) const override {
+        std::cout << "---- STO IN serialize riga 269 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
         s.put_data(data, data + nbytes);
     }
 
     void unserialize(DataStream &s) override {
+        std::cout << "---- STO IN unserialize riga 274 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
         static const auto _exc = std::invalid_argument("ill-formed private key");
         try {
             memmove(data, s.get_data_inplace(nbytes), nbytes);
@@ -246,6 +283,8 @@ class PrivKeySecp256k1: public PrivKey {
     }
 
     void from_rand() override {
+        std::cout << "---- STO IN from_rand riga 285 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
         if (!RAND_bytes(data, nbytes))
             throw std::runtime_error("cannot get rand bytes from openssl");
     }
@@ -254,10 +293,13 @@ class PrivKeySecp256k1: public PrivKey {
 };
 
 pubkey_bt PrivKeySecp256k1::get_pubkey() const {
+    std::cout << "---- STO IN get_pubkey riga 295 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
     return new PubKeySecp256k1(*this, ctx);
 }
 
 PubKeySecp256k1::PubKeySecp256k1(
+
         const PrivKeySecp256k1 &priv_key,
         const secp256k1_context_t &ctx): PubKey(), ctx(ctx) {
     if (!secp256k1_ec_pubkey_create(ctx->ctx, &data, priv_key.data))
@@ -265,10 +307,13 @@ PubKeySecp256k1::PubKeySecp256k1(
 }
 
 class SigSecp256k1: public Serializable {
+
+    
     secp256k1_ecdsa_signature data;
     secp256k1_context_t ctx;
 
     static void check_msg_length(const bytearray_t &msg) {
+        std::cout << "---- STO IN check_msg_length riga 315 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
         if (msg.size() != 32)
             throw std::invalid_argument("the message should be 32-bytes");
     }
@@ -277,23 +322,27 @@ class SigSecp256k1: public Serializable {
     SigSecp256k1(const secp256k1_context_t &ctx =
                         secp256k1_default_sign_ctx):
         Serializable(), ctx(ctx) {}
-    SigSecp256k1(const uint256_t &digest,
-                const PrivKeySecp256k1 &priv_key,
-                secp256k1_context_t &ctx =
-                        secp256k1_default_sign_ctx):
+    SigSecp256k1(const uint256_t &digest,const PrivKeySecp256k1 &priv_key, secp256k1_context_t &ctx = secp256k1_default_sign_ctx):
         Serializable(), ctx(ctx) {
+        std::cout << "---- STO IN SigSecp256k1 riga 325 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
         sign(digest, priv_key);
+        std::cout << "---- STO DOPO sign riga 333 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
     }
 
     void serialize(DataStream &s) const override {
+        std::cout << "---- STO IN serialize riga 339 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
         static uint8_t output[64];
         (void)secp256k1_ecdsa_signature_serialize_compact(
+
             ctx->ctx, (unsigned char *)output,
             &data);
         s.put_data(output, output + 64);
     }
 
     void unserialize(DataStream &s) override {
+        std::cout << "---- STO IN unserialize riga 350 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
         static const auto _exc = std::invalid_argument("ill-formed signature");
         try {
             if (!secp256k1_ecdsa_signature_parse_compact(
@@ -305,6 +354,8 @@ class SigSecp256k1: public Serializable {
     }
 
     void sign(const bytearray_t &msg, const PrivKeySecp256k1 &priv_key) {
+        std::cout << "---- STO IN sign riga 363 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
         check_msg_length(msg);
         if (!secp256k1_ecdsa_sign(
                 ctx->ctx, &data,
@@ -317,6 +368,8 @@ class SigSecp256k1: public Serializable {
 
     bool verify(const bytearray_t &msg, const PubKeySecp256k1 &pub_key,
                 const secp256k1_context_t &_ctx) const {
+        std::cout << "---- STO IN verify riga 376 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
         check_msg_length(msg);
         return secp256k1_ecdsa_verify(
                 _ctx->ctx, &data,
@@ -325,6 +378,7 @@ class SigSecp256k1: public Serializable {
     }
 
     bool verify(const bytearray_t &msg, const PubKeySecp256k1 &pub_key) {
+        std::cout << "---- STO IN verify riga 387 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
         return verify(msg, pub_key, ctx);
     }
 };
@@ -337,10 +391,13 @@ class Secp256k1VeriTask: public VeriTask {
     Secp256k1VeriTask(const uint256_t &msg,
                         const PubKeySecp256k1 &pubkey,
                         const SigSecp256k1 &sig):
-        msg(msg), pubkey(pubkey), sig(sig) {}
+        msg(msg), pubkey(pubkey), sig(sig) {std::cout << "---- STO IN Secp256k1VeriTask riga 393 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+    }
     virtual ~Secp256k1VeriTask() = default;
 
     bool verify() override {
+        std::cout << "---- STO IN verify riga 405 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
         return sig.verify(msg, pubkey, secp256k1_default_verify_ctx);
     }
 };
@@ -352,33 +409,48 @@ class PartCertSecp256k1: public SigSecp256k1, public PartCert {
     PartCertSecp256k1() = default;
     PartCertSecp256k1(const PrivKeySecp256k1 &priv_key, const uint256_t &obj_hash):
         SigSecp256k1(obj_hash, priv_key),
-        PartCert(),
-        obj_hash(obj_hash) {}
+        PartCert() ,
+        obj_hash(obj_hash) {std::cout << "---- STO IN PartCertSecp256k1 riga 410 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+    }
 
     bool verify(const PubKey &pub_key) override {
+        std::cout << "---- STO IN verify riga 416 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+        
         return SigSecp256k1::verify(obj_hash,
                                     static_cast<const PubKeySecp256k1 &>(pub_key),
                                     secp256k1_default_verify_ctx);
     }
 
     promise_t verify(const PubKey &pub_key, VeriPool &vpool) override {
+        std::cout << "---- STO IN verify riga 431 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+        
         return vpool.verify(new Secp256k1VeriTask(obj_hash,
                 static_cast<const PubKeySecp256k1 &>(pub_key),
                 static_cast<const SigSecp256k1 &>(*this)));
     }
 
-    const uint256_t &get_obj_hash() const override { return obj_hash; }
+    const uint256_t &get_obj_hash() const override {
+        std::cout << "---- STO IN get_obj_hash riga 439 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+        
+        return obj_hash; 
+    }
 
     PartCertSecp256k1 *clone() override {
+        std::cout << "---- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+        
         return new PartCertSecp256k1(*this);
     }
 
     void serialize(DataStream &s) const override {
+        std::cout << "---- STO IN serialize riga 451 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+        
         s << obj_hash;
         this->SigSecp256k1::serialize(s);
     }
 
     void unserialize(DataStream &s) override {
+        std::cout << "---- STO IN unserialize riga 458 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
         s >> obj_hash;
         this->SigSecp256k1::unserialize(s);
     }
@@ -394,6 +466,9 @@ class QuorumCertSecp256k1: public QuorumCert {
     QuorumCertSecp256k1(const ReplicaConfig &config, const uint256_t &obj_hash);
 
     void add_part(ReplicaID rid, const PartCert &pc) override {
+        std::cout << "---- STO IN add_part riga 475 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
+
         if (pc.get_obj_hash() != obj_hash)
             throw std::invalid_argument("PartCert does match the block hash");
         sigs.insert(std::make_pair(
@@ -401,7 +476,8 @@ class QuorumCertSecp256k1: public QuorumCert {
         rids.set(rid);
     }
 
-    void compute() override {}
+    void compute() override {std::cout << "---- STO IN compute riga 486 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+    }
 
     bool verify(const ReplicaConfig &config) override;
     promise_t verify(const ReplicaConfig &config, VeriPool &vpool) override;
@@ -409,16 +485,22 @@ class QuorumCertSecp256k1: public QuorumCert {
     const uint256_t &get_obj_hash() const override { return obj_hash; }
 
     QuorumCertSecp256k1 *clone() override {
+        std::cout << "---- STO IN clone riga 494 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
         return new QuorumCertSecp256k1(*this);
     }
 
     void serialize(DataStream &s) const override {
+        std::cout << "---- STO IN serialize riga 500 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
         s << obj_hash << rids;
         for (size_t i = 0; i < rids.size(); i++)
             if (rids.get(i)) s << sigs.at(i);
     }
 
     void unserialize(DataStream &s) override {
+        std::cout << "---- STO IN unserialize riga 508 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
         s >> obj_hash >> rids;
         for (size_t i = 0; i < rids.size(); i++)
             if (rids.get(i)) s >> sigs[i];

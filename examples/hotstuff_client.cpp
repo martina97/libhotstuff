@@ -74,6 +74,7 @@ void connect_all() {
 bool try_send(bool check = true) {
     if ((!check || waiting.size() < max_async_num) && max_iter_num)
     {
+        //sleep(30);  //todo: rimuovi sleep
         auto cmd = new CommandDummy(cid, cnt++);
         MsgReqCmd msg(*cmd);
         for (auto &p: conns) mn->send_msg(msg, p.second);
@@ -83,6 +84,26 @@ bool try_send(bool check = true) {
 #endif
         waiting.insert(std::make_pair(
             cmd->get_hash(), Request(cmd)));
+        if (max_iter_num > 0)
+            max_iter_num--;
+        return true;
+    }
+    return false;
+}
+
+bool try_send2(bool check = true) {
+    if ((!check || waiting.size() < max_async_num) && max_iter_num)
+    {
+        //sleep(30);  //todo: rimuovi sleep
+        auto cmd = new CommandDummy(cid, cnt++);
+        MsgReqCmd msg(*cmd);
+        for (auto &p: conns) mn->send_msg(msg, p.second);
+#ifndef HOTSTUFF_ENABLE_BENCHMARK
+        HOTSTUFF_LOG_INFO("send new cmd %.10s",
+                          get_hex(cmd->get_hash()).c_str());
+#endif
+        waiting.insert(std::make_pair(
+                cmd->get_hash(), Request(cmd)));
         if (max_iter_num > 0)
             max_iter_num--;
         return true;
@@ -109,7 +130,7 @@ void client_resp_cmd_handler(MsgRespCmd &&msg, const Net::conn_t &) {
     elapsed.push_back(std::make_pair(tv, et.elapsed_sec));
 #endif
     waiting.erase(it);
-    while (try_send());
+    //while (try_send());
 }
 
 std::pair<std::string, std::string> split_ip_port_cport(const std::string &s) {
@@ -118,6 +139,9 @@ std::pair<std::string, std::string> split_ip_port_cport(const std::string &s) {
 }
 
 int main(int argc, char **argv) {
+   // sleep(20);
+    std::cout << "STO NEL CLIENTTTTTTT" << std::endl;
+    
     Config config("hotstuff.conf");
 
     auto opt_idx = Config::OptValInt::create(0);
@@ -156,20 +180,35 @@ int main(int argc, char **argv) {
         raw.push_back(res[0]);
     }
 
+
+    for (std::string i : raw) {
+        std::cout << " raw[i] = " <<  i << std::endl;
+    }
+
+    std::cout << "idx = "<< idx << std::endl;
+    std::cout << "(size_t)idx = "<< (size_t)idx << std::endl;
+    std::cout << "raw.size() = "<< raw.size() << std::endl;
+
     if (!(0 <= idx && (size_t)idx < raw.size() && raw.size() > 0))
         throw std::invalid_argument("out of range");
     cid = opt_cid->get() != -1 ? opt_cid->get() : idx;
+    std::cout << "cid = " <<cid << std::endl;
+
     for (const auto &p: raw)
     {
         auto _p = split_ip_port_cport(p);
         size_t _;
         replicas.push_back(NetAddr(NetAddr(_p.first).ip, htons(stoi(_p.second, &_))));
     }
+    for (std::string i : replicas) {
+        std::cout << " replicas[i] = " <<  i << std::endl;
+    }
 
     nfaulty = (replicas.size() - 1) / 3;
     HOTSTUFF_LOG_INFO("nfaulty = %zu", nfaulty);
     connect_all();
-    while (try_send());
+    //while (try_send());
+    try_send();
     ec.dispatch();
 
 #ifdef HOTSTUFF_ENABLE_BENCHMARK

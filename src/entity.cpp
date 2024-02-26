@@ -20,6 +20,8 @@
 namespace hotstuff {
 
 void Block::serialize(DataStream &s) const {
+    std::cout << "---- STO IN serialize riga 22 DENTRO entity.cpp package:salticidae->include->src---- " << std::endl;
+
     s << htole((uint32_t)parent_hashes.size());
     for (const auto &hash: parent_hashes)
         s << hash;
@@ -30,6 +32,8 @@ void Block::serialize(DataStream &s) const {
 }
 
 void Block::unserialize(DataStream &s, HotStuffCore *hsc) {
+    std::cout << "---- STO IN unserialize riga 34 DENTRO entity.cpp package:salticidae->include->src---- " << std::endl;
+
     uint32_t n;
     s >> n;
     n = letoh(n);
@@ -57,12 +61,16 @@ void Block::unserialize(DataStream &s, HotStuffCore *hsc) {
 }
 
 bool Block::verify(const HotStuffCore *hsc) const {
+    std::cout << "---- STO IN verigy riga 63 DENTRO entity.cpp package:salticidae->include->src---- " << std::endl;
+
     if (qc->get_obj_hash() == hsc->get_genesis()->get_hash())
         return true;
     return qc->verify(hsc->get_config());
 }
 
 promise_t Block::verify(const HotStuffCore *hsc, VeriPool &vpool) const {
+    std::cout << "---- STO IN verify riga 71 DENTRO entity.cpp package:salticidae->include->src---- " << std::endl;
+    
     if (qc->get_obj_hash() == hsc->get_genesis()->get_hash())
         return promise_t([](promise_t &pm) { pm.resolve(true); });
     return qc->verify(hsc->get_config(), vpool);

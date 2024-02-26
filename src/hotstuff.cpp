@@ -28,27 +28,39 @@ using salticidae::static_pointer_cast;
 namespace hotstuff {
 
 const opcode_t MsgPropose::opcode;
-MsgPropose::MsgPropose(const Proposal &proposal) { serialized << proposal; }
+MsgPropose::MsgPropose(const Proposal &proposal) {
+    std::cout << "---- STO IN MsgPropose riga 31 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
+    serialized << proposal; }
 void MsgPropose::postponed_parse(HotStuffCore *hsc) {
+    std::cout << "---- STO IN postponed_parse riga 34 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
+
     proposal.hsc = hsc;
     serialized >> proposal;
 }
 
 const opcode_t MsgVote::opcode;
-MsgVote::MsgVote(const Vote &vote) { serialized << vote; }
+MsgVote::MsgVote(const Vote &vote) {
+    std::cout << "---- STO IN MsgVote riga 42 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
+    serialized << vote; }
 void MsgVote::postponed_parse(HotStuffCore *hsc) {
+    std::cout << "---- STO IN postponed_parse riga 45 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
+
     vote.hsc = hsc;
     serialized >> vote;
 }
 
 const opcode_t MsgReqBlock::opcode;
 MsgReqBlock::MsgReqBlock(const std::vector<uint256_t> &blk_hashes) {
+    std::cout << "---- STO IN MsgReqBlock riga 53 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
+
     serialized << htole((uint32_t)blk_hashes.size());
     for (const auto &h: blk_hashes)
         serialized << h;
 }
 
 MsgReqBlock::MsgReqBlock(DataStream &&s) {
+    std::cout << "---- STO IN MsgReqBlock riga 61 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
+
     uint32_t size;
     s >> size;
     size = letoh(size);
@@ -58,11 +70,14 @@ MsgReqBlock::MsgReqBlock(DataStream &&s) {
 
 const opcode_t MsgRespBlock::opcode;
 MsgRespBlock::MsgRespBlock(const std::vector<block_t> &blks) {
+    std::cout << "---- STO IN MsgReqBlock riga 72 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
     serialized << htole((uint32_t)blks.size());
     for (auto blk: blks) serialized << *blk;
 }
 
 void MsgRespBlock::postponed_parse(HotStuffCore *hsc) {
+    std::cout << "---- STO IN postponed_parse riga 78 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
+
     uint32_t size;
     serialized >> size;
     size = letoh(size);
@@ -77,10 +92,14 @@ void MsgRespBlock::postponed_parse(HotStuffCore *hsc) {
 
 // TODO: improve this function
 void HotStuffBase::exec_command(uint256_t cmd_hash, commit_cb_t callback) {
-    cmd_pending.enqueue(std::make_pair(cmd_hash, callback));
+        std::cout << "---- STO IN exec_command riga 94 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
+
+        cmd_pending.enqueue(std::make_pair(cmd_hash, callback));
 }
 
 void HotStuffBase::on_fetch_blk(const block_t &blk) {
+    std::cout << "---- STO IN on_fetch_blk riga 100 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
+
 #ifdef HOTSTUFF_BLK_PROFILE
     blk_profiler.get_tx(blk->get_hash());
 #endif
@@ -98,6 +117,8 @@ void HotStuffBase::on_fetch_blk(const block_t &blk) {
 }
 
 bool HotStuffBase::on_deliver_blk(const block_t &blk) {
+    std::cout << "---- STO IN on_deliver_blk riga 119 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
+    
     const uint256_t &blk_hash = blk->get_hash();
     bool valid;
     /* sanity check: all parents must be delivered */
@@ -145,6 +166,8 @@ bool HotStuffBase::on_deliver_blk(const block_t &blk) {
 promise_t HotStuffBase::async_fetch_blk(const uint256_t &blk_hash,
                                         const PeerId *replica,
                                         bool fetch_now) {
+    std::cout << "---- STO IN async_fetch_blk riga 166 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
+
     if (storage->is_blk_fetched(blk_hash))
         return promise_t([this, &blk_hash](promise_t pm){
             pm.resolve(storage->find_blk(blk_hash));
@@ -167,10 +190,15 @@ promise_t HotStuffBase::async_fetch_blk(const uint256_t &blk_hash,
 
 promise_t HotStuffBase::async_deliver_blk(const uint256_t &blk_hash,
                                         const PeerId &replica) {
-    if (storage->is_blk_delivered(blk_hash))
+    std::cout << "---- STO IN async_deliver_blk riga 191 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
+
+    if (storage->is_blk_delivered(blk_hash)) {
+        std::cout << "BLK IS DELIVERED !!! " << std::endl;
         return promise_t([this, &blk_hash](promise_t pm) {
             pm.resolve(storage->find_blk(blk_hash));
         });
+    }
+    
     auto it = blk_delivery_waiting.find(blk_hash);
     if (it != blk_delivery_waiting.end())
         return static_cast<promise_t &>(it->second);
@@ -184,7 +212,7 @@ promise_t HotStuffBase::async_deliver_blk(const uint256_t &blk_hash,
         assert(qc);
         if (blk == get_genesis())
             pms.push_back(promise_t([](promise_t &pm){ pm.resolve(true); }));
-        else
+        else    //verify !!!!!!!!!!!!!!!!!!!!
             pms.push_back(blk->verify(this, vpool));
         pms.push_back(async_fetch_blk(qc->get_obj_hash(), &replica));
         /* the parents should be delivered */
@@ -198,8 +226,10 @@ promise_t HotStuffBase::async_deliver_blk(const uint256_t &blk_hash,
     });
     return static_cast<promise_t &>(pm);
 }
-
+/** deliver consensus message:  */
 void HotStuffBase::propose_handler(MsgPropose &&msg, const Net::conn_t &conn) {
+    std::cout << "---- STO IN propose_handler riga 227 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
+
     const PeerId &peer = conn->get_peer_id();
     if (peer.is_null()) return;
     msg.postponed_parse(this);
@@ -219,6 +249,7 @@ void HotStuffBase::propose_handler(MsgPropose &&msg, const Net::conn_t &conn) {
 }
 
 void HotStuffBase::vote_handler(MsgVote &&msg, const Net::conn_t &conn) {
+    std::cout << "---- STO IN vote_handler riga 248 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
     const auto &peer = conn->get_peer_id();
     if (peer.is_null()) return;
     msg.postponed_parse(this);
@@ -226,8 +257,8 @@ void HotStuffBase::vote_handler(MsgVote &&msg, const Net::conn_t &conn) {
     RcObj<Vote> v(new Vote(std::move(msg.vote)));
     promise::all(std::vector<promise_t>{
         async_deliver_blk(v->blk_hash, peer),
-        v->verify(vpool),
-    }).then([this, v=std::move(v)](const promise::values_t values) {
+        v->verify(vpool),}).
+        then([this, v=std::move(v)](const promise::values_t values) {
         if (!promise::any_cast<bool>(values[1]))
             LOG_WARN("invalid vote from %d", v->voter);
         else
@@ -236,6 +267,8 @@ void HotStuffBase::vote_handler(MsgVote &&msg, const Net::conn_t &conn) {
 }
 
 void HotStuffBase::req_blk_handler(MsgReqBlock &&msg, const Net::conn_t &conn) {
+    std::cout << "---- STO IN req_blk_handler riga 267 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
+
     const PeerId replica = conn->get_peer_id();
     if (replica.is_null()) return;
     auto &blk_hashes = msg.blk_hashes;
@@ -254,12 +287,16 @@ void HotStuffBase::req_blk_handler(MsgReqBlock &&msg, const Net::conn_t &conn) {
 }
 
 void HotStuffBase::resp_blk_handler(MsgRespBlock &&msg, const Net::conn_t &) {
+    std::cout << "---- STO IN resp_blk_handler riga 287 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
+
     msg.postponed_parse(this);
     for (const auto &blk: msg.blks)
         if (blk) on_fetch_blk(blk);
 }
 
 bool HotStuffBase::conn_handler(const salticidae::ConnPool::conn_t &conn, bool connected) {
+    std::cout << "---- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
+
     if (connected)
     {
         if (!pn.enable_tls) return true;
@@ -271,6 +308,8 @@ bool HotStuffBase::conn_handler(const salticidae::ConnPool::conn_t &conn, bool c
 }
 
 void HotStuffBase::print_stat() const {
+    std::cout << "---- STO IN print_stat riga 308 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
+
     LOG_INFO("===== begin stats =====");
     LOG_INFO("-------- queues -------");
     LOG_INFO("blk_fetch_waiting: %lu", blk_fetch_waiting.size());
@@ -377,16 +416,20 @@ HotStuffBase::HotStuffBase(uint32_t blk_size,
 }
 
 void HotStuffBase::do_broadcast_proposal(const Proposal &prop) {
-    std::cout << "do_broadcast_proposal" << std::endl;
+    std::cout << "---- STO IN do_broadcast_proposal riga 416 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
 
     //MsgPropose prop_msg(prop);
     pn.multicast_msg(MsgPropose(prop), peers);
     //for (const auto &replica: peers)
     //    pn.send_msg(prop_msg, replica);
 }
-
+/**
+Called upon sending out a new vote to the next proposer.
+ The user should send the vote message to a *good* proposer to have good liveness,
+ while safety is always guaranteed by HotStuffCore.
+ */
 void HotStuffBase::do_vote(ReplicaID last_proposer, const Vote &vote) {
-    std::cout << "SONO DENTRO do_vote" << std::endl;
+    std::cout << "---- STO IN do_vote riga 425 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
     
     pmaker->beat_resp(last_proposer)
             .then([this, vote](ReplicaID proposer) {
@@ -406,12 +449,14 @@ void HotStuffBase::do_vote(ReplicaID last_proposer, const Vote &vote) {
 }
 
 void HotStuffBase::do_consensus(const block_t &blk) {
-    std::cout << " DO CONSENSUS" << std::endl;
+    std::cout << "---- STO IN do_consensus riga 445 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
     
     pmaker->on_consensus(blk);
 }
 
 void HotStuffBase::do_decide(Finality &&fin) {
+    std::cout << "---- STO IN do_decide riga 451 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
+    
     part_decided++;
     state_machine_execute(fin);
     auto it = decision_waiting.find(fin.cmd_hash);
@@ -427,7 +472,7 @@ HotStuffBase::~HotStuffBase() {}
 void HotStuffBase::start(
         std::vector<std::tuple<NetAddr, pubkey_bt, uint256_t>> &&replicas,
         bool ec_loop) {
-    std::cout << " #############  STO IN HotStuffBase::start    #############  " << std::endl;
+    std::cout << "---- STO IN start riga 466 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
 
     for (size_t i = 0; i < replicas.size(); i++)
     {
@@ -509,7 +554,7 @@ void HotStuffBase::start(
 
     // CI ENTRO SOLO QUANDO RUNNO IL CLIENT !!!!!!!!!!!
     cmd_pending.reg_handler(ec, [this](cmd_queue_t &q) {
-        std::this_thread::sleep_for(std::chrono::seconds(5));
+        //std::this_thread::sleep_for(std::chrono::seconds(5));
 
         std::cout << "STO DENTRO cmd_pending.reg_handler(ec, [this](cmd_queue_t &q) " << std::endl;
         

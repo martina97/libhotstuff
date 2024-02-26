@@ -29,6 +29,7 @@
 #include <memory>
 #include <functional>
 #include <type_traits>
+#include <iostream>
 
 #if __cplusplus >= 201703L
 #ifdef __has_include
@@ -146,11 +147,15 @@ namespace promise {
                 inline promise_t(Func &&callback);
 
         void swap(promise_t &other) {
+            std::cout << "---- STO IN swap riga 148 DENTRO promise.hpp package:include->hotstuff---- " << std::endl;
+
             std::swap(pm, other.pm);
             std::swap(ref_cnt, other.ref_cnt);
         }
 
         promise_t &operator=(const promise_t &other) {
+            std::cout << "---- STO IN operator riga 155 DENTRO promise.hpp package:include->hotstuff---- " << std::endl;
+
             if (this != &other)
             {
                 promise_t tmp(other);
@@ -171,12 +176,16 @@ namespace promise {
         promise_t(const promise_t &other):
             pm(other.pm),
             ref_cnt(other.ref_cnt) {
+            std::cout << "---- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- " << std::endl;
+
             ++*ref_cnt;
         }
 
         promise_t(promise_t &&other):
             pm(other.pm),
             ref_cnt(other.ref_cnt) {
+            std::cout << "---- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- " << std::endl;
+
             other.pm = nullptr;
         }
 
@@ -225,10 +234,14 @@ namespace promise {
         pm_any_t reason;
 
         void add_on_fulfilled(callback_t &&cb) {
+            std::cout << "---- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- " << std::endl;
+
             fulfilled_callbacks.push_back(std::move(cb));
         }
 
         void add_on_rejected(callback_t &&cb) {
+            std::cout << "---- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- " << std::endl;
+
             rejected_callbacks.push_back(std::move(cb));
         }
 
@@ -283,12 +296,16 @@ namespace promise {
         template<typename Func,
             enable_if_return<Func, promise_t> * = nullptr>
         constexpr auto gen_on_fulfilled(Func &&on_fulfilled, const promise_t &npm) {
+            std::cout << "---- STO IN gen_on_fulfilled riga 297 DENTRO promise.hpp package:include->hotstuff---- " << std::endl;
+
             return cps_transform(std::forward<Func>(on_fulfilled), this->result, npm);
         }
 
         template<typename Func,
             enable_if_return<Func, promise_t> * = nullptr>
         constexpr auto gen_on_rejected(Func &&on_rejected, const promise_t &npm) {
+            std::cout << "---- STO IN gen_on_rejected riga 305 DENTRO promise.hpp package:include->hotstuff---- " << std::endl;
+
             return cps_transform(std::forward<Func>(on_rejected), this->reason, npm);
         }
 
@@ -297,6 +314,8 @@ namespace promise {
             enable_if_return<Func, void> * = nullptr,
             typename function_traits<Func>::non_empty_arg * = nullptr>
         constexpr auto gen_on_fulfilled(Func &&on_fulfilled, const promise_t &npm) {
+            std::cout << "---- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- " << std::endl;
+
             return [this, npm,
                     on_fulfilled = std::forward<Func>(on_fulfilled)]() mutable {
                 on_fulfilled(result);
@@ -308,6 +327,8 @@ namespace promise {
             enable_if_return<Func, void> * = nullptr,
             typename function_traits<Func>::empty_arg * = nullptr>
         constexpr auto gen_on_fulfilled(Func &&on_fulfilled, const promise_t &npm) {
+            std::cout << "---- STO IN gen_on_fulfilled riga 328 DENTRO promise.hpp package:include->hotstuff---- " << std::endl;
+
             return [on_fulfilled = std::forward<Func>(on_fulfilled), npm]() mutable {
                 on_fulfilled();
                 npm->_resolve();
@@ -318,6 +339,8 @@ namespace promise {
             enable_if_return<Func, void> * = nullptr,
             typename function_traits<Func>::non_empty_arg * = nullptr>
         constexpr auto gen_on_rejected(Func &&on_rejected, const promise_t &npm) {
+            std::cout << "---- STO IN gen_on_rejected riga 340 DENTRO promise.hpp package:include->hotstuff---- " << std::endl;
+
             return [this, npm,
                     on_rejected = std::forward<Func>(on_rejected)]() mutable {
                 on_rejected(reason);
@@ -329,6 +352,8 @@ namespace promise {
             enable_if_return<Func, void> * = nullptr,
             typename function_traits<Func>::empty_arg * = nullptr>
         constexpr auto gen_on_rejected(Func &&on_rejected, const promise_t &npm) {
+            std::cout << "---- STO IN gen_on_rejected riga 353 DENTRO promise.hpp package:include->hotstuff---- " << std::endl;
+
             return [npm,
                     on_rejected = std::forward<Func>(on_rejected)]() mutable {
                 on_rejected();
@@ -340,6 +365,7 @@ namespace promise {
             enable_if_return<Func, pm_any_t> * = nullptr,
             typename function_traits<Func>::non_empty_arg * = nullptr>
         constexpr auto gen_on_fulfilled(Func &&on_fulfilled, const promise_t &npm) {
+
             return [this, npm,
                     on_fulfilled = std::forward<Func>(on_fulfilled)]() mutable {
                 npm->_resolve(on_fulfilled(result));

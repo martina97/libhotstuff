@@ -54,6 +54,8 @@ class VeriPool {
 
     public:
     VeriPool(EventContext ec, size_t nworker, size_t burst_size = 128) {
+        std::cout << "---- STO IN VeriPool riga 56 DENTRO task.h package:include->hotstuff---- " << std::endl;
+
         out_queue.reg_handler(ec, [this, burst_size](mpsc_queue_t &q) {
             size_t cnt = burst_size;
             VeriTask *task;
@@ -101,6 +103,8 @@ class VeriPool {
     }
 
     promise_t verify(veritask_ut &&task) {
+        std::cout << "---- STO IN verify riga 105 DENTRO task.h package:include->hotstuff---- " << std::endl;
+
         auto ptr = task.get();
         auto ret = pms.insert(std::make_pair(ptr,
                 std::make_pair(std::move(task), promise_t([](promise_t &){}))));
