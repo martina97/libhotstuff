@@ -1630,6 +1630,30 @@
 			"value" : "ON"
 		},
 		{
+			"name" : "SECP256K1_ENABLE_MODULE_FROST",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "No help, variable specified on the command line."
+				}
+			],
+			"type" : "UNINITIALIZED",
+			"value" : "ON"
+		},
+		{
+			"name" : "SECP256K1_EXPERIMENTAL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "No help, variable specified on the command line."
+				}
+			],
+			"type" : "UNINITIALIZED",
+			"value" : "ON"
+		},
+		{
 			"name" : "Salticidae_BINARY_DIR",
 			"properties" : 
 			[

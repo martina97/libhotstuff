@@ -5,5 +5,6 @@
     <mapping directory="$PROJECT_DIR$/salticidae" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/scripts/deploy/minirun" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/secp256k1" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/secp256k1-frost" vcs="Git" />
   </component>
 </project>

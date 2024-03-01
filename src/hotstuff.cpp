@@ -417,7 +417,7 @@ HotStuffBase::HotStuffBase(uint32_t blk_size,
 
 void HotStuffBase::do_broadcast_proposal(const Proposal &prop) {
     std::cout << "---- STO IN do_broadcast_proposal riga 416 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
-
+    std::cout << " prop.blk->get_hash() = " << std::string(prop) << std::endl;
     //MsgPropose prop_msg(prop);
     pn.multicast_msg(MsgPropose(prop), peers);
     //for (const auto &replica: peers)
