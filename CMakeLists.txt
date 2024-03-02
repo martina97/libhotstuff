@@ -89,13 +89,15 @@ if(BUILD_EXAMPLES)
 endif()
 
 # build tools
-add_executable(hotstuff-keygen
-    src/hotstuff_keygen.cpp)
+add_executable(hotstuff-keygen src/hotstuff_keygen.cpp)
 target_link_libraries(hotstuff-keygen hotstuff_static)
 
-add_executable(hotstuff-tls-keygen
-    src/hotstuff_tls_keygen.cpp)
+add_executable(hotstuff-tls-keygen src/hotstuff_tls_keygen.cpp)
 target_link_libraries(hotstuff-tls-keygen hotstuff_static)
+
+add_executable(frost_keygeneration secp256k1-frost/examples/frost_keygen.cpp)
+target_link_libraries(frost_keygeneration hotstuff_static)
+
 
 find_package(Doxygen)
 if (DOXYGEN_FOUND)

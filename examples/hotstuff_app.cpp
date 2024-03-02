@@ -174,6 +174,7 @@ int main(int argc, char **argv) {
 
 
     Config config("hotstuff.conf");     // classe che gestisce le opzioni di configurazione per un'applicazione
+    //Config config("hotstuff_frost.conf");     // classe che gestisce le opzioni di configurazione per un'applicazione
     std::cout << "---- DOPO CONFIG ---- " << std::endl;
     ElapsedTime elapsed;    //serve a calcolare il tempo trascorso e il tempo della CPU tra due punti nel codice
     elapsed.start();    //tempo di inizio
