@@ -142,8 +142,8 @@ int main(int argc, char **argv) {
    // sleep(20);
     std::cout << "STO NEL CLIENTTTTTTT" << std::endl;
     
-    Config config("hotstuff.conf");
-    //Config config("hotstuff_frost.conf");
+    //Config config("hotstuff.conf");
+    Config config("hotstuff_frost.conf");
 
     auto opt_idx = Config::OptValInt::create(0);
     auto opt_replicas = Config::OptValStrVec::create();
