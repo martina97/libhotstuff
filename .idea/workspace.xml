@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakePresetLoader"><![CDATA[{
+  "useNewFormat": true
+}]]></component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f91c2701-4032-4eac-8cd6-68353351d8a4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/query/cache-v2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/query/cmakeFiles-v1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/query/codemodel-v2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/query/toolchains-v1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/cache-v2-792613572c70b5a1527e.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/cmakeFiles-v1-be2f4db4a979fd6edb1b.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/codemodel-v2-5843be915e2c029c3a0d.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/index-2024-03-03T15-01-55-0436.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-frost_keygeneration-Release-6f6c6544e3f289efab66.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff-Release-91244764f1e3463156bc.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff-app-Release-561fa048cb79dc57491c.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff-client-Release-d59c46710a360390bc87.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff-keygen-Release-b93250ef30887f0feb96.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff-prova-Release-da563b4146174322bc0d.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff-tls-keygen-Release-49803d19ccfb1b4c18a9.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff_shared-Release-6c7cd24cb002347f0f5e.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff_static-Release-9f1720641ef624965f20.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-libsecp256k1-Release-b52a3cb4863e3d781752.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-salticidae-Release-e82965bd0c6d6bf47884.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-salticidae_shared-Release-f1390c5b9e3382ff281f.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-salticidae_static-Release-e6a940ba34a421ba7129.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-test_secp256k1-Release-28d6cbec1c4161caae76.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/toolchains-v1-aa30e0470d4bd450b5d1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitmodules" beforeDir="false" afterPath="$PROJECT_DIR$/.gitmodules" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libhotstuff.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/hotstuff-prova" beforeDir="false" afterPath="$PROJECT_DIR$/examples/hotstuff-prova" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/hotstuff_app.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/hotstuff_app.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/hotstuff_client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/hotstuff_client.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frost_keygeneration" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/deploy/app/run.yml" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/deploy/app/run.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/deploy/app/run_cli.yml" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/deploy/app/run_cli.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/run_demo.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/run_demo.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/run_frost_key_generation.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/secp256k1-frost" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/consensus.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/consensus.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entity.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hotstuff.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hotstuff.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hotstuff_tls_keygen.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hotstuff_tls_keygen.cpp" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2023" />
+    <option name="minorVersion" value="3.4" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="2dEZcYqWOZ1hNnlk93eg69pei2x" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/home/martina/CLionProjects/libhotstuff",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f91c2701-4032-4eac-8cd6-68353351d8a4" name="Changes" comment="" />
+      <created>1709575278090</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1709575278090</updated>
+      <workItem from="1709575279722" duration="2000" />
+    </task>
+    <servers />
+  </component>
+</project>

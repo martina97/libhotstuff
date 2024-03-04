@@ -22,11 +22,6 @@
         src: "{{ (lookup('env','run_path'), hs_base_conf) | path_join }}"
         dest: "{{ (conf_dir, 'hotstuff.conf') | path_join }}"
         mode: '0644'
-    - name: copy the base conf file
-      copy:
-        src: "{{ (lookup('env','run_path'), hs_base_conf) | path_join }}"
-        dest: "{{ (conf_dir, 'hotstuff_frost.conf') | path_join }}"
-        mode: '0644'
     - name: start the hotstuff client
       hotstuff_cli:
         bin: "{{ client_bin | default('~/libhotstuff/examples/hotstuff_client') }}"

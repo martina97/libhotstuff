@@ -216,7 +216,8 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds,
 
 /** Funzione chiamata alla consegna di un messaggio di proposta (PROPOSAL).
  * Il blocco menzionato nel messaggio dovrebbe essere già consegnato.*/
-void HotStuffCore::on_receive_proposal(const Proposal &prop) {
+void HotStuffCore::
+on_receive_proposal(const Proposal &prop) {
     std::cout << "---- STO IN on_receive_proposal riga 215 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
     
     LOG_PROTO("got %s", std::string(prop).c_str());
