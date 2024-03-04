@@ -77,7 +77,7 @@ option(HOTSTUFF_DEBUG_LOG "enable debug log" ON)
 option(HOTSTUFF_NORMAL_LOG "enable normal log" ON)
 option(HOTSTUFF_PROTO_LOG "enable protocol log" ON)
 option(HOTSTUFF_MSG_STAT "enable message statistics" ON)
-option(HOTSTUFF_BLK_PROFILE "enable block profiling" ON)
+option(HOTSTUFF_BLK_PROFILE "enable block profiling" OFF)
 option(HOTSTUFF_TWO_STEP "use two-step HotStuff (instead of three-step HS)" OFF)
 option(BUILD_EXAMPLES "build examples" ON)
 
@@ -89,12 +89,10 @@ if(BUILD_EXAMPLES)
 endif()
 
 # build tools
-add_executable(hotstuff-keygen
-    src/hotstuff_keygen.cpp)
+add_executable(hotstuff-keygen src/hotstuff_keygen.cpp)
 target_link_libraries(hotstuff-keygen hotstuff_static)
 
-add_executable(hotstuff-tls-keygen
-    src/hotstuff_tls_keygen.cpp)
+add_executable(hotstuff-tls-keygen src/hotstuff_tls_keygen.cpp)
 target_link_libraries(hotstuff-tls-keygen hotstuff_static)
 
 find_package(Doxygen)
