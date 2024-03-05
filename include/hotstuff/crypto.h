@@ -303,7 +303,7 @@ PubKeySecp256k1::PubKeySecp256k1(
         const PrivKeySecp256k1 &priv_key,
         const secp256k1_context_t &ctx): PubKey(), ctx(ctx) {
     if (!secp256k1_ec_pubkey_create(ctx->ctx, &data, priv_key.data))
-        throw std::invalid_argument("invalid secp256k1 private key");
+        throw std::invalid_argument("invalid secp256k1-hotstuff private key");
 }
 
 class SigSecp256k1: public Serializable {
@@ -363,7 +363,7 @@ class SigSecp256k1: public Serializable {
                 (unsigned char *)priv_key.data,
                 NULL, // default nonce function
                 NULL))
-            throw std::invalid_argument("failed to create secp256k1 signature");
+            throw std::invalid_argument("failed to create secp256k1-hotstuff signature");
     }
 
     bool verify(const bytearray_t &msg, const PubKeySecp256k1 &pub_key,

@@ -40,7 +40,7 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 49,
+				"line" : 52,
 				"parent" : 0
 			},
 			{
@@ -52,19 +52,19 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 29,
+				"line" : 32,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 47,
+				"line" : 50,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 48,
+				"line" : 51,
 				"parent" : 0
 			}
 		]
@@ -89,7 +89,7 @@
 				},
 				{
 					"backtrace" : 3,
-					"path" : "/home/martina/CLionProjects/libhotstuff/secp256k1/include"
+					"path" : "/home/martina/CLionProjects/libhotstuff/secp256k1-hotstuff/include"
 				},
 				{
 					"backtrace" : 4,

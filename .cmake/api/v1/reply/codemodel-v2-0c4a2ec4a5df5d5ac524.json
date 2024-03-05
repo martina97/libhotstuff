@@ -1,0 +1,659 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2,
+						5,
+						6
+					],
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.9"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						36,
+						39,
+						41,
+						42,
+						43,
+						44
+					]
+				},
+				{
+					"build" : "salticidae",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.9"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "salticidae",
+					"targetIndexes" : 
+					[
+						46,
+						47,
+						48
+					]
+				},
+				{
+					"build" : "secp256k1-frost",
+					"childIndexes" : 
+					[
+						3,
+						4
+					],
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.13"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "secp256k1-frost",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19,
+						20,
+						21,
+						22,
+						23,
+						24,
+						25,
+						26,
+						27,
+						31
+					]
+				},
+				{
+					"build" : "secp256k1-frost/src",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.13"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 2,
+					"source" : "secp256k1-frost/src",
+					"targetIndexes" : 
+					[
+						28,
+						29,
+						30,
+						34,
+						45,
+						50,
+						51,
+						53
+					]
+				},
+				{
+					"build" : "secp256k1-frost/examples",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.13"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 2,
+					"source" : "secp256k1-frost/examples",
+					"targetIndexes" : 
+					[
+						32,
+						33,
+						35,
+						49
+					]
+				},
+				{
+					"build" : "test",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.9"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "test",
+					"targetIndexes" : 
+					[
+						52
+					]
+				},
+				{
+					"build" : "examples",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.9"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "examples",
+					"targetIndexes" : 
+					[
+						37,
+						38,
+						40
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"directoryIndexes" : 
+					[
+						0,
+						5,
+						6
+					],
+					"name" : "hotstuff",
+					"targetIndexes" : 
+					[
+						36,
+						37,
+						38,
+						39,
+						40,
+						41,
+						42,
+						43,
+						44,
+						52
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "Salticidae",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						46,
+						47,
+						48
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2,
+						3,
+						4
+					],
+					"name" : "libsecp256k1",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19,
+						20,
+						21,
+						22,
+						23,
+						24,
+						25,
+						26,
+						27,
+						28,
+						29,
+						30,
+						31,
+						32,
+						33,
+						34,
+						35,
+						45,
+						49,
+						50,
+						51,
+						53
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 2,
+					"id" : "Continuous::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-Continuous-Release-c6fe522093865d6d188b.json",
+					"name" : "Continuous",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ContinuousBuild::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-ContinuousBuild-Release-45d6820fba5659348610.json",
+					"name" : "ContinuousBuild",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ContinuousConfigure::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-ContinuousConfigure-Release-c20ee67886a65ab436ba.json",
+					"name" : "ContinuousConfigure",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ContinuousCoverage::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-ContinuousCoverage-Release-d6a8d9a2b7fe7034427a.json",
+					"name" : "ContinuousCoverage",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ContinuousMemCheck::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-ContinuousMemCheck-Release-2dcb0eef08dfb03d52ed.json",
+					"name" : "ContinuousMemCheck",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ContinuousStart::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-ContinuousStart-Release-bab2a6905e3293821a9a.json",
+					"name" : "ContinuousStart",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ContinuousSubmit::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-ContinuousSubmit-Release-f7bf191defa655cd2964.json",
+					"name" : "ContinuousSubmit",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ContinuousTest::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-ContinuousTest-Release-a45f2517e10b008866c7.json",
+					"name" : "ContinuousTest",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ContinuousUpdate::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-ContinuousUpdate-Release-2a061933cc366896e0ff.json",
+					"name" : "ContinuousUpdate",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "Experimental::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-Experimental-Release-4e6d3b49a3833f4912d8.json",
+					"name" : "Experimental",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ExperimentalBuild::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-ExperimentalBuild-Release-4553bad7c0a6bcc650f4.json",
+					"name" : "ExperimentalBuild",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ExperimentalConfigure::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-ExperimentalConfigure-Release-d3fb6ac18f7340508630.json",
+					"name" : "ExperimentalConfigure",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ExperimentalCoverage::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-ExperimentalCoverage-Release-2f16bc6f802162e4f200.json",
+					"name" : "ExperimentalCoverage",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ExperimentalMemCheck::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-ExperimentalMemCheck-Release-0a0a3fbd07f827c6dd8f.json",
+					"name" : "ExperimentalMemCheck",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ExperimentalStart::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-ExperimentalStart-Release-365882c1016d83bde754.json",
+					"name" : "ExperimentalStart",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ExperimentalSubmit::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-ExperimentalSubmit-Release-ac8404e32f64fc0a5402.json",
+					"name" : "ExperimentalSubmit",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ExperimentalTest::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-ExperimentalTest-Release-cb3651789faadee6588e.json",
+					"name" : "ExperimentalTest",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ExperimentalUpdate::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-ExperimentalUpdate-Release-0d9bfb8586970db27ef8.json",
+					"name" : "ExperimentalUpdate",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "Nightly::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-Nightly-Release-b42b3917543e05bd64a0.json",
+					"name" : "Nightly",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "NightlyBuild::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-NightlyBuild-Release-920465fd1540ab790c0c.json",
+					"name" : "NightlyBuild",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "NightlyConfigure::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-NightlyConfigure-Release-8a1c76eba6f5413a6e74.json",
+					"name" : "NightlyConfigure",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "NightlyCoverage::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-NightlyCoverage-Release-bbc5731163c2701e5749.json",
+					"name" : "NightlyCoverage",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "NightlyMemCheck::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-NightlyMemCheck-Release-2c3111688c2e116621ea.json",
+					"name" : "NightlyMemCheck",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "NightlyMemoryCheck::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-NightlyMemoryCheck-Release-6d64414eca9b6315ed6d.json",
+					"name" : "NightlyMemoryCheck",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "NightlyStart::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-NightlyStart-Release-43c565b2f805ede8f294.json",
+					"name" : "NightlyStart",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "NightlySubmit::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-NightlySubmit-Release-46f0ce750480e375e7f1.json",
+					"name" : "NightlySubmit",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "NightlyTest::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-NightlyTest-Release-358423d5200fce970302.json",
+					"name" : "NightlyTest",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "NightlyUpdate::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-NightlyUpdate-Release-13cb0fd7d4fd0e8c43fb.json",
+					"name" : "NightlyUpdate",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "bench::@3ee2b3094eb712552e85",
+					"jsonFile" : "target-bench-Release-4f964624e50943b8f04b.json",
+					"name" : "bench",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "bench_ecmult::@3ee2b3094eb712552e85",
+					"jsonFile" : "target-bench_ecmult-Release-21153022b259bbeb3cf7.json",
+					"name" : "bench_ecmult",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "bench_internal::@3ee2b3094eb712552e85",
+					"jsonFile" : "target-bench_internal-Release-d8838694e8fca8eba7af.json",
+					"name" : "bench_internal",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "check::@d14abe8b9eeaf0920363",
+					"jsonFile" : "target-check-Release-eeb1ffaea2888a1766f5.json",
+					"name" : "check",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ecdh_example::@73ca5e381b0f51ec0422",
+					"jsonFile" : "target-ecdh_example-Release-8f721edcc1bd09c6a305.json",
+					"name" : "ecdh_example",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ecdsa_example::@73ca5e381b0f51ec0422",
+					"jsonFile" : "target-ecdsa_example-Release-f359c5ee486b0ebf8d1f.json",
+					"name" : "ecdsa_example",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "exhaustive_tests::@3ee2b3094eb712552e85",
+					"jsonFile" : "target-exhaustive_tests-Release-325c0efc9f05de1e864e.json",
+					"name" : "exhaustive_tests",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "frost_example::@73ca5e381b0f51ec0422",
+					"jsonFile" : "target-frost_example-Release-b481ccc187cc07292144.json",
+					"name" : "frost_example",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "hotstuff::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-hotstuff-Release-5805473943f34d318ca1.json",
+					"name" : "hotstuff",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "hotstuff-app::@714eac15f71a94114fdf",
+					"jsonFile" : "target-hotstuff-app-Release-3e03d0dbe62199f793fb.json",
+					"name" : "hotstuff-app",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "hotstuff-client::@714eac15f71a94114fdf",
+					"jsonFile" : "target-hotstuff-client-Release-420be860c53f160f4a2d.json",
+					"name" : "hotstuff-client",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "hotstuff-keygen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-hotstuff-keygen-Release-4fd7ae86f7202862e6fa.json",
+					"name" : "hotstuff-keygen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "hotstuff-prova::@714eac15f71a94114fdf",
+					"jsonFile" : "target-hotstuff-prova-Release-6c75ab3920896c624886.json",
+					"name" : "hotstuff-prova",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "hotstuff-tls-keygen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-hotstuff-tls-keygen-Release-3d4cec65aa8ae0aa4d38.json",
+					"name" : "hotstuff-tls-keygen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "hotstuff_shared::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-hotstuff_shared-Release-16608efe0390bba968b4.json",
+					"name" : "hotstuff_shared",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "hotstuff_static::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-hotstuff_static-Release-fcddf83f92794a3bb08c.json",
+					"name" : "hotstuff_static",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "libsecp256k1::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-libsecp256k1-Release-63eb106d01f700a2166f.json",
+					"name" : "libsecp256k1",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "noverify_tests::@3ee2b3094eb712552e85",
+					"jsonFile" : "target-noverify_tests-Release-6f8b23d2716bd839c0c3.json",
+					"name" : "noverify_tests",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "salticidae::@83427a79185b1d2caf84",
+					"jsonFile" : "target-salticidae-Release-e82965bd0c6d6bf47884.json",
+					"name" : "salticidae",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "salticidae_shared::@83427a79185b1d2caf84",
+					"jsonFile" : "target-salticidae_shared-Release-f1390c5b9e3382ff281f.json",
+					"name" : "salticidae_shared",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "salticidae_static::@83427a79185b1d2caf84",
+					"jsonFile" : "target-salticidae_static-Release-e6a940ba34a421ba7129.json",
+					"name" : "salticidae_static",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "schnorr_example::@73ca5e381b0f51ec0422",
+					"jsonFile" : "target-schnorr_example-Release-6d397716a973afc78f09.json",
+					"name" : "schnorr_example",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "secp256k1::@3ee2b3094eb712552e85",
+					"jsonFile" : "target-secp256k1-Release-bf7f2a61d8a6b2a8bc90.json",
+					"name" : "secp256k1",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "secp256k1_precomputed::@3ee2b3094eb712552e85",
+					"jsonFile" : "target-secp256k1_precomputed-Release-4a98ce2a2ed0e8061da5.json",
+					"name" : "secp256k1_precomputed",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "test_secp256k1::@36f028580bb02cc8272a",
+					"jsonFile" : "target-test_secp256k1-Release-a3a47fb7ddcde49479cf.json",
+					"name" : "test_secp256k1",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "tests::@3ee2b3094eb712552e85",
+					"jsonFile" : "target-tests-Release-6f278ce82b6a3141067e.json",
+					"name" : "tests",
+					"projectIndex" : 2
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/martina/CLionProjects/libhotstuff",
+		"source" : "/home/martina/CLionProjects/libhotstuff"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 2
+	}
+}

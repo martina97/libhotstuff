@@ -11,3 +11,4 @@ ridurre l'overhead della computazione crittografica usando uno schema di thresho
     la validità del blocco e quindi generare una firma secp256k1 per approvarlo. Queste firme vengono raccolte e
     aggregare per formare un quorum certificate per il blocco proposto.
 
+cmake -DSECP256K1_ENABLE_MODULE_FROST=ON -DSECP256K1_EXPERIMENTAL=ON -DSECP256K1_ENABLE_MODULE_SCHNORRSIG=ON -DSECP256K1_BUILD_EXAMPLES=ON  -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED=ON -DHOTSTUFF_PROTO_LOG=ON

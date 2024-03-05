@@ -27,19 +27,19 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 62,
+				"line" : 65,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 64,
+				"line" : 67,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 43,
+				"line" : 46,
 				"parent" : 0
 			},
 			{
@@ -51,19 +51,19 @@
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 29,
+				"line" : 32,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 47,
+				"line" : 50,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 48,
+				"line" : 51,
 				"parent" : 0
 			}
 		]
@@ -98,7 +98,7 @@
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "secp256k1/.libs/libsecp256k1.a",
+				"fragment" : "secp256k1-hotstuff/.libs/libsecp256k1.a",
 				"role" : "libraries"
 			},
 			{

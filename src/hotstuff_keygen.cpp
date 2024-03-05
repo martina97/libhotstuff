@@ -29,12 +29,12 @@ int main(int argc, char **argv) {
 
     privkey_bt priv_key;
     auto opt_n = Config::OptValInt::create(4);
-    auto opt_algo = Config::OptValStr::create("secp256k1");
+    auto opt_algo = Config::OptValStr::create("secp256k1-hotstuff");
     config.add_opt("num", opt_n, Config::SET_VAL);
     config.add_opt("algo", opt_algo, Config::SET_VAL);
     config.parse(argc, argv);
     auto &algo = opt_algo->get();
-    if (algo == "secp256k1")
+    if (algo == "secp256k1-hotstuff")
         priv_key = new hotstuff::PrivKeySecp256k1();
     else
         error(1, 0, "algo not supported");

@@ -1,5 +1,5 @@
-[submodule "secp256k1"]
-	path = secp256k1
+[submodule "secp256k1-hotstuff"]
+	path = secp256k1-hotstuff
 	url = https://github.com/bitcoin-core/secp256k1
 [submodule "salticidae"]
 	path = salticidae

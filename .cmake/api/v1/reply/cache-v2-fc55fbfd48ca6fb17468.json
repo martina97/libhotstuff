@@ -66,6 +66,22 @@
 			"value" : "ON"
 		},
 		{
+			"name" : "BZRCOMMAND",
+			"properties" : 
+			[
+				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
+					"name" : "HELPSTRING",
+					"value" : "(This variable does not exist and should not be used)"
+				}
+			],
+			"type" : "UNINITIALIZED",
+			"value" : ""
+		},
+		{
 			"name" : "CMAKE_ADDR2LINE",
 			"properties" : 
 			[
@@ -217,6 +233,10 @@
 			"name" : "CMAKE_CTEST_COMMAND",
 			"properties" : 
 			[
+				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
 				{
 					"name" : "HELPSTRING",
 					"value" : "Path to ctest program executable."
@@ -1163,7 +1183,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "4"
+			"value" : "7"
 		},
 		{
 			"name" : "CMAKE_OBJCOPY",
@@ -1666,6 +1686,38 @@
 			"value" : "5"
 		},
 		{
+			"name" : "CVSCOMMAND",
+			"properties" : 
+			[
+				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
+					"name" : "HELPSTRING",
+					"value" : "(This variable does not exist and should not be used)"
+				}
+			],
+			"type" : "UNINITIALIZED",
+			"value" : ""
+		},
+		{
+			"name" : "CVS_UPDATE_OPTIONS",
+			"properties" : 
+			[
+				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
+					"name" : "HELPSTRING",
+					"value" : "(This variable does not exist and should not be used)"
+				}
+			],
+			"type" : "UNINITIALIZED",
+			"value" : ""
+		},
+		{
 			"name" : "C_SUPPORTS__PEDANTIC",
 			"properties" : 
 			[
@@ -2030,6 +2082,22 @@
 			"value" : "1"
 		},
 		{
+			"name" : "HGCOMMAND",
+			"properties" : 
+			[
+				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
+					"name" : "HELPSTRING",
+					"value" : "(This variable does not exist and should not be used)"
+				}
+			],
+			"type" : "UNINITIALIZED",
+			"value" : ""
+		},
+		{
 			"name" : "HOTSTUFF_BLK_PROFILE",
 			"properties" : 
 			[
@@ -2230,6 +2298,22 @@
 			"value" : "/usr/lib/x86_64-linux-gnu/libssl.so"
 		},
 		{
+			"name" : "P4COMMAND",
+			"properties" : 
+			[
+				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
+					"name" : "HELPSTRING",
+					"value" : "(This variable does not exist and should not be used)"
+				}
+			],
+			"type" : "UNINITIALIZED",
+			"value" : ""
+		},
+		{
 			"name" : "PKG_CONFIG_ARGN",
 			"properties" : 
 			[
@@ -2260,6 +2344,18 @@
 			],
 			"type" : "FILEPATH",
 			"value" : "PKG_CONFIG_EXECUTABLE-NOTFOUND"
+		},
+		{
+			"name" : "PROJECT_IS_TOP_LEVEL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Emulates CMake 3.21+ behavior."
+				}
+			],
+			"type" : "INTERNAL",
+			"value" : "OFF"
 		},
 		{
 			"name" : "SALTICIDAE_CBINDINGS",
@@ -2379,10 +2475,10 @@
 			[
 				{
 					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
+					"value" : "Build examples."
 				}
 			],
-			"type" : "UNINITIALIZED",
+			"type" : "BOOL",
 			"value" : "ON"
 		},
 		{
@@ -2483,10 +2579,10 @@
 			[
 				{
 					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
+					"value" : "Enable FROST module."
 				}
 			],
-			"type" : "UNINITIALIZED",
+			"type" : "BOOL",
 			"value" : "ON"
 		},
 		{
@@ -2507,10 +2603,10 @@
 			[
 				{
 					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
+					"value" : "Enable schnorrsig module."
 				}
 			],
-			"type" : "UNINITIALIZED",
+			"type" : "BOOL",
 			"value" : "ON"
 		},
 		{
@@ -2519,10 +2615,10 @@
 			[
 				{
 					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
+					"value" : "Allow experimental configuration options."
 				}
 			],
-			"type" : "UNINITIALIZED",
+			"type" : "BOOL",
 			"value" : "ON"
 		},
 		{
@@ -2600,6 +2696,22 @@
 			],
 			"type" : "STRING",
 			"value" : "martina-VirtualBox"
+		},
+		{
+			"name" : "SVNCOMMAND",
+			"properties" : 
+			[
+				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
+					"name" : "HELPSTRING",
+					"value" : "(This variable does not exist and should not be used)"
+				}
+			],
+			"type" : "UNINITIALIZED",
+			"value" : ""
 		},
 		{
 			"name" : "Salticidae_BINARY_DIR",
@@ -2987,7 +3099,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "general;salticidae_static;general;secp256k1;general;crypto;"
+			"value" : "general;salticidae_static;general;secp256k1-hotstuff;general;crypto;"
 		},
 		{
 			"name" : "hotstuff_static_LIB_DEPENDS",
@@ -2999,7 +3111,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "general;salticidae_static;general;secp256k1;general;crypto;"
+			"value" : "general;salticidae_static;general;secp256k1-hotstuff;general;crypto;"
 		},
 		{
 			"name" : "libsecp256k1_BINARY_DIR",
@@ -3019,10 +3131,10 @@
 			[
 				{
 					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
+					"value" : "Emulates CMake 3.21+ behavior."
 				}
 			],
-			"type" : "STATIC",
+			"type" : "INTERNAL",
 			"value" : "OFF"
 		},
 		{
