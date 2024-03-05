@@ -54,7 +54,7 @@ add_library(hotstuff
     src/entity.cpp
     src/consensus.cpp
     src/hotstuff.cpp
-    )
+)
 
 option(BUILD_SHARED "build shared library." OFF)
 if(BUILD_SHARED)
