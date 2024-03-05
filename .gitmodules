@@ -7,3 +7,6 @@
 [submodule "scripts/deploy/minirun"]
 	path = scripts/deploy/minirun
 	url = https://github.com/Determinant/minirun.git
+[submodule "secp256k1-frost"]
+	path = secp256k1-frost
+	url = https://github.com/bancaditalia/secp256k1-frost.git

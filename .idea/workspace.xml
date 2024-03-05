@@ -3,9 +3,9 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
-  <component name="CMakePresetLoader"><![CDATA[{
-  "useNewFormat": true
-}]]></component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
   <component name="CMakeReloadState">
     <option name="reloaded" value="true" />
   </component>
@@ -33,14 +33,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f91c2701-4032-4eac-8cd6-68353351d8a4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/Temporary/LastTest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/hotstuff-prova" beforeDir="false" afterPath="$PROJECT_DIR$/examples/hotstuff-prova" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log0" beforeDir="false" afterPath="$PROJECT_DIR$/log0" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log1" beforeDir="false" afterPath="$PROJECT_DIR$/log1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log2" beforeDir="false" afterPath="$PROJECT_DIR$/log2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log3" beforeDir="false" afterPath="$PROJECT_DIR$/log3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/hotstuff_client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/hotstuff_client.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,10 +58,10 @@
     <option name="majorVersion" value="2023" />
     <option name="minorVersion" value="3.4" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2dEZcYqWOZ1hNnlk93eg69pei2x" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -80,7 +76,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/martina/CLionProjects/libhotstuff",
+    "last_opened_file_path": "/home/martina/CLionProjects/secp256k1-frost",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -90,11 +86,6 @@
   }
 }]]></component>
   <component name="RunManager" selected="CMake Application.hotstuff-keygen">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="hotstuff-app" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hotstuff" TARGET_NAME="hotstuff-app" CONFIG_NAME="Release" RUN_TARGET_PROJECT_NAME="hotstuff" RUN_TARGET_NAME="hotstuff-app">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -161,15 +152,15 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="CMake Application.hotstuff" />
+      <item itemvalue="CMake Application.hotstuff-app" />
+      <item itemvalue="CMake Application.hotstuff-client" />
       <item itemvalue="CMake Application.hotstuff-keygen" />
+      <item itemvalue="CMake Application.hotstuff-prova" />
       <item itemvalue="CMake Application.hotstuff-tls-keygen" />
+      <item itemvalue="CMake Application.hotstuff" />
       <item itemvalue="CMake Application.hotstuff_shared" />
       <item itemvalue="CMake Application.hotstuff_static" />
       <item itemvalue="CMake Application.libsecp256k1" />
-      <item itemvalue="CMake Application.hotstuff-app" />
-      <item itemvalue="CMake Application.hotstuff-client" />
-      <item itemvalue="CMake Application.hotstuff-prova" />
       <item itemvalue="CMake Application.salticidae" />
       <item itemvalue="CMake Application.salticidae_shared" />
       <item itemvalue="CMake Application.salticidae_static" />
@@ -184,7 +175,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1709575278090</updated>
-      <workItem from="1709575279722" duration="840000" />
+      <workItem from="1709575279722" duration="879000" />
+      <workItem from="1709593225328" duration="24000" />
+      <workItem from="1709630074036" duration="1201000" />
     </task>
     <servers />
   </component>
