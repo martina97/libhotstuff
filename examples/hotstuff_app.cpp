@@ -25,18 +25,18 @@
 #include <iostream>
 #include <iomanip>
 
-#include "salticidae/stream.h"
-#include "salticidae/util.h"
-#include "salticidae/network.h"
-#include "salticidae/msg.h"
+#include "../salticidae/include/salticidae/stream.h"
+#include "../salticidae/include/salticidae/util.h"
+#include "../salticidae/include/salticidae/network.h"
+#include "../salticidae/include/salticidae/msg.h"
 
-#include "hotstuff/promise.hpp"
-#include "hotstuff/type.h"
-#include "hotstuff/entity.h"
-#include "hotstuff/util.h"
-#include "hotstuff/client.h"
-#include "hotstuff/hotstuff.h"
-#include "hotstuff/liveness.h"
+#include "../include/hotstuff/promise.hpp"
+#include "../include/hotstuff/type.h"
+#include "../include/hotstuff/entity.h"
+#include "../include/hotstuff/util.h"
+#include "../include/hotstuff/client.h"
+#include "../include/hotstuff/hotstuff.h"
+#include "../include/hotstuff/liveness.h"
 
 using salticidae::MsgNetwork;
 using salticidae::ClientNetwork;

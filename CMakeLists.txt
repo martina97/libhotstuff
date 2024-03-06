@@ -21,9 +21,10 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/salticidae/cmake
 
 add_subdirectory(salticidae)
 include_directories(salticidae/include)
-if (NOT TARGET plugin)
-    add_subdirectory(secp256k1-frost)
-endif ()
+
+add_subdirectory(secp256k1-frost)
+include_directories(secp256k1-frost/include)
+include_directories(secp256k1-frost/src)
 
 find_package(OpenSSL REQUIRED)
 find_package(Threads REQUIRED)
@@ -97,6 +98,12 @@ target_link_libraries(hotstuff-keygen hotstuff_static)
 
 add_executable(hotstuff-tls-keygen src/hotstuff_tls_keygen.cpp)
 target_link_libraries(hotstuff-tls-keygen hotstuff_static)
+
+add_executable(frost-tls-keygen src/frost_keygen.cpp)
+target_link_libraries(frost-tls-keygen hotstuff_static)
+
+add_executable(frost_example2 src/frost_keygen.c)
+target_link_libraries(frost_example2 example)
 
 find_package(Doxygen)
 if (DOXYGEN_FOUND)

@@ -40,7 +40,7 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 52,
+				"line" : 53,
 				"parent" : 0
 			},
 			{
@@ -52,19 +52,31 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 32,
+				"line" : 26,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 50,
+				"line" : 27,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 33,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
 				"line" : 51,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 52,
 				"parent" : 0
 			}
 		]
@@ -89,14 +101,22 @@
 				},
 				{
 					"backtrace" : 3,
-					"path" : "/home/martina/CLionProjects/libhotstuff/secp256k1-hotstuff/include"
+					"path" : "/home/martina/CLionProjects/libhotstuff/secp256k1-frost/include"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "/home/martina/CLionProjects/libhotstuff/."
+					"path" : "/home/martina/CLionProjects/libhotstuff/secp256k1-frost/src"
 				},
 				{
 					"backtrace" : 5,
+					"path" : "/home/martina/CLionProjects/libhotstuff/secp256k1-hotstuff/include"
+				},
+				{
+					"backtrace" : 6,
+					"path" : "/home/martina/CLionProjects/libhotstuff/."
+				},
+				{
+					"backtrace" : 7,
 					"path" : "/home/martina/CLionProjects/libhotstuff/include"
 				}
 			],

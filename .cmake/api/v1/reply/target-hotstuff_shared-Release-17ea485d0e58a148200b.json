@@ -27,19 +27,19 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 65,
+				"line" : 66,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 67,
+				"line" : 68,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 46,
+				"line" : 47,
 				"parent" : 0
 			},
 			{
@@ -51,13 +51,19 @@
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 32,
+				"line" : 26,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 50,
+				"line" : 27,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 33,
 				"parent" : 0
 			},
 			{
@@ -65,17 +71,23 @@
 				"file" : 0,
 				"line" : 51,
 				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 52,
+				"parent" : 0
 			}
 		]
 	},
 	"dependencies" : 
 	[
 		{
-			"id" : "hotstuff::@6890427a1f51a3e7e1df"
-		},
-		{
 			"backtrace" : 3,
 			"id" : "libsecp256k1::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "hotstuff::@6890427a1f51a3e7e1df"
 		},
 		{
 			"backtrace" : 2,
