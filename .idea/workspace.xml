@@ -75,33 +75,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f91c2701-4032-4eac-8cd6-68353351d8a4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/codemodel-v2-0c4a2ec4a5df5d5ac524.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/index-2024-03-05T18-55-44-0449.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff-Release-5805473943f34d318ca1.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff-app-Release-3e03d0dbe62199f793fb.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff-client-Release-420be860c53f160f4a2d.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff-keygen-Release-4fd7ae86f7202862e6fa.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff-prova-Release-6c75ab3920896c624886.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff-tls-keygen-Release-3d4cec65aa8ae0aa4d38.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff_shared-Release-16608efe0390bba968b4.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff_static-Release-fcddf83f92794a3bb08c.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-libsecp256k1-Release-63eb106d01f700a2166f.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-test_secp256k1-Release-a3a47fb7ddcde49479cf.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/codemodel-v2-c38990605dcdd8fd21e5.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/index-2024-03-06T17-59-08-0384.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-frost-tls-keygen-Release-9a588da63fecb6ae2600.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-frost_example2-Release-a814235c7cfbe3f0b8a8.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/Temporary/LastTest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/hotstuff_app.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/hotstuff_app.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/filename.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotstuff-frost-sec0.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotstuff-frost-sec1.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotstuff-frost-sec2.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotstuff-frost-sec3.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotstuff_frost.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log0" beforeDir="false" afterPath="$PROJECT_DIR$/log0" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log1" beforeDir="false" afterPath="$PROJECT_DIR$/log1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log2" beforeDir="false" afterPath="$PROJECT_DIR$/log2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log3" beforeDir="false" afterPath="$PROJECT_DIR$/log3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frost-tls-keygen" beforeDir="false" afterPath="$PROJECT_DIR$/frost-tls-keygen" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frost_example2" beforeDir="false" afterPath="$PROJECT_DIR$/frost_example2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotstuff-frost-sec0.conf" beforeDir="false" afterPath="$PROJECT_DIR$/hotstuff-frost-sec0.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotstuff-frost-sec1.conf" beforeDir="false" afterPath="$PROJECT_DIR$/hotstuff-frost-sec1.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotstuff-frost-sec2.conf" beforeDir="false" afterPath="$PROJECT_DIR$/hotstuff-frost-sec2.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotstuff-frost-sec3.conf" beforeDir="false" afterPath="$PROJECT_DIR$/hotstuff-frost-sec3.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotstuff_frost.conf" beforeDir="false" afterPath="$PROJECT_DIR$/hotstuff_frost.conf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-frost" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-frost/.cirrus.yml" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/.cirrus.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-frost/.github/workflows/functional-tests.yml" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/.github/workflows/functional-tests.yml" afterDir="false" />
@@ -154,6 +140,7 @@
       <change beforePath="$PROJECT_DIR$/secp256k1-hotstuff/src/testrand_impl.h" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-hotstuff/src/testrand_impl.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-hotstuff/src/tests.c" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-hotstuff/src/tests.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-hotstuff/src/tests_exhaustive.c" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-hotstuff/src/tests_exhaustive.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frost_keygen.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/frost_keygen.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,13 +152,13 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Release" />
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/secp256k1-frost" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="OCResolveContextSettings">
-    <option name="configuration" value="0-Release-secp256k1" />
+    <option name="configuration" value="0-Release-noverify_tests" />
   </component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
@@ -198,7 +185,7 @@
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "frost",
     "last_opened_file_path": "/home/martina/CLionProjects/libhotstuff/src",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -649,7 +636,7 @@
       <workItem from="1709630074036" duration="1201000" />
       <workItem from="1709663967813" duration="5534000" />
       <workItem from="1709722293243" duration="2135000" />
-      <workItem from="1709744523206" duration="5311000" />
+      <workItem from="1709744523206" duration="10167000" />
     </task>
     <servers />
   </component>

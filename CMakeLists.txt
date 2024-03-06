@@ -100,7 +100,8 @@ add_executable(hotstuff-tls-keygen src/hotstuff_tls_keygen.cpp)
 target_link_libraries(hotstuff-tls-keygen hotstuff_static)
 
 add_executable(frost-tls-keygen src/frost_keygen.cpp)
-target_link_libraries(frost-tls-keygen hotstuff_static)
+target_link_libraries(frost-tls-keygen example hotstuff_static)
+#target_link_libraries(frost-tls-keygen example hotstuff_static secp256k1_precomputed secp256k1_asm secp256k1)
 
 add_executable(frost_example2 src/frost_keygen.c)
 target_link_libraries(frost_example2 example)
