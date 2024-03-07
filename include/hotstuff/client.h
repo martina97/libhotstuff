@@ -29,7 +29,10 @@ struct MsgReqCmd {
     DataStream serialized;
     command_t cmd;
     MsgReqCmd(const Command &cmd) { serialized << cmd; }
-    MsgReqCmd(DataStream &&s): serialized(std::move(s)) {}
+    MsgReqCmd(DataStream &&s): serialized(std::move(s)) {
+        std::cout << "---- STO IN MsgReqCmd riga 27 DENTRO msg.h package:INCLUDE->HOTSTUFF----"<< std::endl;
+
+    }
 };
 
 struct MsgRespCmd {

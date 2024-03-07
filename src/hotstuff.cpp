@@ -418,7 +418,22 @@ HotStuffBase::HotStuffBase(uint32_t blk_size,
 void HotStuffBase::do_broadcast_proposal(const Proposal &prop) {
     std::cout << "---- STO IN do_broadcast_proposal riga 416 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
 
+
     //MsgPropose prop_msg(prop);
+    const std::unordered_map<PeerId, std::vector<uint32_t>> &prova = pn.get_known_peers();
+    std::cout << "Map size: " << prova.size() << std::endl;
+
+    for (const auto& pair : prova) {
+        const PeerId& peerId = pair.first;
+        const std::vector<uint32_t >& integers = pair.second;
+
+        std::cout << "PeerId: " << peerId.to_hex() << ", Integers: ";
+        for (int value : integers) {
+            std::cout << value << " ";
+        }
+        std::cout << std::endl;
+    }
+
     pn.multicast_msg(MsgPropose(prop), peers);
     //for (const auto &replica: peers)
     //    pn.send_msg(prop_msg, replica);
@@ -524,6 +539,7 @@ void HotStuffBase::start(
 
             //se diversa metto anche gli altri peer nelle strutture che mi servono!
             peers.push_back(peer);
+
             pn.add_peer(peer);
             pn.set_peer_addr(peer, addr);
             pn.conn_peer(peer);
@@ -591,5 +607,7 @@ void HotStuffBase::start(
         return false;
     });
 }
+
+
 
 }
