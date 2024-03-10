@@ -1,9 +1,6 @@
 [submodule "secp256k1-hotstuff"]
 	path = secp256k1-hotstuff
 	url = https://github.com/bitcoin-core/secp256k1
-[submodule "salticidae"]
-	path = salticidae
-	url = https://github.com/Determinant/salticidae.git
 [submodule "scripts/deploy/minirun"]
 	path = scripts/deploy/minirun
 	url = https://github.com/Determinant/minirun.git
