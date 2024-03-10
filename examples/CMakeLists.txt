@@ -36,5 +36,5 @@ add_executable(hotstuff-client hotstuff_client.cpp)
 target_link_libraries(hotstuff-client hotstuff_static)
 
 
-add_executable(hotstuff-prova prova_cert.cpp ${ALL_HEADER_FILES})
+add_executable(hotstuff-prova ${ALL_HEADER_FILES})
 target_link_libraries(hotstuff-prova hotstuff_static)
