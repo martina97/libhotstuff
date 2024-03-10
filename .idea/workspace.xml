@@ -70,7 +70,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f91c2701-4032-4eac-8cd6-68353351d8a4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/salticidae" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-frost" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-frost/include/secp256k1.h" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/include/secp256k1.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-frost/include/secp256k1_frost.h" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/include/secp256k1_frost.h" afterDir="false" />
@@ -108,9 +107,6 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
-  </component>
-  <component name="OCResolveContextSettings">
-    <option name="configuration" value="0-Release-noverify_tests" />
   </component>
   <component name="ProblemsViewState">
     <hideBySeverity>
@@ -576,7 +572,7 @@
       <workItem from="1709809296386" duration="20356000" />
       <workItem from="1709892983604" duration="8420000" />
       <workItem from="1710094082259" duration="27000" />
-      <workItem from="1710094138993" duration="1847000" />
+      <workItem from="1710094138993" duration="2000000" />
     </task>
     <servers />
   </component>
