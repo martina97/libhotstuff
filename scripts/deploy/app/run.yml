@@ -22,6 +22,11 @@
         src: "{{ (lookup('env','run_path'), hs_base_conf) | path_join }}"
         dest: "{{ (conf_dir, 'hotstuff.conf') | path_join }}"
         mode: '0644'
+    - name: copy the base conf file
+      copy:
+        src: "{{ (lookup('env','run_path'), hs_base_conf) | path_join }}"
+        dest: "{{ (conf_dir, 'hotstuff_frost.conf') | path_join }}"
+        mode: '0644'
     - name: copy per node conf files
       copy:
         src: "{{ (lookup('env','run_path'), extra_conf) | path_join }}"
@@ -31,6 +36,16 @@
     - name: start the hotstuff replica
       hotstuff_app:
         bin: "{{ replica_bin | default('~/libhotstuff/examples/hotstuff_app') }}"
+        log_dir: "{{ log_dir }}"
+        cwd: "{{ conf_dir }}"
+        conf: "{{ extra_conf | basename }}"
+        tls: "{{ hs_tls | default(false) }}"
+      environment:
+        PATH: /sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin:/snap/bin
+      register: spawn_results
+    - name: start the hotstuff replica
+      frost_app:
+        bin: "{{ replica_bin | default('~/libhotstuff/examples/hotstuff_frost_app') }}"
         log_dir: "{{ log_dir }}"
         cwd: "{{ conf_dir }}"
         conf: "{{ extra_conf | basename }}"

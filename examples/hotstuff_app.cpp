@@ -244,9 +244,9 @@ int main(int argc, char **argv) {
     //STAMPO I VALORI DI CONFIG !!!!
     std::cout << "---- DOPO  config.add_opt ---- " << std::endl;
     std::cout << "opt_privkey->get(): " << opt_privkey->get() << std::endl;
-    //opt_blk_size->get()
 
-    EventContext ec;    //todo: FARE IN GO !!!!
+
+    EventContext ec;
     config.parse(argc, argv);
     if (opt_help->get())
     {

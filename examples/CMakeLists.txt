@@ -36,5 +36,5 @@ add_executable(hotstuff-client hotstuff_client.cpp)
 target_link_libraries(hotstuff-client hotstuff_static)
 
 
-add_executable(hotstuff-prova ${ALL_HEADER_FILES})
-target_link_libraries(hotstuff-prova hotstuff_static)
+add_executable(frost-app hotstuff_frost_app.cpp ${ALL_HEADER_FILES})
+target_link_libraries(frost-app hotstuff_static example)
