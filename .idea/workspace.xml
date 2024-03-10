@@ -23,7 +23,9 @@
       <config projectName="hotstuff" targetName="ExperimentalTest" />
       <config projectName="hotstuff" targetName="tests" />
       <config projectName="hotstuff" targetName="bench_ecmult" />
+      <config projectName="hotstuff" targetName="schnorr_example" />
       <config projectName="hotstuff" targetName="check" />
+      <config projectName="hotstuff" targetName="hotstuff_shared" />
       <config projectName="hotstuff" targetName="ExperimentalCoverage" />
       <config projectName="hotstuff" targetName="ContinuousTest" />
       <config projectName="hotstuff" targetName="hotstuff-tls-keygen" />
@@ -32,6 +34,7 @@
       <config projectName="hotstuff" targetName="ContinuousConfigure" />
       <config projectName="hotstuff" targetName="salticidae" />
       <config projectName="hotstuff" targetName="NightlyUpdate" />
+      <config projectName="hotstuff" targetName="ecdh_example" />
       <config projectName="hotstuff" targetName="bench_internal" />
       <config projectName="hotstuff" targetName="NightlyStart" />
       <config projectName="hotstuff" targetName="ExperimentalUpdate" />
@@ -44,7 +47,9 @@
       <config projectName="hotstuff" targetName="ContinuousSubmit" />
       <config projectName="hotstuff" targetName="ExperimentalConfigure" />
       <config projectName="hotstuff" targetName="NightlyConfigure" />
+      <config projectName="hotstuff" targetName="salticidae_shared" />
       <config projectName="hotstuff" targetName="Continuous" />
+      <config projectName="hotstuff" targetName="frost_example" />
       <config projectName="hotstuff" targetName="Nightly" />
       <config projectName="hotstuff" targetName="secp256k1" />
       <config projectName="hotstuff" targetName="NightlyBuild" />
@@ -55,6 +60,7 @@
       <config projectName="hotstuff" targetName="Experimental" />
       <config projectName="hotstuff" targetName="hotstuff-keygen" />
       <config projectName="hotstuff" targetName="NightlyMemoryCheck" />
+      <config projectName="hotstuff" targetName="ecdsa_example" />
       <config projectName="hotstuff" targetName="ExperimentalMemCheck" />
       <config projectName="hotstuff" targetName="ContinuousStart" />
       <config projectName="hotstuff" targetName="salticidae_static" />
@@ -70,6 +76,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f91c2701-4032-4eac-8cd6-68353351d8a4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frost-tls-keygen" beforeDir="false" afterPath="$PROJECT_DIR$/frost-tls-keygen" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotstuff-frost-sec0.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotstuff-frost-sec1.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotstuff-frost-sec2.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotstuff-frost-sec3.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotstuff_frost.conf" beforeDir="false" afterPath="$PROJECT_DIR$/hotstuff_frost.conf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-frost" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-frost/include/secp256k1.h" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/include/secp256k1.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-frost/include/secp256k1_frost.h" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/include/secp256k1_frost.h" afterDir="false" />
@@ -90,6 +104,8 @@
       <change beforePath="$PROJECT_DIR$/secp256k1-frost/src/testrand_impl.h" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/src/testrand_impl.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-frost/src/tests.c" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/src/tests.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-frost/src/util.h" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/src/util.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frost_keygen.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/frost_keygen.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hotstuff_tls_keygen.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hotstuff_tls_keygen.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,6 +154,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "master",
@@ -323,12 +340,27 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ecdh_example" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hotstuff" TARGET_NAME="ecdh_example" CONFIG_NAME="Release" RUN_TARGET_PROJECT_NAME="hotstuff" RUN_TARGET_NAME="ecdh_example">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ecdsa_example" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hotstuff" TARGET_NAME="ecdsa_example" CONFIG_NAME="Release" RUN_TARGET_PROJECT_NAME="hotstuff" RUN_TARGET_NAME="ecdsa_example">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="exhaustive_tests" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hotstuff" TARGET_NAME="exhaustive_tests" CONFIG_NAME="Release" RUN_TARGET_PROJECT_NAME="hotstuff" RUN_TARGET_NAME="exhaustive_tests">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="frost-tls-keygen" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hotstuff" TARGET_NAME="frost-tls-keygen" CONFIG_NAME="Release" RUN_TARGET_PROJECT_NAME="hotstuff" RUN_TARGET_NAME="frost-tls-keygen">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="frost_example" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hotstuff" TARGET_NAME="frost_example" CONFIG_NAME="Release" RUN_TARGET_PROJECT_NAME="hotstuff" RUN_TARGET_NAME="frost_example">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -403,6 +435,11 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="hotstuff_shared" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hotstuff" TARGET_NAME="hotstuff_shared" CONFIG_NAME="Release">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="hotstuff_static" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hotstuff" TARGET_NAME="hotstuff_static" CONFIG_NAME="Release">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -443,12 +480,22 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="salticidae_shared" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hotstuff" TARGET_NAME="salticidae_shared" CONFIG_NAME="Release">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="salticidae_static" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hotstuff" TARGET_NAME="salticidae_static" CONFIG_NAME="Release">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="salticidae_static" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hotstuff" TARGET_NAME="salticidae_static" CONFIG_NAME="Release">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="schnorr_example" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hotstuff" TARGET_NAME="schnorr_example" CONFIG_NAME="Release" RUN_TARGET_PROJECT_NAME="hotstuff" RUN_TARGET_NAME="schnorr_example">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -498,12 +545,14 @@
       <item itemvalue="CMake Application.hotstuff-keygen" />
       <item itemvalue="CMake Application.hotstuff-prova" />
       <item itemvalue="CMake Application.hotstuff-tls-keygen" />
+      <item itemvalue="CMake Application.hotstuff_shared" />
       <item itemvalue="CMake Application.frost-tls-keygen" />
       <item itemvalue="CMake Application.frost_example2" />
       <item itemvalue="CMake Application.hotstuff" />
       <item itemvalue="CMake Application.hotstuff_static" />
       <item itemvalue="CMake Application.libsecp256k1" />
       <item itemvalue="CMake Application.salticidae" />
+      <item itemvalue="CMake Application.salticidae_shared" />
       <item itemvalue="CMake Application.salticidae_static" />
       <item itemvalue="CMake Application.check" />
       <item itemvalue="CMake Application.Continuous" />
@@ -534,6 +583,10 @@
       <item itemvalue="CMake Application.NightlySubmit" />
       <item itemvalue="CMake Application.NightlyTest" />
       <item itemvalue="CMake Application.NightlyUpdate" />
+      <item itemvalue="CMake Application.ecdh_example" />
+      <item itemvalue="CMake Application.ecdsa_example" />
+      <item itemvalue="CMake Application.frost_example" />
+      <item itemvalue="CMake Application.schnorr_example" />
       <item itemvalue="CMake Application.bench" />
       <item itemvalue="CMake Application.bench_ecmult" />
       <item itemvalue="CMake Application.bench_internal" />
@@ -572,7 +625,7 @@
       <workItem from="1709809296386" duration="20356000" />
       <workItem from="1709892983604" duration="8420000" />
       <workItem from="1710094082259" duration="27000" />
-      <workItem from="1710094138993" duration="2000000" />
+      <workItem from="1710094138993" duration="8779000" />
     </task>
     <servers />
   </component>

@@ -45,8 +45,6 @@ int main(int argc, char **argv) {
                 salticidae::get_hex(pub_key->get_der()).c_str(),
                 salticidae::get_hex(priv_key->get_privkey_der()).c_str(),
                 salticidae::get_hex(salticidae::get_hash(pub_key->get_der())).c_str());
-
-
     }
     return 0;
 }
