@@ -18,7 +18,7 @@
 #include "hotstuff/hotstuff.h"
 #include "hotstuff/client.h"
 #include "hotstuff/liveness.h"
-
+#include "secp256k1_frost.h"
 using salticidae::static_pointer_cast;
 
 #define LOG_INFO HOTSTUFF_LOG_INFO
@@ -484,10 +484,36 @@ void HotStuffBase::do_decide(Finality &&fin) {
 
 HotStuffBase::~HotStuffBase() {}
 
+void HotStuffBase::start_frost( std::vector<std::tuple<NetAddr, secp256k1_frost_pubkey, uint256_t>> &&replicas,
+            bool ec_loop) {
+    std::cout << "sto in HotStuffBase::start_frost riga 487 DENTRO hotstuff.cpp package:salticidae->include->src---- \" " << std::endl;
+    for (size_t i = 0; i < replicas.size(); i++) {
+        auto &addr = std::get<0>(replicas[i]); //<NetAddr 127.0.0.1:10000>
+        std::cout << "addr.operator std::string() == " << addr.operator std::string() << std::endl;
+        auto cert_hash = std::move(std::get<2>(replicas[i]));   //542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
+        std::cout << "cert_hash.to_hex() == " << cert_hash.to_hex() << std::endl;
+
+        valid_tls_certs.insert(cert_hash);
+        auto peer = pn.enable_tls ? salticidae::PeerId(cert_hash) : salticidae::PeerId(addr);
+        std::cout << " ---  peer.to_hex() = " <<  peer.to_hex() << std::endl;
+        //printKeyDER(peer_to_bytes, "peer_to_bytes ");
+        auto peer_id = pn.get_peer_id();
+        std::cout << "peer_id = " << peer_id.to_hex() << std::endl;
+        auto pn_cert = pn.get_cert();
+        std::cout << "pn_cert == " <<  get_hex(pn_cert->get_der())<< std::endl;
+        //std::cout << "pn_cert.priv == " <<get_hex(pn_cert->get_pubkey().get_privkey_der())<< std::endl;
+        std::cout << "pn_cert.pub == " <<get_hex(pn_cert->get_pubkey().get_pubkey_der())<< std::endl;
+        HotStuffCore::add_replica_frost(i, peer, std::move(std::get<1>(replicas[i])));
+    }
+
+    //todo: continuare
+}
+
+
 void HotStuffBase::start(
         std::vector<std::tuple<NetAddr, pubkey_bt, uint256_t>> &&replicas,
         bool ec_loop) {
-    std::cout << "---- STO IN start riga 466 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
+    std::cout << "---- STO IN start riga 493 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
 
     for (size_t i = 0; i < replicas.size(); i++)
     {

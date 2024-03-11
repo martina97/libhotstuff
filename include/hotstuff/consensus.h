@@ -26,7 +26,7 @@
 #include "hotstuff/type.h"
 #include "hotstuff/entity.h"
 #include "hotstuff/crypto.h"
-
+#include "secp256k1_frost.h"
 namespace hotstuff {
 
 struct Proposal;
@@ -144,6 +144,7 @@ class HotStuffCore {
     /** Add a replica to the current configuration. This should only be called
      * before running HotStuffCore protocol. */
     void add_replica(ReplicaID rid, const PeerId &peer_id, pubkey_bt &&pub_key);
+    void add_replica_frost(ReplicaID rid, const PeerId &peer_id, secp256k1_frost_pubkey &&pub_key);
     /** Try to prune blocks lower than last committed height - staleness. */
     void prune(uint32_t staleness);
 

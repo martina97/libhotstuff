@@ -7,7 +7,7 @@
 #include <cassert>
 #include "salticidae/util.h"
 #include "hotstuff/crypto.h"
-
+#include "secp256k1_frost.h"
 
 #include "../salticidae/include/salticidae/stream.h"
 #include "../salticidae/include/salticidae/util.h"

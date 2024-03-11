@@ -22,6 +22,7 @@
 
 #include "hotstuff/util.h"
 #include "hotstuff/consensus.h"
+#include "secp256k1_frost.h"
 
 #define LOG_INFO HOTSTUFF_LOG_INFO
 #define LOG_DEBUG HOTSTUFF_LOG_DEBUG
@@ -376,6 +377,12 @@ void HotStuffCore::add_replica(ReplicaID rid, const PeerId &peer_id,
     //aggiungo l'id della replica nell'insieme "voted", che memorizza gli id di tutte le
     //repliche che hanno votato per il blocco b0
     b0->voted.insert(rid);  /** b0 = genesis block, ossia blocco iniziale blockchain */
+}
+
+void HotStuffCore::add_replica_frost(ReplicaID rid, const PeerId &peer_id, secp256k1_frost_pubkey &&pub_key) {
+    std::cout << "---- STO IN add_replica_frost riga 354 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
+
+    //todo: continuare
 }
 
 promise_t HotStuffCore::async_qc_finish(const block_t &blk) {
