@@ -22,13 +22,14 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <iostream>
+#include <iomanip>
 
 #include "salticidae/util.h"
 #include "salticidae/network.h"
 #include "salticidae/msg.h"
 #include "hotstuff/util.h"
 #include "hotstuff/consensus.h"
-
+#include "secp256k1_frost.h"
 namespace hotstuff {
 
 using salticidae::PeerNetwork;
@@ -226,6 +227,8 @@ class HotStuffBase: public HotStuffCore {
     void exec_command(uint256_t cmd_hash, commit_cb_t callback);
     void start(std::vector<std::tuple<NetAddr, pubkey_bt, uint256_t>> &&replicas,
                 bool ec_loop = false);
+    void start_frost(std::vector<std::tuple<NetAddr, secp256k1_frost_pubkey, uint256_t>> &&replicas,
+                   bool ec_loop = false);
 
     size_t size() const { return peers.size(); }
     const auto &get_decision_waiting() const { return decision_waiting; }
@@ -244,7 +247,9 @@ class HotStuffBase: public HotStuffCore {
     promise_t async_fetch_blk(const uint256_t &blk_hash, const PeerId *replica, bool fetch_now = true);
     /** Returns a promise resolved (with block_t blk) when Block is delivered (i.e. prefix is fetched). */
     promise_t async_deliver_blk(const uint256_t &blk_hash,  const PeerId &replica);
-};
+
+
+    };
 
 /** HotStuff protocol (templated by cryptographic implementation). */
 template<typename PrivKeyType = PrivKeyDummy,
@@ -329,6 +334,53 @@ class HotStuff: public HotStuffBase {
                     uint256_t(std::get<2>(r))   // 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
                 ));
         HotStuffBase::start(std::move(reps), ec_loop);
+    }
+
+    void print_hex2(unsigned char data[64], size_t size) {
+        std::cout << "sto in print_hex2" << std::endl;
+        
+        size_t i;
+        printf("0x");
+        for (i = 0; i < size; i++) {
+            printf("%02x", data[i]);
+        }
+        printf("\n");
+    }
+
+    void start_frost(const std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> &replicas, bytearray_t group_pub_key, bool ec_loop = false) {
+        std::cout << "---- STO IN start_frost riga 319 DENTRO hotstuff.h package:include->hotstuff---- " << std::endl;
+        /* VETTORE REPLICAS CONTIENE PER OGNI REPLICA:
+         *  valore1: <NetAddr 127.0.0.1:10000>
+            valore2: 039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23
+            valore3: 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
+         */
+        secp256k1_frost_pubkey pubkey;
+        bytearray_t bytes_key = std::get<1>(replicas[0]);
+        for (const auto &byte : bytes_key) {
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)byte;
+        }
+        std::cout << "\n" << std::endl;
+        
+        std::memcpy(pubkey.public_key, bytes_key.data(), bytes_key.size());
+        print_hex2(pubkey.public_key, sizeof(pubkey.public_key));
+        std::memcpy(pubkey.group_public_key, group_pub_key.data(), group_pub_key.size());
+
+        std::vector<std::tuple<NetAddr, secp256k1_frost_pubkey , uint256_t>> reps;
+        for (auto &r: replicas) {
+            secp256k1_frost_pubkey pubkey;
+            bytearray_t bytes_key = std::get<1>(r);
+            std::memcpy(pubkey.public_key, bytes_key.data(), bytes_key.size());
+            std::memcpy(pubkey.group_public_key, group_pub_key.data(), group_pub_key.size());
+            print_hex2(pubkey.public_key, sizeof(pubkey.public_key));
+            reps.push_back(
+                    std::make_tuple(
+                            std::get<0>(r),
+                            pubkey, // 039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23
+                            uint256_t(std::get<2>(r))   // 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
+                    ));
+        }
+
+        HotStuffBase::start_frost(std::move(reps), ec_loop);
     }
 };
 

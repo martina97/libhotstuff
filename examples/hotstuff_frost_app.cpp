@@ -526,7 +526,7 @@ void HotStuffApp::client_request_cmd_handler(MsgReqCmd &&msg, const conn_t &conn
 }
 
 void HotStuffApp::start_frost(const std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> &reps, bytearray_t group_pub_key) {
-    std::cout << "---\n------- Sono in HotStuffApp::start ------ " << std::endl;
+    std::cout << "---\n------- Sono in HotStuffApp::start_frost ------ " << std::endl;
 
     ev_stat_timer = TimerEvent(ec, [this](TimerEvent &) {
         HotStuff::print_stat();
