@@ -50,6 +50,7 @@ using hotstuff::get_hash;
 using hotstuff::promise_t;
 #include <error.h>
 #include <iomanip>
+#include <utility>
 #include "secp256k1.h"
 
 #include "secp256k1_frost.h"
@@ -136,6 +137,8 @@ public:
 
     void start(const std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> &reps);
     void stop();
+
+    void start_frost(const std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> &reps, bytearray_t group_pub_key);
 };
 
 std::pair<std::string, std::string> split_ip_port_cport(const std::string &s) {
@@ -440,6 +443,14 @@ int main(int argc, char* argv[]) {
         std::cout << "----" << std::endl;
 
     }
+
+    bytearray_t group_pub_key = hotstuff::from_hex(opt_group_pubkey->get());
+    std::cout << "STAMPO group_pub_key " << std::endl;
+
+    for (const auto &byte : group_pub_key) {
+        std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)byte;
+    }
+    std::cout << "\n" << std::endl;
     auto shutdown = [&](int) { papp->stop(); }; //stopping all threads.
     salticidae::SigEvent ev_sigint(ec, shutdown);
     salticidae::SigEvent ev_sigterm(ec, shutdown);
@@ -447,7 +458,7 @@ int main(int argc, char* argv[]) {
     ev_sigint.add(SIGINT);
     ev_sigterm.add(SIGTERM);
 
-    papp->start(reps);
+    papp->start_frost(reps, group_pub_key);
 
     elapsed.stop(true);
 
@@ -512,6 +523,44 @@ void HotStuffApp::client_request_cmd_handler(MsgReqCmd &&msg, const conn_t &conn
     exec_command(cmd_hash, [this, addr](Finality fin) {
         resp_queue.enqueue(std::make_pair(fin, addr));
     });
+}
+
+void HotStuffApp::start_frost(const std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> &reps, bytearray_t group_pub_key) {
+    std::cout << "---\n------- Sono in HotStuffApp::start ------ " << std::endl;
+
+    ev_stat_timer = TimerEvent(ec, [this](TimerEvent &) {
+        HotStuff::print_stat();
+        HotStuffApp::print_stat();
+        //HotStuffCore::prune(100);
+        ev_stat_timer.add(stat_period);
+    });
+    ev_stat_timer.add(stat_period);
+    impeach_timer = TimerEvent(ec, [this](TimerEvent &) {
+        if (get_decision_waiting().size())
+            get_pace_maker()->impeach();
+        reset_imp_timer();
+    });
+    impeach_timer.add(impeach_timeout);
+    HOTSTUFF_LOG_INFO("** starting the system with parameters **");
+    HOTSTUFF_LOG_INFO("blk_size = %lu", blk_size);
+    HOTSTUFF_LOG_INFO("conns = %lu", HotStuff::size());
+    HOTSTUFF_LOG_INFO("** starting the event loop...");
+
+    HotStuff::start_frost(reps, std::move(group_pub_key));
+
+    cn.reg_conn_handler([this](const salticidae::ConnPool::conn_t &_conn, bool connected) {
+        auto conn = salticidae::static_pointer_cast<conn_t::type>(_conn);
+        if (connected)
+            client_conns.insert(conn);
+        else
+            client_conns.erase(conn);
+        return true;
+    });
+
+    req_thread = std::thread([this]() { req_ec.dispatch(); });
+    resp_thread = std::thread([this]() { resp_ec.dispatch(); });
+    /* enter the event main loop */
+    ec.dispatch();
 }
 
 void HotStuffApp::start(const std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> &reps) {
