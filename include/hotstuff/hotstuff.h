@@ -337,14 +337,11 @@ class HotStuff: public HotStuffBase {
     }
 
     void print_hex2(unsigned char data[64], size_t size) {
-        std::cout << "sto in print_hex2" << std::endl;
-        
-        size_t i;
-        printf("0x");
-        for (i = 0; i < size; i++) {
-            printf("%02x", data[i]);
+        std::cout << "0x";
+        for (size_t i = 0; i < size; i++) {
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(data[i]);
         }
-        printf("\n");
+        std::cout << std::dec << std::endl; // Reset to decimal format
     }
 
     void start_frost(const std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> &replicas, bytearray_t group_pub_key, bool ec_loop = false) {
@@ -363,6 +360,7 @@ class HotStuff: public HotStuffBase {
         
         std::memcpy(pubkey.public_key, bytes_key.data(), bytes_key.size());
         print_hex2(pubkey.public_key, sizeof(pubkey.public_key));
+
         std::memcpy(pubkey.group_public_key, group_pub_key.data(), group_pub_key.size());
 
         std::vector<std::tuple<NetAddr, secp256k1_frost_pubkey , uint256_t>> reps;

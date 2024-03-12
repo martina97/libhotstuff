@@ -74,13 +74,8 @@ std::tuple<std::string, std::string, std::string> HotstuffTLSKeyGeneration();
 std::pair<std::string, std::string> split_ip_port_cport(const std::string &s);
 void writePublicKeyToFile(FILE *pFile, unsigned char key[64], size_t i);
 
-int main2(int argc, char* argv[]) {
-    std::cout << "argc: " << argc << std::endl;
+int main2() {
 
-    // Print each command-line argument (argv)
-    for (int i = 0; i < argc; ++i) {
-        std::cout << "argv[" << i << "]: " << argv[i] << std::endl;
-    }
 
     int blocksize = 1;
     const std::string &algo = "secp256k1";

@@ -487,7 +487,11 @@ HotStuffBase::~HotStuffBase() {}
 void HotStuffBase::start_frost( std::vector<std::tuple<NetAddr, secp256k1_frost_pubkey, uint256_t>> &&replicas,
             bool ec_loop) {
     std::cout << "sto in HotStuffBase::start_frost riga 487 DENTRO hotstuff.cpp package:salticidae->include->src---- \" " << std::endl;
+    std::cout << "replicas.size()  = " << replicas.size() << std::endl;
+    
     for (size_t i = 0; i < replicas.size(); i++) {
+        std::cout << "index = " << i << std::endl;
+        
         auto &addr = std::get<0>(replicas[i]); //<NetAddr 127.0.0.1:10000>
         std::cout << "addr.operator std::string() == " << addr.operator std::string() << std::endl;
         auto cert_hash = std::move(std::get<2>(replicas[i]));   //542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
@@ -503,10 +507,92 @@ void HotStuffBase::start_frost( std::vector<std::tuple<NetAddr, secp256k1_frost_
         std::cout << "pn_cert == " <<  get_hex(pn_cert->get_der())<< std::endl;
         //std::cout << "pn_cert.priv == " <<get_hex(pn_cert->get_pubkey().get_privkey_der())<< std::endl;
         std::cout << "pn_cert.pub == " <<get_hex(pn_cert->get_pubkey().get_pubkey_der())<< std::endl;
-        HotStuffCore::add_replica_frost(i, peer, std::move(std::get<1>(replicas[i])));
-    }
+        secp256k1_frost_pubkey pub_key = std::get<1>(replicas[i]);
+        /*
+        printf("0x");
+        for (i = 0; i < sizeof(pub_key.public_key); i++) {
+            printf("%02x", pub_key.public_key[i]);
+        }
+        printf("\n");
+         */
+        std::cout << "prima add_replica_frost" << std::endl;
 
-    //todo: continuare
+        HotStuffCore::add_replica_frost(i, peer, pub_key);
+        std::cout << "dopo add_replica_frost" << std::endl;
+        std::cout << "listen_addr.operator std::string() = "<< listen_addr.operator std::string() << std::endl;
+
+        if (addr != listen_addr)
+        {
+            std::cout << " ---- addr != listen_addr ------" << std::endl;
+
+            // è diverso quando sto nel ciclo relativo a una replica diversa, infatti io
+            // sto ciclando per tutte le repliche nel vettore replicas
+
+            //se diversa metto anche gli altri peer nelle strutture che mi servono!
+            peers.push_back(peer);
+
+            pn.add_peer(peer);
+            pn.set_peer_addr(peer, addr);
+            pn.conn_peer(peer);
+        }
+        std::cout << " #############   " << std::endl;
+    }
+    for (const auto& peer : peers) {
+        std::cout << "PeerId: " << peer.to_hex() << std::endl;
+    }
+    // N = 3F+1 --> F = (N-1)/3
+    /* ((n - 1) + 1 - 1) / 3 */
+    uint32_t nfaulty = peers.size() / 3; //nfaulty = 1
+    std::cout << "nfaulty == " << nfaulty << std::endl;
+
+    if (nfaulty == 0)
+        LOG_WARN("too few replicas in the system to tolerate any failure");
+
+    on_init(nfaulty);//Chiamata per inizializzare il protocollo, dovrebbe essere chiamata una volta prima di tutte le altre funzioni.
+    pmaker->init(this);
+    std::cout << "FINE PMAKER INIT" << std::endl;
+
+    if (ec_loop)
+        ec.dispatch();
+    std::cout << "-----------------------------  DOPO ec.dispatch() -----------------------------" << std::endl;
+    // CI ENTRO SOLO QUANDO RUNNO IL CLIENT !!!!!!!!!!!
+    cmd_pending.reg_handler(ec, [this](cmd_queue_t &q) {
+        //std::this_thread::sleep_for(std::chrono::seconds(5));
+
+        std::cout << "STO DENTRO cmd_pending.reg_handler(ec, [this](cmd_queue_t &q) " << std::endl;
+
+        std::pair<uint256_t, commit_cb_t> e;
+        while (q.try_dequeue(e))
+        {
+            std::cout << "STO NEL WHILE q.try_dequeue(e)" << std::endl;
+
+            ReplicaID proposer = pmaker->get_proposer();
+
+            const auto &cmd_hash = e.first;
+            auto it = decision_waiting.find(cmd_hash);
+            if (it == decision_waiting.end())
+                it = decision_waiting.insert(std::make_pair(cmd_hash, e.second)).first;
+            else
+                e.second(Finality(id, 0, 0, 0, cmd_hash, uint256_t()));
+            if (proposer != get_id()) continue;
+            cmd_pending_buffer.push(cmd_hash);
+            if (cmd_pending_buffer.size() >= blk_size)
+            {
+                std::vector<uint256_t> cmds;
+                for (uint32_t i = 0; i < blk_size; i++)
+                {
+                    cmds.push_back(cmd_pending_buffer.front());
+                    cmd_pending_buffer.pop();
+                }
+                pmaker->beat().then([this, cmds = std::move(cmds)](ReplicaID proposer) {
+                    if (proposer == get_id())
+                        on_propose(cmds, pmaker->get_parents());
+                });
+                return true;
+            }
+        }
+        return false;
+    });
 }
 
 

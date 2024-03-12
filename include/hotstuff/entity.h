@@ -29,7 +29,7 @@
 #include "hotstuff/type.h"
 #include "hotstuff/util.h"
 #include "hotstuff/crypto.h"
-
+#include "secp256k1_frost.h"
 namespace hotstuff {
 
 enum EntityType {
@@ -59,8 +59,31 @@ struct ReplicaInfo {
     }
 };
 
+struct ReplicaInfoFrost {
+    ReplicaID id;
+    salticidae::PeerId peer_id;
+    secp256k1_frost_pubkey pubkey;
+
+    ReplicaInfoFrost(ReplicaID id,
+                const salticidae::PeerId &peer_id,
+                     secp256k1_frost_pubkey &&pubkey):
+            id(id), peer_id(peer_id), pubkey(pubkey) {std::cout << "---- STO IN ReplicaInfo riga 45 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+    }
+
+    ReplicaInfoFrost(const ReplicaInfoFrost &other):
+            id(other.id), peer_id(other.peer_id),
+            pubkey(other.pubkey) {std::cout << "---- STO IN ReplicaInfo riga 51 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+    }
+
+    ReplicaInfoFrost(ReplicaInfoFrost &&other):
+            id(other.id), peer_id(other.peer_id),
+            pubkey(other.pubkey) {std::cout << "---- STO IN ReplicaInfo riga 56 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+    }
+};
+
 class ReplicaConfig {
     std::unordered_map<ReplicaID, ReplicaInfo> replica_map;
+    std::unordered_map<ReplicaID, ReplicaInfoFrost> replica_map_frost;
 
     public:
     size_t nreplicas;
@@ -73,6 +96,26 @@ class ReplicaConfig {
 
         replica_map.insert(std::make_pair(rid, info));
         nreplicas++;
+    }
+    void add_replica(ReplicaID rid, const ReplicaInfoFrost &info) {
+        std::cout << "---- STO IN add_replica riga 71 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
+        replica_map_frost.insert(std::make_pair(rid, info));
+        nreplicas++;
+        secp256k1_frost_pubkey key = info.pubkey;
+        size_t i;
+        printf("0x");
+        for (i = 0; i < sizeof(key.public_key); i++) {
+            printf("%02x", key.public_key[i]);
+        }
+        printf("\n");
+        printf("0x");
+        for (i = 0; i < sizeof(key.group_public_key); i++) {
+            printf("%02x", key.group_public_key[i]);
+        }
+        printf("\n");
+        std::cout << "dopo add_replica" << std::endl;
+
     }
 
     const ReplicaInfo &get_info(ReplicaID rid) const {

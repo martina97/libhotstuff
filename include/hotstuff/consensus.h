@@ -117,6 +117,7 @@ class HotStuffCore {
     /** Called by HotStuffCore upon the decision being made for cmd. */
     virtual void do_decide(Finality &&fin) = 0;
     virtual void do_consensus(const block_t &blk) = 0;
+
     /** Called by HotStuffCore upon broadcasting a new proposal.
      * The user should send the proposal message to all replicas except for
      * itself. */
@@ -144,7 +145,7 @@ class HotStuffCore {
     /** Add a replica to the current configuration. This should only be called
      * before running HotStuffCore protocol. */
     void add_replica(ReplicaID rid, const PeerId &peer_id, pubkey_bt &&pub_key);
-    void add_replica_frost(ReplicaID rid, const PeerId &peer_id, secp256k1_frost_pubkey &&pub_key);
+    void add_replica_frost(ReplicaID rid, const PeerId &peer_id, secp256k1_frost_pubkey pub_key);
     /** Try to prune blocks lower than last committed height - staleness. */
     void prune(uint32_t staleness);
 
