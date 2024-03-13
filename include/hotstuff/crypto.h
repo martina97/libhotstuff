@@ -256,7 +256,7 @@ class PubKeySecp256k1: public PubKey {
 };
 
 class PubKeySecp256k1Frost: public PubKey {
-    static const auto _olen = 33;
+    static const auto _olen = 64;
     friend class SigSecp256k1;
     secp256k1_frost_pubkey data;
     secp256k1_context_t ctx;
@@ -265,20 +265,31 @@ class PubKeySecp256k1Frost: public PubKey {
     public:
     PubKeySecp256k1Frost(secp256k1_context_t ctx =
     secp256k1_default_sign_ctx):
-            PubKey(), ctx(std::move(ctx)) {std::cout << "---- STO IN PubKeySecp256k1Frost ---- " << std::endl;}
+            PubKey(), ctx(std::move(ctx)) {std::cout << "---- STO IN PubKeySecp256k1Frost riga 267 ---- " << std::endl;}
 
     PubKeySecp256k1Frost(const bytearray_t &raw_bytes,
                     const secp256k1_context_t &ctx =
                     secp256k1_default_sign_ctx):
         PubKeySecp256k1Frost(ctx) {
-        std::cout << "---- STO IN PubKeySecp256k1Frost ---- " << std::endl;
-        from_bytes(raw_bytes); }
+        // Copy the combined key to the data structure
+        if (raw_bytes.size() != (sizeof(data.public_key) + sizeof(data.group_public_key))) {
+            throw std::invalid_argument("Invalid combined key size");
+        }
+        std::cout << "---- STO IN PubKeySecp256k1Frost riga 270---- " << std::endl;
+        std::copy(raw_bytes.begin(), raw_bytes.begin() + 64, data.public_key);
+        std::copy(raw_bytes.begin() + 64, raw_bytes.end(), data.group_public_key);
+        //std::cout << salticidae::get_hex(data.public_key)<< std::endl;
+
+        from_bytes(raw_bytes) ;    }
+
 
     // Constructor to initialize with public key and group public key
     PubKeySecp256k1Frost(const std::vector<uint8_t> &public_key,
                          const std::vector<uint8_t> &group_public_key,
                          const secp256k1_context_t &ctx = secp256k1_default_sign_ctx):
             PubKeySecp256k1Frost(ctx) {
+        std::cout << "--- STO IN PubKeySecp256k1Frost riga riga 278----" << std::endl;
+        
         // Copy the public key and group public key to the data structure
         std::copy(public_key.begin(), public_key.end(), data.public_key);
         std::copy(group_public_key.begin(), group_public_key.end(), data.group_public_key);
@@ -313,22 +324,29 @@ class PubKeySecp256k1Frost: public PubKey {
     void unserialize(DataStream &s) override {
         std::cout << "---- STO IN unserialize riga 300 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
 
+        std::cout << s.get_hex() << std::endl;
+
         static const auto _exc = std::invalid_argument("ill-formed public key");
         try {
             // Parse the serialized data for public key
             secp256k1_pubkey pub_key;
-            if (!secp256k1_ec_pubkey_parse(
-                    ctx->ctx, &pub_key, s.get_data_inplace(_olen), _olen))
+            if (!secp256k1_ec_pubkey_parse(ctx->ctx, &pub_key, s.get_data_inplace(_olen), _olen)) {
+                std::cout << "CASO 1" << std::endl;
                 throw _exc;
+            }
+
 
             // Copy the parsed public key to the data
             memcpy(data.public_key, pub_key.data, sizeof(data.public_key));
-
+            std::cout << "sto quaaaa" << std::endl;
+            
             // Parse the serialized data for group public key
             secp256k1_pubkey group_pub_key;
-            if (!secp256k1_ec_pubkey_parse(
-                    ctx->ctx, &group_pub_key, s.get_data_inplace(_olen), _olen))
+            if (!secp256k1_ec_pubkey_parse(ctx->ctx, &group_pub_key, s.get_data_inplace(_olen), _olen)) {
+                std::cout << "CASO 2" << std::endl;
                 throw _exc;
+            }
+
 
             // Copy the parsed group public key to the data
             memcpy(data.group_public_key, group_pub_key.data, sizeof(data.group_public_key));

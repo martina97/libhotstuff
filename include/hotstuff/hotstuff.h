@@ -23,6 +23,7 @@
 #include <unordered_set>
 #include <iostream>
 #include <iomanip>
+#include <valarray>
 
 #include "salticidae/util.h"
 #include "salticidae/network.h"
@@ -379,13 +380,21 @@ class HotStuff: public HotStuffBase {
                     ));
         }
          */
-        for (auto &r: replicas)
+        for (auto &r: replicas) {
+            const std::vector<uint8_t> &prova = std::move(std::get<1>(r));
+            std::vector<uint8_t> concatenated_keys(prova.begin(), prova.end());
+            concatenated_keys.insert(concatenated_keys.end(), group_pub_key.begin(), group_pub_key.end());
+            std::cout << get_hex(concatenated_keys) << std::endl;
+            
             reps.push_back(
                     std::make_tuple(
                             std::get<0>(r),
-                            new PubKeyType(std::get<1>(r), group_pub_key), // 039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23
+                            //new PubKeyType(std::get<1>(r), group_pub_key), // 039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23
+                            new PubKeyType(concatenated_keys), // 039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23
                             uint256_t(std::get<2>(r))   // 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
                     ));
+        }
+            
 
         HotStuffBase::start_frost(std::move(reps), ec_loop);
     }

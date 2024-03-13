@@ -157,7 +157,7 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < argc; ++i) {
         std::cout << "argv[" << i << "]: " << argv[i] << std::endl;
     }
-    Config config("hotstuff.conf");
+    Config config("hotstuff_frost.conf");
     std::cout << "---- DOPO CONFIG ---- " << std::endl;
     ElapsedTime elapsed;    //serve a calcolare il tempo trascorso e il tempo della CPU tra due punti nel codice
     elapsed.start();    //tempo di inizio
