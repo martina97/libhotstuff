@@ -227,7 +227,7 @@ class HotStuffBase: public HotStuffCore {
     void exec_command(uint256_t cmd_hash, commit_cb_t callback);
     void start(std::vector<std::tuple<NetAddr, pubkey_bt, uint256_t>> &&replicas,
                 bool ec_loop = false);
-    void start_frost(std::vector<std::tuple<NetAddr, secp256k1_frost_pubkey, uint256_t>> &&replicas,
+    void start_frost(std::vector<std::tuple<NetAddr, pubkey_bt, uint256_t>> &&replicas,
                    bool ec_loop = false);
 
     size_t size() const { return peers.size(); }
@@ -363,7 +363,8 @@ class HotStuff: public HotStuffBase {
 
         std::memcpy(pubkey.group_public_key, group_pub_key.data(), group_pub_key.size());
 
-        std::vector<std::tuple<NetAddr, secp256k1_frost_pubkey , uint256_t>> reps;
+        std::vector<std::tuple<NetAddr, pubkey_bt , uint256_t>> reps;
+        /*
         for (auto &r: replicas) {
             secp256k1_frost_pubkey pubkey;
             bytearray_t bytes_key = std::get<1>(r);
@@ -377,13 +378,21 @@ class HotStuff: public HotStuffBase {
                             uint256_t(std::get<2>(r))   // 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
                     ));
         }
+         */
+        for (auto &r: replicas)
+            reps.push_back(
+                    std::make_tuple(
+                            std::get<0>(r),
+                            new PubKeyType(std::get<1>(r), group_pub_key), // 039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23
+                            uint256_t(std::get<2>(r))   // 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
+                    ));
 
         HotStuffBase::start_frost(std::move(reps), ec_loop);
     }
 };
 
 using HotStuffNoSig = HotStuff<>;
-using HotStuffSecp256k1 = HotStuff<PrivKeySecp256k1, PubKeySecp256k1,
+using HotStuffSecp256k1 = HotStuff<PrivKeySecp256k1, PubKeySecp256k1Frost,
                                     PartCertSecp256k1, QuorumCertSecp256k1>;
 
 template<EntityType ent_type>

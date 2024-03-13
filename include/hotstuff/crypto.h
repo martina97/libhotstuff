@@ -21,6 +21,7 @@
 #include <iostream>
 
 #include "secp256k1.h"
+#include "secp256k1_frost.h"
 #include "salticidae/crypto.h"
 #include "hotstuff/type.h"
 #include "hotstuff/task.h"
@@ -171,6 +172,7 @@ class QuorumCertDummy: public QuorumCert {
 class Secp256k1Context {
     secp256k1_context *ctx;
     friend class PubKeySecp256k1;
+    friend class PubKeySecp256k1Frost;
     friend class SigSecp256k1;
     public:
     Secp256k1Context(bool sign = false):
@@ -208,12 +210,16 @@ class PubKeySecp256k1: public PubKey {
     public:
     PubKeySecp256k1(const secp256k1_context_t &ctx =
                             secp256k1_default_sign_ctx):
-        PubKey(), ctx(ctx) {}
+        PubKey(), ctx(ctx) {std::cout << "---- STO IN PubKeySecp256k1 RIGA 213---- " << std::endl;}
     
     PubKeySecp256k1(const bytearray_t &raw_bytes,
                     const secp256k1_context_t &ctx =
                             secp256k1_default_sign_ctx):
-        PubKeySecp256k1(ctx) { from_bytes(raw_bytes); }
+        PubKeySecp256k1(ctx) {
+        std::cout << "---- STO IN PubKeySecp256k1 RIGA 218---- " << std::endl;
+        from_bytes(raw_bytes); }
+
+
 
     inline PubKeySecp256k1(const PrivKeySecp256k1 &priv_key,
                             const secp256k1_context_t &ctx =
@@ -249,6 +255,95 @@ class PubKeySecp256k1: public PubKey {
     }
 };
 
+class PubKeySecp256k1Frost: public PubKey {
+    static const auto _olen = 33;
+    friend class SigSecp256k1;
+    secp256k1_frost_pubkey data;
+    secp256k1_context_t ctx;
+
+
+    public:
+    PubKeySecp256k1Frost(secp256k1_context_t ctx =
+    secp256k1_default_sign_ctx):
+            PubKey(), ctx(std::move(ctx)) {std::cout << "---- STO IN PubKeySecp256k1Frost ---- " << std::endl;}
+
+    PubKeySecp256k1Frost(const bytearray_t &raw_bytes,
+                    const secp256k1_context_t &ctx =
+                    secp256k1_default_sign_ctx):
+        PubKeySecp256k1Frost(ctx) {
+        std::cout << "---- STO IN PubKeySecp256k1Frost ---- " << std::endl;
+        from_bytes(raw_bytes); }
+
+    // Constructor to initialize with public key and group public key
+    PubKeySecp256k1Frost(const std::vector<uint8_t> &public_key,
+                         const std::vector<uint8_t> &group_public_key,
+                         const secp256k1_context_t &ctx = secp256k1_default_sign_ctx):
+            PubKeySecp256k1Frost(ctx) {
+        // Copy the public key and group public key to the data structure
+        std::copy(public_key.begin(), public_key.end(), data.public_key);
+        std::copy(group_public_key.begin(), group_public_key.end(), data.group_public_key);
+    }
+
+    void serialize(DataStream &s) const override {
+        std::cout << "---- STO IN serialize linea 275 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
+        static uint8_t output[2*_olen];
+        size_t olen = _olen;
+        // Convert the public key to secp256k1_pubkey
+        secp256k1_pubkey pub_key;
+        secp256k1_ec_pubkey_parse(ctx->ctx, &pub_key, data.public_key, sizeof(data.public_key));
+
+        // Serialize public_key
+        (void)secp256k1_ec_pubkey_serialize(
+                ctx->ctx, (unsigned char *)output,
+                &olen, &pub_key, SECP256K1_EC_COMPRESSED);
+
+        // Convert the group public key to secp256k1_pubkey
+        secp256k1_pubkey group_pub_key;
+        secp256k1_ec_pubkey_parse(ctx->ctx, &group_pub_key, data.group_public_key, sizeof(data.group_public_key));
+
+        // Serialize group_public_key
+        (void)secp256k1_ec_pubkey_serialize(
+                ctx->ctx, (unsigned char *)(output + 64),
+                &olen, &group_pub_key, SECP256K1_EC_COMPRESSED);
+
+        //s.put_data(output, output + _olen);
+        s.put_data(output, output + 2 * _olen);
+    }
+    void unserialize(DataStream &s) override {
+        std::cout << "---- STO IN unserialize riga 300 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
+        static const auto _exc = std::invalid_argument("ill-formed public key");
+        try {
+            // Parse the serialized data for public key
+            secp256k1_pubkey pub_key;
+            if (!secp256k1_ec_pubkey_parse(
+                    ctx->ctx, &pub_key, s.get_data_inplace(_olen), _olen))
+                throw _exc;
+
+            // Copy the parsed public key to the data
+            memcpy(data.public_key, pub_key.data, sizeof(data.public_key));
+
+            // Parse the serialized data for group public key
+            secp256k1_pubkey group_pub_key;
+            if (!secp256k1_ec_pubkey_parse(
+                    ctx->ctx, &group_pub_key, s.get_data_inplace(_olen), _olen))
+                throw _exc;
+
+            // Copy the parsed group public key to the data
+            memcpy(data.group_public_key, group_pub_key.data, sizeof(data.group_public_key));
+        } catch (std::ios_base::failure &) {
+            throw _exc;
+        }
+
+    }
+
+    PubKeySecp256k1Frost *clone() override {
+        return new PubKeySecp256k1Frost(*this);
+    }
+};
+
+
 class PrivKeySecp256k1: public PrivKey {
     static const auto nbytes = 32;
     friend class PubKeySecp256k1;
@@ -259,12 +354,15 @@ class PrivKeySecp256k1: public PrivKey {
     public:
     PrivKeySecp256k1(const secp256k1_context_t &ctx =
                             secp256k1_default_sign_ctx):
-        PrivKey(), ctx(ctx) {}
+        PrivKey(), ctx(ctx) {std::cout << "STO IN PrivKeySecp256k1" << std::endl;
+        }
 
     PrivKeySecp256k1(const bytearray_t &raw_bytes,
                      const secp256k1_context_t &ctx =
                             secp256k1_default_sign_ctx):
-        PrivKeySecp256k1(ctx) { from_bytes(raw_bytes); }
+        PrivKeySecp256k1(ctx) {
+        std::cout << "STO IN PrivKeySecp256k1" << std::endl;
+        from_bytes(raw_bytes); }
 
     void serialize(DataStream &s) const override {
         std::cout << "---- STO IN serialize riga 269 DENTRO crypto.h package:include->hotstuff---- " << std::endl;

@@ -335,7 +335,7 @@ void HotStuffCore::on_init(uint32_t nfaulty) {
     std::cout << std::endl;
 
 
-        b0->qc->compute();  //todo: vedere issue su THRESHOLD SIGNATURES
+    b0->qc->compute();  //todo: vedere issue su THRESHOLD SIGNATURES
     b0->self_qc = b0->qc->clone();
     b0->qc_ref = b0;
     hqc = std::make_pair(b0, b0->qc->clone());
