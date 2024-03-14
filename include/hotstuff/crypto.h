@@ -19,12 +19,14 @@
 
 #include <openssl/rand.h>
 #include <iostream>
+#include <iomanip>
 
 #include "secp256k1.h"
 #include "secp256k1_frost.h"
 #include "salticidae/crypto.h"
 #include "hotstuff/type.h"
 #include "hotstuff/task.h"
+#include "eckey_impl.h"
 
 namespace hotstuff {
 
@@ -208,9 +210,10 @@ class PubKeySecp256k1: public PubKey {
     secp256k1_context_t ctx;
 
     public:
-    PubKeySecp256k1(const secp256k1_context_t &ctx =
-                            secp256k1_default_sign_ctx):
-        PubKey(), ctx(ctx) {std::cout << "---- STO IN PubKeySecp256k1 RIGA 213---- " << std::endl;}
+    PubKeySecp256k1(const secp256k1_context_t &ctx = secp256k1_default_sign_ctx):
+        PubKey(), ctx(ctx) {
+            std::cout << "---- STO IN PubKeySecp256k1 RIGA 213---- " << std::endl;
+        }
     
     PubKeySecp256k1(const bytearray_t &raw_bytes,
                     const secp256k1_context_t &ctx =
@@ -239,11 +242,15 @@ class PubKeySecp256k1: public PubKey {
     void unserialize(DataStream &s) override {
         std::cout << "---- STO IN unserialize riga 233 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
 
+        //printf("ciaoooo cacca");
         static const auto _exc = std::invalid_argument("ill-formed public key");
         try {
-            if (!secp256k1_ec_pubkey_parse(
-                    ctx->ctx, &data, s.get_data_inplace(_olen), _olen))
+            std::cout << "sto dopo secp256k1_ec_pubkey_parse" << std::endl;
+            int boh = secp256k1_ec_pubkey_parse(ctx->ctx, &data, s.get_data_inplace(_olen), _olen);
+            if (!boh) {
                 throw _exc;
+            }
+                
         } catch (std::ios_base::failure &) {
             throw _exc;
         }
@@ -321,40 +328,60 @@ class PubKeySecp256k1Frost: public PubKey {
         //s.put_data(output, output + _olen);
         s.put_data(output, output + 2 * _olen);
     }
+    
     void unserialize(DataStream &s) override {
         std::cout << "---- STO IN unserialize riga 300 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
 
         std::cout << s.get_hex() << std::endl;
 
         static const auto _exc = std::invalid_argument("ill-formed public key");
+        static const auto _exc2 = std::invalid_argument("ill-formed group public key");
+
+        const unsigned char *boh = s.get_data_inplace(_olen);
+        for (size_t i = 0; i < _olen; ++i) {
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(boh[i]);
+        }
+        std::cout << std::endl;
+        
         try {
+            std::cout << "PRIMO TRY" << std::endl;
+
             // Parse the serialized data for public key
             secp256k1_pubkey pub_key;
             if (!secp256k1_ec_pubkey_parse(ctx->ctx, &pub_key, s.get_data_inplace(_olen), _olen)) {
                 std::cout << "CASO 1" << std::endl;
                 throw _exc;
             }
-
-
+            std::cout << "dopo try" << std::endl;
             // Copy the parsed public key to the data
-            memcpy(data.public_key, pub_key.data, sizeof(data.public_key));
+            //memcpy(data.public_key, pub_key.data, sizeof(data.public_key));
             std::cout << "sto quaaaa" << std::endl;
-            
+
+            /*
+            std::cout << "secondo TRY" << std::endl;
+            std::cout << "AOOOOOOOOOOOOOOOOOOOOOOOO" << std::endl;
+            std::cout << "AOOOOOOOOOOOOOOOOOOOOOOOO" << std::endl;
+
+            const unsigned char *ee = s.get_data_inplace(_olen);
+            for (size_t i = 0; i < _olen; ++i) {
+                std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(ee[i]);
+            }
+            std::cout << std::endl;
             // Parse the serialized data for group public key
             secp256k1_pubkey group_pub_key;
             if (!secp256k1_ec_pubkey_parse(ctx->ctx, &group_pub_key, s.get_data_inplace(_olen), _olen)) {
                 std::cout << "CASO 2" << std::endl;
-                throw _exc;
+                throw _exc2;
             }
-
-
             // Copy the parsed group public key to the data
-            memcpy(data.group_public_key, group_pub_key.data, sizeof(data.group_public_key));
+             */
+            //memcpy(data.group_public_key, group_pub_key.data, sizeof(data.group_public_key));
         } catch (std::ios_base::failure &) {
-            throw _exc;
+            throw _exc2;
         }
 
     }
+    
 
     PubKeySecp256k1Frost *clone() override {
         return new PubKeySecp256k1Frost(*this);
