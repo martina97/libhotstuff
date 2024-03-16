@@ -392,6 +392,24 @@ int main(int argc, char* argv[]) {
     std::cout << "clisten_addr --> Port: " <<  ntohs(NetAddr("0.0.0.0", client_port).port) << std::endl;
     std::cout << "opt_nworker->get(): " <<   opt_nworker->get() << std::endl;
 
+    bytearray_t bytearray_pubkey= hotstuff::from_hex(std::get<1>(replicas[0]));
+    bytearray_t bytearray_grouppubkey= hotstuff::from_hex(opt_group_pubkey->get());
+
+    unsigned char* pubkey = new unsigned char[bytearray_pubkey.size()];
+    // Copy the vector elements to the unsigned char array
+    std::copy(bytearray_pubkey.begin(), bytearray_pubkey.end(), pubkey);
+    unsigned char* gpubkey = new unsigned char[bytearray_grouppubkey.size()];
+    // Copy the vector elements to the unsigned char array
+    std::copy(bytearray_grouppubkey.begin(), bytearray_grouppubkey.end(), gpubkey);
+
+    const hotstuff::PubKeyFrost &frost_key = hotstuff::PubKeyFrost(pubkey, gpubkey, idx, replicas.size());
+    std::cout << "ORA STAMPO STRONZO" << std::endl;
+    std::cout << frost_key.data->index << std::endl;
+    
+    
+    
+
+
     papp = new HotStuffApp(opt_blk_size->get(),
                            opt_stat_period->get(),
                            opt_imp_timeout->get(),
@@ -458,6 +476,64 @@ int main(int argc, char* argv[]) {
 
     papp->start(reps, group_pub_key);
 
+    /*
+    std::cout << "PROVO A LAVORARE CON LE CHIAVI FROST!! " << std::endl;
+    bytearray_t bytearray_pubkey= std::get<1>(reps[0]);
+    bytearray_t bytearray_grouppubkey= hotstuff::from_hex(opt_group_pubkey->get());
+
+    for (const auto &byte : bytearray_pubkey) {
+        std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)byte;
+    }
+    std::cout << "\n" << std::endl;
+    for (const auto &byte : bytearray_grouppubkey) {
+        std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)byte;
+    }
+    std::cout << "\n" << std::endl;
+     */
+
+    /** CONVERTO bytearray_t IN unsigned char* */
+    // Get a pointer to the data buffer of the vector
+    // Create a new unsigned char array with the same size as the vector
+    //unsigned char* pubkey = new unsigned char[bytearray_pubkey.size()];
+    // Copy the vector elements to the unsigned char array
+    //std::copy(bytearray_pubkey.begin(), bytearray_pubkey.end(), pubkey);
+
+    /*
+    for (std::size_t i = 0; i < bytearray_pubkey.size(); ++i) {
+        std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(pubkey[i]);
+    }
+    std::cout << std::dec << std::endl;
+     */
+
+    //unsigned char* gpubkey = new unsigned char[bytearray_grouppubkey.size()];
+    // Copy the vector elements to the unsigned char array
+    //std::copy(bytearray_grouppubkey.begin(), bytearray_grouppubkey.end(), gpubkey);
+
+    /*
+
+         std::cout << std::dec << std::endl;
+         */
+
+    //const hotstuff::PubKeyFrost &chiave = hotstuff::PubKeyFrost(pubkey, gpubkey, idx, reps.size());
+    //hotstuff::PubKeyFrost(pubkey, gpubkey, idx, reps.size());
+
+
+    //std::cout << "stamppppppppppppppppppppppppppppppppppppp" << std::endl;
+   // std::cout << chiave.data->group_public_key << std::endl;
+    
+   //print_hex(chiave.data->public_key, 64);
+    
+
+
+
+
+
+
+
+
+
+    //chiave_frost = hotstuff::PubKeyFrost()
+    
     elapsed.stop(true);
 
     return 0;

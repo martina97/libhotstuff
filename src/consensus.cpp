@@ -372,13 +372,14 @@ void HotStuffCore::add_replica(ReplicaID rid, const PeerId &peer_id,
                                 pubkey_bt &&pub_key) {
     std::cout << "---- STO IN add_replica riga 354 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
 
+
     config.add_replica(rid,ReplicaInfo(rid, peer_id, std::move(pub_key)));
     //aggiungo l'id della replica nell'insieme "voted", che memorizza gli id di tutte le
     //repliche che hanno votato per il blocco b0
     b0->voted.insert(rid);  /** b0 = genesis block, ossia blocco iniziale blockchain */
 }
 
-void HotStuffCore::add_replica_frost(ReplicaID rid, const PeerId &peer_id, secp256k1_frost_pubkey pub_key) {
+void HotStuffCore::add_replica_frost(ReplicaID rid, const PeerId &peer_id, pubkey_bt &&pub_key) {
     std::cout << "---- STO IN add_replica_frost riga 354 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
     //print_hex2(pub_key.public_key, sizeof(pub_key.public_key));
     size_t i;
@@ -389,8 +390,14 @@ void HotStuffCore::add_replica_frost(ReplicaID rid, const PeerId &peer_id, secp2
     }
     printf("\n");
      */
-    ReplicaInfoFrost replica_info(rid, peer_id, std::move(pub_key));
-    config.add_replica(rid,replica_info);
+
+    std::cout << "PROVO A STAMPARE PUB KEY" << std::endl;
+    std::cout << pub_key.get()->to_hex() << std::endl;
+    std::cout << "DOPO AVER STAMPATO PUB KEY" << std::endl;
+
+
+    //todo: scommentare ASSOLUTAMENTE
+    config.add_replica(rid,ReplicaInfo(rid, peer_id, std::move(pub_key)));
 
     b0->voted.insert(rid);
 }

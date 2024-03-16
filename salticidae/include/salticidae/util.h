@@ -29,6 +29,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include "salticidae/config.h"
+#include <iostream>
 
 typedef struct SalticidaeCError {
     int code;
@@ -133,6 +134,8 @@ class SalticidaeError: public std::exception {
     }
 
     SalticidaeError(int code, int oscode = 0): code(code), oscode(oscode) {
+        std::cout << "sto dentro SalticidaeError" << std::endl;
+        
         if (oscode)
             msg = stringprintf("%s: %s", SALTICIDAE_ERROR_STRINGS[code], strerror(oscode));
         else

@@ -364,39 +364,64 @@ class HotStuff: public HotStuffBase {
 
         std::memcpy(pubkey.group_public_key, group_pub_key.data(), group_pub_key.size());
 
-        std::vector<std::tuple<NetAddr, pubkey_bt , uint256_t>> reps;
-        /*
+        std::vector<std::tuple<NetAddr, hotstuff::PubKeyFrost , uint256_t>> reps;
+
+        int index = 0;
         for (auto &r: replicas) {
-            secp256k1_frost_pubkey pubkey;
-            bytearray_t bytes_key = std::get<1>(r);
-            std::memcpy(pubkey.public_key, bytes_key.data(), bytes_key.size());
-            std::memcpy(pubkey.group_public_key, group_pub_key.data(), group_pub_key.size());
-            print_hex2(pubkey.public_key, sizeof(pubkey.public_key));
-            reps.push_back(
-                    std::make_tuple(
-                            std::get<0>(r),
-                            pubkey, // 039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23
-                            uint256_t(std::get<2>(r))   // 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
-                    ));
-        }
-         */
-        for (auto &r: replicas) {
+
             const std::vector<uint8_t> &prova = std::move(std::get<1>(r));
             std::vector<uint8_t> concatenated_keys(prova.begin(), prova.end());
             concatenated_keys.insert(concatenated_keys.end(), group_pub_key.begin(), group_pub_key.end());
             std::cout << get_hex(concatenated_keys) << std::endl;
-            
+
+            bytearray_t bytearray_pubkey =  std::move(std::get<1>(r));
+            unsigned char* pubkey = new unsigned char[bytearray_pubkey.size()];
+            std::copy(bytearray_pubkey.begin(), bytearray_pubkey.end(), pubkey);
+
+            unsigned char* group_pubkey = new unsigned char[group_pub_key.size()];
+            std::copy(group_pub_key.begin(), group_pub_key.end(), group_pubkey);
+
+            hotstuff::PubKeyFrost frost_key = hotstuff::PubKeyFrost(pubkey, group_pubkey, index, replicas.size());
+            std::cout << frost_key.data->index << std::endl;
+
             reps.push_back(
                     std::make_tuple(
                             std::get<0>(r),
-                            //new PubKeyType(std::get<1>(r), group_pub_key), // 039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23
-                            new PubKeyType(concatenated_keys), // 039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23
+                            std::move(frost_key), // 039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23
                             uint256_t(std::get<2>(r))   // 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
                     ));
-        }
+            index = index +1;
+            std::cout << "dentro if index = " << index << std::endl;
             
+        }
+        
+        std::cout << "prova stampa puntatori" << std::endl;
+        // Access the second element of the tuple, which is hotstuff::PubKeyFrost
+        hotstuff::PubKeyFrost &frost_key = std::get<1>(reps[1]);
+        // Access the raw pointer to secp256k1_frost_pubkey object
+        secp256k1_frost_pubkey* data_ptr = frost_key.data.get();
+        print_hex2(data_ptr->group_public_key,33);
 
-        HotStuffBase::start_frost(std::move(reps), ec_loop);
+        for (std::size_t i = 0; i < 33; ++i) {
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(data_ptr->group_public_key[i]);
+        }
+        std::cout;
+        //HotStuffBase::start_frost(std::move(reps), ec_loop);
+        std::cout << "--- STO DOPO START_FROST ------" << std::endl;
+
+        /*
+         * unsigned char *pubkey33;
+        unsigned char *group_pubkey33;
+        secp256k1_frost_pubkey_save(pubkey33, group_pubkey33, frost_key.data.get());
+        */
+        // Call serializePubKeys with the data_ptr
+        auto serializedKeys = frost_key.serializePubKeys(data_ptr);
+
+        // Now you can access the serialized public keys
+        unsigned char* pubkey33 = serializedKeys.first.data();
+        unsigned char* group_pubkey33 = serializedKeys.second.data();
+        print_hex2(pubkey33,33);
+        
     }
 };
 

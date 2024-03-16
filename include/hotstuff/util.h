@@ -34,6 +34,9 @@ class Logger: public salticidae::Logger {
     }
 };
 
+
+
+
 extern Logger logger;
 
 #ifdef HOTSTUFF_PROTO_LOG

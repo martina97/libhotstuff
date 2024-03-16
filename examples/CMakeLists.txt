@@ -30,10 +30,10 @@ include_directories(salticidae/include)
 set(ALL_HEADER_FILES ${HEADER_FILES} ${SALTICIDAE_HEADER_FILES})
 
 add_executable(hotstuff-app hotstuff_app.cpp ${ALL_HEADER_FILES})
-target_link_libraries(hotstuff-app hotstuff_static)
+target_link_libraries(hotstuff-app hotstuff_static example)
 
 add_executable(hotstuff-client hotstuff_client.cpp)
-target_link_libraries(hotstuff-client hotstuff_static)
+target_link_libraries(hotstuff-client hotstuff_static example)
 
 
 add_executable(frost-app hotstuff_frost_app.cpp ${ALL_HEADER_FILES})

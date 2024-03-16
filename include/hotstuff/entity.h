@@ -62,22 +62,22 @@ struct ReplicaInfo {
 struct ReplicaInfoFrost {
     ReplicaID id;
     salticidae::PeerId peer_id;
-    secp256k1_frost_pubkey pubkey;
+    pubkey_bt pubkey;
 
     ReplicaInfoFrost(ReplicaID id,
                 const salticidae::PeerId &peer_id,
-                     secp256k1_frost_pubkey &&pubkey):
-            id(id), peer_id(peer_id), pubkey(pubkey) {std::cout << "---- STO IN ReplicaInfo riga 45 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+                     pubkey_bt &&pubkey):
+            id(id), peer_id(peer_id), pubkey(std::move(pubkey)) {std::cout << "---- STO IN ReplicaInfo riga 45 DENTRO entity.h package:include->hotstuff---- " << std::endl;
     }
 
     ReplicaInfoFrost(const ReplicaInfoFrost &other):
             id(other.id), peer_id(other.peer_id),
-            pubkey(other.pubkey) {std::cout << "---- STO IN ReplicaInfo riga 51 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+            pubkey(other.pubkey->clone()) {std::cout << "---- STO IN ReplicaInfo riga 51 DENTRO entity.h package:include->hotstuff---- " << std::endl;
     }
 
     ReplicaInfoFrost(ReplicaInfoFrost &&other):
             id(other.id), peer_id(other.peer_id),
-            pubkey(other.pubkey) {std::cout << "---- STO IN ReplicaInfo riga 56 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+            pubkey(std::move(other.pubkey)) {std::cout << "---- STO IN ReplicaInfo riga 56 DENTRO entity.h package:include->hotstuff---- " << std::endl;
     }
 };
 
@@ -97,6 +97,7 @@ class ReplicaConfig {
         replica_map.insert(std::make_pair(rid, info));
         nreplicas++;
     }
+    /*
     void add_replica(ReplicaID rid, const ReplicaInfoFrost &info) {
         std::cout << "---- STO IN add_replica riga 71 DENTRO entity.h package:include->hotstuff---- " << std::endl;
 
@@ -117,6 +118,7 @@ class ReplicaConfig {
         std::cout << "dopo add_replica" << std::endl;
 
     }
+     */
 
     const ReplicaInfo &get_info(ReplicaID rid) const {
         std::cout << "---- STO IN get_info riga 78 DENTRO entity.h package:include->hotstuff---- " << std::endl;

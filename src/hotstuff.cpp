@@ -484,7 +484,7 @@ void HotStuffBase::do_decide(Finality &&fin) {
 
 HotStuffBase::~HotStuffBase() {}
 
-void HotStuffBase::start_frost( std::vector<std::tuple<NetAddr, secp256k1_frost_pubkey, uint256_t>> &&replicas,
+void HotStuffBase::start_frost( std::vector<std::tuple<NetAddr, pubkey_bt, uint256_t>> &&replicas,
             bool ec_loop) {
     std::cout << "sto in HotStuffBase::start_frost riga 487 DENTRO hotstuff.cpp package:salticidae->include->src---- \" " << std::endl;
     std::cout << "replicas.size()  = " << replicas.size() << std::endl;
@@ -507,7 +507,7 @@ void HotStuffBase::start_frost( std::vector<std::tuple<NetAddr, secp256k1_frost_
         std::cout << "pn_cert == " <<  get_hex(pn_cert->get_der())<< std::endl;
         //std::cout << "pn_cert.priv == " <<get_hex(pn_cert->get_pubkey().get_privkey_der())<< std::endl;
         std::cout << "pn_cert.pub == " <<get_hex(pn_cert->get_pubkey().get_pubkey_der())<< std::endl;
-        secp256k1_frost_pubkey pub_key = std::get<1>(replicas[i]);
+        //auto pub_key = std::get<1>(replicas[i]);
         /*
         printf("0x");
         for (i = 0; i < sizeof(pub_key.public_key); i++) {
@@ -517,7 +517,7 @@ void HotStuffBase::start_frost( std::vector<std::tuple<NetAddr, secp256k1_frost_
          */
         std::cout << "prima add_replica_frost" << std::endl;
 
-        HotStuffCore::add_replica_frost(i, peer, pub_key);
+        HotStuffCore::add_replica_frost(i, peer, std::move(std::get<1>(replicas[i])));
         std::cout << "dopo add_replica_frost" << std::endl;
         std::cout << "listen_addr.operator std::string() = "<< listen_addr.operator std::string() << std::endl;
 

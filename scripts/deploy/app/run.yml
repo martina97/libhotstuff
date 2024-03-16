@@ -44,7 +44,7 @@
         PATH: /sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin:/snap/bin
       register: spawn_results
     - name: start the hotstuff replica
-      frost_app:
+      hotstuff_frost_app:
         bin: "{{ replica_bin | default('~/libhotstuff/examples/hotstuff_frost_app') }}"
         log_dir: "{{ log_dir }}"
         cwd: "{{ conf_dir }}"

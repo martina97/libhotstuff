@@ -27,7 +27,7 @@
 #include "hotstuff/type.h"
 #include "hotstuff/task.h"
 #include "eckey_impl.h"
-
+//#include "../secp256k1-frost/src/modules/frost/main_impl.h"
 namespace hotstuff {
 
 using salticidae::SHA256;
@@ -285,6 +285,20 @@ class PubKeySecp256k1Frost: public PubKey {
         std::cout << "---- STO IN PubKeySecp256k1Frost riga 270---- " << std::endl;
         std::copy(raw_bytes.begin(), raw_bytes.begin() + 64, data.public_key);
         std::copy(raw_bytes.begin() + 64, raw_bytes.end(), data.group_public_key);
+
+        std::cout << "provo a stampare dentro costruttore" << std::endl;
+        
+        auto pub = data.public_key;
+        for (size_t i = 0; i < 64; ++i) {
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(pub[i]);
+        }
+        std::cout << std::endl;
+
+        auto pub2 = data.group_public_key;
+        for (size_t i = 0; i < 64; ++i) {
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(pub2[i]);
+        }
+        std::cout << std::endl;
         //std::cout << salticidae::get_hex(data.public_key)<< std::endl;
 
         from_bytes(raw_bytes) ;    }
@@ -387,6 +401,56 @@ class PubKeySecp256k1Frost: public PubKey {
         return new PubKeySecp256k1Frost(*this);
     }
 };
+
+class PubKeyFrost {
+    friend class SigSecp256k1;
+
+    secp256k1_context_t ctx;
+
+public:
+    std::unique_ptr<secp256k1_frost_pubkey> data;
+    PubKeyFrost(unsigned char *pubkey33, unsigned char *group_pubkey33, const uint32_t index,
+                const uint32_t max_participants) { // Constructor with parameters
+        std::cout << "sto in PubKeyFrost riga 412 crypto.h" << std::endl;
+        std::cout << "index = " << index << std::endl;
+        std::cout << "max partecipants = " << max_participants << std::endl;
+        
+        
+        static const auto _exc = std::invalid_argument("ill-formed public key");
+        try {
+            std::cout << "PRIMO TRY ! " << std::endl;
+            data.reset(new secp256k1_frost_pubkey); // Allocating memory for data
+            int out = secp256k1_frost_pubkey_load(data.get(), index, max_participants, pubkey33,group_pubkey33);
+            std::cout << "out = " <<out << std::endl;
+            std::cout << "dopo" << std::endl;
+
+            if (!out) {
+                std::cout << "sto in if not out" << std::endl;
+                
+                throw _exc;
+            }
+        } catch (std::ios_base::failure &) {
+            throw _exc;
+        }
+
+    }
+    // Member function to serialize the public key and group public key
+    std::pair<std::vector<unsigned char>, std::vector<unsigned char>> serializePubKeys(const secp256k1_frost_pubkey *pubkey) {
+        std::vector<unsigned char> pubkey33(33);
+        std::vector<unsigned char> group_pubkey33(33);
+
+        int result = secp256k1_frost_pubkey_save(&pubkey33[0], &group_pubkey33[0], pubkey);
+
+        if (result != 1) {
+            throw std::runtime_error("Failed to serialize public keys");
+        }
+
+        return std::make_pair(pubkey33, group_pubkey33);
+    }
+
+
+};
+
 
 
 class PrivKeySecp256k1: public PrivKey {
