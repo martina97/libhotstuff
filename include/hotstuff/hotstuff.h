@@ -228,8 +228,7 @@ class HotStuffBase: public HotStuffCore {
     void exec_command(uint256_t cmd_hash, commit_cb_t callback);
     void start(std::vector<std::tuple<NetAddr, pubkey_bt, uint256_t>> &&replicas,
                 bool ec_loop = false);
-    void start_frost(std::vector<std::tuple<NetAddr, pubkey_bt, uint256_t>> &&replicas,
-                   bool ec_loop = false);
+    void start_frost(std::vector<std::tuple<NetAddr, hotstuff::PubKeyFrost, uint256_t>> &&replicas, bool ec_loop = false);
 
     size_t size() const { return peers.size(); }
     const auto &get_decision_waiting() const { return decision_waiting; }
@@ -406,8 +405,9 @@ class HotStuff: public HotStuffBase {
             std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(data_ptr->group_public_key[i]);
         }
         std::cout;
-        //HotStuffBase::start_frost(std::move(reps), ec_loop);
+
         std::cout << "--- STO DOPO START_FROST ------" << std::endl;
+
 
         /*
          * unsigned char *pubkey33;
@@ -415,13 +415,13 @@ class HotStuff: public HotStuffBase {
         secp256k1_frost_pubkey_save(pubkey33, group_pubkey33, frost_key.data.get());
         */
         // Call serializePubKeys with the data_ptr
-        auto serializedKeys = frost_key.serializePubKeys(data_ptr);
+        auto serializedKeys = frost_key.serializePubKeys();
 
         // Now you can access the serialized public keys
         unsigned char* pubkey33 = serializedKeys.first.data();
         unsigned char* group_pubkey33 = serializedKeys.second.data();
         print_hex2(pubkey33,33);
-        
+        HotStuffBase::start_frost(std::move(reps), ec_loop);
     }
 };
 

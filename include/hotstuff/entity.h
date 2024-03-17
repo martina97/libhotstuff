@@ -42,9 +42,7 @@ struct ReplicaInfo {
     salticidae::PeerId peer_id;
     pubkey_bt pubkey;
 
-    ReplicaInfo(ReplicaID id,
-                const salticidae::PeerId &peer_id,
-                pubkey_bt &&pubkey):
+    ReplicaInfo(ReplicaID id, const salticidae::PeerId &peer_id, pubkey_bt &&pubkey):
         id(id), peer_id(peer_id), pubkey(std::move(pubkey)) {std::cout << "---- STO IN ReplicaInfo riga 45 DENTRO entity.h package:include->hotstuff---- " << std::endl;
     }
 
@@ -62,23 +60,23 @@ struct ReplicaInfo {
 struct ReplicaInfoFrost {
     ReplicaID id;
     salticidae::PeerId peer_id;
-    pubkey_bt pubkey;
+    PubKeyFrost &pubkey;
 
-    ReplicaInfoFrost(ReplicaID id,
-                const salticidae::PeerId &peer_id,
-                     pubkey_bt &&pubkey):
-            id(id), peer_id(peer_id), pubkey(std::move(pubkey)) {std::cout << "---- STO IN ReplicaInfo riga 45 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+    ReplicaInfoFrost(ReplicaID id, const salticidae::PeerId &peer_id, hotstuff::PubKeyFrost &pubkey):
+            id(id), peer_id(peer_id), pubkey(pubkey) {
+        std::cout << "---- STO IN ReplicaInfoFrost riga 65 DENTRO entity.h package:include->hotstuff---- " << std::endl;
     }
 
     ReplicaInfoFrost(const ReplicaInfoFrost &other):
             id(other.id), peer_id(other.peer_id),
-            pubkey(other.pubkey->clone()) {std::cout << "---- STO IN ReplicaInfo riga 51 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+            pubkey(other.pubkey) {std::cout << "---- STO IN ReplicaInfoFrost riga 70 DENTRO entity.h package:include->hotstuff---- " << std::endl;
     }
 
     ReplicaInfoFrost(ReplicaInfoFrost &&other):
             id(other.id), peer_id(other.peer_id),
-            pubkey(std::move(other.pubkey)) {std::cout << "---- STO IN ReplicaInfo riga 56 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+            pubkey(other.pubkey) {std::cout << "---- STO IN ReplicaInfoFrost riga 75 DENTRO entity.h package:include->hotstuff---- " << std::endl;
     }
+
 };
 
 class ReplicaConfig {
@@ -94,51 +92,70 @@ class ReplicaConfig {
     void add_replica(ReplicaID rid, const ReplicaInfo &info) {
         std::cout << "---- STO IN add_replica riga 71 DENTRO entity.h package:include->hotstuff---- " << std::endl;
 
-        replica_map.insert(std::make_pair(rid, info));
+        //replica_map.insert(std::make_pair(rid, info));
         nreplicas++;
     }
-    /*
+
     void add_replica(ReplicaID rid, const ReplicaInfoFrost &info) {
-        std::cout << "---- STO IN add_replica riga 71 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+        std::cout << "---- STO IN add_replica riga 98 DENTRO entity.h package:include->hotstuff---- " << std::endl;
 
+        auto serializedKeys = info.pubkey.serializePubKeys();
+        std::cout << "0x";
+        for (size_t i = 0; i < 33; i++) {
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(serializedKeys.first[i]);
+        }
+        std::cout << std::dec << std::endl;
         replica_map_frost.insert(std::make_pair(rid, info));
+        std::cout << "-------------------\n\n\n" << std::endl;
+        
         nreplicas++;
-        secp256k1_frost_pubkey key = info.pubkey;
-        size_t i;
-        printf("0x");
-        for (i = 0; i < sizeof(key.public_key); i++) {
-            printf("%02x", key.public_key[i]);
-        }
-        printf("\n");
-        printf("0x");
-        for (i = 0; i < sizeof(key.group_public_key); i++) {
-            printf("%02x", key.group_public_key[i]);
-        }
-        printf("\n");
-        std::cout << "dopo add_replica" << std::endl;
-
     }
-     */
 
+
+    //  TODO: SCOMMENTA !!!!!!!!!!!!
     const ReplicaInfo &get_info(ReplicaID rid) const {
         std::cout << "---- STO IN get_info riga 78 DENTRO entity.h package:include->hotstuff---- " << std::endl;
 
         auto it = replica_map.find(rid);
         if (it == replica_map.end())
-            throw HotStuffError("rid %s not found",
-                    get_hex(rid).c_str());
+            throw HotStuffError("rid %s not found", get_hex(rid).c_str());
         return it->second;
     }
 
+
+    const ReplicaInfoFrost &get_info_frost(ReplicaID rid) const {
+        std::cout << "---- STO IN get_info_frost riga 78 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
+        auto it = replica_map_frost.find(rid);
+        if (it == replica_map_frost.end())
+            throw HotStuffError("rid %s not found", get_hex(rid).c_str());
+        return it->second;
+    }
+
+    // TODO: SCOMMENTA !!!!!!!!!!!!
     const PubKey &get_pubkey(ReplicaID rid) const {
         std::cout << "---- STO IN get_pubkey riga 88 DENTRO entity.h package:include->hotstuff---- " << std::endl;
 
         return *(get_info(rid).pubkey);
     }
 
+
+    std::pair<std::vector<unsigned char>, std::vector<unsigned char>> get_pubkey_frost(ReplicaID rid) const {
+        std::cout << "---- STO IN get_pubkey_frost riga 88 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
+        return get_info_frost(rid).pubkey.serializePubKeys();
+    }
+
+    // TODO: SCOMMENTA !!!!!!!!!!!!
     const salticidae::PeerId &get_peer_id(ReplicaID rid) const {
         std::cout << "---- STO IN get_peer_id riga 94 DENTRO entity.h package:include->hotstuff---- " << std::endl;
         return get_info(rid).peer_id;
+    }
+
+
+    const salticidae::PeerId &get_peer_id_frost(ReplicaID rid) const {
+        std::cout << "---- STO IN get_peer_id_frost riga 94 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+        return get_info_frost(rid).peer_id;
     }
 };
 
@@ -189,6 +206,7 @@ class Block {
     uint32_t height;
     bool delivered;
     int8_t decision;
+    bool frost;
 
     std::unordered_set<ReplicaID> voted;
 
@@ -208,6 +226,7 @@ class Block {
 
     Block(const std::vector<block_t> &parents,
         const std::vector<uint256_t> &cmds,
+        bool frost,
         quorum_cert_bt &&qc,
         bytearray_t &&extra,
         uint32_t height,
@@ -216,6 +235,7 @@ class Block {
         int8_t decision = 0):
             parent_hashes(get_hashes(parents)),
             cmds(cmds),
+            frost(frost),
             qc(std::move(qc)),
             extra(std::move(extra)),
             hash(salticidae::get_hash(*this)),

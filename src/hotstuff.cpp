@@ -236,7 +236,8 @@ void HotStuffBase::propose_handler(MsgPropose &&msg, const Net::conn_t &conn) {
     auto &prop = msg.proposal;
     block_t blk = prop.blk;
     if (!blk) return;
-    if (peer != get_config().get_peer_id(prop.proposer))
+   // if (peer != get_config().get_peer_id(prop.proposer))
+    if (peer != get_config().get_peer_id_frost(prop.proposer))
     {
         LOG_WARN("invalid proposal from %d", prop.proposer);
         return;
@@ -458,7 +459,8 @@ void HotStuffBase::do_vote(ReplicaID last_proposer, const Vote &vote) {
         else {
             std::cout << "SEND VOTE !!!!" << std::endl;
             
-            pn.send_msg(MsgVote(vote), get_config().get_peer_id(proposer));
+            //pn.send_msg(MsgVote(vote), get_config().get_peer_id(proposer));
+            pn.send_msg(MsgVote(vote), get_config().get_peer_id_frost(proposer));
         }
     });
 }
@@ -484,11 +486,10 @@ void HotStuffBase::do_decide(Finality &&fin) {
 
 HotStuffBase::~HotStuffBase() {}
 
-void HotStuffBase::start_frost( std::vector<std::tuple<NetAddr, pubkey_bt, uint256_t>> &&replicas,
-            bool ec_loop) {
+void HotStuffBase::start_frost( std::vector<std::tuple<NetAddr, hotstuff::PubKeyFrost, uint256_t>> &&replicas,bool ec_loop) {
     std::cout << "sto in HotStuffBase::start_frost riga 487 DENTRO hotstuff.cpp package:salticidae->include->src---- \" " << std::endl;
     std::cout << "replicas.size()  = " << replicas.size() << std::endl;
-    
+
     for (size_t i = 0; i < replicas.size(); i++) {
         std::cout << "index = " << i << std::endl;
         
@@ -517,9 +518,18 @@ void HotStuffBase::start_frost( std::vector<std::tuple<NetAddr, pubkey_bt, uint2
          */
         std::cout << "prima add_replica_frost" << std::endl;
 
-        HotStuffCore::add_replica_frost(i, peer, std::move(std::get<1>(replicas[i])));
+        HotStuffCore::add_replica_frost(i, peer, std::get<1>(replicas[i]));
+        if (i == id) {
+            std::cout << "i === id --> CREO KEYPAIR" << std::endl;
+            HotStuffCore::add_keypair_frost(i,std::get<1>(replicas[i]));
+        }
         std::cout << "dopo add_replica_frost" << std::endl;
         std::cout << "listen_addr.operator std::string() = "<< listen_addr.operator std::string() << std::endl;
+
+
+
+        std::cout << "dopo aadd_keypair_frost PROVO A VEDERE SE HO FATTO ! " << std::endl;
+
 
         if (addr != listen_addr)
         {

@@ -477,8 +477,7 @@ HotStuffApp::HotStuffApp(uint32_t blk_size,
                          const Net::Config &repnet_config,
                          const ClientNetwork<opcode_t>::Config &clinet_config):
 
-        HotStuff(blk_size, idx, raw_privkey,
-                 plisten_addr, std::move(pmaker), ec, nworker, repnet_config),
+        HotStuff(blk_size, idx, raw_privkey, plisten_addr, std::move(pmaker), ec, nworker, repnet_config),
         stat_period(stat_period),
         impeach_timeout(impeach_timeout),
         ec(ec),
@@ -545,6 +544,7 @@ void HotStuffApp::start(const std::vector<std::tuple<NetAddr, bytearray_t, bytea
     HOTSTUFF_LOG_INFO("** starting the event loop...");
 
     HotStuff::start_frost(reps, std::move(group_pub_key));
+
 
     cn.reg_conn_handler([this](const salticidae::ConnPool::conn_t &_conn, bool connected) {
         auto conn = salticidae::static_pointer_cast<conn_t::type>(_conn);

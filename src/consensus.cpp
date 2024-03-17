@@ -33,8 +33,7 @@ namespace hotstuff {
 
 /* The core logic of HotStuff, is fairly simple :). */
 /*** begin HotStuff protocol logic ***/
-HotStuffCore::HotStuffCore(ReplicaID id,
-                            privkey_bt &&priv_key):
+HotStuffCore::HotStuffCore(ReplicaID id, privkey_bt &&priv_key):
         b0(new Block(true, 1)),
         b_lock(b0),
         b_exec(b0),
@@ -177,17 +176,22 @@ void HotStuffCore::update(const block_t &nblk) {
 Chiamata per inviare nuovi comandi da decidere (eseguire).
 "parents" deve contenere almeno un blocco e il primo blocco è il genitore effettivo, mentre gli altri sono uncles/aunts.
  */
-block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds,
-                            const std::vector<block_t> &parents,
-                            bytearray_t &&extra) {
+block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds, const std::vector<block_t> &parents, bytearray_t &&extra) {
     std::cout << "---- STO IN on_propose riga 177 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
     
     if (parents.empty())
         throw std::runtime_error("empty parents");
     for (const auto &_: parents) tails.erase(_);
+
+    std::cout << "parents[0]->get_hash().to_hex() = " << parents[0]->get_hash().to_hex() << std::endl;
+    bool frost = true;
+    if (parents[0]->get_hash() == b0->get_hash()) {
+        std::cout << "PRIMO BLOCCO DA AGGIUNGERE ALLA CATENA ! " << std::endl;
+        frost = false;
+    }
     /* create the new block */
     block_t bnew = storage->add_blk(
-        new Block(parents, cmds,
+        new Block(parents, cmds, frost,
             hqc.second->clone(), std::move(extra),
             parents[0]->height + 1,
             hqc.first,
@@ -217,8 +221,7 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds,
 
 /** Funzione chiamata alla consegna di un messaggio di proposta (PROPOSAL).
  * Il blocco menzionato nel messaggio dovrebbe essere già consegnato.*/
-void HotStuffCore::
-on_receive_proposal(const Proposal &prop) {
+void HotStuffCore::on_receive_proposal(const Proposal &prop) {
     std::cout << "---- STO IN on_receive_proposal riga 215 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
     
     LOG_PROTO("got %s", std::string(prop).c_str());
@@ -263,8 +266,21 @@ on_receive_proposal(const Proposal &prop) {
         //part_cert_bt boh = create_part_cert(*priv_key, bnew->get_hash());
         //std::cout << "DOPO CREATE PART CERT" << std::endl;
 
-        const Vote vote = Vote(id, bnew->get_hash(),
-                               create_part_cert(*priv_key, bnew->get_hash()), this);
+        /** PRIMA DI CREARE IL VOTO GENERO COPPIA NONCE-COMMITMENT PER IL BLOCCO SUCCESSIVO !
+         *  PER VOTARE USO I COMMITMENT CREATI NELLA FASE PRECEDENTE DI VOTO, SE IL FLAG "frost" = true
+         * */
+
+        secp256k1_frost_nonce *nonce = secp256k1_frost_nonce_create(sign_verify_ctx, key_pair, binding_seed, hiding_seed);
+        nonce_list.push_back(nonce);
+        std::cout <<" nonce_list.size() = "<< nonce_list.size()<< std::endl;
+        /**
+         * IDEA: SE nonce.list è vuota, vuol dire che è la prima volta che voto, quindi che aggiungo un blocco,
+         * per cui posso dire che se:
+         * size ==0 --> firma senza FROST (quindi senza nonce-commitment)
+         * size != 0 --> prendi il primo elemento nella lista di nonce, vedi se nonce non è usato, e lo inserisci nel msg voto
+         */
+
+        const Vote vote = Vote(id, bnew->get_hash(), create_part_cert(*priv_key, bnew->get_hash()), this);
         /*do_vote(prop.proposer,
                 Vote(id, bnew->get_hash(),
                      create_part_cert(*priv_key, bnew->get_hash()), this));*/
@@ -379,10 +395,10 @@ void HotStuffCore::add_replica(ReplicaID rid, const PeerId &peer_id,
     b0->voted.insert(rid);  /** b0 = genesis block, ossia blocco iniziale blockchain */
 }
 
-void HotStuffCore::add_replica_frost(ReplicaID rid, const PeerId &peer_id, pubkey_bt &&pub_key) {
+void HotStuffCore::add_replica_frost(ReplicaID rid, const PeerId &peer_id, hotstuff::PubKeyFrost &pub_key) {
     std::cout << "---- STO IN add_replica_frost riga 354 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
     //print_hex2(pub_key.public_key, sizeof(pub_key.public_key));
-    size_t i;
+
     /*
     printf("0x");
     for (i = 0; i < sizeof(pub_key.public_key); i++) {
@@ -391,16 +407,49 @@ void HotStuffCore::add_replica_frost(ReplicaID rid, const PeerId &peer_id, pubke
     printf("\n");
      */
 
+
     std::cout << "PROVO A STAMPARE PUB KEY" << std::endl;
+    auto serializedKeys = pub_key.serializePubKeys();
+
+    std::cout << "0x";
+    for (size_t i = 0; i < 33; i++) {
+        std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(serializedKeys.first[i]);
+    }
+    std::cout << std::dec << std::endl; // Reset to decimal format
+
+    /*
     std::cout << pub_key.get()->to_hex() << std::endl;
     std::cout << "DOPO AVER STAMPATO PUB KEY" << std::endl;
 
 
-    //todo: scommentare ASSOLUTAMENTE
-    config.add_replica(rid,ReplicaInfo(rid, peer_id, std::move(pub_key)));
+     */
+    config.add_replica(rid,ReplicaInfoFrost(rid, peer_id, pub_key));
 
     b0->voted.insert(rid);
 }
+    void HotStuffCore::add_keypair_frost(ReplicaID rid, hotstuff::PubKeyFrost &pub_key) {
+    std::cout << "----- STO IN add_keypair_frost ------" << std::endl;
+        key_pair = new secp256k1_frost_keypair;
+        memcpy(key_pair->secret, priv_key->to_hex().c_str(), sizeof(priv_key->to_hex()));
+        std::cout << "Secret: ";
+        std::cout << priv_key->to_hex() << std::endl;
+        
+        std::cout << std::endl;
+        auto pubkey = pub_key.serializePubKeys();
+        std::copy(pubkey.first.begin(), pubkey.first.end(), key_pair->public_keys.public_key);
+        std::copy(pubkey.second.begin(), pubkey.second.end(), key_pair->public_keys.group_public_key);
+        key_pair->public_keys.index = rid;
+
+
+        std::cout << "DOPO ADD KEY PAIR PROVO A STAMPARE" << std::endl;
+
+        for (std::size_t i = 0; i < 33; ++i) {
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(key_pair->public_keys.public_key[i]);
+        }
+        std::cout << "" << std::endl;
+        sign_verify_ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
+
+    }
 
 promise_t HotStuffCore::async_qc_finish(const block_t &blk) {
     std::cout << "---- STO IN async_qc_finish riga 356 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;

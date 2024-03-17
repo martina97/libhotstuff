@@ -404,7 +404,6 @@ class PubKeySecp256k1Frost: public PubKey {
 
 class PubKeyFrost {
     friend class SigSecp256k1;
-
     secp256k1_context_t ctx;
 
 public:
@@ -435,23 +434,29 @@ public:
 
     }
     // Member function to serialize the public key and group public key
-    std::pair<std::vector<unsigned char>, std::vector<unsigned char>> serializePubKeys(const secp256k1_frost_pubkey *pubkey) {
+    std::pair<std::vector<unsigned char>, std::vector<unsigned char>> serializePubKeys() {
+        secp256k1_frost_pubkey* pubkey = data.get();
         std::vector<unsigned char> pubkey33(33);
         std::vector<unsigned char> group_pubkey33(33);
 
         int result = secp256k1_frost_pubkey_save(&pubkey33[0], &group_pubkey33[0], pubkey);
-
         if (result != 1) {
             throw std::runtime_error("Failed to serialize public keys");
         }
-
         return std::make_pair(pubkey33, group_pubkey33);
     }
 
 
 };
 
+class NonceGenerator {
+    friend class SigSecp256k1;
+    secp256k1_context_t ctx;
+    secp256k1_frost_nonce *nonces; // Array to hold nonce objects
+public:
 
+
+};
 
 class PrivKeySecp256k1: public PrivKey {
     static const auto nbytes = 32;
@@ -515,7 +520,6 @@ PubKeySecp256k1::PubKeySecp256k1(
 
 class SigSecp256k1: public Serializable {
 
-    
     secp256k1_ecdsa_signature data;
     secp256k1_context_t ctx;
 
@@ -630,7 +634,7 @@ class PartCertSecp256k1: public SigSecp256k1, public PartCert {
 
     promise_t verify(const PubKey &pub_key, VeriPool &vpool) override {
         std::cout << "---- STO IN verify riga 431 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
-        
+
         return vpool.verify(new Secp256k1VeriTask(obj_hash,
                 static_cast<const PubKeySecp256k1 &>(pub_key),
                 static_cast<const SigSecp256k1 &>(*this)));
@@ -674,7 +678,6 @@ class QuorumCertSecp256k1: public QuorumCert {
 
     void add_part(ReplicaID rid, const PartCert &pc) override {
         std::cout << "---- STO IN add_part riga 475 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
-
 
         if (pc.get_obj_hash() != obj_hash)
             throw std::invalid_argument("PartCert does match the block hash");

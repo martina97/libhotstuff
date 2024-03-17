@@ -27,6 +27,8 @@
 #include "hotstuff/entity.h"
 #include "hotstuff/crypto.h"
 #include "secp256k1_frost.h"
+
+#define EXAMPLE_MAX_PARTICIPANTS 4
 namespace hotstuff {
 
 struct Proposal;
@@ -51,10 +53,14 @@ class HotStuffCore {
     promise_t propose_waiting;
     promise_t receive_proposal_waiting;
     promise_t hqc_update_waiting;
+    secp256k1_frost_keypair *key_pair;
     /* == feature switches == */
     /** always vote negatively, useful for some PaceMakers */
     bool vote_disabled;
-
+    secp256k1_context *sign_verify_ctx;
+    std::vector<secp256k1_frost_nonce*> nonce_list;    // i nonce-commitment della replica ! (non degli altri)
+    unsigned char binding_seed[32] = {0};
+    unsigned char hiding_seed[32] = {0};
     block_t get_delivered_blk(const uint256_t &blk_hash);
     void sanity_check_delivered(const block_t &blk);
     void update(const block_t &nblk);
@@ -145,7 +151,7 @@ class HotStuffCore {
     /** Add a replica to the current configuration. This should only be called
      * before running HotStuffCore protocol. */
     void add_replica(ReplicaID rid, const PeerId &peer_id, pubkey_bt &&pub_key);
-    void add_replica_frost(ReplicaID rid, const PeerId &peer_id,pubkey_bt &&pub_key);
+    void add_replica_frost(ReplicaID rid, const PeerId &peer_id, hotstuff::PubKeyFrost &pub_key);
     /** Try to prune blocks lower than last committed height - staleness. */
     void prune(uint32_t staleness);
 
@@ -168,6 +174,8 @@ class HotStuffCore {
     const std::set<block_t> get_tails() const { return tails; }
     operator std::string () const;
     void set_vote_disabled(bool f) { vote_disabled = f; }
+
+    void add_keypair_frost(ReplicaID rid, PubKeyFrost &pub_key);
 };
 
 /** Abstraction for proposal messages. */
@@ -270,6 +278,7 @@ struct Vote: public Serializable {
 
         assert(hsc != nullptr);
         return cert->verify(hsc->get_config().get_pubkey(voter), vpool).then([this](bool result) {
+        //return cert->verify(hsc->get_config().get_pubkey_frost(voter), vpool).then([this](bool result) {
             return result && cert->get_obj_hash() == blk_hash;
         });
     }
