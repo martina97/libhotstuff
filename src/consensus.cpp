@@ -269,10 +269,10 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
         /** PRIMA DI CREARE IL VOTO GENERO COPPIA NONCE-COMMITMENT PER IL BLOCCO SUCCESSIVO !
          *  PER VOTARE USO I COMMITMENT CREATI NELLA FASE PRECEDENTE DI VOTO, SE IL FLAG "frost" = true
          * */
-
+        std::cout <<" nonce_list.size() = "<< nonce_list.size()<< std::endl;
         secp256k1_frost_nonce *nonce = secp256k1_frost_nonce_create(sign_verify_ctx, key_pair, binding_seed, hiding_seed);
         nonce_list.push_back(nonce);
-        std::cout <<" nonce_list.size() = "<< nonce_list.size()<< std::endl;
+
         /**
          * IDEA: SE nonce.list è vuota, vuol dire che è la prima volta che voto, quindi che aggiungo un blocco,
          * per cui posso dire che se:
@@ -280,13 +280,29 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
          * size != 0 --> prendi il primo elemento nella lista di nonce, vedi se nonce non è usato, e lo inserisci nel msg voto
          */
 
-        const Vote vote = Vote(id, bnew->get_hash(), create_part_cert(*priv_key, bnew->get_hash()), this);
+
+        if (nonce_list.empty()) {
+            bnew->frost = false;
+            const Vote vote = Vote(id, bnew->get_hash(), create_part_cert(*priv_key, bnew->get_hash()), this);
+            std::cout << "dopo aver creato il vote!!" << std::endl;
+
+            do_vote(prop.proposer, vote);
+        } else{
+            bnew->frost = true;
+            // creo certificato con firme frost !
+            std::cout << "signature_share->response"<< std::endl;
+            for (int i = 0; i < 32; ++i) {
+                std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(signature_share->response[i]);
+            }
+            std::cout << std::endl;
+
+            const Vote vote = Vote(id, bnew->get_hash(), create_part_cert(*priv_key, bnew->get_hash()), this);
+        }
+
         /*do_vote(prop.proposer,
                 Vote(id, bnew->get_hash(),
                      create_part_cert(*priv_key, bnew->get_hash()), this));*/
-        std::cout << "dopo aver creato il vote!!" << std::endl;
-        
-        do_vote(prop.proposer, vote);
+
     }
 }
 
@@ -430,7 +446,13 @@ void HotStuffCore::add_replica_frost(ReplicaID rid, const PeerId &peer_id, hotst
     void HotStuffCore::add_keypair_frost(ReplicaID rid, hotstuff::PubKeyFrost &pub_key) {
     std::cout << "----- STO IN add_keypair_frost ------" << std::endl;
         key_pair = new secp256k1_frost_keypair;
-        memcpy(key_pair->secret, priv_key->to_hex().c_str(), sizeof(priv_key->to_hex()));
+        std::cout << "priv k = " << priv_key->to_hex().data() << std::endl;
+        std::cout << "priv k = " << priv_key->to_hex().c_str() << std::endl;
+        std::cout << sizeof(priv_key->to_bytes()) << std::endl;
+        
+
+        memcpy(key_pair->secret, (unsigned char *)&*priv_key->to_bytes().begin(), 32);
+        //key_pair->secret = (unsigned char *)&*priv_key->to_bytes().begin();
         std::cout << "Secret: ";
         std::cout << priv_key->to_hex() << std::endl;
         
@@ -447,7 +469,22 @@ void HotStuffCore::add_replica_frost(ReplicaID rid, const PeerId &peer_id, hotst
             std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(key_pair->public_keys.public_key[i]);
         }
         std::cout << "" << std::endl;
+        for (std::size_t i = 0; i < 32; ++i) {
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(key_pair->secret[i]);
+        }
+        std::cout << "" << std::endl;
+
+        
+        std::cout << "" << std::endl;
         sign_verify_ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
+
+        signature_share = new secp256k1_frost_signature_share;
+        signature_share->index = rid;
+        memcpy(signature_share->response,priv_key->to_hex().c_str(), sizeof(priv_key->to_hex()));
+        std::cout << "HO INIZIALIZZATO LA MIA SIGNATURE SHARE !!!!" << std::endl;
+
+        
+        
 
     }
 

@@ -54,6 +54,7 @@ class HotStuffCore {
     promise_t receive_proposal_waiting;
     promise_t hqc_update_waiting;
     secp256k1_frost_keypair *key_pair;
+    secp256k1_frost_signature_share *signature_share;
     /* == feature switches == */
     /** always vote negatively, useful for some PaceMakers */
     bool vote_disabled;

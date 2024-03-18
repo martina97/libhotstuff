@@ -402,6 +402,30 @@ class PubKeySecp256k1Frost: public PubKey {
     }
 };
 
+class PartCertFrost  {
+    uint256_t obj_hash;
+public:
+    PartCertFrost() = default;
+    PartCertFrost(secp256k1_frost_signature_share *signature_share,const uint256_t &msg_hash,
+                  uint32_t num_signers,
+                  const secp256k1_frost_keypair *keypair,
+                  secp256k1_frost_nonce *nonce,
+                  secp256k1_frost_nonce_commitment *signing_commitments) {
+        obj_hash = msg_hash;
+        // Convert uint256_t to unsigned char array
+        //const unsigned char *msg_data = reinterpret_cast<const unsigned char*>(msg_hash_.data());
+
+        const bytearray_t &msg = msg_hash.to_bytes();
+        (unsigned char *)&*msg.begin();
+
+        secp256k1_frost_sign(signature_share, (unsigned char *)&*msg.begin(), 3, keypair, nonce, signing_commitments);
+    }
+
+
+
+};
+
+
 class PubKeyFrost {
     friend class SigSecp256k1;
     secp256k1_context_t ctx;
@@ -577,8 +601,7 @@ class SigSecp256k1: public Serializable {
             throw std::invalid_argument("failed to create secp256k1-hotstuff signature");
     }
 
-    bool verify(const bytearray_t &msg, const PubKeySecp256k1 &pub_key,
-                const secp256k1_context_t &_ctx) const {
+    bool verify(const bytearray_t &msg, const PubKeySecp256k1 &pub_key,const secp256k1_context_t &_ctx) const {
         std::cout << "---- STO IN verify riga 376 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
 
         check_msg_length(msg);

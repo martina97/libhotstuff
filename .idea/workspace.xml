@@ -78,16 +78,12 @@
     <list default="true" id="f91c2701-4032-4eac-8cd6-68353351d8a4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/frost-app" beforeDir="false" afterPath="$PROJECT_DIR$/examples/frost-app" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/hotstuff_frost_app.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/hotstuff_frost_app.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frost-tls-keygen" beforeDir="false" afterPath="$PROJECT_DIR$/frost-tls-keygen" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/hotstuff/consensus.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/hotstuff/consensus.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/hotstuff/crypto.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/hotstuff/crypto.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/hotstuff/entity.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/hotstuff/entity.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/hotstuff/hotstuff.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/hotstuff/hotstuff.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log0_frost" beforeDir="false" afterPath="$PROJECT_DIR$/log0_frost" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log1_frost" beforeDir="false" afterPath="$PROJECT_DIR$/log1_frost" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log2_frost" beforeDir="false" afterPath="$PROJECT_DIR$/log2_frost" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log3_frost" beforeDir="false" afterPath="$PROJECT_DIR$/log3_frost" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log0_frost" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log1_frost" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log2_frost" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log3_frost" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-frost" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-frost/examples/frost.c" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/examples/frost.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-frost/include/secp256k1.h" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/include/secp256k1.h" afterDir="false" />
@@ -101,7 +97,6 @@
       <change beforePath="$PROJECT_DIR$/secp256k1-frost/src/tests_exhaustive.c" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/src/tests_exhaustive.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-frost/src/util.h" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/src/util.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/consensus.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/consensus.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hotstuff.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hotstuff.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,6 +111,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/log0_frost" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -929,7 +927,7 @@
       <workItem from="1710364147196" duration="17835000" />
       <workItem from="1710431786790" duration="20541000" />
       <workItem from="1710599060445" duration="480000" />
-      <workItem from="1710599927196" duration="31517000" />
+      <workItem from="1710599927196" duration="40939000" />
     </task>
     <servers />
   </component>

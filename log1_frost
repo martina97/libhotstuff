@@ -7,12 +7,12 @@ argv[1]: --conf
 argv[2]: ./hotstuff-frost-sec1.conf
 ---- DOPO CONFIG ---- 
 ---- DOPO elapsed.start() ---- 
-Elapsed time: 5.12109e-311 seconds
-CPU time: 5.09801e-310 seconds
+Elapsed time: 9.8678e-311 seconds
+CPU time: 5.01445e-310 seconds
 ---- DOPO  config.add_opt ---- 
 opt_privkey->get(): 
-2024-03-17 15:50:25.250931 [net info] loaded configuration from hotstuff_frost.conf
-2024-03-17 15:50:25.251004 [net info] loading extra configuration from ./hotstuff-frost-sec1.conf
+2024-03-18 13:26:26.917097 [net info] loaded configuration from hotstuff_frost.conf
+2024-03-18 13:26:26.917427 [net info] loading extra configuration from ./hotstuff-frost-sec1.conf
 ---- STO QUA ---- 
 idx: 1
 client_port: -1
@@ -90,14 +90,11 @@ STO IN PrivKeySecp256k1
 ---- STO IN serialize riga 136 DENTRO crypto.h package:include->hotstuff---- 
 ---- STO IN add_blk riga 278 DENTRO entity.h package:include->hotstuff---- 
 ---- STO IN VeriPool riga 56 DENTRO task.h package:include->hotstuff---- 
-2024-03-17 15:50:25.299079 [net info] starting all threads...
-2024-03-17 15:50:25.309455 [net info] listening to 10001
+2024-03-18 13:26:26.926855 [net info] starting all threads...
+2024-03-18 13:26:26.927111 [net info] listening to 10001
 siamo qui2
-2024-03-17 15:50:25.313024 [net info] starting all threads...
-2024-03-17 15:50:25.314357 [net info] accepted <Conn fd=81 addr=<NetAddr 127.0.0.1:36034> mode=passive>
-2024-03-17 15:50:25.314426 [net debug] worker 55e94640 got <Conn fd=81 addr=<NetAddr 127.0.0.1:36034> mode=passive>
-2024-03-17 15:50:25.317423 [net debug] tls handshake read
-2024-03-17 15:50:25.318001 [net info] listening to 20001
+2024-03-18 13:26:26.932673 [net info] starting all threads...
+2024-03-18 13:26:26.934900 [net info] listening to 20001
 ---- STO IN split_ip_port_cport DENTRO hotstuff_app.cpp ---- 
  p.first == 127.0.0.1:10000
  p.second == 20000
@@ -134,14 +131,14 @@ STAMPO group_pub_key
 
 ---
 ------- Sono in HotStuffApp::start dentro hotstuff_frost_app------ 
-2024-03-17 15:50:25.318278 [hotstuff info] ** starting the system with parameters **
-2024-03-17 15:50:25.318290 [hotstuff info] blk_size = 1
-2024-03-17 15:50:25.318300 [hotstuff info] conns = 0
-2024-03-17 15:50:25.318307 [hotstuff info] ** starting the event loop...
+2024-03-18 13:26:26.935204 [hotstuff info] ** starting the system with parameters **
+2024-03-18 13:26:26.935219 [hotstuff info] blk_size = 1
+2024-03-18 13:26:26.935228 [hotstuff info] conns = 0
+2024-03-18 13:26:26.935250 [hotstuff info] ** starting the event loop...
 ---- STO IN start_frost riga 319 DENTRO hotstuff.h package:include->hotstuff---- 
 030339fada9174431c775665b26bbc95b90f0446c772f69522ae04341cc6a79d6f
 
-0x030339fada9174431c775665b26bbc95b90f0446c772f69522ae04341cc6a79d6f0000000000000080fe399cd85d0000409548bdfd7f000010582a9cd85d0000
+0x030339fada9174431c775665b26bbc95b90f0446c772f69522ae04341cc6a79d6f0000000000000090de86d84e5c000000602e7dfe7f0000103877d84e5c0000
 030339fada9174431c775665b26bbc95b90f0446c772f69522ae04341cc6a79d6f0229b6c17ecb3e20aaedeb8df1b1ac336ec12dad666df4e5845083530ef85f23e1
 sto in PubKeyFrost riga 412 crypto.h
 index = 0
@@ -280,6 +277,11 @@ sto in secp256k1_frost_pubkey_save
 
 i === id --> CREO KEYPAIR
 ----- STO IN add_keypair_frost ------
+priv k = ---- STO IN serialize riga 269 DENTRO crypto.h package:include->hotstuff---- 
+48229adc2a517e28b48d478021ee9518896a00e088bd6389ad4108d580834eab
+priv k = ---- STO IN serialize riga 269 DENTRO crypto.h package:include->hotstuff---- 
+48229adc2a517e28b48d478021ee9518896a00e088bd6389ad4108d580834eab
+24
 ---- STO IN serialize riga 269 DENTRO crypto.h package:include->hotstuff---- 
 Secret: ---- STO IN serialize riga 269 DENTRO crypto.h package:include->hotstuff---- 
 48229adc2a517e28b48d478021ee9518896a00e088bd6389ad4108d580834eab
@@ -287,6 +289,10 @@ Secret: ---- STO IN serialize riga 269 DENTRO crypto.h package:include->hotstuff
 sto in secp256k1_frost_pubkey_save
 DOPO ADD KEY PAIR PROVO A STAMPARE
 030c1ca61c6cea0d3ea6891c50bf02694fc4ae12aa5d9e439f665649f3a40c024d
+48229adc2a517e28b48d478021ee9518896a00e088bd6389ad4108d580834eab
+
+---- STO IN serialize riga 269 DENTRO crypto.h package:include->hotstuff---- 
+HO INIZIALIZZATO LA MIA SIGNATURE SHARE !!!!
 dopo add_replica_frost
 listen_addr.operator std::string() = <NetAddr 127.0.0.1:10001>
 dopo aadd_keypair_frost PROVO A VEDERE SE HO FATTO ! 
@@ -409,7 +415,7 @@ FINE on_init
 ---- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
 ---- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
 ---- STO IN stop_rotate riga 367 DENTRO liveness.h package:include->hotstuff----
-2024-03-17 15:50:25.320123 [hotstuff proto] Pacemaker: stop rotation at 0
+2024-03-18 13:26:26.937283 [hotstuff proto] Pacemaker: stop rotation at 0
 ---- STO IN proposer_update_last_proposed riga 308 DENTRO liveness.h package:include->hotstuff----
 ---- STO IN async_wait_proposal riga 389 DENTRO consensus.cpp package:salticidae->include->src---- 
 ---- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
@@ -429,1977 +435,209 @@ FINE on_init
 ---- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
 FINE PMAKER INIT
 -----------------------------  DOPO ec.dispatch() -----------------------------
-2024-03-17 15:50:25.320576 [net info] created <Conn fd=87 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:25.320884 [net info] created <Conn fd=89 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:25.321179 [net info] created <Conn fd=91 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:25.322712 [net info] connected to remote <Conn fd=87 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:25.322752 [net info] connected to remote <Conn fd=89 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:25.322767 [net info] connected to remote <Conn fd=91 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:25.322782 [net info] c261250345: setup connection <Conn fd=81 addr=<NetAddr 127.0.0.1:36034> mode=passive>
-2024-03-17 15:50:25.322836 [net debug] worker 55e94640 got <Conn fd=87 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:25.322856 [net debug] worker 55e94640 got <Conn fd=89 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:25.322873 [net debug] worker 55e94640 got <Conn fd=91 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:25.322882 [net debug] reset connection timeout 180.00
-2024-03-17 15:50:25.323075 [net debug] tls handshake read
-2024-03-17 15:50:25.323242 [net debug] tls handshake read
-2024-03-17 15:50:25.323400 [net debug] tls handshake read
-2024-03-17 15:50:25.327306 [net info] c261250345: setup connection <Conn fd=89 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:25.327401 [net debug] wrote message <msg magic=00000000 opcode=f0 length=15 checksum=1963f7d3 payload=017f00000127118d35000036000000> to <Conn fd=89 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:25.327416 [net debug] reset connection timeout 180.00
-2024-03-17 15:50:25.327502 [net debug] ssl(89) sent 28 bytes
+2024-03-18 13:26:26.938248 [net info] created <Conn fd=85 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-03-18 13:26:26.938566 [net info] created <Conn fd=87 addr=<NetAddr 127.0.0.1:10002> mode=active>
+2024-03-18 13:26:26.938825 [net info] created <Conn fd=89 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2024-03-18 13:26:26.938864 [net info] connected to remote <Conn fd=85 addr=<NetAddr 127.0.0.1:10000> mode=active>
+sto dentro SalticidaeError
+sto dentro SalticidaeError
+2024-03-18 13:26:26.939019 [net debug] worker 3ebde640 got <Conn fd=85 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-03-18 13:26:26.939043 [net info] c261250345: lost connection <Conn fd=87 addr=<NetAddr 127.0.0.1:10002> mode=active>
+2024-03-18 13:26:26.939069 [net info] c261250345: lost connection <Conn fd=89 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2024-03-18 13:26:26.939369 [net debug] tls handshake read
+2024-03-18 13:26:26.939427 [hotstuff warn] network async error: unable to connect: Connection refused
+
+2024-03-18 13:26:26.939450 [hotstuff warn] network async error: unable to connect: Connection refused
+
 ---- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
 ---- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:25.328252 [net debug] ssl(81) read 28 bytes
-2024-03-17 15:50:25.328319 [net debug] got message <msg magic=00000000 opcode=f0 length=15 checksum=fc009c2a payload=017f0000012710f452000036000000> from <Conn fd=81 addr=<NetAddr 127.0.0.1:36034> mode=passive>
-2024-03-17 15:50:25.328339 [net debug] opcode = f0
----- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
-SONO NEL PRIMO IF ping_handler
-SONO NEL SECONDO IF ping_handler
-PID ping_handler === 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
-COMMITMENT ping_handler == 54
-2024-03-17 15:50:25.328414 [net debug] c261250345: inbound handshake from 542865a568
-2024-03-17 15:50:25.328441 [net debug] wrote message <msg magic=00000000 opcode=f1 length=15 checksum=6428df45 payload=017f00000127113e9e000036000000> to <Conn fd=81 addr=<NetAddr 127.0.0.1:36034> mode=passive>
-2024-03-17 15:50:25.328461 [net debug] c261250345: choses connection <Conn fd=81 addr=<NetAddr 127.0.0.1:36034> mode=passive>
-2024-03-17 15:50:25.328475 [net debug] wrote message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> to <Conn fd=81 addr=<NetAddr 127.0.0.1:36034> mode=passive>
-2024-03-17 15:50:25.328501 [net debug] destroyed <Conn fd=-1 addr=<NetAddr 0.0.0.0:0> mode=passive>
-2024-03-17 15:50:25.328596 [net info] established c261250345 <---> 542865a568 (via <Conn fd=81 addr=<NetAddr 127.0.0.1:36034> mode=passive>)
-2024-03-17 15:50:25.328612 [net debug] reset connection timeout 180.00
-2024-03-17 15:50:25.328658 [net debug] ssl(81) sent 28 bytes
-2024-03-17 15:50:25.328679 [net debug] ssl(81) sent 14 bytes
-2024-03-17 15:50:25.329151 [net debug] ssl(89) read -1 bytes
-2024-03-17 15:50:25.332425 [net info] c261250345: setup connection <Conn fd=91 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:25.332494 [net debug] wrote message <msg magic=00000000 opcode=f0 length=15 checksum=e171f1e2 payload=017f0000012711bc80000036000000> to <Conn fd=91 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:25.332519 [net info] c261250345: setup connection <Conn fd=87 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:25.332539 [net debug] wrote message <msg magic=00000000 opcode=f0 length=15 checksum=6428df45 payload=017f00000127113e9e000036000000> to <Conn fd=87 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-03-18 13:26:26.943812 [net info] c261250345: setup connection <Conn fd=85 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-03-18 13:26:26.943924 [net debug] wrote message <msg magic=00000000 opcode=f0 length=15 checksum=1b62e597 payload=017f00000127114ef7000036000000> to <Conn fd=85 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-03-18 13:26:26.943955 [net debug] reset connection timeout 180.00
+2024-03-18 13:26:26.944051 [net debug] ssl(85) sent 28 bytes
 ---- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:25.332551 [net debug] reset connection timeout 180.00
+2024-03-18 13:26:26.945862 [net debug] ssl(85) read -1 bytes
+2024-03-18 13:26:26.946361 [net debug] ssl(85) read -1 bytes
+2024-03-18 13:26:26.947952 [net info] accepted <Conn fd=87 addr=<NetAddr 127.0.0.1:52460> mode=passive>
+2024-03-18 13:26:26.948012 [net debug] worker 3ebde640 got <Conn fd=87 addr=<NetAddr 127.0.0.1:52460> mode=passive>
+2024-03-18 13:26:26.948075 [net debug] tls handshake read
+2024-03-18 13:26:26.951346 [net debug] tls handshake read
+2024-03-18 13:26:26.951574 [net info] accepted <Conn fd=91 addr=<NetAddr 127.0.0.1:52476> mode=passive>
+2024-03-18 13:26:26.951601 [net debug] ssl(85) read 0 bytes
+2024-03-18 13:26:26.951618 [net debug] ssl(85) read 0 bytes
+2024-03-18 13:26:26.951656 [net debug] worker 3ebde640 got <Conn fd=91 addr=<NetAddr 127.0.0.1:52476> mode=passive>
+2024-03-18 13:26:26.951725 [net info] c261250345: lost connection <Conn fd=85 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-03-18 13:26:26.951800 [net debug] tls handshake read
 ---- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:25.332563 [net debug] reset connection timeout 180.00
-2024-03-17 15:50:25.332600 [net debug] ssl(81) read 14 bytes
-2024-03-17 15:50:25.332642 [net debug] ssl(91) sent 28 bytes
-2024-03-17 15:50:25.332650 [net debug] got message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> from <Conn fd=81 addr=<NetAddr 127.0.0.1:36034> mode=passive>
-2024-03-17 15:50:25.332670 [net debug] ssl(87) sent 28 bytes
-2024-03-17 15:50:25.332671 [net debug] opcode = f0
----- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
-2024-03-17 15:50:25.332708 [net debug] ssl(81) read 14 bytes
-2024-03-17 15:50:25.333144 [net debug] got message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> from <Conn fd=81 addr=<NetAddr 127.0.0.1:36034> mode=passive>
-2024-03-17 15:50:25.333165 [net debug] opcode = f1
----- STO IN pong_handler riga 1084 DENTRO msg.h package:salticidae->include----
-2024-03-17 15:50:25.333172 [net debug] ssl(91) read -1 bytes
-SONO NEL QUARTO IF ping_handler
-MANDO PONG ping_handler
-COMMITMENT ping_handler == 24024
-2024-03-17 15:50:25.333204 [net info] c261250345: ping from <Conn fd=81 addr=<NetAddr 127.0.0.1:36034> mode=passive>
-2024-03-17 15:50:25.333217 [net debug] wrote message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> to <Conn fd=81 addr=<NetAddr 127.0.0.1:36034> mode=passive>
-SONO NEL QUARTO IF pong_handler
-2024-03-17 15:50:25.333250 [net debug] ssl(91) read 0 bytes
-2024-03-17 15:50:25.333282 [net debug] ssl(81) sent 14 bytes
-2024-03-17 15:50:25.333299 [net debug] ssl(91) read 0 bytes
-2024-03-17 15:50:25.333396 [net info] c261250345: lost connection <Conn fd=91 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2024-03-18 13:26:26.955597 [net debug] tls handshake read
+2024-03-18 13:26:26.966568 [net info] c261250345: setup connection <Conn fd=87 addr=<NetAddr 127.0.0.1:52460> mode=passive>
+2024-03-18 13:26:26.966605 [net info] c261250345: setup connection <Conn fd=91 addr=<NetAddr 127.0.0.1:52476> mode=passive>
+2024-03-18 13:26:26.966616 [net debug] reset connection timeout 180.00
 ---- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:25.334766 [net debug] ssl(87) read -1 bytes
-2024-03-17 15:50:25.334894 [net debug] ssl(89) read -1 bytes
-2024-03-17 15:50:25.334925 [net debug] ssl(81) read 0 bytes
-2024-03-17 15:50:25.334938 [net debug] ssl(81) read 0 bytes
-2024-03-17 15:50:25.335004 [net info] c261250345: lost connection <Conn fd=81 addr=<NetAddr 127.0.0.1:36034> mode=passive>
-2024-03-17 15:50:25.335019 [net info] ended c261250345 <-/-> 542865a568 (via <Conn fd=81 addr=<NetAddr 127.0.0.1:36034> mode=passive>)
+2024-03-18 13:26:26.966628 [net debug] reset connection timeout 180.00
 ---- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:25.335260 [net debug] ssl(87) read 28 bytes
-2024-03-17 15:50:25.335303 [net debug] ssl(87) read 14 bytes
-2024-03-17 15:50:25.335334 [net debug] got message <msg magic=00000000 opcode=f1 length=15 checksum=a1c5d37c payload=017f0000012710ffff000036000000> from <Conn fd=87 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:25.335356 [net debug] opcode = f1
----- STO IN pong_handler riga 1084 DENTRO msg.h package:salticidae->include----
-2024-03-17 15:50:25.335390 [net debug] got message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> from <Conn fd=87 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:25.335400 [net debug] opcode = f0
----- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
-SONO NEL PRIMO IF pong_handler
-SONO NEL SECONDO IF pong_handler
-PID pong_handler === 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
-COMMITMENT pong_handler== 54
-AGGIUNGO COMMITMENT ALLA LISTA
-FINITO AGGIUNGERE COMMITMENT ALLA LISTA
-2024-03-17 15:50:25.335666 [net debug] c261250345: outbound handshake to 542865a568
-2024-03-17 15:50:25.335691 [net debug] c261250345: choses connection <Conn fd=87 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:25.335713 [net debug] wrote message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> to <Conn fd=87 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:25.335727 [net debug] destroyed <Conn fd=81 addr=<NetAddr 127.0.0.1:36034> mode=passive>
-2024-03-17 15:50:25.335836 [net info] established c261250345 <---> 542865a568 (via <Conn fd=87 addr=<NetAddr 127.0.0.1:10000> mode=active>)
-SONO NEL QUARTO IF ping_handler
-MANDO PONG ping_handler
-COMMITMENT ping_handler == 24024
-2024-03-17 15:50:25.335862 [net info] c261250345: ping from <Conn fd=87 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:25.335875 [net debug] wrote message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> to <Conn fd=87 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:25.335884 [net debug] reset connection timeout 180.00
-2024-03-17 15:50:25.335943 [net debug] ssl(87) sent 14 bytes
-2024-03-17 15:50:25.335965 [net debug] ssl(87) sent 14 bytes
-2024-03-17 15:50:25.336673 [net debug] ssl(87) read 14 bytes
-2024-03-17 15:50:25.336736 [net debug] got message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> from <Conn fd=87 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:25.336757 [net debug] opcode = f1
----- STO IN pong_handler riga 1084 DENTRO msg.h package:salticidae->include----
-SONO NEL QUARTO IF pong_handler
-2024-03-17 15:50:25.337356 [net debug] ssl(89) read 28 bytes
-2024-03-17 15:50:25.337408 [net debug] ssl(89) read 14 bytes
-2024-03-17 15:50:25.337417 [net debug] got message <msg magic=00000000 opcode=f1 length=15 checksum=5d9403db payload=017f0000012712563a000036000000> from <Conn fd=89 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:25.337438 [net debug] opcode = f1
----- STO IN pong_handler riga 1084 DENTRO msg.h package:salticidae->include----
-2024-03-17 15:50:25.337486 [net debug] got message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> from <Conn fd=89 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:25.337499 [net debug] opcode = f0
-SONO NEL PRIMO IF pong_handler
-SONO NEL SECONDO IF pong_handler
-PID pong_handler === 065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
-COMMITMENT pong_handler== 54
-AGGIUNGO COMMITMENT ALLA LISTA
-FINITO AGGIUNGERE COMMITMENT ALLA LISTA
-2024-03-17 15:50:25.337572 [net debug] c261250345: outbound handshake to 065b010aed
-2024-03-17 15:50:25.337588 [net debug] c261250345: choses connection <Conn fd=89 addr=<NetAddr 127.0.0.1:10002> mode=active>
----- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
-2024-03-17 15:50:25.337603 [net debug] wrote message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> to <Conn fd=89 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:25.337617 [net debug] destroyed <Conn fd=-1 addr=<NetAddr 0.0.0.0:0> mode=passive>
-2024-03-17 15:50:25.337682 [net info] established c261250345 <---> 065b010aed (via <Conn fd=89 addr=<NetAddr 127.0.0.1:10002> mode=active>)
-2024-03-17 15:50:25.337699 [net debug] reset connection timeout 180.00
-SONO NEL QUARTO IF ping_handler
-MANDO PONG ping_handler
-COMMITMENT ping_handler == 24024
-2024-03-17 15:50:25.337724 [net info] c261250345: ping from <Conn fd=89 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:25.337736 [net debug] wrote message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> to <Conn fd=89 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:25.337782 [net debug] ssl(89) sent 14 bytes
-2024-03-17 15:50:25.337803 [net debug] ssl(89) sent 14 bytes
-2024-03-17 15:50:25.338084 [net debug] ssl(89) read 14 bytes
-2024-03-17 15:50:25.338145 [net debug] got message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> from <Conn fd=89 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:25.338164 [net debug] opcode = f1
----- STO IN pong_handler riga 1084 DENTRO msg.h package:salticidae->include----
-SONO NEL QUARTO IF pong_handler
-2024-03-17 15:50:28.202603 [net info] accepted <Conn fd=81 addr=<NetAddr 127.0.0.1:36042> mode=passive>
-2024-03-17 15:50:28.202680 [net debug] worker 55e94640 got <Conn fd=81 addr=<NetAddr 127.0.0.1:36042> mode=passive>
-2024-03-17 15:50:28.202713 [net debug] tls handshake read
-2024-03-17 15:50:28.204009 [net debug] tls handshake read
-2024-03-17 15:50:28.209540 [net info] c261250345: setup connection <Conn fd=81 addr=<NetAddr 127.0.0.1:36042> mode=passive>
-2024-03-17 15:50:28.209580 [net debug] reset connection timeout 180.00
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:28.209846 [net debug] ssl(81) read 28 bytes
-2024-03-17 15:50:28.209916 [net debug] got message <msg magic=00000000 opcode=f0 length=15 checksum=09416a2e payload=017f0000012713461b000036000000> from <Conn fd=81 addr=<NetAddr 127.0.0.1:36042> mode=passive>
-2024-03-17 15:50:28.209938 [net debug] opcode = f0
----- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
-SONO NEL PRIMO IF ping_handler
-SONO NEL SECONDO IF ping_handler
-PID ping_handler === 6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
-COMMITMENT ping_handler == 54
-2024-03-17 15:50:28.210039 [net debug] c261250345: inbound handshake from 6540a0fea6
-2024-03-17 15:50:28.210071 [net debug] wrote message <msg magic=00000000 opcode=f1 length=15 checksum=273cb0e5 payload=017f0000012711d0d7000036000000> to <Conn fd=81 addr=<NetAddr 127.0.0.1:36042> mode=passive>
-2024-03-17 15:50:28.210084 [net debug] c261250345: choses connection <Conn fd=81 addr=<NetAddr 127.0.0.1:36042> mode=passive>
-2024-03-17 15:50:28.210094 [net debug] destroyed <Conn fd=91 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:28.210239 [net debug] wrote message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> to <Conn fd=81 addr=<NetAddr 127.0.0.1:36042> mode=passive>
-2024-03-17 15:50:28.210268 [net debug] destroyed <Conn fd=-1 addr=<NetAddr 0.0.0.0:0> mode=passive>
-2024-03-17 15:50:28.210331 [net info] established c261250345 <---> 6540a0fea6 (via <Conn fd=81 addr=<NetAddr 127.0.0.1:36042> mode=passive>)
-2024-03-17 15:50:28.210347 [net debug] reset connection timeout 180.00
-2024-03-17 15:50:28.210410 [net debug] ssl(81) sent 28 bytes
-2024-03-17 15:50:28.210435 [net debug] ssl(81) sent 14 bytes
-2024-03-17 15:50:28.217250 [net debug] ssl(81) read 14 bytes
-2024-03-17 15:50:28.217354 [net debug] ssl(81) read 14 bytes
-2024-03-17 15:50:28.217364 [net debug] got message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> from <Conn fd=81 addr=<NetAddr 127.0.0.1:36042> mode=passive>
-2024-03-17 15:50:28.217389 [net debug] opcode = f0
----- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
-2024-03-17 15:50:28.217421 [net debug] got message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> from <Conn fd=81 addr=<NetAddr 127.0.0.1:36042> mode=passive>
-2024-03-17 15:50:28.217430 [net debug] opcode = f1
----- STO IN pong_handler riga 1084 DENTRO msg.h package:salticidae->include----
-SONO NEL QUARTO IF ping_handler
-MANDO PONG ping_handler
-COMMITMENT ping_handler == 24024
-2024-03-17 15:50:28.217478 [net info] c261250345: ping from <Conn fd=81 addr=<NetAddr 127.0.0.1:36042> mode=passive>
-2024-03-17 15:50:28.217513 [net debug] wrote message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> to <Conn fd=81 addr=<NetAddr 127.0.0.1:36042> mode=passive>
-SONO NEL QUARTO IF pong_handler
-2024-03-17 15:50:28.217593 [net debug] ssl(81) sent 14 bytes
-2024-03-17 15:50:30.489080 [net info] accepted <Conn fd=84 addr=<NetAddr 127.0.0.1:55440> mode=passive>
-2024-03-17 15:50:30.489249 [net debug] worker 557af640 got <Conn fd=84 addr=<NetAddr 127.0.0.1:55440> mode=passive>
-2024-03-17 15:50:30.502701 [net debug] socket(84) read 42 bytes
-2024-03-17 15:50:30.502811 [net debug] got message <msg magic=00000000 opcode=04 length=8 checksum=05fe4057 payload=0000000000000000> from <Conn fd=84 addr=<NetAddr 127.0.0.1:55440> mode=passive>
-2024-03-17 15:50:30.502837 [net debug] opcode = 04
----- STO IN MsgReqCmd riga 27 DENTRO msg.h package:INCLUDE->HOTSTUFF----
----- STO IN client_request_cmd_handler DENTRO hotstuff_app.cpp ---- 
----- STO IN parse_cmd DENTRO hotstuff_app.cpp ---- 
----- STO IN unserialize DENTRO client.h package:include->hotstuff---- 
----- STO IN serialize DENTRO client.h package:include->hotstuff---- 
----- STO IN get_hash DENTRO client.h package:include->hotstuff---- 
----- STO IN get_hash DENTRO client.h package:include->hotstuff---- 
-2024-03-17 15:50:30.502876 [hotstuff debug] processing <cmd id=af5570f5a1>
----- STO IN exec_command riga 94 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:30.502902 [net debug] got message <msg magic=00000000 opcode=04 length=8 checksum=efaa1c26 payload=0000000001000000> from <Conn fd=84 addr=<NetAddr 127.0.0.1:55440> mode=passive>
-2024-03-17 15:50:30.502911 [net debug] opcode = 04
----- STO IN MsgReqCmd riga 27 DENTRO msg.h package:INCLUDE->HOTSTUFF----
----- STO IN client_request_cmd_handler DENTRO hotstuff_app.cpp ---- 
----- STO IN parse_cmd DENTRO hotstuff_app.cpp ---- 
----- STO IN unserialize DENTRO client.h package:include->hotstuff---- 
----- STO IN serialize DENTRO client.h package:include->hotstuff---- 
----- STO IN get_hash DENTRO client.h package:include->hotstuff---- 
----- STO IN get_hash DENTRO client.h package:include->hotstuff---- 
-STO DENTRO cmd_pending.reg_handler(ec, [this](cmd_queue_t &q) 
-2024-03-17 15:50:30.502947 [hotstuff debug] processing <cmd id=01acecb507>
-STO NEL WHILE q.try_dequeue(e)
----- STO IN exec_command riga 94 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-STO DENTRO cmd_pending.reg_handler(ec, [this](cmd_queue_t &q) 
-STO NEL WHILE q.try_dequeue(e)
-2024-03-17 15:50:30.503120 [net debug] socket(84) read 42 bytes
-2024-03-17 15:50:30.503269 [net debug] got message <msg magic=00000000 opcode=04 length=8 checksum=391dabcb payload=0000000002000000> from <Conn fd=84 addr=<NetAddr 127.0.0.1:55440> mode=passive>
-2024-03-17 15:50:30.503295 [net debug] opcode = 04
----- STO IN MsgReqCmd riga 27 DENTRO msg.h package:INCLUDE->HOTSTUFF----
----- STO IN client_request_cmd_handler DENTRO hotstuff_app.cpp ---- 
----- STO IN parse_cmd DENTRO hotstuff_app.cpp ---- 
----- STO IN unserialize DENTRO client.h package:include->hotstuff---- 
----- STO IN serialize DENTRO client.h package:include->hotstuff---- 
----- STO IN get_hash DENTRO client.h package:include->hotstuff---- 
----- STO IN get_hash DENTRO client.h package:include->hotstuff---- 
-2024-03-17 15:50:30.503347 [hotstuff debug] processing <cmd id=2fcd151b82>
----- STO IN exec_command riga 94 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:30.503400 [net debug] got message <msg magic=00000000 opcode=04 length=8 checksum=1499246f payload=0000000003000000> from <Conn fd=84 addr=<NetAddr 127.0.0.1:55440> mode=passive>
-2024-03-17 15:50:30.503412 [net debug] opcode = 04
-STO DENTRO cmd_pending.reg_handler(ec, [this](cmd_queue_t &q) 
-STO NEL WHILE q.try_dequeue(e)
----- STO IN MsgReqCmd riga 27 DENTRO msg.h package:INCLUDE->HOTSTUFF----
----- STO IN client_request_cmd_handler DENTRO hotstuff_app.cpp ---- 
----- STO IN parse_cmd DENTRO hotstuff_app.cpp ---- 
----- STO IN unserialize DENTRO client.h package:include->hotstuff---- 
----- STO IN serialize DENTRO client.h package:include->hotstuff---- 
----- STO IN get_hash DENTRO client.h package:include->hotstuff---- 
----- STO IN get_hash DENTRO client.h package:include->hotstuff---- 
-2024-03-17 15:50:30.503523 [hotstuff debug] processing <cmd id=9ae4c9d086>
----- STO IN exec_command riga 94 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-STO DENTRO cmd_pending.reg_handler(ec, [this](cmd_queue_t &q) 
-STO NEL WHILE q.try_dequeue(e)
-2024-03-17 15:50:30.506139 [net debug] ssl(87) read 135 bytes
-2024-03-17 15:50:30.506260 [net debug] got message <msg magic=00000000 opcode=00 length=122 checksum=c539778c payload=0000010000006b7d92eaae70399143faebc71d4a82259e327c5c6164486f325e051fe807df5601000000af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc6b7d92eaae70399143faebc71d4a82259e327c5c6164486f325e051fe807df5604000000000000000000000000000000> from <Conn fd=87 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:30.506281 [net debug] opcode = 00
----- STO IN propose_handler riga 227 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN postponed_parse riga 34 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN unserialize riga 194 DENTRO consensus.h package:include->hotstuff---- 
----- STO IN unserialize riga 34 DENTRO entity.cpp package:salticidae->include->src---- 
----- STO IN parse_quorum_cert riga 292 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN unserialize riga 508 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN serialize riga 22 DENTRO entity.cpp package:salticidae->include->src---- 
----- STO IN serialize riga 500 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN add_blk riga 266 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_peer_id_frost riga 94 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_info_frost riga 78 DENTRO entity.h package:include->hotstuff---- 
----- STO IN async_deliver_blk riga 191 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN is_blk_delivered riga 252 DENTRO entity.h package:include->hotstuff---- 
----- STO IN is_delivered riga 215 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN BlockDeliveryContext riga 121 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN BlockDeliveryContext riga 112 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN BlockDeliveryContext riga 116 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN async_fetch_blk riga 166 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN is_blk_fetched riga 260 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN verify riga 71 DENTRO entity.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN async_fetch_blk riga 166 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN is_blk_fetched riga 260 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN get_parent_hashes riga 199 DENTRO entity.h package:include->hotstuff---- 
----- STO IN async_deliver_blk riga 191 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN is_blk_delivered riga 252 DENTRO entity.h package:include->hotstuff---- 
----- STO IN is_delivered riga 215 DENTRO entity.h package:include->hotstuff---- 
-BLK IS DELIVERED !!! 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN on_deliver_blk riga 119 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN get_parent_hashes riga 199 DENTRO entity.h package:include->hotstuff---- 
----- STO IN is_blk_delivered riga 252 DENTRO entity.h package:include->hotstuff---- 
----- STO IN is_delivered riga 215 DENTRO entity.h package:include->hotstuff---- 
----- STO IN on_deliver_blk riga 65 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN get_delivered_blk riga 56 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN std::string riga 229 DENTRO entity.h package:include->hotstuff---- 
-2024-03-17 15:50:30.506791 [hotstuff debug] deliver <block id=2c460db42a height=1 parent=6b7d92eaae qc_ref=6b7d92eaae>
-2024-03-17 15:50:30.506807 [hotstuff debug] block 2c460db42a delivered
----- STO IN get_parent_hashes riga 199 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 328 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN on_receive_proposal riga 215 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN std::string riga 204 DENTRO consensus.h package:include->hotstuff---- 
-2024-03-17 15:50:30.506863 [hotstuff proto] got <proposal rid=0 blk=2c460db42a>
----- STO IN sanity_check_delivered riga 49 DENTRO consensus.cpp package:salticidae->include->src---- 
-CHIAMO UPDATE DENTRO on_receive_proposal
----- STO IN update riga 104 DENTRO consensus.cpp package:salticidae->include->src---- 
-three-step HotStuff
----- STO IN std::string riga 437 DENTRO consensus.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:30.506896 [hotstuff proto] now state: <hotstuff hqc=6b7d92eaae hqc.height=0 b_lock=6b7d92eaae b_exec=6b7d92eaae vheight=1 tails=1>
----- STO IN on_qc_finish riga 378 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN on_receive_proposal_ riga 421 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN swap riga 148 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN check_ancestry riga 66 DENTRO liveness.h package:include->hotstuff----
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_parents riga 193 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN reg_receive_proposal riga 88 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
------ DO VOTE ------ 
-PRIMA DI CREATE PART CERT
- nonce_list.size()1
----- STO IN create_part_cert riga 258 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN serialize riga 269 DENTRO crypto.h package:include->hotstuff---- 
-2024-03-17 15:50:30.507102 [hotstuff debug] create part cert with priv=48229adc2a, blk_hash=2c460db42a
-PRIMA DI PartCertType
-dopo creazione key
----- STO IN SigSecp256k1 riga 325 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN sign riga 363 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN check_msg_length riga 315 DENTRO crypto.h package:include->hotstuff---- 
----- STO DOPO sign riga 333 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN PartCertSecp256k1 riga 410 DENTRO crypto.h package:include->hotstuff---- 
-DOPO PartCertType
-dopo aver creato il vote!!
----- STO IN do_vote riga 425 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- 
-SEND VOTE !!!!
----- STO IN get_peer_id_frost riga 94 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_info_frost riga 78 DENTRO entity.h package:include->hotstuff---- 
----- STO IN MsgVote riga 42 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN serialize riga 244 DENTRO consensus.h package:include->hotstuff---- 
----- STO IN serialize riga 451 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN serialize riga 339 DENTRO crypto.h package:include->hotstuff---- 
-2024-03-17 15:50:30.507277 [net debug] wrote message <msg magic=00000000 opcode=01 length=130 checksum=59243b63 payload=01002c460db42a07913c83fe095836c78b56364204ffff107cbadfac699cc4a09d5b2c460db42a07913c83fe095836c78b56364204ffff107cbadfac699cc4a09d5b7064096d5254f5fa9f8629b5efa5898b8c7dcb2d2ccc2802a11439334a7cacdd048aa363bbcb43f908b549379a16bd3be8ef0bf1505c1add3f743aeaadfe5cce> to <Conn fd=87 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:30.507450 [net debug] ssl(87) sent 143 bytes
-2024-03-17 15:50:30.510820 [net debug] ssl(87) read 0 bytes
-2024-03-17 15:50:30.510861 [net debug] ssl(87) read 0 bytes
-2024-03-17 15:50:30.510997 [net info] c261250345: lost connection <Conn fd=87 addr=<NetAddr 127.0.0.1:10000> mode=active>
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:30.511021 [net info] ended c261250345 <-/-> 542865a568 (via <Conn fd=87 addr=<NetAddr 127.0.0.1:10000> mode=active>)
-2024-03-17 15:50:32.994713 [net info] accepted <Conn fd=86 addr=<NetAddr 127.0.0.1:33422> mode=passive>
-2024-03-17 15:50:32.994779 [net debug] worker 55e94640 got <Conn fd=86 addr=<NetAddr 127.0.0.1:33422> mode=passive>
-2024-03-17 15:50:32.995883 [net debug] tls handshake read
-2024-03-17 15:50:32.999073 [net info] c261250345: setup connection <Conn fd=86 addr=<NetAddr 127.0.0.1:33422> mode=passive>
-2024-03-17 15:50:32.999126 [net debug] reset connection timeout 180.00
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:32.999245 [net debug] ssl(86) read 28 bytes
-2024-03-17 15:50:32.999320 [net debug] got message <msg magic=00000000 opcode=f0 length=15 checksum=30001ec2 payload=017f00000127109c5c000036000000> from <Conn fd=86 addr=<NetAddr 127.0.0.1:33422> mode=passive>
-2024-03-17 15:50:32.999370 [net debug] opcode = f0
----- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
-SONO NEL PRIMO IF ping_handler
-SONO NEL SECONDO IF ping_handler
-PID ping_handler === 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
-COMMITMENT ping_handler == 54
-2024-03-17 15:50:32.999447 [net debug] c261250345: inbound handshake from 542865a568
-2024-03-17 15:50:32.999479 [net debug] wrote message <msg magic=00000000 opcode=f1 length=15 checksum=a7b492d8 payload=017f0000012711e4d7000036000000> to <Conn fd=86 addr=<NetAddr 127.0.0.1:33422> mode=passive>
-2024-03-17 15:50:32.999496 [net debug] c261250345: choses connection <Conn fd=86 addr=<NetAddr 127.0.0.1:33422> mode=passive>
-2024-03-17 15:50:32.999511 [net debug] wrote message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> to <Conn fd=86 addr=<NetAddr 127.0.0.1:33422> mode=passive>
-2024-03-17 15:50:32.999522 [net debug] destroyed <Conn fd=87 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:32.999656 [net info] established c261250345 <---> 542865a568 (via <Conn fd=86 addr=<NetAddr 127.0.0.1:33422> mode=passive>)
-2024-03-17 15:50:32.999674 [net debug] reset connection timeout 180.00
-2024-03-17 15:50:32.999729 [net debug] ssl(86) sent 28 bytes
-2024-03-17 15:50:32.999752 [net debug] ssl(86) sent 14 bytes
-2024-03-17 15:50:33.000220 [net debug] ssl(86) read 14 bytes
-2024-03-17 15:50:33.000266 [net debug] ssl(86) read 14 bytes
-2024-03-17 15:50:33.000293 [net debug] got message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> from <Conn fd=86 addr=<NetAddr 127.0.0.1:33422> mode=passive>
-2024-03-17 15:50:33.000314 [net debug] opcode = f0
----- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
-2024-03-17 15:50:33.000350 [net debug] got message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> from <Conn fd=86 addr=<NetAddr 127.0.0.1:33422> mode=passive>
-2024-03-17 15:50:33.000359 [net debug] opcode = f1
----- STO IN pong_handler riga 1084 DENTRO msg.h package:salticidae->include----
-SONO NEL QUARTO IF ping_handler
-MANDO PONG ping_handler
-COMMITMENT ping_handler == 24024
-2024-03-17 15:50:33.000413 [net info] c261250345: ping from <Conn fd=86 addr=<NetAddr 127.0.0.1:33422> mode=passive>
-2024-03-17 15:50:33.000431 [net debug] wrote message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> to <Conn fd=86 addr=<NetAddr 127.0.0.1:33422> mode=passive>
-SONO NEL QUARTO IF pong_handler
-2024-03-17 15:50:33.000487 [net debug] ssl(86) sent 14 bytes
----- STO IN print_stat riga 308 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:35.253124 [hotstuff info] ===== begin stats =====
-2024-03-17 15:50:35.253160 [hotstuff info] -------- queues -------
-2024-03-17 15:50:35.253168 [hotstuff info] blk_fetch_waiting: 0
-2024-03-17 15:50:35.253176 [hotstuff info] blk_delivery_waiting: 0
-2024-03-17 15:50:35.253183 [hotstuff info] decision_waiting: 4
-2024-03-17 15:50:35.253191 [hotstuff info] -------- misc ---------
-2024-03-17 15:50:35.253198 [hotstuff info] fetched: 0
-2024-03-17 15:50:35.253206 [hotstuff info] delivered: 1
-2024-03-17 15:50:35.253213 [hotstuff info] cmd_cache: 0
-2024-03-17 15:50:35.253221 [hotstuff info] blk_cache: 2
-2024-03-17 15:50:35.253228 [hotstuff info] ------ misc (10s) -----
-2024-03-17 15:50:35.253235 [hotstuff info] fetched: 0
-2024-03-17 15:50:35.253243 [hotstuff info] delivered: 1
-2024-03-17 15:50:35.253250 [hotstuff info] decided: 0
-2024-03-17 15:50:35.253258 [hotstuff info] gened: 0
-2024-03-17 15:50:35.253265 [hotstuff info] avg. parent_size: 1.000
-2024-03-17 15:50:35.253275 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
-2024-03-17 15:50:35.253284 [hotstuff info] --- replica msg. (10s) ---
-2024-03-17 15:50:35.253442 [hotstuff info] 542865a568: 3(17), 3(17), 0
-2024-03-17 15:50:35.253515 [hotstuff info] 065b010aed: 3(17), 3(17), 0
-2024-03-17 15:50:35.253589 [hotstuff info] 6540a0fea6: 3(17), 3(17), 0
-2024-03-17 15:50:35.253606 [hotstuff info] sent: 9
-2024-03-17 15:50:35.253614 [hotstuff info] recv: 9
-2024-03-17 15:50:35.253633 [hotstuff info] --- replica msg. total ---
-2024-03-17 15:50:35.253641 [hotstuff info] sent: 9
-2024-03-17 15:50:35.253648 [hotstuff info] recv: 9
-2024-03-17 15:50:35.253655 [hotstuff info] ====== end stats ======
----- STO IN print_stat DENTRO hotstuff_app.cpp ---- 
-2024-03-17 15:50:35.253674 [hotstuff info] --- client msg. (10s) ---
-2024-03-17 15:50:35.253685 [hotstuff info] <NetAddr 127.0.0.1:55440>: 0(0), 4(32)
-2024-03-17 15:50:35.253693 [hotstuff info] --- end client msg. ---
----- STO IN rotate riga 350 DENTRO liveness.h package:include->hotstuff----
----- STO IN reg_proposal riga 270 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_proposal riga 389 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN reg_receive_proposal riga 280 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
-2024-03-17 15:50:36.252117 [hotstuff proto] Pacemaker: rotate to 1
-2024-03-17 15:50:36.252145 [hotstuff info] schedule to impeach the proposer
----- STO IN reset_imp_timer riga 111 DENTRO hotstuff_app.cpp ---- 
----- STO IN on_exp_timeout riga 340 DENTRO liveness.h package:include->hotstuff----
----- STO IN do_new_consensus riga 323 DENTRO liveness.h package:include->hotstuff----
----- STO IN on_propose riga 177 DENTRO consensus.cpp package:salticidae->include->src---- 
-parents[0]->get_hash().to_hex() = 2c460db42a07913c83fe095836c78b56364204ffff107cbadfac699cc4a09d5b
----- STO IN clone riga 494 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN get_hashes riga 122 DENTRO entity.h package:include->hotstuff---- 
----- STO IN serialize riga 22 DENTRO entity.cpp package:salticidae->include->src---- 
----- STO IN serialize riga 500 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN add_blk riga 278 DENTRO entity.h package:include->hotstuff---- 
----- STO IN create_quorum_cert riga 286 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN QuorumCertSecp256k1 riga 26 DENTRO crypto.cpp package:salticidae->include->src---- 
----- STO IN on_deliver_blk riga 65 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN get_delivered_blk riga 56 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN std::string riga 229 DENTRO entity.h package:include->hotstuff---- 
-2024-03-17 15:50:37.254001 [hotstuff debug] deliver <block id=1b035e3d7e height=2 parent=2c460db42a qc_ref=6b7d92eaae>
-CHIAMO UPDATE DENTRO on_propose
----- STO IN update riga 104 DENTRO consensus.cpp package:salticidae->include->src---- 
-three-step HotStuff
-dopo update
-dopo prop
----- STO IN std::string riga 229 DENTRO entity.h package:include->hotstuff---- 
-2024-03-17 15:50:37.254240 [hotstuff proto] propose <block id=1b035e3d7e height=2 parent=2c460db42a qc_ref=6b7d92eaae>
----- STO IN on_receive_proposal riga 215 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN std::string riga 204 DENTRO consensus.h package:include->hotstuff---- 
-2024-03-17 15:50:37.254713 [hotstuff proto] got <proposal rid=1 blk=1b035e3d7e>
----- STO IN std::string riga 437 DENTRO consensus.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:37.254958 [hotstuff proto] now state: <hotstuff hqc=6b7d92eaae hqc.height=0 b_lock=6b7d92eaae b_exec=6b7d92eaae vheight=2 tails=1>
----- STO IN on_receive_proposal_ riga 421 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN swap riga 148 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN check_ancestry riga 66 DENTRO liveness.h package:include->hotstuff----
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_parents riga 193 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_parents riga 193 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN reg_receive_proposal riga 88 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN reg_receive_proposal riga 280 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
------ DO VOTE ------ 
-PRIMA DI CREATE PART CERT
- nonce_list.size()2
----- STO IN create_part_cert riga 258 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN serialize riga 269 DENTRO crypto.h package:include->hotstuff---- 
-2024-03-17 15:50:37.255235 [hotstuff debug] create part cert with priv=48229adc2a, blk_hash=1b035e3d7e
-PRIMA DI PartCertType
-dopo creazione key
----- STO IN SigSecp256k1 riga 325 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN sign riga 363 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN check_msg_length riga 315 DENTRO crypto.h package:include->hotstuff---- 
----- STO DOPO sign riga 333 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN PartCertSecp256k1 riga 410 DENTRO crypto.h package:include->hotstuff---- 
-DOPO PartCertType
-dopo aver creato il vote!!
----- STO IN do_vote riga 425 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- 
-proposer == get_id()
----- STO IN on_receive_vote riga 272 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN std::string riga 275 DENTRO consensus.h package:include->hotstuff---- 
-2024-03-17 15:50:37.255398 [hotstuff proto] got <vote rid=1 blk=1b035e3d7e>
----- STO IN std::string riga 437 DENTRO consensus.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:37.255423 [hotstuff proto] now state: <hotstuff hqc=6b7d92eaae hqc.height=0 b_lock=6b7d92eaae b_exec=6b7d92eaae vheight=2 tails=1>
----- STO IN get_delivered_blk riga 56 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
-config.nmajority = 3
-qsize = 0
-qsize = 1
-PRIMA DI ADD_PART!!!
----- STO IN add_part riga 475 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN get_obj_hash riga 439 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN on_propose riga 413 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN swap riga 148 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN reg_proposal riga 88 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_proposal riga 389 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN reg_proposal riga 270 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_proposal riga 389 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN do_broadcast_proposal riga 416 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-Map size: 3
-PeerId: 6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651, Integers: 54 
-PeerId: 065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78, Integers: 54 
-PeerId: 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420, Integers: 54 
----- STO IN MsgPropose riga 31 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN serialize riga 187 DENTRO consensus.h package:include->hotstuff---- 
----- STO IN serialize riga 22 DENTRO entity.cpp package:salticidae->include->src---- 
----- STO IN serialize riga 500 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN async_qc_finish riga 356 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN swap riga 148 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 328 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
-2024-03-17 15:50:37.255736 [net debug] wrote message <msg magic=00000000 opcode=00 length=90 checksum=35b95abd payload=0100010000002c460db42a07913c83fe095836c78b56364204ffff107cbadfac699cc4a09d5b000000006b7d92eaae70399143faebc71d4a82259e327c5c6164486f325e051fe807df5604000000000000000000000000000000> to <Conn fd=86 addr=<NetAddr 127.0.0.1:33422> mode=passive>
-2024-03-17 15:50:37.255785 [net debug] wrote message <msg magic=00000000 opcode=00 length=90 checksum=35b95abd payload=0100010000002c460db42a07913c83fe095836c78b56364204ffff107cbadfac699cc4a09d5b000000006b7d92eaae70399143faebc71d4a82259e327c5c6164486f325e051fe807df5604000000000000000000000000000000> to <Conn fd=89 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:37.255821 [net debug] wrote message <msg magic=00000000 opcode=00 length=90 checksum=35b95abd payload=0100010000002c460db42a07913c83fe095836c78b56364204ffff107cbadfac699cc4a09d5b000000006b7d92eaae70399143faebc71d4a82259e327c5c6164486f325e051fe807df5604000000000000000000000000000000> to <Conn fd=81 addr=<NetAddr 127.0.0.1:36042> mode=passive>
-2024-03-17 15:50:37.256092 [net debug] ssl(86) sent 103 bytes
-2024-03-17 15:50:37.256199 [net debug] ssl(89) sent 103 bytes
-2024-03-17 15:50:37.256384 [net debug] ssl(81) sent 103 bytes
-2024-03-17 15:50:37.259800 [net debug] ssl(81) read 143 bytes
-2024-03-17 15:50:37.259850 [net debug] ssl(89) read 143 bytes
-2024-03-17 15:50:37.259885 [net debug] ssl(86) read 143 bytes
-2024-03-17 15:50:37.259890 [net debug] got message <msg magic=00000000 opcode=01 length=130 checksum=a371ca2d payload=03001b035e3d7e17334ecb7b9a9334a478c1da0a6a9f3e915023d007daef6ac4eeed1b035e3d7e17334ecb7b9a9334a478c1da0a6a9f3e915023d007daef6ac4eeed0608733c6c737253bfd27dd21875e60f38541bbb702ee94ca829ebee71ee8dc45774aad3e93a03c459173ef94d51b22263ad8089b523e7bf8720157292511c45> from <Conn fd=81 addr=<NetAddr 127.0.0.1:36042> mode=passive>
-2024-03-17 15:50:37.259913 [net debug] opcode = 01
----- STO IN vote_handler riga 248 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN postponed_parse riga 45 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN unserialize riga 250 DENTRO consensus.h package:include->hotstuff---- 
----- STO IN parse_part_cert riga 278 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN unserialize riga 458 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN unserialize riga 350 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN async_deliver_blk riga 191 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN is_blk_delivered riga 252 DENTRO entity.h package:include->hotstuff---- 
----- STO IN is_delivered riga 215 DENTRO entity.h package:include->hotstuff---- 
-BLK IS DELIVERED !!! 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN verify riga 267 DENTRO consensus.h package:include->hotstuff---- 
----- STO IN get_pubkey riga 88 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_info riga 78 DENTRO entity.h package:include->hotstuff---- 
-2024-03-17 15:50:37.260169 [net warn] error while parsing: rid 0300 not found, terminating the connection
-2024-03-17 15:50:37.260216 [net debug] got message <msg magic=00000000 opcode=01 length=130 checksum=fa146723 payload=02001b035e3d7e17334ecb7b9a9334a478c1da0a6a9f3e915023d007daef6ac4eeed1b035e3d7e17334ecb7b9a9334a478c1da0a6a9f3e915023d007daef6ac4eeedc6136b228c52b155a311a86442df01d64956c3b1c19593e0b2b3a63dead92ae903471e163d63e5be7a274f10b88f61a59542259d51427c05ef5c76182111ca55> from <Conn fd=89 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:37.260226 [net debug] opcode = 01
----- STO IN vote_handler riga 248 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN postponed_parse riga 45 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:37.260327 [net info] c261250345: lost connection <Conn fd=81 addr=<NetAddr 127.0.0.1:36042> mode=passive>
----- STO IN unserialize riga 250 DENTRO consensus.h package:include->hotstuff---- 
----- STO IN parse_part_cert riga 278 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN unserialize riga 458 DENTRO crypto.h package:include->hotstuff---- 
-2024-03-17 15:50:37.260365 [net info] ended c261250345 <-/-> 6540a0fea6 (via <Conn fd=81 addr=<NetAddr 127.0.0.1:36042> mode=passive>)
----- STO IN unserialize riga 350 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN async_deliver_blk riga 191 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN is_blk_delivered riga 252 DENTRO entity.h package:include->hotstuff---- 
----- STO IN is_delivered riga 215 DENTRO entity.h package:include->hotstuff---- 
-BLK IS DELIVERED !!! 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN verify riga 267 DENTRO consensus.h package:include->hotstuff---- 
----- STO IN get_pubkey riga 88 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_info riga 78 DENTRO entity.h package:include->hotstuff---- 
-2024-03-17 15:50:37.260416 [net warn] error while parsing: rid 0200 not found, terminating the connection
-2024-03-17 15:50:37.260449 [net debug] got message <msg magic=00000000 opcode=01 length=130 checksum=ab136d60 payload=00001b035e3d7e17334ecb7b9a9334a478c1da0a6a9f3e915023d007daef6ac4eeed1b035e3d7e17334ecb7b9a9334a478c1da0a6a9f3e915023d007daef6ac4eeedfcde372e60398ae066d6db581e490bc32246b5c36d3142fa061be8c73181c3f671dff4903b1ddfa7fb37316532d9edfe17ca52b3ee79db139a261dc4597861b5> from <Conn fd=86 addr=<NetAddr 127.0.0.1:33422> mode=passive>
-2024-03-17 15:50:37.260458 [net debug] opcode = 01
----- STO IN vote_handler riga 248 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:37.260505 [net info] c261250345: lost connection <Conn fd=89 addr=<NetAddr 127.0.0.1:10002> mode=active>
----- STO IN postponed_parse riga 45 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:37.260522 [net info] ended c261250345 <-/-> 065b010aed (via <Conn fd=89 addr=<NetAddr 127.0.0.1:10002> mode=active>)
----- STO IN unserialize riga 250 DENTRO consensus.h package:include->hotstuff---- 
----- STO IN parse_part_cert riga 278 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN unserialize riga 458 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN unserialize riga 350 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN async_deliver_blk riga 191 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN is_blk_delivered riga 252 DENTRO entity.h package:include->hotstuff---- 
----- STO IN is_delivered riga 215 DENTRO entity.h package:include->hotstuff---- 
-BLK IS DELIVERED !!! 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN verify riga 267 DENTRO consensus.h package:include->hotstuff---- 
----- STO IN get_pubkey riga 88 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_info riga 78 DENTRO entity.h package:include->hotstuff---- 
-2024-03-17 15:50:37.260576 [net warn] error while parsing: rid 0000 not found, terminating the connection
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:37.260790 [net info] c261250345: lost connection <Conn fd=86 addr=<NetAddr 127.0.0.1:33422> mode=passive>
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:37.260807 [net info] ended c261250345 <-/-> 542865a568 (via <Conn fd=86 addr=<NetAddr 127.0.0.1:33422> mode=passive>)
----- STO IN rotate riga 350 DENTRO liveness.h package:include->hotstuff----
----- STO IN reg_proposal riga 270 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_proposal riga 389 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN reg_receive_proposal riga 280 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
-2024-03-17 15:50:38.255479 [hotstuff proto] Pacemaker: rotate to 2
-2024-03-17 15:50:39.399635 [net info] accepted <Conn fd=81 addr=<NetAddr 127.0.0.1:33438> mode=passive>
-2024-03-17 15:50:39.399744 [net debug] worker 55e94640 got <Conn fd=81 addr=<NetAddr 127.0.0.1:33438> mode=passive>
-2024-03-17 15:50:39.400898 [net debug] tls handshake read
-2024-03-17 15:50:39.406436 [net info] c261250345: setup connection <Conn fd=81 addr=<NetAddr 127.0.0.1:33438> mode=passive>
-2024-03-17 15:50:39.406494 [net debug] reset connection timeout 180.00
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:39.406864 [net debug] ssl(81) read 28 bytes
-2024-03-17 15:50:39.406938 [net debug] got message <msg magic=00000000 opcode=f0 length=15 checksum=4c236fd7 payload=017f00000127102aac000036000000> from <Conn fd=81 addr=<NetAddr 127.0.0.1:33438> mode=passive>
-2024-03-17 15:50:39.406978 [net debug] opcode = f0
----- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
-SONO NEL PRIMO IF ping_handler
-SONO NEL SECONDO IF ping_handler
-PID ping_handler === 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
-COMMITMENT ping_handler == 54
-2024-03-17 15:50:39.407096 [net debug] c261250345: inbound handshake from 542865a568
-2024-03-17 15:50:39.407136 [net debug] wrote message <msg magic=00000000 opcode=f1 length=15 checksum=f89aabc0 payload=017f00000127118503000036000000> to <Conn fd=81 addr=<NetAddr 127.0.0.1:33438> mode=passive>
-2024-03-17 15:50:39.407150 [net debug] c261250345: terminates one side (ac2a >= 0385)
-2024-03-17 15:50:39.407216 [net info] c261250345: lost connection <Conn fd=81 addr=<NetAddr 127.0.0.1:33438> mode=passive>
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:39.774235 [net info] created <Conn fd=81 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:39.774329 [net info] connected to remote <Conn fd=81 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:39.774388 [net debug] worker 55e94640 got <Conn fd=81 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:39.774737 [net debug] tls handshake read
-2024-03-17 15:50:39.777501 [net info] c261250345: setup connection <Conn fd=81 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:39.777591 [net debug] wrote message <msg magic=00000000 opcode=f0 length=15 checksum=b52c4272 payload=017f00000127111b45000036000000> to <Conn fd=81 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:39.777626 [net debug] reset connection timeout 180.00
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:39.777671 [net debug] ssl(81) sent 28 bytes
-2024-03-17 15:50:39.778711 [net debug] ssl(81) read -1 bytes
-2024-03-17 15:50:39.779274 [net debug] ssl(81) read -1 bytes
-2024-03-17 15:50:39.779604 [net debug] ssl(81) read 0 bytes
-2024-03-17 15:50:39.779634 [net debug] ssl(81) read 0 bytes
-2024-03-17 15:50:39.779725 [net info] c261250345: lost connection <Conn fd=81 addr=<NetAddr 127.0.0.1:10003> mode=active>
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:39.978761 [net info] accepted <Conn fd=81 addr=<NetAddr 127.0.0.1:33450> mode=passive>
-2024-03-17 15:50:39.978831 [net debug] worker 55e94640 got <Conn fd=81 addr=<NetAddr 127.0.0.1:33450> mode=passive>
-2024-03-17 15:50:39.978898 [net debug] tls handshake read
-2024-03-17 15:50:39.980606 [net debug] tls handshake read
-2024-03-17 15:50:39.985474 [net info] c261250345: setup connection <Conn fd=81 addr=<NetAddr 127.0.0.1:33450> mode=passive>
-2024-03-17 15:50:39.985538 [net debug] reset connection timeout 180.00
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:39.985662 [net debug] ssl(81) read 28 bytes
-2024-03-17 15:50:39.985732 [net debug] got message <msg magic=00000000 opcode=f0 length=15 checksum=080b3a43 payload=017f0000012713b031000036000000> from <Conn fd=81 addr=<NetAddr 127.0.0.1:33450> mode=passive>
-2024-03-17 15:50:39.985765 [net debug] opcode = f0
----- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
-SONO NEL PRIMO IF ping_handler
-SONO NEL SECONDO IF ping_handler
-PID ping_handler === 6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
-COMMITMENT ping_handler == 54
-2024-03-17 15:50:39.985915 [net debug] c261250345: inbound handshake from 6540a0fea6
-2024-03-17 15:50:39.985956 [net debug] wrote message <msg magic=00000000 opcode=f1 length=15 checksum=97baa6f2 payload=017f0000012711582d000036000000> to <Conn fd=81 addr=<NetAddr 127.0.0.1:33450> mode=passive>
-2024-03-17 15:50:39.985976 [net debug] c261250345: terminates one side (31b0 >= 2d58)
-2024-03-17 15:50:39.986051 [net info] c261250345: lost connection <Conn fd=81 addr=<NetAddr 127.0.0.1:33450> mode=passive>
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:40.177256 [net info] created <Conn fd=81 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:40.177324 [net info] connected to remote <Conn fd=81 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:40.177389 [net debug] worker 55e94640 got <Conn fd=81 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:40.177673 [net debug] tls handshake read
-2024-03-17 15:50:40.180366 [net info] c261250345: setup connection <Conn fd=81 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:40.180437 [net debug] wrote message <msg magic=00000000 opcode=f0 length=15 checksum=f89aabc0 payload=017f00000127118503000036000000> to <Conn fd=81 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:40.180460 [net debug] reset connection timeout 180.00
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:40.180496 [net debug] ssl(81) sent 28 bytes
-2024-03-17 15:50:40.181761 [net info] accepted <Conn fd=92 addr=<NetAddr 127.0.0.1:33452> mode=passive>
-2024-03-17 15:50:40.181823 [net debug] worker 55e94640 got <Conn fd=92 addr=<NetAddr 127.0.0.1:33452> mode=passive>
-2024-03-17 15:50:40.181904 [net debug] ssl(81) read -1 bytes
-2024-03-17 15:50:40.183041 [net debug] tls handshake read
-2024-03-17 15:50:40.185908 [net debug] ssl(81) read 28 bytes
-2024-03-17 15:50:40.186000 [net debug] ssl(81) read 14 bytes
-2024-03-17 15:50:40.186019 [net debug] got message <msg magic=00000000 opcode=f1 length=15 checksum=d0f17beb payload=017f0000012710e2ec000036000000> from <Conn fd=81 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:40.186043 [net debug] opcode = f1
----- STO IN pong_handler riga 1084 DENTRO msg.h package:salticidae->include----
-2024-03-17 15:50:40.186072 [net debug] got message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> from <Conn fd=81 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:40.186081 [net debug] opcode = f0
----- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
-SONO NEL PRIMO IF pong_handler
-SONO NEL SECONDO IF pong_handler
-PID pong_handler === 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
-COMMITMENT pong_handler== 54
-AGGIUNGO COMMITMENT ALLA LISTA
-FINITO AGGIUNGERE COMMITMENT ALLA LISTA
-2024-03-17 15:50:40.187664 [net debug] c261250345: outbound handshake to 542865a568
-2024-03-17 15:50:40.187694 [net debug] c261250345: choses connection <Conn fd=81 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:40.187706 [net debug] destroyed <Conn fd=81 addr=<NetAddr 127.0.0.1:33438> mode=passive>
-2024-03-17 15:50:40.187803 [net debug] wrote message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> to <Conn fd=81 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:40.187818 [net debug] destroyed <Conn fd=86 addr=<NetAddr 127.0.0.1:33422> mode=passive>
-2024-03-17 15:50:40.187896 [net info] established c261250345 <---> 542865a568 (via <Conn fd=81 addr=<NetAddr 127.0.0.1:10000> mode=active>)
-SONO NEL QUARTO IF ping_handler
-MANDO PONG ping_handler
-COMMITMENT ping_handler == 24024
-2024-03-17 15:50:40.187920 [net info] c261250345: ping from <Conn fd=81 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:40.187931 [net debug] wrote message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> to <Conn fd=81 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:40.187941 [net info] c261250345: setup connection <Conn fd=92 addr=<NetAddr 127.0.0.1:33452> mode=passive>
-2024-03-17 15:50:40.187956 [net debug] reset connection timeout 180.00
-2024-03-17 15:50:40.187968 [net debug] reset connection timeout 180.00
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:40.188279 [net debug] ssl(81) sent 14 bytes
-2024-03-17 15:50:40.188305 [net debug] ssl(81) sent 14 bytes
-2024-03-17 15:50:40.188344 [net debug] ssl(92) read 28 bytes
-2024-03-17 15:50:40.188414 [net debug] got message <msg magic=00000000 opcode=f0 length=15 checksum=83bd3c4a payload=017f00000127124dbf000036000000> from <Conn fd=92 addr=<NetAddr 127.0.0.1:33452> mode=passive>
-2024-03-17 15:50:40.188436 [net debug] opcode = f0
+2024-03-18 13:26:26.966676 [net debug] ssl(91) read 28 bytes
+2024-03-18 13:26:26.966744 [net debug] got message <msg magic=00000000 opcode=f0 length=15 checksum=cdd5682c payload=017f0000012712f0d2000036000000> from <Conn fd=91 addr=<NetAddr 127.0.0.1:52476> mode=passive>
+2024-03-18 13:26:26.966763 [net debug] opcode = f0
 ---- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
 SONO NEL PRIMO IF ping_handler
 SONO NEL SECONDO IF ping_handler
 PID ping_handler === 065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
 COMMITMENT ping_handler == 54
-2024-03-17 15:50:40.188641 [net debug] c261250345: inbound handshake from 065b010aed
-2024-03-17 15:50:40.188671 [net debug] wrote message <msg magic=00000000 opcode=f1 length=15 checksum=69be0713 payload=017f00000127117d21000036000000> to <Conn fd=92 addr=<NetAddr 127.0.0.1:33452> mode=passive>
-2024-03-17 15:50:40.188682 [net debug] c261250345: terminates one side (bf4d >= 217d)
-2024-03-17 15:50:40.188883 [net info] c261250345: lost connection <Conn fd=92 addr=<NetAddr 127.0.0.1:33452> mode=passive>
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:40.188942 [net debug] ssl(81) read 14 bytes
-2024-03-17 15:50:40.189010 [net debug] got message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> from <Conn fd=81 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:40.189029 [net debug] opcode = f1
----- STO IN pong_handler riga 1084 DENTRO msg.h package:salticidae->include----
-SONO NEL QUARTO IF pong_handler
-2024-03-17 15:50:40.213658 [net info] created <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:40.213722 [net info] connected to remote <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:40.213769 [net debug] worker 55e94640 got <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:40.214006 [net debug] tls handshake read
-2024-03-17 15:50:40.217712 [net info] c261250345: setup connection <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:40.221955 [net debug] wrote message <msg magic=00000000 opcode=f0 length=15 checksum=69be0713 payload=017f00000127117d21000036000000> to <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:40.221989 [net debug] reset connection timeout 180.00
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:40.222050 [net debug] ssl(86) sent 28 bytes
-2024-03-17 15:50:40.222152 [net debug] ssl(86) read -1 bytes
-2024-03-17 15:50:40.223689 [net debug] ssl(86) read 28 bytes
-2024-03-17 15:50:40.223744 [net debug] ssl(86) read 14 bytes
-2024-03-17 15:50:40.223767 [net debug] got message <msg magic=00000000 opcode=f1 length=15 checksum=302c84b6 payload=017f0000012712a3da000036000000> from <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:40.223792 [net debug] opcode = f1
----- STO IN pong_handler riga 1084 DENTRO msg.h package:salticidae->include----
-2024-03-17 15:50:40.223830 [net debug] got message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> from <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:40.223840 [net debug] opcode = f0
+2024-03-18 13:26:26.967475 [net debug] c261250345: inbound handshake from 065b010aed
+2024-03-18 13:26:26.967559 [net debug] wrote message <msg magic=00000000 opcode=f1 length=15 checksum=bbfec3ef payload=017f0000012711f3fc000036000000> to <Conn fd=91 addr=<NetAddr 127.0.0.1:52476> mode=passive>
+2024-03-18 13:26:26.967582 [net debug] c261250345: choses connection <Conn fd=91 addr=<NetAddr 127.0.0.1:52476> mode=passive>
+2024-03-18 13:26:26.967592 [net debug] destroyed <Conn fd=87 addr=<NetAddr 127.0.0.1:10002> mode=active>
+2024-03-18 13:26:26.967744 [net debug] wrote message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> to <Conn fd=91 addr=<NetAddr 127.0.0.1:52476> mode=passive>
+2024-03-18 13:26:26.967760 [net debug] destroyed <Conn fd=-1 addr=<NetAddr 0.0.0.0:0> mode=passive>
+2024-03-18 13:26:26.967831 [net info] established c261250345 <---> 065b010aed (via <Conn fd=91 addr=<NetAddr 127.0.0.1:52476> mode=passive>)
+2024-03-18 13:26:26.967848 [net debug] reset connection timeout 180.00
+2024-03-18 13:26:26.967964 [net debug] ssl(91) sent 28 bytes
+2024-03-18 13:26:26.967990 [net debug] ssl(91) sent 14 bytes
+2024-03-18 13:26:26.972108 [net debug] ssl(91) read 14 bytes
+2024-03-18 13:26:26.972213 [net debug] got message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> from <Conn fd=91 addr=<NetAddr 127.0.0.1:52476> mode=passive>
+2024-03-18 13:26:26.972236 [net debug] opcode = f0
 ---- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
-SONO NEL PRIMO IF pong_handler
-SONO NEL SECONDO IF pong_handler
-PID pong_handler === 065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
-COMMITMENT pong_handler== 54
-AGGIUNGO COMMITMENT ALLA LISTA
-FINITO AGGIUNGERE COMMITMENT ALLA LISTA
-2024-03-17 15:50:40.224729 [net debug] c261250345: outbound handshake to 065b010aed
-2024-03-17 15:50:40.224754 [net debug] c261250345: choses connection <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:40.224767 [net debug] destroyed <Conn fd=92 addr=<NetAddr 127.0.0.1:33452> mode=passive>
-2024-03-17 15:50:40.224861 [net debug] wrote message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> to <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:40.224878 [net debug] destroyed <Conn fd=89 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:40.225048 [net info] established c261250345 <---> 065b010aed (via <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>)
+2024-03-18 13:26:26.972365 [net info] accepted <Conn fd=83 addr=<NetAddr 127.0.0.1:52482> mode=passive>
+2024-03-18 13:26:26.972411 [net debug] ssl(91) read 14 bytes
 SONO NEL QUARTO IF ping_handler
 MANDO PONG ping_handler
-COMMITMENT ping_handler == 24024
-2024-03-17 15:50:40.225081 [net info] c261250345: ping from <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:40.225095 [net debug] wrote message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> to <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:40.225248 [net debug] reset connection timeout 180.00
-2024-03-17 15:50:40.225349 [net debug] ssl(86) sent 14 bytes
-2024-03-17 15:50:40.225372 [net debug] ssl(86) sent 14 bytes
-2024-03-17 15:50:40.225941 [net debug] ssl(86) read 14 bytes
-2024-03-17 15:50:40.226024 [net debug] got message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> from <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:40.226073 [net debug] opcode = f1
+COMMITMENT ping_handler == 23630
+2024-03-18 13:26:26.972466 [net info] c261250345: ping from <Conn fd=91 addr=<NetAddr 127.0.0.1:52476> mode=passive>
+2024-03-18 13:26:26.972481 [net debug] wrote message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> to <Conn fd=91 addr=<NetAddr 127.0.0.1:52476> mode=passive>
+2024-03-18 13:26:26.972495 [net debug] got message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> from <Conn fd=91 addr=<NetAddr 127.0.0.1:52476> mode=passive>
+2024-03-18 13:26:26.972513 [net debug] worker 3ebde640 got <Conn fd=83 addr=<NetAddr 127.0.0.1:52482> mode=passive>
+2024-03-18 13:26:26.972516 [net debug] opcode = f1
 ---- STO IN pong_handler riga 1084 DENTRO msg.h package:salticidae->include----
+2024-03-18 13:26:26.972550 [net debug] ssl(91) sent 14 bytes
+2024-03-18 13:26:26.973634 [net debug] tls handshake read
 SONO NEL QUARTO IF pong_handler
----- STO IN on_exp_timeout riga 340 DENTRO liveness.h package:include->hotstuff----
-2024-03-17 15:50:40.264738 [net debug] ssl(86) read 103 bytes
-2024-03-17 15:50:40.264842 [net debug] got message <msg magic=00000000 opcode=00 length=90 checksum=3278a937 payload=0200010000001b035e3d7e17334ecb7b9a9334a478c1da0a6a9f3e915023d007daef6ac4eeed000000006b7d92eaae70399143faebc71d4a82259e327c5c6164486f325e051fe807df5604000000000000000000000000000000> from <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:40.264868 [net debug] opcode = 00
----- STO IN propose_handler riga 227 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN postponed_parse riga 34 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN unserialize riga 194 DENTRO consensus.h package:include->hotstuff---- 
----- STO IN unserialize riga 34 DENTRO entity.cpp package:salticidae->include->src---- 
----- STO IN parse_quorum_cert riga 292 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN unserialize riga 508 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN serialize riga 22 DENTRO entity.cpp package:salticidae->include->src---- 
----- STO IN serialize riga 500 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN add_blk riga 266 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_peer_id_frost riga 94 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_info_frost riga 78 DENTRO entity.h package:include->hotstuff---- 
----- STO IN async_deliver_blk riga 191 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN is_blk_delivered riga 252 DENTRO entity.h package:include->hotstuff---- 
----- STO IN is_delivered riga 215 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN BlockDeliveryContext riga 121 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN BlockDeliveryContext riga 112 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN BlockDeliveryContext riga 116 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN async_fetch_blk riga 166 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN is_blk_fetched riga 260 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN verify riga 71 DENTRO entity.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN async_fetch_blk riga 166 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN is_blk_fetched riga 260 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN get_parent_hashes riga 199 DENTRO entity.h package:include->hotstuff---- 
----- STO IN async_deliver_blk riga 191 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN is_blk_delivered riga 252 DENTRO entity.h package:include->hotstuff---- 
----- STO IN is_delivered riga 215 DENTRO entity.h package:include->hotstuff---- 
-BLK IS DELIVERED !!! 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN on_deliver_blk riga 119 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN get_parent_hashes riga 199 DENTRO entity.h package:include->hotstuff---- 
----- STO IN is_blk_delivered riga 252 DENTRO entity.h package:include->hotstuff---- 
----- STO IN is_delivered riga 215 DENTRO entity.h package:include->hotstuff---- 
----- STO IN on_deliver_blk riga 65 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN get_delivered_blk riga 56 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN std::string riga 229 DENTRO entity.h package:include->hotstuff---- 
-2024-03-17 15:50:40.265612 [hotstuff debug] deliver <block id=e0858ec98f height=3 parent=1b035e3d7e qc_ref=6b7d92eaae>
-2024-03-17 15:50:40.265630 [hotstuff debug] block e0858ec98f delivered
----- STO IN get_parent_hashes riga 199 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 328 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN on_receive_proposal riga 215 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN std::string riga 204 DENTRO consensus.h package:include->hotstuff---- 
-2024-03-17 15:50:40.265687 [hotstuff proto] got <proposal rid=2 blk=e0858ec98f>
----- STO IN sanity_check_delivered riga 49 DENTRO consensus.cpp package:salticidae->include->src---- 
-CHIAMO UPDATE DENTRO on_receive_proposal
----- STO IN update riga 104 DENTRO consensus.cpp package:salticidae->include->src---- 
-three-step HotStuff
----- STO IN std::string riga 437 DENTRO consensus.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:40.265726 [hotstuff proto] now state: <hotstuff hqc=6b7d92eaae hqc.height=0 b_lock=6b7d92eaae b_exec=6b7d92eaae vheight=3 tails=1>
----- STO IN on_qc_finish riga 378 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN on_receive_proposal_ riga 421 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN swap riga 148 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN check_ancestry riga 66 DENTRO liveness.h package:include->hotstuff----
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_parents riga 193 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_parents riga 193 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_parents riga 193 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN reg_receive_proposal riga 88 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN reg_receive_proposal riga 280 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN reg_receive_proposal riga 280 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
------ DO VOTE ------ 
-PRIMA DI CREATE PART CERT
- nonce_list.size()3
----- STO IN create_part_cert riga 258 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN serialize riga 269 DENTRO crypto.h package:include->hotstuff---- 
-2024-03-17 15:50:40.266015 [hotstuff debug] create part cert with priv=48229adc2a, blk_hash=e0858ec98f
-PRIMA DI PartCertType
-dopo creazione key
----- STO IN SigSecp256k1 riga 325 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN sign riga 363 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN check_msg_length riga 315 DENTRO crypto.h package:include->hotstuff---- 
----- STO DOPO sign riga 333 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN PartCertSecp256k1 riga 410 DENTRO crypto.h package:include->hotstuff---- 
-DOPO PartCertType
-dopo aver creato il vote!!
----- STO IN do_vote riga 425 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- 
-SEND VOTE !!!!
----- STO IN get_peer_id_frost riga 94 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_info_frost riga 78 DENTRO entity.h package:include->hotstuff---- 
----- STO IN MsgVote riga 42 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN serialize riga 244 DENTRO consensus.h package:include->hotstuff---- 
----- STO IN serialize riga 451 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN serialize riga 339 DENTRO crypto.h package:include->hotstuff---- 
-2024-03-17 15:50:40.266151 [net debug] wrote message <msg magic=00000000 opcode=01 length=130 checksum=a1c33011 payload=0100e0858ec98f46c640039cd7a01589945467f55595ae8a077c90d800b97dabe7f5e0858ec98f46c640039cd7a01589945467f55595ae8a077c90d800b97dabe7f50aac0d6c548d082c5ec13337e4af367ddf6186d4acb32465fc7b403d5837eff772298322ebf55e4e871eeee2ab105f2ef4b405d346651e5c73f97739c461d410> to <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:40.267144 [net debug] ssl(86) sent 143 bytes
-2024-03-17 15:50:40.268438 [net debug] ssl(86) read 0 bytes
-2024-03-17 15:50:40.268469 [net debug] ssl(86) read 0 bytes
-2024-03-17 15:50:40.268564 [net info] c261250345: lost connection <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
+2024-03-18 13:26:26.984329 [net info] c261250345: setup connection <Conn fd=83 addr=<NetAddr 127.0.0.1:52482> mode=passive>
+2024-03-18 13:26:26.984366 [net debug] reset connection timeout 180.00
 ---- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:40.268584 [net info] ended c261250345 <-/-> 065b010aed (via <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>)
----- STO IN rotate riga 350 DENTRO liveness.h package:include->hotstuff----
----- STO IN reg_proposal riga 270 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_proposal riga 389 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN reg_receive_proposal riga 280 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
-2024-03-17 15:50:41.256385 [hotstuff proto] Pacemaker: rotate to 3
-2024-03-17 15:50:42.425260 [net info] created <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:42.425380 [net info] connected to remote <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:42.425439 [net debug] worker 55e94640 got <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:42.425712 [net debug] tls handshake read
-2024-03-17 15:50:42.429012 [net info] c261250345: setup connection <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:42.429090 [net debug] wrote message <msg magic=00000000 opcode=f0 length=15 checksum=28f09a57 payload=017f0000012711e2e8000036000000> to <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:42.429119 [net debug] reset connection timeout 180.00
-2024-03-17 15:50:42.429173 [net debug] ssl(86) sent 28 bytes
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:42.434741 [net debug] ssl(86) read -1 bytes
-2024-03-17 15:50:42.435781 [net debug] ssl(86) read 28 bytes
-2024-03-17 15:50:42.435852 [net debug] ssl(86) read 14 bytes
-2024-03-17 15:50:42.435876 [net debug] got message <msg magic=00000000 opcode=f1 length=15 checksum=de1905c2 payload=017f00000127127df6000036000000> from <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:42.435903 [net debug] opcode = f1
----- STO IN pong_handler riga 1084 DENTRO msg.h package:salticidae->include----
-2024-03-17 15:50:42.435942 [net debug] got message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> from <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:42.435952 [net debug] opcode = f0
+2024-03-18 13:26:26.987996 [net debug] ssl(87) read 28 bytes
+2024-03-18 13:26:26.988040 [net debug] ssl(83) read 28 bytes
+2024-03-18 13:26:26.988069 [net debug] got message <msg magic=00000000 opcode=f0 length=15 checksum=3a164455 payload=017f0000012710608d000036000000> from <Conn fd=87 addr=<NetAddr 127.0.0.1:52460> mode=passive>
+2024-03-18 13:26:26.988090 [net debug] opcode = f0
 ---- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
-SONO NEL PRIMO IF pong_handler
-SONO NEL SECONDO IF pong_handler
-PID pong_handler === 065b010aed5629edfb5289e8b22fc6cc6b33c4013bfdd128caba80c3c02d6d78
-COMMITMENT pong_handler== 54
-AGGIUNGO COMMITMENT ALLA LISTA
-FINITO AGGIUNGERE COMMITMENT ALLA LISTA
-2024-03-17 15:50:42.436010 [net debug] c261250345: outbound handshake to 065b010aed
-2024-03-17 15:50:42.436046 [net debug] c261250345: choses connection <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:42.436066 [net debug] wrote message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> to <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:42.436080 [net debug] destroyed <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:42.436230 [net info] established c261250345 <---> 065b010aed (via <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>)
-SONO NEL QUARTO IF ping_handler
-MANDO PONG ping_handler
-COMMITMENT ping_handler == 24024
-2024-03-17 15:50:42.436253 [net info] c261250345: ping from <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:42.436265 [net debug] wrote message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> to <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:42.436273 [net debug] reset connection timeout 180.00
-2024-03-17 15:50:42.436323 [net debug] ssl(86) sent 14 bytes
-2024-03-17 15:50:42.436348 [net debug] ssl(86) sent 14 bytes
-2024-03-17 15:50:42.436847 [net debug] ssl(86) read 14 bytes
-2024-03-17 15:50:42.436912 [net debug] got message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> from <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:50:42.436933 [net debug] opcode = f1
----- STO IN pong_handler riga 1084 DENTRO msg.h package:salticidae->include----
-SONO NEL QUARTO IF pong_handler
-2024-03-17 15:50:42.496977 [net info] created <Conn fd=87 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:42.497069 [net debug] destroyed <Conn fd=81 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:42.497192 [net info] connected to remote <Conn fd=87 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:42.497227 [net debug] worker 55e94640 got <Conn fd=87 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:42.497453 [net debug] tls handshake read
-2024-03-17 15:50:42.500392 [net info] c261250345: setup connection <Conn fd=87 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:42.500480 [net debug] wrote message <msg magic=00000000 opcode=f0 length=15 checksum=97baa6f2 payload=017f0000012711582d000036000000> to <Conn fd=87 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:42.500508 [net debug] reset connection timeout 180.00
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:42.500553 [net debug] ssl(87) sent 28 bytes
-2024-03-17 15:50:42.501562 [net debug] ssl(87) read -1 bytes
-2024-03-17 15:50:42.501957 [net debug] ssl(87) read -1 bytes
-2024-03-17 15:50:42.502682 [net debug] ssl(87) read 28 bytes
-2024-03-17 15:50:42.502755 [net debug] ssl(87) read 14 bytes
-2024-03-17 15:50:42.502774 [net debug] got message <msg magic=00000000 opcode=f1 length=15 checksum=2991a73f payload=017f000001271360b9000036000000> from <Conn fd=87 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:42.502796 [net debug] opcode = f1
----- STO IN pong_handler riga 1084 DENTRO msg.h package:salticidae->include----
-2024-03-17 15:50:42.502846 [net debug] got message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> from <Conn fd=87 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:42.502856 [net debug] opcode = f0
----- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
-SONO NEL PRIMO IF pong_handler
-SONO NEL SECONDO IF pong_handler
-PID pong_handler === 6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
-COMMITMENT pong_handler== 54
-AGGIUNGO COMMITMENT ALLA LISTA
-FINITO AGGIUNGERE COMMITMENT ALLA LISTA
-2024-03-17 15:50:42.502925 [net debug] c261250345: outbound handshake to 6540a0fea6
-2024-03-17 15:50:42.502940 [net debug] c261250345: choses connection <Conn fd=87 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:42.502951 [net debug] destroyed <Conn fd=81 addr=<NetAddr 127.0.0.1:33450> mode=passive>
-2024-03-17 15:50:42.503153 [net debug] wrote message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> to <Conn fd=87 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:42.503185 [net debug] destroyed <Conn fd=81 addr=<NetAddr 127.0.0.1:36042> mode=passive>
-2024-03-17 15:50:42.503257 [net info] established c261250345 <---> 6540a0fea6 (via <Conn fd=87 addr=<NetAddr 127.0.0.1:10003> mode=active>)
-SONO NEL QUARTO IF ping_handler
-MANDO PONG ping_handler
-COMMITMENT ping_handler == 24024
-2024-03-17 15:50:42.503281 [net info] c261250345: ping from <Conn fd=87 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:42.503295 [net debug] wrote message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> to <Conn fd=87 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:42.503305 [net debug] reset connection timeout 180.00
-2024-03-17 15:50:42.503385 [net debug] ssl(87) sent 14 bytes
-2024-03-17 15:50:42.503439 [net debug] ssl(87) sent 14 bytes
-2024-03-17 15:50:42.503681 [net debug] ssl(87) read 14 bytes
-2024-03-17 15:50:42.503736 [net debug] got message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> from <Conn fd=87 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:42.503757 [net debug] opcode = f1
----- STO IN pong_handler riga 1084 DENTRO msg.h package:salticidae->include----
-SONO NEL QUARTO IF pong_handler
----- STO IN print_stat riga 308 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:45.257198 [hotstuff info] ===== begin stats =====
-2024-03-17 15:50:45.257251 [hotstuff info] -------- queues -------
-2024-03-17 15:50:45.257259 [hotstuff info] blk_fetch_waiting: 0
-2024-03-17 15:50:45.257266 [hotstuff info] blk_delivery_waiting: 0
-2024-03-17 15:50:45.257273 [hotstuff info] decision_waiting: 4
-2024-03-17 15:50:45.257280 [hotstuff info] -------- misc ---------
-2024-03-17 15:50:45.257286 [hotstuff info] fetched: 0
-2024-03-17 15:50:45.257293 [hotstuff info] delivered: 2
-2024-03-17 15:50:45.257301 [hotstuff info] cmd_cache: 0
-2024-03-17 15:50:45.257307 [hotstuff info] blk_cache: 4
-2024-03-17 15:50:45.257314 [hotstuff info] ------ misc (10s) -----
-2024-03-17 15:50:45.257321 [hotstuff info] fetched: 0
-2024-03-17 15:50:45.257327 [hotstuff info] delivered: 1
-2024-03-17 15:50:45.257334 [hotstuff info] decided: 0
-2024-03-17 15:50:45.257340 [hotstuff info] gened: 0
-2024-03-17 15:50:45.257347 [hotstuff info] avg. parent_size: 1.000
-2024-03-17 15:50:45.257358 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
-2024-03-17 15:50:45.257373 [hotstuff info] --- replica msg. (10s) ---
-2024-03-17 15:50:45.259185 [hotstuff info] 542865a568: 3(17), 3(17), 0
-2024-03-17 15:50:45.259336 [hotstuff info] 065b010aed: 3(17), 3(17), 0
-2024-03-17 15:50:45.259413 [hotstuff info] 6540a0fea6: 3(17), 3(17), 0
-2024-03-17 15:50:45.259442 [hotstuff info] sent: 9
-2024-03-17 15:50:45.259450 [hotstuff info] recv: 9
-2024-03-17 15:50:45.259457 [hotstuff info] --- replica msg. total ---
-2024-03-17 15:50:45.259463 [hotstuff info] sent: 18
-2024-03-17 15:50:45.259470 [hotstuff info] recv: 18
-2024-03-17 15:50:45.259477 [hotstuff info] ====== end stats ======
----- STO IN print_stat DENTRO hotstuff_app.cpp ---- 
-2024-03-17 15:50:45.259489 [hotstuff info] --- client msg. (10s) ---
-2024-03-17 15:50:45.259506 [hotstuff info] <NetAddr 127.0.0.1:55440>: 0(0), 0(0)
-2024-03-17 15:50:45.259514 [hotstuff info] --- end client msg. ---
----- STO IN on_exp_timeout riga 340 DENTRO liveness.h package:include->hotstuff----
-2024-03-17 15:50:45.270738 [net debug] ssl(87) read 103 bytes
-2024-03-17 15:50:45.270848 [net debug] got message <msg magic=00000000 opcode=00 length=90 checksum=5484c121 payload=030001000000e0858ec98f46c640039cd7a01589945467f55595ae8a077c90d800b97dabe7f5000000006b7d92eaae70399143faebc71d4a82259e327c5c6164486f325e051fe807df5604000000000000000000000000000000> from <Conn fd=87 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:45.270878 [net debug] opcode = 00
----- STO IN propose_handler riga 227 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN postponed_parse riga 34 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN unserialize riga 194 DENTRO consensus.h package:include->hotstuff---- 
----- STO IN unserialize riga 34 DENTRO entity.cpp package:salticidae->include->src---- 
----- STO IN parse_quorum_cert riga 292 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN unserialize riga 508 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN serialize riga 22 DENTRO entity.cpp package:salticidae->include->src---- 
----- STO IN serialize riga 500 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN add_blk riga 266 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_peer_id_frost riga 94 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_info_frost riga 78 DENTRO entity.h package:include->hotstuff---- 
----- STO IN async_deliver_blk riga 191 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN is_blk_delivered riga 252 DENTRO entity.h package:include->hotstuff---- 
----- STO IN is_delivered riga 215 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN BlockDeliveryContext riga 121 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN BlockDeliveryContext riga 112 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN BlockDeliveryContext riga 116 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN async_fetch_blk riga 166 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN is_blk_fetched riga 260 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN verify riga 71 DENTRO entity.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN async_fetch_blk riga 166 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN is_blk_fetched riga 260 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN get_parent_hashes riga 199 DENTRO entity.h package:include->hotstuff---- 
----- STO IN async_deliver_blk riga 191 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN is_blk_delivered riga 252 DENTRO entity.h package:include->hotstuff---- 
----- STO IN is_delivered riga 215 DENTRO entity.h package:include->hotstuff---- 
-BLK IS DELIVERED !!! 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN on_deliver_blk riga 119 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN get_parent_hashes riga 199 DENTRO entity.h package:include->hotstuff---- 
----- STO IN is_blk_delivered riga 252 DENTRO entity.h package:include->hotstuff---- 
----- STO IN is_delivered riga 215 DENTRO entity.h package:include->hotstuff---- 
----- STO IN on_deliver_blk riga 65 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN get_delivered_blk riga 56 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN std::string riga 229 DENTRO entity.h package:include->hotstuff---- 
-2024-03-17 15:50:45.273467 [hotstuff debug] deliver <block id=892b34c319 height=4 parent=e0858ec98f qc_ref=6b7d92eaae>
-2024-03-17 15:50:45.273485 [hotstuff debug] block 892b34c319 delivered
----- STO IN get_parent_hashes riga 199 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 328 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN on_receive_proposal riga 215 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN std::string riga 204 DENTRO consensus.h package:include->hotstuff---- 
-2024-03-17 15:50:45.273543 [hotstuff proto] got <proposal rid=3 blk=892b34c319>
----- STO IN sanity_check_delivered riga 49 DENTRO consensus.cpp package:salticidae->include->src---- 
-CHIAMO UPDATE DENTRO on_receive_proposal
----- STO IN update riga 104 DENTRO consensus.cpp package:salticidae->include->src---- 
-three-step HotStuff
----- STO IN std::string riga 437 DENTRO consensus.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:45.273575 [hotstuff proto] now state: <hotstuff hqc=6b7d92eaae hqc.height=0 b_lock=6b7d92eaae b_exec=6b7d92eaae vheight=4 tails=1>
----- STO IN on_qc_finish riga 378 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN on_receive_proposal_ riga 421 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN swap riga 148 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN check_ancestry riga 66 DENTRO liveness.h package:include->hotstuff----
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_parents riga 193 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_parents riga 193 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_parents riga 193 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_parents riga 193 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN reg_receive_proposal riga 88 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN reg_receive_proposal riga 280 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN reg_receive_proposal riga 280 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN reg_receive_proposal riga 280 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
------ DO VOTE ------ 
-PRIMA DI CREATE PART CERT
- nonce_list.size()4
----- STO IN create_part_cert riga 258 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN serialize riga 269 DENTRO crypto.h package:include->hotstuff---- 
-2024-03-17 15:50:45.273987 [hotstuff debug] create part cert with priv=48229adc2a, blk_hash=892b34c319
-PRIMA DI PartCertType
-dopo creazione key
----- STO IN SigSecp256k1 riga 325 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN sign riga 363 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN check_msg_length riga 315 DENTRO crypto.h package:include->hotstuff---- 
----- STO DOPO sign riga 333 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN PartCertSecp256k1 riga 410 DENTRO crypto.h package:include->hotstuff---- 
-DOPO PartCertType
-dopo aver creato il vote!!
----- STO IN do_vote riga 425 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- 
-SEND VOTE !!!!
----- STO IN get_peer_id_frost riga 94 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_info_frost riga 78 DENTRO entity.h package:include->hotstuff---- 
----- STO IN MsgVote riga 42 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN serialize riga 244 DENTRO consensus.h package:include->hotstuff---- 
----- STO IN serialize riga 451 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN serialize riga 339 DENTRO crypto.h package:include->hotstuff---- 
-2024-03-17 15:50:45.274206 [net debug] wrote message <msg magic=00000000 opcode=01 length=130 checksum=901ab20e payload=0100892b34c3194d65e5a6c1dba7e711c55db002992171fbaac67fa8d3131652e30b892b34c3194d65e5a6c1dba7e711c55db002992171fbaac67fa8d3131652e30bbda57c2ea7e564beec14e1435e60a44c7baf103af4d91a56717b683e24ff425e75ef8987e6a07ad702e4a128298995a9de9b08002c67531050ff5dde796396ad> to <Conn fd=87 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:45.274347 [net debug] ssl(87) sent 143 bytes
-2024-03-17 15:50:45.274838 [net debug] ssl(87) read 0 bytes
-2024-03-17 15:50:45.274865 [net debug] ssl(87) read 0 bytes
-2024-03-17 15:50:45.274961 [net info] c261250345: lost connection <Conn fd=87 addr=<NetAddr 127.0.0.1:10003> mode=active>
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:45.275022 [net info] ended c261250345 <-/-> 6540a0fea6 (via <Conn fd=87 addr=<NetAddr 127.0.0.1:10003> mode=active>)
----- STO IN rotate riga 350 DENTRO liveness.h package:include->hotstuff----
----- STO IN reg_proposal riga 270 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_proposal riga 389 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN reg_receive_proposal riga 280 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
-2024-03-17 15:50:46.258364 [hotstuff proto] Pacemaker: rotate to 0
----- STO IN reset_imp_timer riga 111 DENTRO hotstuff_app.cpp ---- 
-2024-03-17 15:50:47.385698 [net info] accepted <Conn fd=82 addr=<NetAddr 127.0.0.1:57140> mode=passive>
-2024-03-17 15:50:47.386013 [net debug] worker 55e94640 got <Conn fd=82 addr=<NetAddr 127.0.0.1:57140> mode=passive>
-2024-03-17 15:50:47.386083 [net debug] tls handshake read
-2024-03-17 15:50:47.387515 [net debug] tls handshake read
-2024-03-17 15:50:47.390649 [net info] c261250345: setup connection <Conn fd=82 addr=<NetAddr 127.0.0.1:57140> mode=passive>
-2024-03-17 15:50:47.390686 [net debug] reset connection timeout 180.00
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:47.390817 [net debug] ssl(82) read 28 bytes
-2024-03-17 15:50:47.390874 [net debug] got message <msg magic=00000000 opcode=f0 length=15 checksum=82c48190 payload=017f000001271376a3000036000000> from <Conn fd=82 addr=<NetAddr 127.0.0.1:57140> mode=passive>
-2024-03-17 15:50:47.390896 [net debug] opcode = f0
----- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
-SONO NEL PRIMO IF ping_handler
-SONO NEL SECONDO IF ping_handler
-PID ping_handler === 6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
-COMMITMENT ping_handler == 54
-2024-03-17 15:50:47.390969 [net debug] c261250345: inbound handshake from 6540a0fea6
-2024-03-17 15:50:47.390996 [net debug] wrote message <msg magic=00000000 opcode=f1 length=15 checksum=8a616d88 payload=017f0000012711a9c0000036000000> to <Conn fd=82 addr=<NetAddr 127.0.0.1:57140> mode=passive>
-2024-03-17 15:50:47.391009 [net debug] c261250345: choses connection <Conn fd=82 addr=<NetAddr 127.0.0.1:57140> mode=passive>
-2024-03-17 15:50:47.391023 [net debug] wrote message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> to <Conn fd=82 addr=<NetAddr 127.0.0.1:57140> mode=passive>
-2024-03-17 15:50:47.391034 [net debug] destroyed <Conn fd=87 addr=<NetAddr 127.0.0.1:10003> mode=active>
-2024-03-17 15:50:47.391126 [net info] established c261250345 <---> 6540a0fea6 (via <Conn fd=82 addr=<NetAddr 127.0.0.1:57140> mode=passive>)
-2024-03-17 15:50:47.391138 [net debug] reset connection timeout 180.00
-2024-03-17 15:50:47.391176 [net debug] ssl(82) sent 28 bytes
-2024-03-17 15:50:47.391197 [net debug] ssl(82) sent 14 bytes
-2024-03-17 15:50:47.392072 [net debug] ssl(82) read 14 bytes
-2024-03-17 15:50:47.392120 [net debug] got message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> from <Conn fd=82 addr=<NetAddr 127.0.0.1:57140> mode=passive>
-2024-03-17 15:50:47.392120 [net debug] ssl(82) read 14 bytes
-2024-03-17 15:50:47.392174 [net debug] opcode = f0
----- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
-2024-03-17 15:50:47.392201 [net debug] got message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> from <Conn fd=82 addr=<NetAddr 127.0.0.1:57140> mode=passive>
-2024-03-17 15:50:47.392210 [net debug] opcode = f1
-SONO NEL QUARTO IF ping_handler---- STO IN pong_handler riga 1084 DENTRO msg.h package:salticidae->include----
-
-MANDO PONG ping_handler
-COMMITMENT ping_handler == 24024
-2024-03-17 15:50:47.392275 [net info] c261250345: ping from <Conn fd=82 addr=<NetAddr 127.0.0.1:57140> mode=passive>
-2024-03-17 15:50:47.392294 [net debug] wrote message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> to <Conn fd=82 addr=<NetAddr 127.0.0.1:57140> mode=passive>
-SONO NEL QUARTO IF pong_handler
-2024-03-17 15:50:47.392367 [net debug] ssl(82) sent 14 bytes
----- STO IN on_exp_timeout riga 340 DENTRO liveness.h package:include->hotstuff----
-2024-03-17 15:50:54.283558 [net debug] ssl(81) read 103 bytes
-2024-03-17 15:50:54.283730 [net debug] got message <msg magic=00000000 opcode=00 length=90 checksum=39ab4e50 payload=000001000000892b34c3194d65e5a6c1dba7e711c55db002992171fbaac67fa8d3131652e30b000000006b7d92eaae70399143faebc71d4a82259e327c5c6164486f325e051fe807df5604000000000000000000000000000000> from <Conn fd=81 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:54.283748 [net debug] opcode = 00
----- STO IN propose_handler riga 227 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN postponed_parse riga 34 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN unserialize riga 194 DENTRO consensus.h package:include->hotstuff---- 
----- STO IN unserialize riga 34 DENTRO entity.cpp package:salticidae->include->src---- 
----- STO IN parse_quorum_cert riga 292 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN unserialize riga 508 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN serialize riga 22 DENTRO entity.cpp package:salticidae->include->src---- 
----- STO IN serialize riga 500 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN add_blk riga 266 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_peer_id_frost riga 94 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_info_frost riga 78 DENTRO entity.h package:include->hotstuff---- 
----- STO IN async_deliver_blk riga 191 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN is_blk_delivered riga 252 DENTRO entity.h package:include->hotstuff---- 
----- STO IN is_delivered riga 215 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN BlockDeliveryContext riga 121 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN BlockDeliveryContext riga 112 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN BlockDeliveryContext riga 116 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN async_fetch_blk riga 166 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN is_blk_fetched riga 260 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN verify riga 71 DENTRO entity.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN async_fetch_blk riga 166 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN is_blk_fetched riga 260 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN get_parent_hashes riga 199 DENTRO entity.h package:include->hotstuff---- 
----- STO IN async_deliver_blk riga 191 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN is_blk_delivered riga 252 DENTRO entity.h package:include->hotstuff---- 
----- STO IN is_delivered riga 215 DENTRO entity.h package:include->hotstuff---- 
-BLK IS DELIVERED !!! 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN on_deliver_blk riga 119 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN get_parent_hashes riga 199 DENTRO entity.h package:include->hotstuff---- 
----- STO IN is_blk_delivered riga 252 DENTRO entity.h package:include->hotstuff---- 
----- STO IN is_delivered riga 215 DENTRO entity.h package:include->hotstuff---- 
----- STO IN on_deliver_blk riga 65 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN get_delivered_blk riga 56 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN find_blk riga 285 DENTRO entity.h package:include->hotstuff---- 
----- STO IN std::string riga 229 DENTRO entity.h package:include->hotstuff---- 
-2024-03-17 15:50:54.285202 [hotstuff debug] deliver <block id=6acf442fdf height=5 parent=892b34c319 qc_ref=6b7d92eaae>
-2024-03-17 15:50:54.285219 [hotstuff debug] block 6acf442fdf delivered
----- STO IN get_parent_hashes riga 199 DENTRO entity.h package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 328 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN on_receive_proposal riga 215 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN std::string riga 204 DENTRO consensus.h package:include->hotstuff---- 
-2024-03-17 15:50:54.285282 [hotstuff proto] got <proposal rid=0 blk=6acf442fdf>
----- STO IN sanity_check_delivered riga 49 DENTRO consensus.cpp package:salticidae->include->src---- 
-CHIAMO UPDATE DENTRO on_receive_proposal
----- STO IN update riga 104 DENTRO consensus.cpp package:salticidae->include->src---- 
-three-step HotStuff
----- STO IN std::string riga 437 DENTRO consensus.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:54.285314 [hotstuff proto] now state: <hotstuff hqc=6b7d92eaae hqc.height=0 b_lock=6b7d92eaae b_exec=6b7d92eaae vheight=5 tails=1>
----- STO IN on_qc_finish riga 378 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN on_receive_proposal_ riga 421 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN swap riga 148 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN check_ancestry riga 66 DENTRO liveness.h package:include->hotstuff----
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_parents riga 193 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_parents riga 193 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_parents riga 193 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_parents riga 193 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_parents riga 193 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_height riga 220 DENTRO entity.h package:include->hotstuff---- 
----- STO IN reg_receive_proposal riga 88 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN reg_receive_proposal riga 280 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN reg_receive_proposal riga 280 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN reg_receive_proposal riga 280 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN reg_receive_proposal riga 280 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
------ DO VOTE ------ 
-PRIMA DI CREATE PART CERT
- nonce_list.size()5
----- STO IN create_part_cert riga 258 DENTRO hotstuff.h package:include->hotstuff---- 
----- STO IN serialize riga 269 DENTRO crypto.h package:include->hotstuff---- 
-2024-03-17 15:50:54.285742 [hotstuff debug] create part cert with priv=48229adc2a, blk_hash=6acf442fdf
-PRIMA DI PartCertType
-dopo creazione key
----- STO IN SigSecp256k1 riga 325 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN sign riga 363 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN check_msg_length riga 315 DENTRO crypto.h package:include->hotstuff---- 
----- STO DOPO sign riga 333 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN PartCertSecp256k1 riga 410 DENTRO crypto.h package:include->hotstuff---- 
-DOPO PartCertType
-dopo aver creato il vote!!
----- STO IN do_vote riga 425 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN CLONE riga 445 DENTRO crypto.h package:include->hotstuff---- 
-SEND VOTE !!!!
----- STO IN get_peer_id_frost riga 94 DENTRO entity.h package:include->hotstuff---- 
----- STO IN get_info_frost riga 78 DENTRO entity.h package:include->hotstuff---- 
----- STO IN MsgVote riga 42 DENTRO hotstuff.cpp package:salticidae->include->src---- 
----- STO IN serialize riga 244 DENTRO consensus.h package:include->hotstuff---- 
----- STO IN serialize riga 451 DENTRO crypto.h package:include->hotstuff---- 
----- STO IN serialize riga 339 DENTRO crypto.h package:include->hotstuff---- 
-2024-03-17 15:50:54.285903 [net debug] wrote message <msg magic=00000000 opcode=01 length=130 checksum=2e6ee1fc payload=01006acf442fdf51eedf06960a48f768a4b51144dc5b0bb94744e445b5954b31b7ce6acf442fdf51eedf06960a48f768a4b51144dc5b0bb94744e445b5954b31b7ce3268dcb5ea9b8b8a8632cd1d622eb6bc61cfb6ece1cd5045b08bb81283c67a61058385d774245a54dc8ca226b129f1feb3becbaaafb4cd95d75d7de13a3d76ec> to <Conn fd=81 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:54.286084 [net debug] ssl(81) sent 143 bytes
-2024-03-17 15:50:54.286891 [net debug] ssl(81) read 0 bytes
-2024-03-17 15:50:54.286925 [net debug] ssl(81) read 0 bytes
-2024-03-17 15:50:54.287093 [net info] c261250345: lost connection <Conn fd=81 addr=<NetAddr 127.0.0.1:10000> mode=active>
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:54.287118 [net info] ended c261250345 <-/-> 542865a568 (via <Conn fd=81 addr=<NetAddr 127.0.0.1:10000> mode=active>)
----- STO IN print_stat riga 308 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:55.259297 [hotstuff info] ===== begin stats =====
-2024-03-17 15:50:55.259332 [hotstuff info] -------- queues -------
-2024-03-17 15:50:55.259349 [hotstuff info] blk_fetch_waiting: 0
-2024-03-17 15:50:55.259387 [hotstuff info] blk_delivery_waiting: 0
-2024-03-17 15:50:55.259399 [hotstuff info] decision_waiting: 4
-2024-03-17 15:50:55.259406 [hotstuff info] -------- misc ---------
-2024-03-17 15:50:55.259413 [hotstuff info] fetched: 0
-2024-03-17 15:50:55.259420 [hotstuff info] delivered: 4
-2024-03-17 15:50:55.259442 [hotstuff info] cmd_cache: 0
-2024-03-17 15:50:55.259450 [hotstuff info] blk_cache: 6
-2024-03-17 15:50:55.259456 [hotstuff info] ------ misc (10s) -----
-2024-03-17 15:50:55.259499 [hotstuff info] fetched: 0
-2024-03-17 15:50:55.259530 [hotstuff info] delivered: 2
-2024-03-17 15:50:55.259537 [hotstuff info] decided: 0
-2024-03-17 15:50:55.259557 [hotstuff info] gened: 0
-2024-03-17 15:50:55.259568 [hotstuff info] avg. parent_size: 1.000
-2024-03-17 15:50:55.259576 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
-2024-03-17 15:50:55.259585 [hotstuff info] --- replica msg. (10s) ---
-2024-03-17 15:50:55.259762 [hotstuff info] 542865a568: 1(130), 1(90), 0
-2024-03-17 15:50:55.260001 [hotstuff info] 065b010aed: 0(0), 0(0), 0
-2024-03-17 15:50:55.260180 [hotstuff info] 6540a0fea6: 3(17), 3(17), 0
-2024-03-17 15:50:55.260202 [hotstuff info] sent: 4
-2024-03-17 15:50:55.260211 [hotstuff info] recv: 4
-2024-03-17 15:50:55.260217 [hotstuff info] --- replica msg. total ---
-2024-03-17 15:50:55.260224 [hotstuff info] sent: 22
-2024-03-17 15:50:55.260231 [hotstuff info] recv: 22
-2024-03-17 15:50:55.260238 [hotstuff info] ====== end stats ======
----- STO IN print_stat DENTRO hotstuff_app.cpp ---- 
-2024-03-17 15:50:55.260249 [hotstuff info] --- client msg. (10s) ---
-2024-03-17 15:50:55.260259 [hotstuff info] <NetAddr 127.0.0.1:55440>: 0(0), 0(0)
-2024-03-17 15:50:55.260282 [hotstuff info] --- end client msg. ---
----- STO IN rotate riga 350 DENTRO liveness.h package:include->hotstuff----
----- STO IN reg_proposal riga 270 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_proposal riga 389 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN reg_receive_proposal riga 280 DENTRO liveness.h package:include->hotstuff----
----- STO IN async_wait_receive_proposal riga 397 DENTRO consensus.cpp package:salticidae->include->src---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN gen_on_fulfilled riga 315 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_fulfilled riga 235 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 175 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN promise_t riga 183 DENTRO promise.hpp package:include->hotstuff---- 
----- STO IN add_on_rejected riga 241 DENTRO promise.hpp package:include->hotstuff---- 
-2024-03-17 15:50:55.266876 [hotstuff proto] Pacemaker: rotate to 1
-2024-03-17 15:50:56.582966 [net info] accepted <Conn fd=81 addr=<NetAddr 127.0.0.1:46608> mode=passive>
-2024-03-17 15:50:56.583230 [net info] created <Conn fd=89 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:56.583307 [net debug] worker 55e94640 got <Conn fd=81 addr=<NetAddr 127.0.0.1:46608> mode=passive>
-2024-03-17 15:50:56.583323 [net info] connected to remote <Conn fd=89 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:56.583347 [net debug] worker 55e94640 got <Conn fd=89 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:56.583374 [net debug] tls handshake read
-2024-03-17 15:50:56.583523 [net debug] tls handshake read
-2024-03-17 15:50:56.584540 [net debug] tls handshake read
-2024-03-17 15:50:56.589768 [net info] c261250345: setup connection <Conn fd=89 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:56.589987 [net debug] wrote message <msg magic=00000000 opcode=f0 length=15 checksum=954d819b payload=017f0000012711b1c6000036000000> to <Conn fd=89 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:56.590017 [net debug] reset connection timeout 180.00
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:56.590071 [net debug] ssl(89) sent 28 bytes
-2024-03-17 15:50:56.591984 [net info] c261250345: setup connection <Conn fd=81 addr=<NetAddr 127.0.0.1:46608> mode=passive>
-2024-03-17 15:50:56.592101 [net debug] reset connection timeout 180.00
----- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:56.592432 [net debug] ssl(89) read -1 bytes
-2024-03-17 15:50:56.593351 [net debug] ssl(81) read 28 bytes
-2024-03-17 15:50:56.593833 [net debug] got message <msg magic=00000000 opcode=f0 length=15 checksum=b4375e8c payload=017f0000012710b803000036000000> from <Conn fd=81 addr=<NetAddr 127.0.0.1:46608> mode=passive>
-2024-03-17 15:50:56.593868 [net debug] opcode = f0
+2024-03-18 13:26:26.988118 [net debug] got message <msg magic=00000000 opcode=f0 length=15 checksum=3fdf9e0e payload=017f0000012713e365000036000000> from <Conn fd=83 addr=<NetAddr 127.0.0.1:52482> mode=passive>
+2024-03-18 13:26:26.988127 [net debug] opcode = f0
 ---- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
 SONO NEL PRIMO IF ping_handler
 SONO NEL SECONDO IF ping_handler
 PID ping_handler === 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
 COMMITMENT ping_handler == 54
-2024-03-17 15:50:56.594053 [net debug] c261250345: inbound handshake from 542865a568
-2024-03-17 15:50:56.594094 [net debug] wrote message <msg magic=00000000 opcode=f1 length=15 checksum=954d819b payload=017f0000012711b1c6000036000000> to <Conn fd=81 addr=<NetAddr 127.0.0.1:46608> mode=passive>
-2024-03-17 15:50:56.594117 [net debug] c261250345: choses connection <Conn fd=81 addr=<NetAddr 127.0.0.1:46608> mode=passive>
-2024-03-17 15:50:56.594290 [net debug] wrote message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> to <Conn fd=81 addr=<NetAddr 127.0.0.1:46608> mode=passive>
-2024-03-17 15:50:56.594318 [net debug] destroyed <Conn fd=81 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:56.594546 [net info] established c261250345 <---> 542865a568 (via <Conn fd=81 addr=<NetAddr 127.0.0.1:46608> mode=passive>)
-2024-03-17 15:50:56.594607 [net debug] reset connection timeout 180.00
-2024-03-17 15:50:56.594971 [net debug] ssl(81) sent 28 bytes
-2024-03-17 15:50:56.595020 [net debug] ssl(81) sent 14 bytes
-2024-03-17 15:50:56.601183 [net debug] ssl(81) read 0 bytes
-2024-03-17 15:50:56.601219 [net debug] ssl(81) read 0 bytes
-2024-03-17 15:50:56.601299 [net info] c261250345: lost connection <Conn fd=81 addr=<NetAddr 127.0.0.1:46608> mode=passive>
-2024-03-17 15:50:56.601316 [net info] ended c261250345 <-/-> 542865a568 (via <Conn fd=81 addr=<NetAddr 127.0.0.1:46608> mode=passive>)
+2024-03-18 13:26:26.988166 [net debug] c261250345: inbound handshake from 542865a568
+2024-03-18 13:26:26.988199 [net debug] wrote message <msg magic=00000000 opcode=f1 length=15 checksum=58a49bdd payload=017f0000012711ce52000036000000> to <Conn fd=87 addr=<NetAddr 127.0.0.1:52460> mode=passive>
+2024-03-18 13:26:26.988210 [net debug] c261250345: terminates one side (8d60 >= 52ce)
+SONO NEL PRIMO IF ping_handler
+SONO NEL SECONDO IF ping_handler
+PID ping_handler === 6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
+COMMITMENT ping_handler == 54
+2024-03-18 13:26:26.988239 [net debug] c261250345: inbound handshake from 6540a0fea6
+2024-03-18 13:26:26.988257 [net debug] wrote message <msg magic=00000000 opcode=f1 length=15 checksum=048121d5 payload=017f00000127116731000036000000> to <Conn fd=83 addr=<NetAddr 127.0.0.1:52482> mode=passive>
+2024-03-18 13:26:26.988267 [net debug] c261250345: terminates one side (65e3 >= 3167)
+2024-03-18 13:26:26.988331 [net info] c261250345: lost connection <Conn fd=87 addr=<NetAddr 127.0.0.1:52460> mode=passive>
 ---- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
-2024-03-17 15:50:56.601485 [net debug] ssl(89) read 28 bytes
-2024-03-17 15:50:56.601522 [net debug] ssl(89) read 14 bytes
-2024-03-17 15:50:56.601538 [net debug] ssl(89) read 14 bytes
-2024-03-17 15:50:56.601567 [net debug] ssl(89) read 14 bytes
-2024-03-17 15:50:56.601578 [net debug] got message <msg magic=00000000 opcode=f1 length=15 checksum=a1c5d37c payload=017f0000012710ffff000036000000> from <Conn fd=89 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:56.601606 [net debug] opcode = f1
+2024-03-18 13:26:26.988422 [net info] c261250345: lost connection <Conn fd=83 addr=<NetAddr 127.0.0.1:52482> mode=passive>
+---- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
+2024-03-18 13:26:29.151781 [net info] created <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-03-18 13:26:29.151868 [net debug] destroyed <Conn fd=85 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-03-18 13:26:29.152095 [net info] connected to remote <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-03-18 13:26:29.152159 [net debug] worker 3ebde640 got <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-03-18 13:26:29.152594 [net debug] tls handshake read
+2024-03-18 13:26:29.156623 [net info] c261250345: setup connection <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-03-18 13:26:29.156739 [net debug] wrote message <msg magic=00000000 opcode=f0 length=15 checksum=58a49bdd payload=017f0000012711ce52000036000000> to <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-03-18 13:26:29.156770 [net debug] reset connection timeout 180.00
+---- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
+2024-03-18 13:26:29.156831 [net debug] ssl(83) sent 28 bytes
+2024-03-18 13:26:29.157863 [net debug] ssl(83) read -1 bytes
+2024-03-18 13:26:29.158267 [net debug] ssl(83) read -1 bytes
+2024-03-18 13:26:29.159209 [net debug] ssl(83) read 28 bytes
+2024-03-18 13:26:29.159302 [net debug] ssl(83) read 14 bytes
+2024-03-18 13:26:29.159312 [net debug] got message <msg magic=00000000 opcode=f1 length=15 checksum=44288432 payload=017f0000012710e89b000036000000> from <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-03-18 13:26:29.159340 [net debug] opcode = f1
 ---- STO IN pong_handler riga 1084 DENTRO msg.h package:salticidae->include----
-2024-03-17 15:50:56.601668 [net debug] got message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> from <Conn fd=89 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:56.601683 [net debug] opcode = f0
----- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
-2024-03-17 15:50:56.601705 [net debug] got message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> from <Conn fd=89 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:56.601717 [net debug] opcode = f0
----- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
-2024-03-17 15:50:56.601737 [net debug] got message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> from <Conn fd=89 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:56.601749 [net debug] opcode = f1
----- STO IN pong_handler riga 1084 DENTRO msg.h package:salticidae->include----
+2024-03-18 13:26:29.159407 [net debug] got message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> from <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>
 SONO NEL PRIMO IF pong_handler
 SONO NEL SECONDO IF pong_handler
+2024-03-18 13:26:29.159426 [net debug] opcode = f0
+---- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
 PID pong_handler === 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
 COMMITMENT pong_handler== 54
 AGGIUNGO COMMITMENT ALLA LISTA
 FINITO AGGIUNGERE COMMITMENT ALLA LISTA
-2024-03-17 15:50:56.601820 [net debug] c261250345: outbound handshake to 542865a568
-2024-03-17 15:50:56.601846 [net debug] c261250345: choses connection <Conn fd=89 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:56.601886 [net debug] wrote message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> to <Conn fd=89 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:56.601905 [net debug] destroyed <Conn fd=81 addr=<NetAddr 127.0.0.1:46608> mode=passive>
-2024-03-17 15:50:56.602024 [net info] established c261250345 <---> 542865a568 (via <Conn fd=89 addr=<NetAddr 127.0.0.1:10000> mode=active>)
+2024-03-18 13:26:29.159484 [net debug] c261250345: outbound handshake to 542865a568
+2024-03-18 13:26:29.159512 [net debug] c261250345: choses connection <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-03-18 13:26:29.159534 [net debug] destroyed <Conn fd=87 addr=<NetAddr 127.0.0.1:52460> mode=passive>
+2024-03-18 13:26:29.159804 [net debug] wrote message <msg magic=00000000 opcode=f0 length=1 checksum=5ba93c9d payload=00> to <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-03-18 13:26:29.159839 [net debug] destroyed <Conn fd=-1 addr=<NetAddr 0.0.0.0:0> mode=passive>
+2024-03-18 13:26:29.159934 [net info] established c261250345 <---> 542865a568 (via <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>)
 SONO NEL QUARTO IF ping_handler
 MANDO PONG ping_handler
-COMMITMENT ping_handler == 24024
-2024-03-17 15:50:56.602047 [net info] c261250345: ping from <Conn fd=89 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:56.602060 [net debug] wrote message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> to <Conn fd=89 addr=<NetAddr 127.0.0.1:10000> mode=active>
-SONO NEL QUARTO IF ping_handler
-MANDO PONG ping_handler
-COMMITMENT ping_handler == 24024
-2024-03-17 15:50:56.602078 [net info] c261250345: ping from <Conn fd=89 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:56.602088 [net debug] wrote message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> to <Conn fd=89 addr=<NetAddr 127.0.0.1:10000> mode=active>
-SONO NEL QUARTO IF pong_handler
-2024-03-17 15:50:56.602101 [net debug] reset connection timeout 180.00
-2024-03-17 15:50:56.602309 [net debug] ssl(89) sent 14 bytes
-2024-03-17 15:50:56.602346 [net debug] ssl(89) sent 14 bytes
-2024-03-17 15:50:56.602389 [net debug] ssl(89) sent 14 bytes
-2024-03-17 15:50:56.603230 [net debug] ssl(89) read 14 bytes
-2024-03-17 15:50:56.603320 [net debug] got message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> from <Conn fd=89 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:50:56.603354 [net debug] opcode = f1
+COMMITMENT ping_handler == 23630
+2024-03-18 13:26:29.160004 [net info] c261250345: ping from <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-03-18 13:26:29.160027 [net debug] wrote message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> to <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-03-18 13:26:29.160040 [net debug] reset connection timeout 180.00
+2024-03-18 13:26:29.160124 [net debug] ssl(83) sent 14 bytes
+2024-03-18 13:26:29.160159 [net debug] ssl(83) sent 14 bytes
+2024-03-18 13:26:29.160477 [net debug] ssl(83) read 14 bytes
+2024-03-18 13:26:29.160553 [net debug] got message <msg magic=00000000 opcode=f1 length=1 checksum=5ba93c9d payload=00> from <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-03-18 13:26:29.160580 [net debug] opcode = f1
 ---- STO IN pong_handler riga 1084 DENTRO msg.h package:salticidae->include----
 SONO NEL QUARTO IF pong_handler
-2024-03-17 15:50:57.818502 [net debug] socket(84) read 0 bytes
-2024-03-17 15:50:57.818753 [net debug] socket(84) read 0 bytes
-2024-03-17 15:50:57.819944 [net debug] destroyed <Conn fd=84 addr=<NetAddr 127.0.0.1:55440> mode=passive>
----- STO IN reset_imp_timer riga 111 DENTRO hotstuff_app.cpp ---- 
+2024-03-18 13:26:29.330534 [net info] accepted <Conn fd=82 addr=<NetAddr 127.0.0.1:52494> mode=passive>
+2024-03-18 13:26:29.330611 [net debug] worker 3ebde640 got <Conn fd=82 addr=<NetAddr 127.0.0.1:52494> mode=passive>
+2024-03-18 13:26:29.330646 [net debug] tls handshake read
+2024-03-18 13:26:29.331995 [net debug] tls handshake read
+2024-03-18 13:26:29.335220 [net info] c261250345: setup connection <Conn fd=82 addr=<NetAddr 127.0.0.1:52494> mode=passive>
+2024-03-18 13:26:29.335272 [net debug] reset connection timeout 180.00
+---- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
+2024-03-18 13:26:29.338645 [net debug] ssl(82) read 28 bytes
+2024-03-18 13:26:29.338788 [net debug] got message <msg magic=00000000 opcode=f0 length=15 checksum=1cbc8b88 payload=017f00000127136db2000036000000> from <Conn fd=82 addr=<NetAddr 127.0.0.1:52494> mode=passive>
+2024-03-18 13:26:29.338811 [net debug] opcode = f0
+---- STO IN ping_handler riga 10 DENTRO msg.h package:salticidae->include---- 
+SONO NEL PRIMO IF ping_handler
+SONO NEL SECONDO IF ping_handler
+PID ping_handler === 6540a0fea67efcb08f53ec3a952df4c3f0e2e07c2778fd92320807717e29a651
+COMMITMENT ping_handler == 54
+2024-03-18 13:26:29.338894 [net debug] c261250345: inbound handshake from 6540a0fea6
+2024-03-18 13:26:29.338918 [net debug] wrote message <msg magic=00000000 opcode=f1 length=15 checksum=048121d5 payload=017f00000127116731000036000000> to <Conn fd=82 addr=<NetAddr 127.0.0.1:52494> mode=passive>
+2024-03-18 13:26:29.338934 [net debug] c261250345: terminating stale handshake connection <Conn fd=83 addr=<NetAddr 127.0.0.1:52482> mode=passive>
+2024-03-18 13:26:29.338943 [net debug] c261250345: terminates one side (b26d >= 3167)
+2024-03-18 13:26:29.338952 [net debug] destroyed <Conn fd=83 addr=<NetAddr 127.0.0.1:52482> mode=passive>
+2024-03-18 13:26:29.339091 [net info] c261250345: lost connection <Conn fd=82 addr=<NetAddr 127.0.0.1:52494> mode=passive>
+---- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
+2024-03-18 13:26:29.850849 [net info] created <Conn fd=82 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2024-03-18 13:26:29.850932 [net debug] destroyed <Conn fd=89 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2024-03-18 13:26:29.851096 [net info] connected to remote <Conn fd=82 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2024-03-18 13:26:29.851157 [net debug] worker 3ebde640 got <Conn fd=82 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2024-03-18 13:26:29.851411 [net debug] tls handshake read
+2024-03-18 13:26:29.854227 [net info] c261250345: setup connection <Conn fd=82 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2024-03-18 13:26:29.854287 [net debug] wrote message <msg magic=00000000 opcode=f0 length=15 checksum=048121d5 payload=017f00000127116731000036000000> to <Conn fd=82 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2024-03-18 13:26:29.854311 [net debug] reset connection timeout 180.00
+2024-03-18 13:26:29.854348 [net debug] ssl(82) sent 28 bytes
+---- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
+2024-03-18 13:26:29.856009 [net debug] ssl(82) read -1 bytes
+2024-03-18 13:26:29.856134 [net debug] ssl(82) read 0 bytes
+2024-03-18 13:26:29.856157 [net debug] ssl(82) read 0 bytes
+---- STO IN conn_handler riga 295 DENTRO hotstuff.cpp package:salticidae->include->src---- 
+2024-03-18 13:26:29.856264 [net info] c261250345: lost connection <Conn fd=82 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2024-03-18 13:26:29.856291 [net debug] destroyed <Conn fd=82 addr=<NetAddr 127.0.0.1:52494> mode=passive>
 ---- STO IN stop DENTRO hotstuff_app.cpp ---- 
-2024-03-17 15:51:01.040754 [net info] elapsed: 35.793 (wall) 0.107 (cpu)
-2024-03-17 15:51:01.041515 [net info] stopping all threads...
-2024-03-17 15:51:01.043793 [net debug] ssl(89) read 0 bytes
-2024-03-17 15:51:01.043842 [net debug] ssl(89) read 0 bytes
-2024-03-17 15:51:01.043915 [net info] c261250345: lost connection <Conn fd=89 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:51:01.043932 [net info] ended c261250345 <-/-> 542865a568 (via <Conn fd=89 addr=<NetAddr 127.0.0.1:10000> mode=active>)
-2024-03-17 15:51:01.047131 [net info] stopping all threads...
-2024-03-17 15:51:01.048016 [net info] c261250345: lost connection <Conn fd=82 addr=<NetAddr 127.0.0.1:57140> mode=passive>
-2024-03-17 15:51:01.048064 [net info] ended c261250345 <-/-> 6540a0fea6 (via <Conn fd=82 addr=<NetAddr 127.0.0.1:57140> mode=passive>)
-2024-03-17 15:51:01.048115 [net info] c261250345: lost connection <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
-2024-03-17 15:51:01.048128 [net info] ended c261250345 <-/-> 065b010aed (via <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>)
-2024-03-17 15:51:01.049452 [net debug] destroyed <Conn fd=89 addr=<NetAddr 127.0.0.1:10000> mode=active>
-2024-03-17 15:51:01.049590 [net debug] destroyed <Conn fd=82 addr=<NetAddr 127.0.0.1:57140> mode=passive>
-2024-03-17 15:51:01.049652 [net debug] destroyed <Conn fd=86 addr=<NetAddr 127.0.0.1:10002> mode=active>
+2024-03-18 13:26:31.325454 [net info] elapsed: 4.409 (wall) 0.052 (cpu)
+2024-03-18 13:26:31.326266 [net info] stopping all threads...
+2024-03-18 13:26:31.328642 [net debug] ssl(83) read 0 bytes
+2024-03-18 13:26:31.328707 [net debug] ssl(83) read 0 bytes
+2024-03-18 13:26:31.328813 [net info] c261250345: lost connection <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-03-18 13:26:31.328854 [net info] ended c261250345 <-/-> 542865a568 (via <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>)
+2024-03-18 13:26:31.329161 [net debug] ssl(91) read 0 bytes
+2024-03-18 13:26:31.329189 [net debug] ssl(91) read 0 bytes
+2024-03-18 13:26:31.329269 [net info] c261250345: lost connection <Conn fd=91 addr=<NetAddr 127.0.0.1:52476> mode=passive>
+2024-03-18 13:26:31.329286 [net info] ended c261250345 <-/-> 065b010aed (via <Conn fd=91 addr=<NetAddr 127.0.0.1:52476> mode=passive>)
+2024-03-18 13:26:31.330299 [net info] stopping all threads...
+2024-03-18 13:26:31.330941 [net debug] destroyed <Conn fd=82 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2024-03-18 13:26:31.331071 [net debug] destroyed <Conn fd=-1 addr=<NetAddr 0.0.0.0:0> mode=passive>
+2024-03-18 13:26:31.333459 [net debug] destroyed <Conn fd=83 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2024-03-18 13:26:31.333598 [net debug] destroyed <Conn fd=91 addr=<NetAddr 127.0.0.1:52476> mode=passive>
 ---- STO IN HotStuffCore riga 73 DENTRO consensus.h package:include->hotstuff---- 
