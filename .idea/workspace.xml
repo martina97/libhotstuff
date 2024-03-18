@@ -78,12 +78,14 @@
     <list default="true" id="f91c2701-4032-4eac-8cd6-68353351d8a4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/frost-app" beforeDir="false" afterPath="$PROJECT_DIR$/examples/frost-app" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frost-tls-keygen" beforeDir="false" afterPath="$PROJECT_DIR$/frost-tls-keygen" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/hotstuff/consensus.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/hotstuff/consensus.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/hotstuff/crypto.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/hotstuff/crypto.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log0_frost" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log1_frost" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log2_frost" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log3_frost" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/hotstuff/entity.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/hotstuff/entity.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log0_frost" beforeDir="false" afterPath="$PROJECT_DIR$/log0_frost" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log1_frost" beforeDir="false" afterPath="$PROJECT_DIR$/log1_frost" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log2_frost" beforeDir="false" afterPath="$PROJECT_DIR$/log2_frost" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log3_frost" beforeDir="false" afterPath="$PROJECT_DIR$/log3_frost" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-frost" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-frost/examples/frost.c" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/examples/frost.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-frost/include/secp256k1.h" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/include/secp256k1.h" afterDir="false" />
@@ -160,7 +162,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "settings.editor.selected.configurable": "editor.preferences.completion",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -927,7 +929,7 @@
       <workItem from="1710364147196" duration="17835000" />
       <workItem from="1710431786790" duration="20541000" />
       <workItem from="1710599060445" duration="480000" />
-      <workItem from="1710599927196" duration="40939000" />
+      <workItem from="1710599927196" duration="58962000" />
     </task>
     <servers />
   </component>

@@ -405,8 +405,9 @@ class PubKeySecp256k1Frost: public PubKey {
 class PartCertFrost  {
     uint256_t obj_hash;
 public:
+    std::unique_ptr<secp256k1_frost_signature_share> signature_share;
     PartCertFrost() = default;
-    PartCertFrost(secp256k1_frost_signature_share *signature_share,const uint256_t &msg_hash,
+    PartCertFrost(const uint256_t &msg_hash,
                   uint32_t num_signers,
                   const secp256k1_frost_keypair *keypair,
                   secp256k1_frost_nonce *nonce,
@@ -417,9 +418,17 @@ public:
 
         const bytearray_t &msg = msg_hash.to_bytes();
         (unsigned char *)&*msg.begin();
+        signature_share.reset(new secp256k1_frost_signature_share);
 
-        secp256k1_frost_sign(signature_share, (unsigned char *)&*msg.begin(), 3, keypair, nonce, signing_commitments);
+        int res = secp256k1_frost_sign(signature_share.get(),(unsigned char *)&*msg.begin(), 3, keypair, nonce, signing_commitments);
+        std::cout << "res = " << res << std::endl;
+        if (res != 1) {
+            throw std::runtime_error("Failed to create signature share!");
+        }
+        
     }
+
+
 
 
 
@@ -469,6 +478,8 @@ public:
         }
         return std::make_pair(pubkey33, group_pubkey33);
     }
+
+
 
 
 };

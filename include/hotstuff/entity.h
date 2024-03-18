@@ -209,6 +209,7 @@ class Block {
     bool frost;
 
     std::unordered_set<ReplicaID> voted;
+    secp256k1_frost_nonce_commitment list_commitment[4];
 
     public:
     Block():

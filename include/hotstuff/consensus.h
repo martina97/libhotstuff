@@ -21,6 +21,7 @@
 #include <cassert>
 #include <set>
 #include <unordered_map>
+#include <map>
 
 #include "hotstuff/promise.hpp"
 #include "hotstuff/type.h"
@@ -54,7 +55,8 @@ class HotStuffCore {
     promise_t receive_proposal_waiting;
     promise_t hqc_update_waiting;
     secp256k1_frost_keypair *key_pair;
-    secp256k1_frost_signature_share *signature_share;
+    std::map<std::string, std::list<secp256k1_frost_nonce_commitment>> commitment_map;
+    //secp256k1_frost_signature_share *signature_share;
     /* == feature switches == */
     /** always vote negatively, useful for some PaceMakers */
     bool vote_disabled;
@@ -187,6 +189,7 @@ struct Proposal: public Serializable {
     /** handle of the core object to allow polymorphism. The user should use
      * a pointer to the object of the class derived from HotStuffCore */
     HotStuffCore *hsc;
+    std::list<secp256k1_frost_nonce_commitment> *commitment_list;
 
     Proposal(): blk(nullptr), hsc(nullptr) {}
     Proposal(ReplicaID proposer,
@@ -225,7 +228,7 @@ struct Proposal: public Serializable {
 
 /** Abstraction for vote messages. */
 struct Vote: public Serializable {
-    ReplicaID voter;
+    ReplicaID voter{};
     /** block being voted */
     uint256_t blk_hash;
     /** proof of validity for the vote */
@@ -234,20 +237,32 @@ struct Vote: public Serializable {
     /** handle of the core object to allow polymorphism */
     HotStuffCore *hsc;
 
+    const PartCertFrost *cert_frost;
+
+    bool frost{};
+    secp256k1_frost_nonce_commitment *commitment{};
+
     Vote(): cert(nullptr), hsc(nullptr) {}
 
-    Vote(ReplicaID voter,
-        const uint256_t &blk_hash,
-        part_cert_bt &&cert,
-        HotStuffCore *hsc):
+    Vote(ReplicaID voter, const uint256_t &blk_hash, part_cert_bt &&cert,
+         secp256k1_frost_nonce_commitment *commitment, HotStuffCore *hsc):
         voter(voter),
         blk_hash(blk_hash),
-        cert(std::move(cert)), hsc(hsc) {}
+        cert(std::move(cert)), commitment(commitment),hsc(hsc) {}
+
+    Vote(ReplicaID voter,
+         const uint256_t &blk_hash,
+         const hotstuff::PartCertFrost &cert, secp256k1_frost_nonce_commitment *commitment,
+         HotStuffCore *hsc):
+            voter(voter),
+            blk_hash(blk_hash),
+            cert_frost(&cert), commitment(commitment), hsc(hsc) {}
 
     Vote(const Vote &other):
         voter(other.voter),
         blk_hash(other.blk_hash),
         cert(other.cert ? other.cert->clone() : nullptr),
+        commitment(other.commitment),
         hsc(other.hsc) {}
 
     Vote(Vote &&other) = default;
