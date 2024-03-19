@@ -203,13 +203,14 @@ class Block {
     std::vector<block_t> parents;
     block_t qc_ref;
     quorum_cert_bt self_qc;
+    QuorumCertFrost *qc_frost;
     uint32_t height;
     bool delivered;
     int8_t decision;
     bool frost;
 
     std::unordered_set<ReplicaID> voted;
-    secp256k1_frost_nonce_commitment list_commitment[4];
+    //secp256k1_frost_nonce_commitment list_commitment[4];
 
     public:
     Block():
@@ -330,8 +331,9 @@ class EntityStorage {
         return blk_cache.count(blk_hash);
     }
 
-    block_t add_blk(Block &&_blk, const ReplicaConfig &/*config*/) {
+    block_t add_blk(Block &&_blk, const ReplicaConfig &config) {
         std::cout << "---- STO IN add_blk riga 266 DENTRO entity.h package:include->hotstuff---- " << std::endl;
+
 
         //if (!_blk.verify(config))
         //{
@@ -339,6 +341,7 @@ class EntityStorage {
         //    return nullptr;
         //}
         block_t blk = new Block(std::move(_blk));
+        std::cout << " blk->get_hash().to_hex() = " << blk->get_hash().to_hex()  << std::endl;
         return blk_cache.insert(std::make_pair(blk->get_hash(), blk)).first->second;
     }
 

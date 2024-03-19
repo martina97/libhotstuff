@@ -251,6 +251,8 @@ void HotStuffBase::propose_handler(MsgPropose &&msg, const Net::conn_t &conn) {
 
 void HotStuffBase::vote_handler(MsgVote &&msg, const Net::conn_t &conn) {
     std::cout << "---- STO IN vote_handler riga 248 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
+    //std::cout << "msg.vote.frost = " << msg.vote.frost << std::endl;
+
     const auto &peer = conn->get_peer_id();
     if (peer.is_null()) return;
     msg.postponed_parse(this);

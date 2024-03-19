@@ -48,6 +48,8 @@ void Block::unserialize(DataStream &s, HotStuffCore *hsc) {
 //    for (auto &cmd: cmds)
 //        cmd = hsc->parse_cmd(s);
     qc = hsc->parse_quorum_cert(s);
+    std::cout << "qccccccccccccc = " << qc->to_hex() << std::endl;
+    
     s >> n;
     n = letoh(n);
     if (n == 0)

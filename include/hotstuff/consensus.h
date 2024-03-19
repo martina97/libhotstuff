@@ -56,6 +56,8 @@ class HotStuffCore {
     promise_t hqc_update_waiting;
     secp256k1_frost_keypair *key_pair;
     std::map<std::string, std::list<secp256k1_frost_nonce_commitment>> commitment_map;
+    // Define a mutex to protect access to commitment_map
+    std::mutex map_mutex;
     //secp256k1_frost_signature_share *signature_share;
     /* == feature switches == */
     /** always vote negatively, useful for some PaceMakers */
@@ -145,6 +147,7 @@ class HotStuffCore {
     virtual part_cert_bt parse_part_cert(DataStream &s) = 0;
     /** Create a quorum certificate that proves 2f+1 votes for a block. */
     virtual quorum_cert_bt create_quorum_cert(const uint256_t &blk_hash) = 0;
+    virtual QuorumCertFrost create_quorum_cert_frost(const uint256_t &blk_hash) = 0;
     /** Create a quorum certificate from its serialized form. */
     virtual quorum_cert_bt parse_quorum_cert(DataStream &s) = 0;
     /** Create a command object from its serialized form. */
@@ -212,6 +215,8 @@ struct Proposal: public Serializable {
         s >> proposer;
         Block _blk;
         _blk.unserialize(s, hsc);
+        std::cout << "hsc->get_config().nmajority = " << hsc->get_config().nmajority << std::endl;
+
         blk = hsc->storage->add_blk(std::move(_blk), hsc->get_config());
     }
 

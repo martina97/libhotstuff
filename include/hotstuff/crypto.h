@@ -402,11 +402,12 @@ class PubKeySecp256k1Frost: public PubKey {
     }
 };
 
-class PartCertFrost  {
-    uint256_t obj_hash;
+class PartCertFrost {
 public:
     std::unique_ptr<secp256k1_frost_signature_share> signature_share;
+    uint256_t obj_hash;
     PartCertFrost() = default;
+
     PartCertFrost(const uint256_t &msg_hash,
                   uint32_t num_signers,
                   const secp256k1_frost_keypair *keypair,
@@ -417,22 +418,25 @@ public:
         //const unsigned char *msg_data = reinterpret_cast<const unsigned char*>(msg_hash_.data());
 
         const bytearray_t &msg = msg_hash.to_bytes();
-        (unsigned char *)&*msg.begin();
+        (unsigned char *) &*msg.begin();
         signature_share.reset(new secp256k1_frost_signature_share);
 
-        int res = secp256k1_frost_sign(signature_share.get(),(unsigned char *)&*msg.begin(), 3, keypair, nonce, signing_commitments);
+        int res = secp256k1_frost_sign(signature_share.get(), (unsigned char *) &*msg.begin(), 3, keypair, nonce,
+                                       signing_commitments);
         std::cout << "res = " << res << std::endl;
         if (res != 1) {
             throw std::runtime_error("Failed to create signature share!");
         }
-        
+
     }
 
 
-
-
-
 };
+
+
+
+
+
 
 
 class PubKeyFrost {
@@ -698,6 +702,45 @@ class PartCertSecp256k1: public SigSecp256k1, public PartCert {
 
         s >> obj_hash;
         this->SigSecp256k1::unserialize(s);
+    }
+};
+
+class QuorumCertFrost: public QuorumCert {
+    uint256_t obj_hash;
+    salticidae::Bits rids;
+    std::unordered_map<ReplicaID, SigSecp256k1> sigs_hotstuff;
+    std::unordered_map<ReplicaID, secp256k1_frost_signature_share> sigs_frost;
+
+public:
+    QuorumCertFrost() = default;
+    QuorumCertFrost(const ReplicaConfig &config, const uint256_t &obj_hash);
+
+
+    // Define a copy assignment operator
+    QuorumCertFrost& operator=(const QuorumCertFrost& other) {
+        std::cout << "STO IN QUORUM CERT FROST operator!!! " << std::endl;
+
+        if (this != &other) {
+            // Copy the obj_hash
+            obj_hash = other.obj_hash;
+
+
+            // Copy other members if needed
+            // rids and sigs are std::unordered_map and salticidae::Bits which are copy-assignable
+
+            // Make sure to properly handle self-assignment
+        }
+        return *this;
+    }
+    void add_part(ReplicaID rid, const PartCertFrost &pc) {
+        std::cout << "---- STO IN add_part riga QuorumCertFrost 441 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
+        if (pc.obj_hash != obj_hash)
+            throw std::invalid_argument("PartCertFrost does match the block hash");
+
+        // Insert the signature share into the map
+        sigs.emplace(rid, *pc.signature_share);
+        rids.set(rid);
     }
 };
 

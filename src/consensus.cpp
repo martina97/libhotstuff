@@ -200,20 +200,30 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds, const std::
         ));
     bnew->frost = frost;
     const uint256_t bnew_hash = bnew->get_hash();
-    bnew->self_qc = create_quorum_cert(bnew_hash);
+
     on_deliver_blk(bnew);
     std::cout << "CHIAMO UPDATE DENTRO on_propose" << std::endl;
 
     update(bnew);
     std::cout << "dopo update" << std::endl;
-    
+    //bnew->qc_frost = QuorumCertFrost(config, bnew_hash);
+
+
     Proposal prop(id, bnew, nullptr);
     if (frost) {
+        //bnew->self_qc = create_quorum_cert(bnew_hash);
+        bnew->qc_frost = new QuorumCertFrost(config, bnew_hash);
+        //std::cout << "bnew->qc_frost.obj_hash.to_hex() "<< bnew->qc_frost.obj_hash.to_hex() << std::endl;
         std::cout << "FROST ABILITATO DENTRO ON PROPOSE !!!!" << std::endl;
-        auto first_element = commitment_map.begin()->second;
-        std::copy(first_element.begin(), first_element.end(), bnew->list_commitment);
-        commitment_map.erase(commitment_map.begin()); //tolgo il primo valore della mappa, in quanto l'ho usato!!!
-
+        // Whenever you access commitment_map, lock the mutex first
+        {
+            std::lock_guard<std::mutex> lock(map_mutex);
+            auto first_element = commitment_map.begin()->second;
+            //std::copy(first_element.begin(), first_element.end(), bnew->list_commitment);
+            commitment_map.erase(commitment_map.begin()); //tolgo il primo valore della mappa, in quanto l'ho usato!!!
+        }
+    } else {
+        bnew->self_qc = create_quorum_cert(bnew_hash);
     }
 
     std::cout << "dopo prop" << std::endl;
@@ -233,7 +243,7 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds, const std::
  * Il blocco menzionato nel messaggio dovrebbe essere già consegnato.*/
 void HotStuffCore::on_receive_proposal(const Proposal &prop) {
     std::cout << "---- STO IN on_receive_proposal riga 215 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
-    
+    std::mutex nonce_list_mutex;
     LOG_PROTO("got %s", std::string(prop).c_str());
     bool self_prop = prop.proposer == get_id();
     block_t bnew = prop.blk;
@@ -293,7 +303,12 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
 
         if (bnew->frost == false) {
             secp256k1_frost_nonce *nonce = secp256k1_frost_nonce_create(sign_verify_ctx, key_pair, binding_seed, hiding_seed);
-            nonce_list.push_back(nonce);
+            {
+                std::lock_guard<std::mutex> lock(nonce_list_mutex);
+                nonce_list.push_back(nonce);
+            }
+            std::cout << "NONCE LIST SIZE = " << nonce_list.size() << std::endl;
+            
 
             const Vote vote = Vote(id, bnew->get_hash(), create_part_cert(*priv_key, bnew->get_hash()), &nonce->commitments,this);
             std::cout << "dopo aver creato il vote!!" << std::endl;
@@ -311,23 +326,34 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
             std::cout << std::endl;
              */
 
-            /** CREO PART CERT CON I COMMITMENT PRESI NEL MSG PROPOSE ! --> if blk.frost = true !!! */
+
+
+
 
             /** CREO NUOVA COPPIA NONCE-COMM DA USARE PER IL PROX BLOCCO */
             secp256k1_frost_nonce *nonce = secp256k1_frost_nonce_create(sign_verify_ctx, key_pair, binding_seed, hiding_seed);
-            nonce_list.push_back(nonce);
+            {
+                std::lock_guard<std::mutex> lock(nonce_list_mutex);
+                nonce_list.push_back(nonce);
+            }
 
             /** METTO COMMITMENT DENTRO VOTE MSG */
             secp256k1_frost_nonce_commitment signing_commitments[4];
-            std::copy(std::begin(bnew->list_commitment), std::end(bnew->list_commitment), std::begin(signing_commitments));
+
+
+            //std::copy(std::begin(bnew->list_commitment), std::end(bnew->list_commitment), std::begin(signing_commitments));
             std::cout << "nonce_list_size = " << nonce_list.size() << std::endl;
+            /** CREO PART CERT CON I COMMITMENT PRESI NEL MSG PROPOSE ! --> if blk.frost = true !!! */
             const hotstuff::PartCertFrost &frost_cert = hotstuff::PartCertFrost(bnew->get_hash(),
                                                                                 3, key_pair, nonce_list[0],signing_commitments);
+            {
+                std::lock_guard<std::mutex> lock(nonce_list_mutex);
+                nonce_list.erase(nonce_list.begin());
+            }
 
 
-            nonce_list.erase(nonce_list.begin());
+
             std::cout << "nonce_list_size = " << nonce_list.size() << std::endl;
-
 
             std::cout << "signature_share->response"<< std::endl;
             for (unsigned char i : frost_cert.signature_share->response) {
@@ -335,7 +361,7 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
             }
             std::cout << std::endl;
             const Vote vote = Vote(id, bnew->get_hash(), frost_cert ,&nonce->commitments, this);
-
+            do_vote(prop.proposer, vote);
         }
 
         /*do_vote(prop.proposer,
@@ -348,11 +374,17 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
 
 void HotStuffCore::on_receive_vote(const Vote &vote) {
     std::cout << "---- STO IN on_receive_vote riga 272 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
-    
+
+    /** CI ENTRA SOLO IL LEADER --> POSSO PRENDERMI I COMMITMENT */
     LOG_PROTO("got %s", std::string(vote).c_str());
     LOG_PROTO("now state: %s", std::string(*this).c_str());
     block_t blk = get_delivered_blk(vote.blk_hash);
-    assert(vote.cert);
+    if (vote.frost == 0) {
+        assert(vote.cert);
+    } else {
+        assert(vote.cert_frost);
+    }
+
     size_t qsize = blk->voted.size();
     std::cout << "config.nmajority = " << config.nmajority << std::endl;
     std::cout << "qsize = " << blk->voted.size() << std::endl;
