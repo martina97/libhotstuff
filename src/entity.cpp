@@ -63,7 +63,7 @@ void Block::unserialize(DataStream &s, HotStuffCore *hsc) {
 }
 
 bool Block::verify(const HotStuffCore *hsc) const {
-    std::cout << "---- STO IN verigy riga 63 DENTRO entity.cpp package:salticidae->include->src---- " << std::endl;
+    std::cout << "---- STO IN verify riga 63 DENTRO entity.cpp package:salticidae->include->src---- " << std::endl;
 
     if (qc->get_obj_hash() == hsc->get_genesis()->get_hash())
         return true;

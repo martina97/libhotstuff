@@ -28,6 +28,7 @@
 #include "hotstuff/task.h"
 #include "eckey_impl.h"
 //#include "../secp256k1-frost/src/modules/frost/main_impl.h"
+
 namespace hotstuff {
 
 using salticidae::SHA256;
@@ -39,7 +40,7 @@ class PubKey: public Serializable, Cloneable {
 };
 
 using pubkey_bt = BoxObj<PubKey>;
-
+class PartCertFrost;
 class PrivKey: public Serializable {
     public:
     virtual ~PrivKey() = default;
@@ -64,6 +65,7 @@ class QuorumCert: public Serializable, public Cloneable {
     public:
     virtual ~QuorumCert() = default;
     virtual void add_part(ReplicaID replica, const PartCert &pc) = 0;
+    virtual void add_part(ReplicaID replica, const PartCertFrost &pc) = 0;
     virtual void compute() = 0;
     virtual promise_t verify(const ReplicaConfig &config, VeriPool &vpool) = 0;
     virtual bool verify(const ReplicaConfig &config) = 0;
@@ -156,6 +158,7 @@ class QuorumCertDummy: public QuorumCert {
     }
 
     void add_part(ReplicaID, const PartCert &) override {}
+    void add_part(ReplicaID, const PartCertFrost &) override {}
     void compute() override {}
     bool verify(const ReplicaConfig &) override { return true; }
     promise_t verify(const ReplicaConfig &, VeriPool &) override {
@@ -169,6 +172,7 @@ class QuorumCertDummy: public QuorumCert {
 
         return obj_hash; }
 };
+
 
 
 class Secp256k1Context {
@@ -402,12 +406,15 @@ class PubKeySecp256k1Frost: public PubKey {
     }
 };
 
-class PartCertFrost {
+class PartCertFrost: public Serializable {
 public:
     std::unique_ptr<secp256k1_frost_signature_share> signature_share;
     uint256_t obj_hash;
     PartCertFrost() = default;
-
+    PartCertFrost(const PartCertFrost &other) {
+        obj_hash = other.obj_hash;
+        signature_share.reset(new secp256k1_frost_signature_share(*other.signature_share));
+    }
     PartCertFrost(const uint256_t &msg_hash,
                   uint32_t num_signers,
                   const secp256k1_frost_keypair *keypair,
@@ -428,6 +435,20 @@ public:
             throw std::runtime_error("Failed to create signature share!");
         }
 
+    }
+
+    void serialize(DataStream &s) const override {
+        std::cout << "---- STO IN serialize riga 451 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
+        s << obj_hash;
+        //this->SigSecp256k1::serialize(s);
+    }
+
+    void unserialize(DataStream &s) override {
+            std::cout << "---- STO IN unserialize riga 458 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
+            s >> obj_hash;
+            //this->SigSecp256k1::unserialize(s);
     }
 
 
@@ -488,14 +509,7 @@ public:
 
 };
 
-class NonceGenerator {
-    friend class SigSecp256k1;
-    secp256k1_context_t ctx;
-    secp256k1_frost_nonce *nonces; // Array to hold nonce objects
-public:
 
-
-};
 
 class PrivKeySecp256k1: public PrivKey {
     static const auto nbytes = 32;
@@ -710,37 +724,65 @@ class QuorumCertFrost: public QuorumCert {
     salticidae::Bits rids;
     std::unordered_map<ReplicaID, SigSecp256k1> sigs_hotstuff;
     std::unordered_map<ReplicaID, secp256k1_frost_signature_share> sigs_frost;
-
-public:
+    bool frost;
+    public:
     QuorumCertFrost() = default;
     QuorumCertFrost(const ReplicaConfig &config, const uint256_t &obj_hash);
 
 
-    // Define a copy assignment operator
-    QuorumCertFrost& operator=(const QuorumCertFrost& other) {
-        std::cout << "STO IN QUORUM CERT FROST operator!!! " << std::endl;
 
-        if (this != &other) {
-            // Copy the obj_hash
-            obj_hash = other.obj_hash;
+    void add_part(ReplicaID rid, const PartCert &pc) override {
+        std::cout << "---- STO IN add_part riga 736 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
 
-
-            // Copy other members if needed
-            // rids and sigs are std::unordered_map and salticidae::Bits which are copy-assignable
-
-            // Make sure to properly handle self-assignment
-        }
-        return *this;
+        if (pc.get_obj_hash() != obj_hash)
+            throw std::invalid_argument("PartCert does match the block hash");
+        sigs_hotstuff.insert(std::make_pair(
+                rid, static_cast<const PartCertSecp256k1 &>(pc)));
+        rids.set(rid);
     }
-    void add_part(ReplicaID rid, const PartCertFrost &pc) {
-        std::cout << "---- STO IN add_part riga QuorumCertFrost 441 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
+    void add_part(ReplicaID rid, const PartCertFrost &pc) override {
+        std::cout << "---- STO IN add_part riga QuorumCertFrost 746 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
 
         if (pc.obj_hash != obj_hash)
             throw std::invalid_argument("PartCertFrost does match the block hash");
 
         // Insert the signature share into the map
-        sigs.emplace(rid, *pc.signature_share);
+        sigs_frost.emplace(rid, *pc.signature_share);
         rids.set(rid);
+    }
+
+    // TODO: FARE VERIFY
+    void compute() override {std::cout << "---- STO IN compute riga 746 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+    }
+
+    bool verify(const ReplicaConfig &config) override;
+    promise_t verify(const ReplicaConfig &config, VeriPool &vpool) override;
+
+    const uint256_t &get_obj_hash() const override { return obj_hash; }
+
+    QuorumCertFrost *clone() override {
+        std::cout << "---- STO IN clone riga 754 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
+        return new QuorumCertFrost(*this);
+    }
+
+    void serialize(DataStream &s) const override {
+        std::cout << "---- STO IN serialize riga 760 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
+        s << obj_hash << rids;
+        for (size_t i = 0; i < rids.size(); i++)
+            if (rids.get(i)) s << sigs_hotstuff.at(i);  //todo: change
+    }
+
+    void unserialize(DataStream &s) override {
+        std::cout << "---- STO IN unserialize riga 768 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
+        s >> obj_hash >> rids;
+        /*
+        for (size_t i = 0; i < rids.size(); i++)
+            if (rids.get(i)) s >> sigs_frost[i];  //todo: change
+            */
     }
 };
 
@@ -763,6 +805,10 @@ class QuorumCertSecp256k1: public QuorumCert {
         rids.set(rid);
     }
 
+    void add_part(ReplicaID rid, const PartCertFrost &pc) override {
+        std::cout << "---- STO IN add_part riga QuorumCertFrost 746 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
+    }
     void compute() override {std::cout << "---- STO IN compute riga 486 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
     }
 

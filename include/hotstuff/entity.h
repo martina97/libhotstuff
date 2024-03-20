@@ -203,7 +203,6 @@ class Block {
     std::vector<block_t> parents;
     block_t qc_ref;
     quorum_cert_bt self_qc;
-    QuorumCertFrost *qc_frost;
     uint32_t height;
     bool delivered;
     int8_t decision;

@@ -210,9 +210,10 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds, const std::
 
 
     Proposal prop(id, bnew, nullptr);
+    bnew->self_qc = create_quorum_cert(bnew_hash);
+    std::cout << "PROVO A STAMPARE IL QC ---- " << bnew->self_qc->to_hex() << std::endl;
+    
     if (frost) {
-        //bnew->self_qc = create_quorum_cert(bnew_hash);
-        bnew->qc_frost = new QuorumCertFrost(config, bnew_hash);
         //std::cout << "bnew->qc_frost.obj_hash.to_hex() "<< bnew->qc_frost.obj_hash.to_hex() << std::endl;
         std::cout << "FROST ABILITATO DENTRO ON PROPOSE !!!!" << std::endl;
         // Whenever you access commitment_map, lock the mutex first
@@ -222,8 +223,6 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds, const std::
             //std::copy(first_element.begin(), first_element.end(), bnew->list_commitment);
             commitment_map.erase(commitment_map.begin()); //tolgo il primo valore della mappa, in quanto l'ho usato!!!
         }
-    } else {
-        bnew->self_qc = create_quorum_cert(bnew_hash);
     }
 
     std::cout << "dopo prop" << std::endl;
@@ -306,13 +305,25 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
             {
                 std::lock_guard<std::mutex> lock(nonce_list_mutex);
                 nonce_list.push_back(nonce);
-            }
-            std::cout << "NONCE LIST SIZE = " << nonce_list.size() << std::endl;
-            
+                std::cout << "NONCE LIST SIZE = " << nonce_list.size() << std::endl;
 
-            const Vote vote = Vote(id, bnew->get_hash(), create_part_cert(*priv_key, bnew->get_hash()), &nonce->commitments,this);
-            std::cout << "dopo aver creato il vote!!" << std::endl;
-            do_vote(prop.proposer, vote);
+
+                const Vote vote = Vote(id, bnew->get_hash(), create_part_cert(*priv_key, bnew->get_hash()), &nonce->commitments,this);
+                std::cout << "dopo aver creato il vote!!" << std::endl;
+                std::cout <<"msg.vote.commitment->index = " <<vote.commitment->index << std::endl;
+                std::cout <<"msg.vote.commitment->hiding = " <<std::endl;
+                std::cout << "0x";
+                for (size_t i = 0; i < sizeof(vote.commitment->hiding); i++) {
+                    std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(vote.commitment->hiding[i]);
+                }
+                std::cout << std::dec << std::endl; // Reset to decimal format
+                std::cout <<"msg.vote.commitment->binding = " <<vote.commitment->binding << std::endl;
+
+                std::cout << "BLOCCOOOOO = === = = =" << bnew->get_hash().to_hex() << std::endl;
+                do_vote(prop.proposer, vote);
+                nonce_list.erase(nonce_list.begin());
+            }
+
         } else{
             std::cout << "CREO VOTO FROST !!!! " << std::endl;
             
@@ -326,48 +337,33 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
             std::cout << std::endl;
              */
 
-
-
-
-
             /** CREO NUOVA COPPIA NONCE-COMM DA USARE PER IL PROX BLOCCO */
             secp256k1_frost_nonce *nonce = secp256k1_frost_nonce_create(sign_verify_ctx, key_pair, binding_seed, hiding_seed);
             {
                 std::lock_guard<std::mutex> lock(nonce_list_mutex);
                 nonce_list.push_back(nonce);
-            }
+                /** METTO COMMITMENT DENTRO VOTE MSG */
+                secp256k1_frost_nonce_commitment signing_commitments[4];
 
-            /** METTO COMMITMENT DENTRO VOTE MSG */
-            secp256k1_frost_nonce_commitment signing_commitments[4];
-
-
-            //std::copy(std::begin(bnew->list_commitment), std::end(bnew->list_commitment), std::begin(signing_commitments));
-            std::cout << "nonce_list_size = " << nonce_list.size() << std::endl;
-            /** CREO PART CERT CON I COMMITMENT PRESI NEL MSG PROPOSE ! --> if blk.frost = true !!! */
-            const hotstuff::PartCertFrost &frost_cert = hotstuff::PartCertFrost(bnew->get_hash(),
-                                                                                3, key_pair, nonce_list[0],signing_commitments);
-            {
-                std::lock_guard<std::mutex> lock(nonce_list_mutex);
+                //std::copy(std::begin(bnew->list_commitment), std::end(bnew->list_commitment), std::begin(signing_commitments));
+                std::cout << "nonce_list_size = " << nonce_list.size() << std::endl;
+                /** CREO PART CERT CON I COMMITMENT PRESI NEL MSG PROPOSE ! --> if blk.frost = true !!! */
+                hotstuff::PartCertFrost frost_cert = hotstuff::PartCertFrost(bnew->get_hash(),
+                                                                             3, key_pair, nonce_list[0],signing_commitments);
                 nonce_list.erase(nonce_list.begin());
+                std::cout << "nonce_list_size = " << nonce_list.size() << std::endl;
+
+                std::cout << "signature_share->response"<< std::endl;
+                for (unsigned char i : frost_cert.signature_share->response) {
+                    std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(i);
+                }
+                std::cout << std::endl;
+                //Vote vote = Vote(id, bnew->get_hash(), frost_cert ,&nonce->commitments, this);
+                Vote vote = Vote(id, bnew->get_hash() ,&nonce->commitments, this);
+                vote.frost=true;
+                do_vote(prop.proposer, vote);
             }
-
-
-
-            std::cout << "nonce_list_size = " << nonce_list.size() << std::endl;
-
-            std::cout << "signature_share->response"<< std::endl;
-            for (unsigned char i : frost_cert.signature_share->response) {
-                std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(i);
-            }
-            std::cout << std::endl;
-            const Vote vote = Vote(id, bnew->get_hash(), frost_cert ,&nonce->commitments, this);
-            do_vote(prop.proposer, vote);
         }
-
-        /*do_vote(prop.proposer,
-                Vote(id, bnew->get_hash(),
-                     create_part_cert(*priv_key, bnew->get_hash()), this));*/
-
     }
 }
 
@@ -378,11 +374,28 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
     /** CI ENTRA SOLO IL LEADER --> POSSO PRENDERMI I COMMITMENT */
     LOG_PROTO("got %s", std::string(vote).c_str());
     LOG_PROTO("now state: %s", std::string(*this).c_str());
+
+    std::cout << "HO RICEVUTO VOTO, CONTROLLO I COMMITMENT PASSATI!" << std::endl;
+    std::cout << "vote.frost = " << vote.frost << std::endl;
+
+    if (vote.commitment->index != 0) {
+        vote.commitment->index = vote.commitment->index / 256;
+    }
+    std::cout << "BLOCCOOOOO = === = = =" << vote.blk_hash.to_hex() << std::endl;
+    std::cout << "vote.commitment->index = " << vote.commitment->index << std::endl;
+    std::cout <<"msg.vote.commitment->hiding = " <<std::endl;
+    std::cout << "0x";
+    for (size_t i = 0; i < 33; i++) {
+        std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(vote.commitment->hiding[i]);
+    }
+    std::cout << std::dec << std::endl; // Reset to decimal format
+    std::cout << std::endl;
+    std::cout <<"msg.vote.commitment->binding = " <<vote.commitment->binding << std::endl;
     block_t blk = get_delivered_blk(vote.blk_hash);
     if (vote.frost == 0) {
         assert(vote.cert);
     } else {
-        assert(vote.cert_frost);
+        //assert(vote.cert_frost->signature_share);
     }
 
     size_t qsize = blk->voted.size();

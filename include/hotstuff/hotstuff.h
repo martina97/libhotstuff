@@ -292,15 +292,7 @@ class HotStuff: public HotStuffBase {
         return new QuorumCertType(get_config(), blk_hash);
     }
 
-    QuorumCertFrost create_quorum_cert_frost(const uint256_t &blk_hash) {
-        std::cout << "----- sto in create_quorum_cert_frost ----- " << std::endl;
-        
-        // Get replica configuration
-        ReplicaConfig config = get_config();
 
-        // Create a QuorumCertFrost object
-        return QuorumCertFrost(config, blk_hash);
-    }
 
 
 

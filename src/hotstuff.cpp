@@ -195,7 +195,8 @@ promise_t HotStuffBase::async_deliver_blk(const uint256_t &blk_hash,
     if (storage->is_blk_delivered(blk_hash)) {
         std::cout << "BLK IS DELIVERED !!! " << std::endl;
         return promise_t([this, &blk_hash](promise_t pm) {
-            pm.resolve(storage->find_blk(blk_hash));
+        //pm.resolve(storage->find_blk(blk_hash));  //todo: l'ho cambiato!!!
+        pm.resolve(true);
         });
     }
     
@@ -253,20 +254,70 @@ void HotStuffBase::vote_handler(MsgVote &&msg, const Net::conn_t &conn) {
     std::cout << "---- STO IN vote_handler riga 248 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
     //std::cout << "msg.vote.frost = " << msg.vote.frost << std::endl;
 
+
+
     const auto &peer = conn->get_peer_id();
     if (peer.is_null()) return;
     msg.postponed_parse(this);
     //auto &vote = msg.vote;
     RcObj<Vote> v(new Vote(std::move(msg.vote)));
+    std::cout << "msg.vote.frost = " << v->frost << std::endl;
+    std::cout << "HO RICEVUTO VOTO, CONTROLLO I COMMITMENT PASSATI!" << std::endl;
+    std::cout << "msg.vote.frost = " << v->frost << std::endl;
+   // std::cout <<"msg.vote.commitment->index=" <<v->commitment->index << std::endl;
+    //std::cout <<"msg.vote.cert->to_hex()=" <<msg.vote.cert->to_hex() << std::endl;
+
+
+
+/*
     promise::all(std::vector<promise_t>{
-        async_deliver_blk(v->blk_hash, peer),
-        v->verify(vpool),}).
-        then([this, v=std::move(v)](const promise::values_t values) {
+            async_deliver_blk(v->blk_hash, peer),
+            v->verify(vpool),}).
+            then([this, v=std::move(v)](const promise::values_t values) {
         if (!promise::any_cast<bool>(values[1]))
             LOG_WARN("invalid vote from %d", v->voter);
         else
             on_receive_vote(*v);
+    });*/
+
+/*
+    auto &vote = msg.vote;
+    promise::all(std::vector<promise_t>{
+            async_deliver_blk(vote.blk_hash, peer)
+    }).then([this, vote=std::move(vote)]() {
+        on_receive_vote(vote);
     });
+    */
+
+
+    // Create a vector of promises with only async_deliver_blk
+    std::vector<promise_t> promises{
+            async_deliver_blk(v->blk_hash, peer)
+    };
+
+    // Execute async_deliver_blk and handle the result
+    promise::all(std::move(promises))
+            .then([this, v=std::move(v)](const promise::values_t values) {
+                if (!promise::any_cast<bool>(values[0]))
+                    LOG_WARN("async_deliver_blk failed for vote from %d", v->voter);
+                else
+                    on_receive_vote(*v);
+            });
+
+
+
+/*
+    // Async deliver block
+    async_deliver_blk(v->blk_hash, peer)
+            .then([this, v=std::move(v)](bool delivery_successful) {
+                if (!delivery_successful) {
+                    LOG_WARN("Failed to deliver block for vote from %d", v->voter);
+                    return;
+                }
+
+                // Handle successful delivery
+                on_receive_vote(*v);
+            });*/
 }
 
 void HotStuffBase::req_blk_handler(MsgReqBlock &&msg, const Net::conn_t &conn) {
@@ -423,9 +474,9 @@ void HotStuffBase::do_broadcast_proposal(const Proposal &prop) {
 
 
     //MsgPropose prop_msg(prop);
-    const std::unordered_map<PeerId, std::vector<uint32_t>> &prova = pn.get_known_peers();
-    std::cout << "Map size: " << prova.size() << std::endl;
-
+    //const std::unordered_map<PeerId, std::vector<uint32_t>> &prova = pn.get_known_peers();
+    //std::cout << "Map size: " << prova.size() << std::endl;
+/*
     for (const auto& pair : prova) {
         const PeerId& peerId = pair.first;
         const std::vector<uint32_t >& integers = pair.second;
@@ -435,7 +486,7 @@ void HotStuffBase::do_broadcast_proposal(const Proposal &prop) {
             std::cout << value << " ";
         }
         std::cout << std::endl;
-    }
+    }*/
 
     pn.multicast_msg(MsgPropose(prop), peers);
     //for (const auto &replica: peers)
@@ -449,8 +500,12 @@ Called upon sending out a new vote to the next proposer.
 void HotStuffBase::do_vote(ReplicaID last_proposer, const Vote &vote) {
     std::cout << "---- STO IN do_vote riga 425 DENTRO hotstuff.cpp package:salticidae->include->src---- " << std::endl;
     
+    std::cout << "STO IN DO_VOTE PROVO A STAMPARE CAMPI VOTO" << std::endl;
+    std::cout << "vote.commitment->index " << vote.commitment->index << std::endl;
+        
     pmaker->beat_resp(last_proposer)
             .then([this, vote](ReplicaID proposer) {
+                
         if (proposer == get_id())
         {
             std::cout << "proposer == get_id()" << std::endl;

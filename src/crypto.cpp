@@ -29,7 +29,10 @@ QuorumCertSecp256k1::QuorumCertSecp256k1(const ReplicaConfig &config, const uint
 
     rids.clear();
 }
-   
+
+
+
+
 bool QuorumCertSecp256k1::verify(const ReplicaConfig &config) {
     std::cout << "---- STO IN verify riga 35 DENTRO crypto.cpp package:salticidae->include->src---- " << std::endl;
 
@@ -70,5 +73,27 @@ promise_t QuorumCertSecp256k1::verify(const ReplicaConfig &config, VeriPool &vpo
 }
 
 
+    QuorumCertFrost::QuorumCertFrost(const ReplicaConfig &config, const uint256_t &obj_hash) :
+            QuorumCert(), obj_hash(obj_hash), rids(config.nreplicas) {
+        //niente
+        std::cout << "---- STO IN QuorumCertFrost riga 76 DENTRO crypto.cpp package:salticidae->include->src---- " << std::endl;
 
+        rids.clear();
+    }
+
+
+    bool QuorumCertFrost::verify(const ReplicaConfig &config) {
+        std::cout << "---- STO IN verify riga 82 DENTRO crypto.cpp package:salticidae->include->src---- " << std::endl;
+        HOTSTUFF_LOG_DEBUG("CHECKING AGGREGATE SIGNATURE!");
+        //non devo controllare il singolo certificato, ma la firma aggregata!!!!!
+        //TODO: FARE
+        return true;
+    }
+
+    promise_t QuorumCertFrost::verify(const ReplicaConfig &config, VeriPool &vpool) {
+        std::cout << "---- STO IN verify riga 93 DENTRO crypto.cpp package:salticidae->include->src---- " << std::endl;
+
+        //TODO: FARE
+        return promise_t();
+    }
 }
