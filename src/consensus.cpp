@@ -23,6 +23,7 @@
 #include "hotstuff/util.h"
 #include "hotstuff/consensus.h"
 #include "secp256k1_frost.h"
+#include "secp256k1-frost/examples/examples_util.h"
 
 #define LOG_INFO HOTSTUFF_LOG_INFO
 #define LOG_DEBUG HOTSTUFF_LOG_DEBUG
@@ -301,6 +302,15 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
          */
 
         if (bnew->frost == false) {
+
+            if (!fill_random(binding_seed, sizeof(binding_seed))) {
+                throw ("Failed to generate binding_seed\n");
+
+            }
+            if (!fill_random(hiding_seed, sizeof(hiding_seed))) {
+                throw ("Failed to generate hiding_seed\n");
+
+            }
             secp256k1_frost_nonce *nonce = secp256k1_frost_nonce_create(sign_verify_ctx, key_pair, binding_seed, hiding_seed);
             {
                 std::lock_guard<std::mutex> lock(nonce_list_mutex);
@@ -317,7 +327,12 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
                     std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(vote.commitment->hiding[i]);
                 }
                 std::cout << std::dec << std::endl; // Reset to decimal format
-                std::cout <<"msg.vote.commitment->binding = " <<vote.commitment->binding << std::endl;
+                std::cout <<"msg.vote.commitment->binding = " <<std::endl;
+                std::cout << "0x";
+                for (size_t i = 0; i < sizeof(vote.commitment->binding); i++) {
+                    std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(vote.commitment->binding[i]);
+                }
+                std::cout << std::dec << std::endl; // Reset to decimal format
 
                 std::cout << "BLOCCOOOOO = === = = =" << bnew->get_hash().to_hex() << std::endl;
                 do_vote(prop.proposer, vote);
@@ -385,12 +400,18 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
     std::cout << "vote.commitment->index = " << vote.commitment->index << std::endl;
     std::cout <<"msg.vote.commitment->hiding = " <<std::endl;
     std::cout << "0x";
-    for (size_t i = 0; i < 33; i++) {
+    for (size_t i = 0; i < sizeof(vote.commitment->hiding); i++) {
         std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(vote.commitment->hiding[i]);
     }
     std::cout << std::dec << std::endl; // Reset to decimal format
-    std::cout << std::endl;
-    std::cout <<"msg.vote.commitment->binding = " <<vote.commitment->binding << std::endl;
+
+    std::cout <<"msg.vote.commitment->binding = " <<std::endl;
+    std::cout << "0x";
+    for (size_t i = 0; i < sizeof(vote.commitment->binding); i++) {
+        std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(vote.commitment->binding[i]);
+    }
+    std::cout << std::dec << std::endl; // Reset to decimal format
+
     block_t blk = get_delivered_blk(vote.blk_hash);
     if (vote.frost == 0) {
         assert(vote.cert);

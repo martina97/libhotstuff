@@ -325,7 +325,10 @@ struct Vote: public Serializable {
 
         // Convert to host byte order
 
-
+// Skip the first two bytes before reading hiding and binding arrays
+        // Discard the first two values from the stream
+        unsigned char discard1, discard2;
+        s >> discard1 ;
         // Deserialize commitment fields individually
         for (int i = 0; i < 64; ++i) {
             s >> commitment->hiding[i];
