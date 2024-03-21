@@ -445,7 +445,7 @@ public:
     }
 
     void unserialize(DataStream &s) override {
-            std::cout << "---- STO IN unserialize riga 458 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+            std::cout << "---- STO IN unserialize riga 447 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
 
             s >> obj_hash;
             //this->SigSecp256k1::unserialize(s);

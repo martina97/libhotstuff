@@ -252,7 +252,7 @@ struct Vote: public Serializable {
          secp256k1_frost_nonce_commitment *commitment, HotStuffCore *hsc):
         voter(voter),
         blk_hash(blk_hash),
-        cert(std::move(cert)), commitment(commitment),hsc(hsc) {}
+        cert(std::move(cert)), frost(true),commitment(commitment),hsc(hsc) {}
 
         /*
     Vote(ReplicaID voter,
@@ -266,14 +266,14 @@ struct Vote: public Serializable {
          const uint256_t &blk_hash, secp256k1_frost_nonce_commitment *commitment,
          HotStuffCore *hsc):
             voter(voter),
-            blk_hash(blk_hash),
+            blk_hash(blk_hash),frost(true),
             commitment(commitment), hsc(hsc){}
 
     Vote(const Vote &other):
         voter(other.voter),
         blk_hash(other.blk_hash),
         cert(other.cert ? other.cert->clone() : nullptr),
-        hsc(other.hsc),
+        hsc(other.hsc),frost(true),
         commitment(other.commitment) {}
 
     Vote(Vote &&other) = default;
@@ -285,13 +285,14 @@ struct Vote: public Serializable {
 
         s << frost;
 
+
         // Serialize cert_frost and commitment if frost is true
         //s << *cert_frost;
         //s << static_cast<uint32_t>(commitment->index);
-        s << htole(commitment->index);
+        s << commitment->index;
         //s << htole(commitment->index);
-        for (int i = 0; i < 64; ++i) {
-            s << commitment->hiding[i];
+        for (unsigned char i : commitment->hiding) {
+            s << i;
 
         }
         for (int i = 0; i < 64; ++i) {
@@ -311,24 +312,33 @@ struct Vote: public Serializable {
         s >> voter >> blk_hash;
         cert = hsc->parse_part_cert(s);
         s << frost;
+        std::cout << "frost == " << frost << std::endl;
+
+
+        //s>>frost;
 
         //if(frost) todo
         // Deserialize cert_frost and commitment if frost is true
        // cert_frost = new PartCertFrost();
         //s >> *cert_frost;
-
+        /*
+        unsigned char discard2;
+        s<<discard2;
+        s<<discard2;
+        s<<discard2;
+         */
         // Allocate memory for commitment
         commitment = new secp256k1_frost_nonce_commitment();
-        uint32_t index;
-        s >> index; // Deserialize index as uint32_t
-        commitment->index = static_cast<uint32_t>(letoh(index)); // Convert to host byte order
+        s >> commitment->index; // Deserialize index as uint32_t
+        //= static_cast<uint32_t>(letoh(index)); // Convert to host byte order
 
         // Convert to host byte order
 
-// Skip the first two bytes before reading hiding and binding arrays
+        // Skip the first two bytes before reading hiding and binding arrays
         // Discard the first two values from the stream
-        unsigned char discard1, discard2;
+        unsigned char discard1;
         s >> discard1 ;
+
         // Deserialize commitment fields individually
         for (int i = 0; i < 64; ++i) {
             s >> commitment->hiding[i];

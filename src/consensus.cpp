@@ -335,6 +335,7 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
                 std::cout << std::dec << std::endl; // Reset to decimal format
 
                 std::cout << "BLOCCOOOOO = === = = =" << bnew->get_hash().to_hex() << std::endl;
+
                 do_vote(prop.proposer, vote);
                 nonce_list.erase(nonce_list.begin());
             }
@@ -374,8 +375,8 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
                 }
                 std::cout << std::endl;
                 //Vote vote = Vote(id, bnew->get_hash(), frost_cert ,&nonce->commitments, this);
-                Vote vote = Vote(id, bnew->get_hash() ,&nonce->commitments, this);
-                vote.frost=true;
+                const Vote vote = Vote(id, bnew->get_hash() ,&nonce->commitments, this);
+                //vote.frost=true;
                 do_vote(prop.proposer, vote);
             }
         }
