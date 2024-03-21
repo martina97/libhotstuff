@@ -195,8 +195,8 @@ promise_t HotStuffBase::async_deliver_blk(const uint256_t &blk_hash,
     if (storage->is_blk_delivered(blk_hash)) {
         std::cout << "BLK IS DELIVERED !!! " << std::endl;
         return promise_t([this, &blk_hash](promise_t pm) {
-        //pm.resolve(storage->find_blk(blk_hash));  //todo: l'ho cambiato!!!
-        pm.resolve(true);
+        pm.resolve(storage->find_blk(blk_hash));  //todo: l'ho cambiato!!!
+        //pm.resolve(true);
         });
     }
     
@@ -269,16 +269,34 @@ void HotStuffBase::vote_handler(MsgVote &&msg, const Net::conn_t &conn) {
 
 
 
+    if (v->frost == 0) {    //mi comporto come al solito
+        promise::all(std::vector<promise_t>{
+                async_deliver_blk(v->blk_hash, peer),
+                v->verify(vpool),}).
+                then([this, v=std::move(v)](const promise::values_t values) {
+            if (!promise::any_cast<bool>(values[1]))
+                LOG_WARN("invalid vote from %d", v->voter);
+            else
+                on_receive_vote(*v);
+        });
+    } else {    //non faccio verify !!
+        // Create a vector of promises with only async_deliver_blk
+        std::vector<promise_t> promises{
+                async_deliver_blk(v->blk_hash, peer)
+        };
+
+        // Execute async_deliver_blk and handle the result
+        promise::all(std::move(promises))
+                .then([this, v=std::move(v)](const promise::values_t values) {
+                    if (!promise::any_cast<bool>(values[0]))
+                        LOG_WARN("async_deliver_blk failed for vote from %d", v->voter);
+                    else
+                        on_receive_vote(*v);
+                });
+    }
+
 /*
-    promise::all(std::vector<promise_t>{
-            async_deliver_blk(v->blk_hash, peer),
-            v->verify(vpool),}).
-            then([this, v=std::move(v)](const promise::values_t values) {
-        if (!promise::any_cast<bool>(values[1]))
-            LOG_WARN("invalid vote from %d", v->voter);
-        else
-            on_receive_vote(*v);
-    });*/
+    */
 
 /*
     auto &vote = msg.vote;
@@ -290,19 +308,7 @@ void HotStuffBase::vote_handler(MsgVote &&msg, const Net::conn_t &conn) {
     */
 
 
-    // Create a vector of promises with only async_deliver_blk
-    std::vector<promise_t> promises{
-            async_deliver_blk(v->blk_hash, peer)
-    };
 
-    // Execute async_deliver_blk and handle the result
-    promise::all(std::move(promises))
-            .then([this, v=std::move(v)](const promise::values_t values) {
-                if (!promise::any_cast<bool>(values[0]))
-                    LOG_WARN("async_deliver_blk failed for vote from %d", v->voter);
-                else
-                    on_receive_vote(*v);
-            });
 
 
 
@@ -543,7 +549,8 @@ void HotStuffBase::do_decide(Finality &&fin) {
 
 HotStuffBase::~HotStuffBase() {}
 
-void HotStuffBase::start_frost( std::vector<std::tuple<NetAddr, hotstuff::PubKeyFrost, uint256_t>> &&replicas,bool ec_loop) {
+void HotStuffBase::start_frost( std::vector<std::tuple<NetAddr, hotstuff::PubKeyFrost, uint256_t>> &&replicas,std::vector<pubkey_bt> &&pubkeyVector, bool ec_loop) {
+//void HotStuffBase::start_frost( std::vector<std::tuple<NetAddr, hotstuff::PubKeyFrost, uint256_t>> &&replicas, bool ec_loop) {
     std::cout << "sto in HotStuffBase::start_frost riga 487 DENTRO hotstuff.cpp package:salticidae->include->src---- \" " << std::endl;
     std::cout << "replicas.size()  = " << replicas.size() << std::endl;
 
@@ -576,6 +583,7 @@ void HotStuffBase::start_frost( std::vector<std::tuple<NetAddr, hotstuff::PubKey
         std::cout << "prima add_replica_frost" << std::endl;
 
         HotStuffCore::add_replica_frost(i, peer, std::get<1>(replicas[i]));
+        HotStuffCore::add_replica(i, peer, std::move(pubkeyVector[i]));
         if (i == id) {
             std::cout << "i === id --> CREO KEYPAIR" << std::endl;
             HotStuffCore::add_keypair_frost(i,std::get<1>(replicas[i]));
@@ -584,6 +592,12 @@ void HotStuffBase::start_frost( std::vector<std::tuple<NetAddr, hotstuff::PubKey
         std::cout << "listen_addr.operator std::string() = "<< listen_addr.operator std::string() << std::endl;
 
 
+        std::vector<unsigned char> pub = std::get<1>(replicas[i]).serializePubKeys().first;
+        size_t publicKeySize = sizeof(pub);
+        // Create a PubKeySecp256k1 object using the public key data
+        PubKeySecp256k1 pubKeySecp256k1(pub);
+        //pubkey_bt boh =
+        std::cout << "pubKeySecp256k1.to_hex() = " << pubKeySecp256k1.to_hex() << std::endl;
 
         std::cout << "dopo aadd_keypair_frost PROVO A VEDERE SE HO FATTO ! " << std::endl;
 

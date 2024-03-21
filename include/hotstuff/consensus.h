@@ -354,6 +354,9 @@ struct Vote: public Serializable {
         std::cout << "---- STO IN verify riga 267 DENTRO consensus.h package:include->hotstuff---- " << std::endl;
 
         assert(hsc != nullptr);
+        std::cout << cert->to_hex() << std::endl;
+        std::cout << cert->get_obj_hash().to_hex() << std::endl;
+        std::cout << blk_hash.to_hex() << std::endl;
         return cert->verify(hsc->get_config().get_pubkey(voter), vpool).then([this](bool result) {
         //return cert->verify(hsc->get_config().get_pubkey_frost(voter), vpool).then([this](bool result) {
             return result && cert->get_obj_hash() == blk_hash;

@@ -403,7 +403,7 @@ int main(int argc, char* argv[]) {
     std::copy(bytearray_grouppubkey.begin(), bytearray_grouppubkey.end(), gpubkey);
 
     const hotstuff::PubKeyFrost &frost_key = hotstuff::PubKeyFrost(pubkey, gpubkey, idx, replicas.size());
-    std::cout << "ORA STAMPO STRONZO" << std::endl;
+
     std::cout << frost_key.data->index << std::endl;
     
     

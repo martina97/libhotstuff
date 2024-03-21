@@ -17,6 +17,9 @@
 #include <iostream>
 #include "hotstuff/entity.h"
 #include "hotstuff/crypto.h"
+#include "secp256k1_frost.h"
+#include "eckey_impl.h"
+#include "secp256k1.h"
 
 namespace hotstuff {
 

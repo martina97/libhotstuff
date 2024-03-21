@@ -634,10 +634,29 @@ class SigSecp256k1: public Serializable {
         std::cout << "---- STO IN verify riga 376 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
 
         check_msg_length(msg);
-        return secp256k1_ecdsa_verify(
+
+
+        std::cout << "provo stampa key " << pub_key.to_hex() << std::endl;
+
+        for (std::size_t i = 0; i < 33; ++i) {
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(data.data[i]);
+        }
+        std::cout << std::endl;
+
+        for (std::size_t i = 0; i < 33; ++i) {
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(pub_key.data.data[i]);
+        }
+        std::cout << std::endl;
+
+        
+        
+        bool ret_ecdsa_verify = secp256k1_ecdsa_verify(
                 _ctx->ctx, &data,
-                (unsigned char *)&*msg.begin(),
+                (unsigned char *) &*msg.begin(),
                 &pub_key.data) == 1;
+        std::cout << "ret_ecdsa == " << ret_ecdsa_verify << std::endl;
+        
+        return ret_ecdsa_verify;
     }
 
     bool verify(const bytearray_t &msg, const PubKeySecp256k1 &pub_key) {
@@ -660,8 +679,11 @@ class Secp256k1VeriTask: public VeriTask {
 
     bool verify() override {
         std::cout << "---- STO IN verify riga 405 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+        std::cout << "provo stampa key " << pubkey.to_hex() << std::endl;
+        bool ret = sig.verify(msg, pubkey, secp256k1_default_verify_ctx);
+        std::cout << "ret === " << ret << std::endl;
 
-        return sig.verify(msg, pubkey, secp256k1_default_verify_ctx);
+        return ret;
     }
 };
 
@@ -687,6 +709,8 @@ class PartCertSecp256k1: public SigSecp256k1, public PartCert {
     promise_t verify(const PubKey &pub_key, VeriPool &vpool) override {
         std::cout << "---- STO IN verify riga 431 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
 
+        std::cout << "provo stampa key " << pub_key.to_hex() << std::endl;
+        
         return vpool.verify(new Secp256k1VeriTask(obj_hash,
                 static_cast<const PubKeySecp256k1 &>(pub_key),
                 static_cast<const SigSecp256k1 &>(*this)));

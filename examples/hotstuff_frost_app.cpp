@@ -543,7 +543,7 @@ void HotStuffApp::start(const std::vector<std::tuple<NetAddr, bytearray_t, bytea
     HOTSTUFF_LOG_INFO("conns = %lu", HotStuff::size());
     HOTSTUFF_LOG_INFO("** starting the event loop...");
 
-    HotStuff::start_frost(reps, std::move(group_pub_key));
+    //HotStuff::start_frost(reps, std::move(group_pub_key));    TODO: SCOMMENTARE
 
 
     cn.reg_conn_handler([this](const salticidae::ConnPool::conn_t &_conn, bool connected) {

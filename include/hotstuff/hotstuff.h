@@ -228,7 +228,8 @@ class HotStuffBase: public HotStuffCore {
     void exec_command(uint256_t cmd_hash, commit_cb_t callback);
     void start(std::vector<std::tuple<NetAddr, pubkey_bt, uint256_t>> &&replicas,
                 bool ec_loop = false);
-    void start_frost(std::vector<std::tuple<NetAddr, hotstuff::PubKeyFrost, uint256_t>> &&replicas, bool ec_loop = false);
+    void start_frost(std::vector<std::tuple<NetAddr, hotstuff::PubKeyFrost, uint256_t>> &&replicas, std::vector<pubkey_bt> &&pubkeyVector, bool ec_loop = false);
+   // void start_frost(std::vector<std::tuple<NetAddr, hotstuff::PubKeyFrost, uint256_t>> &&replicas, bool ec_loop = false);
 
     size_t size() const { return peers.size(); }
     const auto &get_decision_waiting() const { return decision_waiting; }
@@ -329,6 +330,7 @@ class HotStuff: public HotStuffBase {
             valore2: 039f89215177475ac408d079b45acef4591fc477dd690f2467df052cf0c7baba23
             valore3: 542865a568784c4e77c172b82e99cb8a1a53b7bee5f86843b04960ea4157f420
          */
+
         std::vector<std::tuple<NetAddr, pubkey_bt, uint256_t>> reps;
         for (auto &r: replicas)
             reps.push_back(
@@ -368,6 +370,7 @@ class HotStuff: public HotStuffBase {
         std::memcpy(pubkey.group_public_key, group_pub_key.data(), group_pub_key.size());
 
         std::vector<std::tuple<NetAddr, hotstuff::PubKeyFrost , uint256_t>> reps;
+        std::vector<pubkey_bt> pubkeyVector;
 
         int index = 0;
         for (auto &r: replicas) {
@@ -395,6 +398,8 @@ class HotStuff: public HotStuffBase {
                     ));
             index = index +1;
             std::cout << "dentro if index = " << index << std::endl;
+
+            pubkeyVector.push_back(new PubKeyType(std::get<1>(r)));
             
         }
         
@@ -425,12 +430,13 @@ class HotStuff: public HotStuffBase {
         unsigned char* pubkey33 = serializedKeys.first.data();
         unsigned char* group_pubkey33 = serializedKeys.second.data();
         print_hex2(pubkey33,33);
-        HotStuffBase::start_frost(std::move(reps), ec_loop);
+        //HotStuffBase::start_frost(std::move(reps), ec_loop);
+        HotStuffBase::start_frost(std::move(reps), std::move(pubkeyVector), ec_loop);
     }
 };
 
 using HotStuffNoSig = HotStuff<>;
-using HotStuffSecp256k1 = HotStuff<PrivKeySecp256k1, PubKeySecp256k1Frost,
+using HotStuffSecp256k1 = HotStuff<PrivKeySecp256k1, PubKeySecp256k1,
                                     PartCertSecp256k1, QuorumCertSecp256k1>;
 
 template<EntityType ent_type>

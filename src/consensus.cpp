@@ -323,14 +323,14 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
                 std::cout <<"msg.vote.commitment->index = " <<vote.commitment->index << std::endl;
                 std::cout <<"msg.vote.commitment->hiding = " <<std::endl;
                 std::cout << "0x";
-                for (size_t i = 0; i < sizeof(vote.commitment->hiding); i++) {
-                    std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(vote.commitment->hiding[i]);
+                for (unsigned char i : vote.commitment->hiding) {
+                    std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(i);
                 }
                 std::cout << std::dec << std::endl; // Reset to decimal format
                 std::cout <<"msg.vote.commitment->binding = " <<std::endl;
                 std::cout << "0x";
-                for (size_t i = 0; i < sizeof(vote.commitment->binding); i++) {
-                    std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(vote.commitment->binding[i]);
+                for (unsigned char i : vote.commitment->binding) {
+                    std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(i);
                 }
                 std::cout << std::dec << std::endl; // Reset to decimal format
 
@@ -508,12 +508,13 @@ void HotStuffCore::prune(uint32_t staleness) {
 void HotStuffCore::add_replica(ReplicaID rid, const PeerId &peer_id,
                                 pubkey_bt &&pub_key) {
     std::cout << "---- STO IN add_replica riga 354 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
+    std::cout << " pub_key->to_hex() = " <<  pub_key->to_hex() << std::endl;
 
 
     config.add_replica(rid,ReplicaInfo(rid, peer_id, std::move(pub_key)));
     //aggiungo l'id della replica nell'insieme "voted", che memorizza gli id di tutte le
     //repliche che hanno votato per il blocco b0
-    b0->voted.insert(rid);  /** b0 = genesis block, ossia blocco iniziale blockchain */
+   // b0->voted.insert(rid);  /** b0 = genesis block, ossia blocco iniziale blockchain */
 }
 
 void HotStuffCore::add_replica_frost(ReplicaID rid, const PeerId &peer_id, hotstuff::PubKeyFrost &pub_key) {

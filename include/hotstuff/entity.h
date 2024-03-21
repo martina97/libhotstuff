@@ -30,6 +30,9 @@
 #include "hotstuff/util.h"
 #include "hotstuff/crypto.h"
 #include "secp256k1_frost.h"
+#include "eckey_impl.h"
+#include "secp256k1.h"
+
 namespace hotstuff {
 
 enum EntityType {
@@ -92,8 +95,8 @@ class ReplicaConfig {
     void add_replica(ReplicaID rid, const ReplicaInfo &info) {
         std::cout << "---- STO IN add_replica riga 71 DENTRO entity.h package:include->hotstuff---- " << std::endl;
 
-        //replica_map.insert(std::make_pair(rid, info));
-        nreplicas++;
+        replica_map.insert(std::make_pair(rid, info));
+        //nreplicas++;
     }
 
     void add_replica(ReplicaID rid, const ReplicaInfoFrost &info) {
@@ -136,14 +139,21 @@ class ReplicaConfig {
     const PubKey &get_pubkey(ReplicaID rid) const {
         std::cout << "---- STO IN get_pubkey riga 88 DENTRO entity.h package:include->hotstuff---- " << std::endl;
 
+        
         return *(get_info(rid).pubkey);
     }
 
 
-    std::pair<std::vector<unsigned char>, std::vector<unsigned char>> get_pubkey_frost(ReplicaID rid) const {
+    const PubKey  &get_pubkey2(ReplicaID rid) const {
         std::cout << "---- STO IN get_pubkey_frost riga 88 DENTRO entity.h package:include->hotstuff---- " << std::endl;
-
-        return get_info_frost(rid).pubkey.serializePubKeys();
+        std::vector<unsigned char> pub = get_info_frost(rid).pubkey.serializePubKeys().first;
+        size_t publicKeySize = sizeof(pub);
+        // Create a PubKeySecp256k1 object using the public key data
+        PubKeySecp256k1 pubKeySecp256k1(pub);
+        //pubkey_bt boh =
+        std::cout << "pubKeySecp256k1.to_hex() = " << pubKeySecp256k1.to_hex() << std::endl;
+                
+        return pubKeySecp256k1;
     }
 
     // TODO: SCOMMENTA !!!!!!!!!!!!
