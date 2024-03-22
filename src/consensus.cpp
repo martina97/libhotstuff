@@ -186,8 +186,8 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds, const std::
 
     std::cout << "parents[0]->get_hash().to_hex() = " << parents[0]->get_hash().to_hex() << std::endl;
     bool frost = true;
-    if (commitment_map.empty()) {
-        std::cout << "PRIMO BLOCCO DA AGGIUNGERE ALLA CATENA ! " << std::endl;
+    if (commitment_map.empty() or commitment_map.size() < 3) {
+        std::cout << "NIENTE FROST!!!!!!!! " << std::endl;
         frost = false;
     }
 
@@ -210,7 +210,7 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds, const std::
     //bnew->qc_frost = QuorumCertFrost(config, bnew_hash);
 
 
-    Proposal prop(id, bnew, nullptr);
+    Proposal prop(frost,id, bnew, nullptr);
     bnew->self_qc = create_quorum_cert(bnew_hash, frost);
     //bnew->self_qc = create_quorum_cert(bnew_hash);
     std::cout << "PROVO A STAMPARE IL QC ---- " << bnew->self_qc->to_hex() << std::endl;
@@ -222,9 +222,34 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds, const std::
         // Whenever you access commitment_map, lock the mutex first
         {
             std::lock_guard<std::mutex> lock(map_mutex);
-            auto first_element = commitment_map.begin()->second;
+            auto first_element = commitment_map.begin();
+            prop.commitment_list = new std::list<secp256k1_frost_nonce_commitment>();
+
+            // Copy the commitments from the list in the map to the new list
+            for (const auto& commitment : first_element->second) {
+                prop.commitment_list->push_back(commitment);
+            }
+
+            // Iterate over the list and print each element
+            std::cout << "Printing commitment list:" << std::endl;
+            std::cout << "Commitment list SIZE = "  << prop.commitment_list->size()<< std::endl;
+            for (const auto &commitment : *prop.commitment_list) {
+                std::cout << "Index: " << commitment.index << std::endl;
+                std::cout << "Hiding: ";
+                for (unsigned char i : commitment.hiding) {
+                    std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(i);
+                }
+                std::cout << std::endl;
+                std::cout << "Binding: ";
+                for (unsigned char i : commitment.binding) {
+                    std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(i);
+                }
+                std::cout << std::endl;
+            }
+
             //std::copy(first_element.begin(), first_element.end(), bnew->list_commitment);
             commitment_map.erase(commitment_map.begin()); //tolgo il primo valore della mappa, in quanto l'ho usato!!!
+
         }
     }
 
@@ -354,7 +379,14 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
             }
             std::cout << std::endl;
              */
+            if (!fill_random(binding_seed, sizeof(binding_seed))) {
+                throw ("Failed to generate binding_seed\n");
 
+            }
+            if (!fill_random(hiding_seed, sizeof(hiding_seed))) {
+                throw ("Failed to generate hiding_seed\n");
+
+            }
             /** CREO NUOVA COPPIA NONCE-COMM DA USARE PER IL PROX BLOCCO */
             secp256k1_frost_nonce *nonce = secp256k1_frost_nonce_create(sign_verify_ctx, key_pair, binding_seed, hiding_seed);
             {

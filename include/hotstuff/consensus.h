@@ -185,6 +185,7 @@ class HotStuffCore {
 
 /** Abstraction for proposal messages. */
 struct Proposal: public Serializable {
+    bool frost{};
     ReplicaID proposer;
     /** block being proposed */
     block_t blk;
@@ -194,24 +195,53 @@ struct Proposal: public Serializable {
     std::list<secp256k1_frost_nonce_commitment> *commitment_list;
 
     Proposal(): blk(nullptr), hsc(nullptr) {}
-    Proposal(ReplicaID proposer,
+    Proposal(bool frost,ReplicaID proposer,
             const block_t &blk,
             HotStuffCore *hsc):
-        proposer(proposer),
-        blk(blk), hsc(hsc) {}
+            frost(frost),
+            proposer(proposer),
+            blk(blk), hsc(hsc) {}
 
     void serialize(DataStream &s) const override {
-        std::cout << "---- STO IN serialize riga 187 DENTRO consensus.h package:include->hotstuff---- " << std::endl;
 
+        std::cout << "---- STO IN serialize riga 204 DENTRO consensus.h package:include->hotstuff---- " << std::endl;
+        std::cout << "s == " << s.get_hex() << std::endl;
+        s<<frost;
         s << proposer
           << *blk;
+
+        // Serialize the size of the commitment_list
+
+
+        if (blk->frost == 1) {
+            uint32_t num_commitments = 4;
+            s << htole(num_commitments);
+
+
+            // Serialize each commitment in the list
+            if (commitment_list) {
+                for (const auto &commitment : *commitment_list) {
+                    s << commitment.index; // Serialize the index
+                    for (int i = 0; i < 64; ++i) {
+                        s << commitment.hiding[i]; // Serialize hiding array
+                    }
+                    for (int i = 0; i < 64; ++i) {
+                        s << commitment.binding[i]; // Serialize binding array
+                    }
+                }
+            }
+        }
+
     }
 
     void unserialize(DataStream &s) override {
-        std::cout << "---- STO IN unserialize riga 194 DENTRO consensus.h package:include->hotstuff---- " << std::endl;
+        std::cout << "---- STO IN unserialize riga 234 DENTRO consensus.h package:include->hotstuff---- " << std::endl;
         std::cout << "s = " << s.get_hex() << std::endl;
-        
+
         assert(hsc != nullptr);
+        s>>frost;
+        std::cout << "frost == "  << frost << std::endl;
+
         s >> proposer;
         Block _blk;
         _blk.unserialize(s, hsc);
@@ -219,6 +249,26 @@ struct Proposal: public Serializable {
 
         blk = hsc->storage->add_blk(std::move(_blk), hsc->get_config());
         std::cout << "BLOCCO FROST == " << blk->frost << std::endl;
+        std::cout << "s = " << s.get_hex() << std::endl;
+
+        /*
+        if (blk->frost == 1) {
+            // vuol dire che il blocco avrà i commitment list
+            // Deserialize each commitment in the list
+            commitment_list = new std::list<secp256k1_frost_nonce_commitment>();
+            for (uint32_t i = 0; i < 4; ++i) {
+                secp256k1_frost_nonce_commitment commitment;
+                s >> commitment.index; // Deserialize the index
+                for (int j = 0; j < 64; ++j) {
+                    s >> commitment.hiding[j]; // Deserialize hiding array
+                }
+                for (int j = 0; j < 64; ++j) {
+                    s >> commitment.binding[j]; // Deserialize binding array
+                }
+                commitment_list->push_back(commitment);
+            }
+
+        }*/
         
     }
 
