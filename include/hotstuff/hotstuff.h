@@ -281,16 +281,17 @@ class HotStuff: public HotStuffBase {
 
     part_cert_bt parse_part_cert(DataStream &s) override {
         std::cout << "---- STO IN parse_part_cert riga 278 DENTRO hotstuff.h package:include->hotstuff---- " << std::endl;
-        
+        std::cout << "s = "<< s.get_hex()<< std::endl;
+
         PartCert *pc = new PartCertType();
         s >> *pc;
         return pc;
     }
 
-    quorum_cert_bt create_quorum_cert(const uint256_t &blk_hash) override {
+    quorum_cert_bt create_quorum_cert(const uint256_t &blk_hash, bool frost) override {
         std::cout << "---- STO IN create_quorum_cert riga 286 DENTRO hotstuff.h package:include->hotstuff---- " << std::endl;
 
-        return new QuorumCertType(get_config(), blk_hash);
+        return new QuorumCertType(get_config(), blk_hash, frost);
     }
 
 
@@ -437,7 +438,7 @@ class HotStuff: public HotStuffBase {
 
 using HotStuffNoSig = HotStuff<>;
 using HotStuffSecp256k1 = HotStuff<PrivKeySecp256k1, PubKeySecp256k1,
-                                    PartCertSecp256k1, QuorumCertSecp256k1>;
+                                    PartCertSecp256k1, QuorumCertFrost>;
 
 template<EntityType ent_type>
 FetchContext<ent_type>::FetchContext(FetchContext && other):

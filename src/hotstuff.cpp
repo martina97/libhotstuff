@@ -195,8 +195,8 @@ promise_t HotStuffBase::async_deliver_blk(const uint256_t &blk_hash,
     if (storage->is_blk_delivered(blk_hash)) {
         std::cout << "BLK IS DELIVERED !!! " << std::endl;
         return promise_t([this, &blk_hash](promise_t pm) {
-        pm.resolve(storage->find_blk(blk_hash));  //todo: l'ho cambiato!!!
-        //pm.resolve(true);
+        //pm.resolve(storage->find_blk(blk_hash));  //todo: l'ho cambiato!!!
+        pm.resolve(true);
         });
     }
     

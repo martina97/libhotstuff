@@ -146,7 +146,7 @@ class HotStuffCore {
     /** Create a partial certificate from its seralized form. */
     virtual part_cert_bt parse_part_cert(DataStream &s) = 0;
     /** Create a quorum certificate that proves 2f+1 votes for a block. */
-    virtual quorum_cert_bt create_quorum_cert(const uint256_t &blk_hash) = 0;
+    virtual quorum_cert_bt create_quorum_cert(const uint256_t &blk_hash, bool frost) = 0;
     /** Create a quorum certificate from its serialized form. */
     virtual quorum_cert_bt parse_quorum_cert(DataStream &s) = 0;
     /** Create a command object from its serialized form. */
@@ -232,27 +232,27 @@ struct Proposal: public Serializable {
 
 /** Abstraction for vote messages. */
 struct Vote: public Serializable {
+    bool frost{};
     ReplicaID voter{};
     /** block being voted */
     uint256_t blk_hash;
     /** proof of validity for the vote */
     part_cert_bt cert;
-    bool frost{};
-    secp256k1_frost_nonce_commitment *commitment{};
+
+    secp256k1_frost_nonce_commitment *commitment{}; //il voto trasporta i commitment generati dal voter
     /** handle of the core object to allow polymorphism */
     HotStuffCore *hsc;
 
    // PartCertFrost *cert_frost;
 
-
-
     Vote(): cert(nullptr), hsc(nullptr) {}
 
-    Vote(ReplicaID voter, const uint256_t &blk_hash, part_cert_bt &&cert,
+    Vote(bool frost, ReplicaID voter, const uint256_t &blk_hash, part_cert_bt &&cert,
          secp256k1_frost_nonce_commitment *commitment, HotStuffCore *hsc):
+        frost(frost),
         voter(voter),
         blk_hash(blk_hash),
-        cert(std::move(cert)), frost(true),commitment(commitment),hsc(hsc) {}
+        cert(std::move(cert)), commitment(commitment),hsc(hsc) {}
 
         /*
     Vote(ReplicaID voter,
@@ -262,44 +262,45 @@ struct Vote: public Serializable {
             voter(voter),
             blk_hash(blk_hash),
             cert_frost(&cert), commitment(commitment), hsc(hsc) {}*/
-    Vote(ReplicaID voter,
+    Vote(bool frost, ReplicaID voter,
          const uint256_t &blk_hash, secp256k1_frost_nonce_commitment *commitment,
          HotStuffCore *hsc):
+            frost(frost),
             voter(voter),
-            blk_hash(blk_hash),frost(true),
+            blk_hash(blk_hash),
             commitment(commitment), hsc(hsc){}
 
     Vote(const Vote &other):
+        frost(other.frost),
         voter(other.voter),
         blk_hash(other.blk_hash),
         cert(other.cert ? other.cert->clone() : nullptr),
-        hsc(other.hsc),frost(true),
+        hsc(other.hsc),
         commitment(other.commitment) {}
 
     Vote(Vote &&other) = default;
     
     void serialize(DataStream &s) const override {
         std::cout << "---- STO IN serialize riga 244 DENTRO consensus.h package:include->hotstuff---- " << std::endl;
-
-        s << voter << blk_hash << *cert;
-
         s << frost;
-
+        s << voter << blk_hash ;
 
         // Serialize cert_frost and commitment if frost is true
         //s << *cert_frost;
         //s << static_cast<uint32_t>(commitment->index);
+        std::cout << "commitment index == " << commitment->index << std::endl;
         s << commitment->index;
         //s << htole(commitment->index);
         for (unsigned char i : commitment->hiding) {
             s << i;
 
         }
-        for (int i = 0; i < 64; ++i) {
-            s << commitment->binding[i];
+        for (unsigned char i : commitment->binding) {
+            s << i;
         }
         // Assuming commitment is not nullptr, serialize it
         //s << *commitment;
+        s << *cert;
 
     }
 
@@ -307,12 +308,14 @@ struct Vote: public Serializable {
         std::cout << "---- STO IN unserialize riga 250 DENTRO consensus.h package:include->hotstuff---- " << std::endl;
 
         std::cout << s.get_hex() << std::endl;
-        
+        s >> frost;
         assert(hsc != nullptr);
         s >> voter >> blk_hash;
-        cert = hsc->parse_part_cert(s);
-        s << frost;
+
+       // s<<frost;
         std::cout << "frost == " << frost << std::endl;
+        std::cout << "voter == " << voter << std::endl;
+        std::cout << "blk_hash == " << blk_hash.to_hex() << std::endl;
 
 
         //s>>frost;
@@ -330,14 +333,19 @@ struct Vote: public Serializable {
         // Allocate memory for commitment
         commitment = new secp256k1_frost_nonce_commitment();
         s >> commitment->index; // Deserialize index as uint32_t
+
+        std::cout << "commitment index == " << commitment->index << std::endl;
+
         //= static_cast<uint32_t>(letoh(index)); // Convert to host byte order
 
         // Convert to host byte order
 
         // Skip the first two bytes before reading hiding and binding arrays
         // Discard the first two values from the stream
+        /*
         unsigned char discard1;
         s >> discard1 ;
+         */
 
         // Deserialize commitment fields individually
         for (int i = 0; i < 64; ++i) {
@@ -346,8 +354,8 @@ struct Vote: public Serializable {
         for (int i = 0; i < 64; ++i) {
             s >> commitment->binding[i];
         }
-
-
+        //s << discard1 << discard1;
+        cert = hsc->parse_part_cert(s);
 
 
     }

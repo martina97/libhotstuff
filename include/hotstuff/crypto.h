@@ -746,12 +746,14 @@ class PartCertSecp256k1: public SigSecp256k1, public PartCert {
 class QuorumCertFrost: public QuorumCert {
     uint256_t obj_hash;
     salticidae::Bits rids;
-    std::unordered_map<ReplicaID, SigSecp256k1> sigs_hotstuff;
+    bool frost{};
+    std::unordered_map<ReplicaID, SigSecp256k1> sigs;
     std::unordered_map<ReplicaID, secp256k1_frost_signature_share> sigs_frost;
-    bool frost;
+
     public:
+
     QuorumCertFrost() = default;
-    QuorumCertFrost(const ReplicaConfig &config, const uint256_t &obj_hash);
+    QuorumCertFrost(const ReplicaConfig &config, const uint256_t &obj_hash, bool frost);
 
 
 
@@ -760,7 +762,7 @@ class QuorumCertFrost: public QuorumCert {
 
         if (pc.get_obj_hash() != obj_hash)
             throw std::invalid_argument("PartCert does match the block hash");
-        sigs_hotstuff.insert(std::make_pair(
+        sigs.insert(std::make_pair(
                 rid, static_cast<const PartCertSecp256k1 &>(pc)));
         rids.set(rid);
     }
@@ -792,21 +794,27 @@ class QuorumCertFrost: public QuorumCert {
     }
 
     void serialize(DataStream &s) const override {
-        std::cout << "---- STO IN serialize riga 760 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+        std::cout << "---- STO IN serialize riga 794 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+        std::cout << "s = " << s.get_hex() << std::endl;
 
-        s << obj_hash << rids;
+        s  << obj_hash << rids<<frost;
+        std::cout << "obj_hash == " << obj_hash.to_hex() << std::endl;
+        std::cout << "frost == " << frost << std::endl;
         for (size_t i = 0; i < rids.size(); i++)
-            if (rids.get(i)) s << sigs_hotstuff.at(i);  //todo: change
+            if (rids.get(i)) s << sigs.at(i);
     }
 
     void unserialize(DataStream &s) override {
-        std::cout << "---- STO IN unserialize riga 768 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+        std::cout << "---- STO IN unserialize riga 805 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+        std::cout << "s = " << s.get_hex() << std::endl;
 
-        s >> obj_hash >> rids;
-        /*
+        s >> obj_hash >> rids>>frost;
+        std::cout << "obj_hash == " << obj_hash.to_hex() << std::endl;
+        std::cout << "frost == " << frost << std::endl;
         for (size_t i = 0; i < rids.size(); i++)
-            if (rids.get(i)) s >> sigs_frost[i];  //todo: change
-            */
+            if (rids.get(i)) s >> sigs[i];
+
+
     }
 };
 
@@ -814,6 +822,7 @@ class QuorumCertSecp256k1: public QuorumCert {
     uint256_t obj_hash;
     salticidae::Bits rids;
     std::unordered_map<ReplicaID, SigSecp256k1> sigs;
+    std::unordered_map<ReplicaID, secp256k1_frost_signature_share> sigs_frost;
 
     public:
     QuorumCertSecp256k1() = default;
@@ -848,16 +857,20 @@ class QuorumCertSecp256k1: public QuorumCert {
     }
 
     void serialize(DataStream &s) const override {
-        std::cout << "---- STO IN serialize riga 500 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+        std::cout << "---- STO IN serialize riga 859 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+        std::cout << "s = " << s.get_hex() << std::endl;
 
-        s << obj_hash << rids;
+        s  << obj_hash << rids;
+        std::cout << "obj_hash == " << obj_hash.to_hex() << std::endl;
+
         for (size_t i = 0; i < rids.size(); i++)
             if (rids.get(i)) s << sigs.at(i);
     }
 
     void unserialize(DataStream &s) override {
-        std::cout << "---- STO IN unserialize riga 508 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
-
+        std::cout << "---- STO IN unserialize riga 870 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+        std::cout << "s = " << s.get_hex() << std::endl;
+        std::cout << "obj_hash == " << obj_hash.to_hex() << std::endl;
         s >> obj_hash >> rids;
         for (size_t i = 0; i < rids.size(); i++)
             if (rids.get(i)) s >> sigs[i];

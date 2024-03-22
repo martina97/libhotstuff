@@ -21,19 +21,22 @@ namespace hotstuff {
 
 void Block::serialize(DataStream &s) const {
     std::cout << "---- STO IN serialize riga 22 DENTRO entity.cpp package:salticidae->include->src---- " << std::endl;
-
+    s<<frost;
     s << htole((uint32_t)parent_hashes.size());
     for (const auto &hash: parent_hashes)
         s << hash;
     s << htole((uint32_t)cmds.size());
     for (auto cmd: cmds)
         s << cmd;
+
     s << *qc << htole((uint32_t)extra.size()) << extra;
 }
 
 void Block::unserialize(DataStream &s, HotStuffCore *hsc) {
     std::cout << "---- STO IN unserialize riga 34 DENTRO entity.cpp package:salticidae->include->src---- " << std::endl;
-
+    std::cout << "s == " << s.get_hex() << std::endl;
+    
+    s>>frost;
     uint32_t n;
     s >> n;
     n = letoh(n);

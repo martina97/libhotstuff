@@ -199,7 +199,7 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds, const std::
             hqc.first,
             nullptr
         ));
-    bnew->frost = frost;
+   // bnew->frost = frost;
     const uint256_t bnew_hash = bnew->get_hash();
 
     on_deliver_blk(bnew);
@@ -211,9 +211,11 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds, const std::
 
 
     Proposal prop(id, bnew, nullptr);
-    bnew->self_qc = create_quorum_cert(bnew_hash);
+    bnew->self_qc = create_quorum_cert(bnew_hash, frost);
+    //bnew->self_qc = create_quorum_cert(bnew_hash);
     std::cout << "PROVO A STAMPARE IL QC ---- " << bnew->self_qc->to_hex() << std::endl;
-    
+
+
     if (frost) {
         //std::cout << "bnew->qc_frost.obj_hash.to_hex() "<< bnew->qc_frost.obj_hash.to_hex() << std::endl;
         std::cout << "FROST ABILITATO DENTRO ON PROPOSE !!!!" << std::endl;
@@ -318,7 +320,7 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
                 std::cout << "NONCE LIST SIZE = " << nonce_list.size() << std::endl;
 
 
-                const Vote vote = Vote(id, bnew->get_hash(), create_part_cert(*priv_key, bnew->get_hash()), &nonce->commitments,this);
+                const Vote vote = Vote(bnew->frost,id, bnew->get_hash(), create_part_cert(*priv_key, bnew->get_hash()), &nonce->commitments,this);
                 std::cout << "dopo aver creato il vote!!" << std::endl;
                 std::cout <<"msg.vote.commitment->index = " <<vote.commitment->index << std::endl;
                 std::cout <<"msg.vote.commitment->hiding = " <<std::endl;
@@ -364,6 +366,9 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
                 //std::copy(std::begin(bnew->list_commitment), std::end(bnew->list_commitment), std::begin(signing_commitments));
                 std::cout << "nonce_list_size = " << nonce_list.size() << std::endl;
                 /** CREO PART CERT CON I COMMITMENT PRESI NEL MSG PROPOSE ! --> if blk.frost = true !!! */
+
+                // TODO: SCOMMENTA
+                /*
                 hotstuff::PartCertFrost frost_cert = hotstuff::PartCertFrost(bnew->get_hash(),
                                                                              3, key_pair, nonce_list[0],signing_commitments);
                 nonce_list.erase(nonce_list.begin());
@@ -374,8 +379,13 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
                     std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(i);
                 }
                 std::cout << std::endl;
+                 */
+
+
                 //Vote vote = Vote(id, bnew->get_hash(), frost_cert ,&nonce->commitments, this);
-                const Vote vote = Vote(id, bnew->get_hash() ,&nonce->commitments, this);
+                //const Vote vote = Vote(id, bnew->get_hash() ,&nonce->commitments, this);  todo scommenta
+                const Vote vote = Vote(true,id, bnew->get_hash(), create_part_cert(*priv_key, bnew->get_hash()), &nonce->commitments,this);
+
                 //vote.frost=true;
                 do_vote(prop.proposer, vote);
             }
@@ -394,22 +404,23 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
     std::cout << "HO RICEVUTO VOTO, CONTROLLO I COMMITMENT PASSATI!" << std::endl;
     std::cout << "vote.frost = " << vote.frost << std::endl;
 
+    /*
     if (vote.commitment->index != 0) {
         vote.commitment->index = vote.commitment->index / 256;
-    }
+    }*/
     std::cout << "BLOCCOOOOO = === = = =" << vote.blk_hash.to_hex() << std::endl;
     std::cout << "vote.commitment->index = " << vote.commitment->index << std::endl;
     std::cout <<"msg.vote.commitment->hiding = " <<std::endl;
     std::cout << "0x";
-    for (size_t i = 0; i < sizeof(vote.commitment->hiding); i++) {
-        std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(vote.commitment->hiding[i]);
+    for (unsigned char i : vote.commitment->hiding) {
+        std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(i);
     }
     std::cout << std::dec << std::endl; // Reset to decimal format
 
     std::cout <<"msg.vote.commitment->binding = " <<std::endl;
     std::cout << "0x";
-    for (size_t i = 0; i < sizeof(vote.commitment->binding); i++) {
-        std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(vote.commitment->binding[i]);
+    for (unsigned char i : vote.commitment->binding) {
+        std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(i);
     }
     std::cout << std::dec << std::endl; // Reset to decimal format
 
@@ -419,6 +430,21 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
     } else {
         //assert(vote.cert_frost->signature_share);
     }
+    /**  ORA DEVO METTERE IL COMMITMENT NELLA MAPPA !!!! */
+
+    std::string key = get_hex10(vote.blk_hash);
+    // Check if the key already exists in the map
+    auto it = commitment_map.find(key);
+    if (it != commitment_map.end()) {
+        // If the key exists, append the commitment to the associated list
+        it->second.push_back(*vote.commitment);
+    } else {
+        // If the key doesn't exist, create a new list and insert the commitment
+        std::list<secp256k1_frost_nonce_commitment> newCommitmentList;
+        newCommitmentList.push_back(*vote.commitment);
+        commitment_map[key] = newCommitmentList;
+    }
+
 
     size_t qsize = blk->voted.size();
     std::cout << "config.nmajority = " << config.nmajority << std::endl;
@@ -438,7 +464,7 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
     if (qc == nullptr)
     {
         LOG_WARN("vote for block not proposed by itself");
-        qc = create_quorum_cert(blk->get_hash());
+        qc = create_quorum_cert(blk->get_hash(), vote.frost);
     }
     std::cout << "PRIMA DI ADD_PART!!!" << std::endl;
     
@@ -461,7 +487,7 @@ void HotStuffCore::on_init(uint32_t nfaulty) {
 
 
     // b0->qc è quorum_cert_bt , ossia QuorumCert
-    b0->qc = create_quorum_cert(b0->get_hash());    //Create a quorum certificate that proves 2f+1 votes for a block.
+    b0->qc = create_quorum_cert(b0->get_hash(), false);    //Create a quorum certificate that proves 2f+1 votes for a block.
     std::cout << "b0->qc.get()->to_hex() = " << b0->qc.get()->to_hex() << std::endl;
     std::cout << "b0->height = " << b0->height << std::endl;
 

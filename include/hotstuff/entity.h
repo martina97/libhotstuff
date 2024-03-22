@@ -202,6 +202,7 @@ get_hashes(const std::vector<Hashable> &plist) {
 
 class Block {
     friend HotStuffCore;
+    bool frost{};
     std::vector<uint256_t> parent_hashes;
     std::vector<uint256_t> cmds;
     quorum_cert_bt qc_old;
@@ -216,19 +217,20 @@ class Block {
     uint32_t height;
     bool delivered;
     int8_t decision;
-    bool frost;
-
     std::unordered_set<ReplicaID> voted;
+
     //secp256k1_frost_nonce_commitment list_commitment[4];
 
     public:
     Block():
+        frost(false),
         qc(nullptr),
         qc_ref(nullptr),
         self_qc(nullptr), height(0),
         delivered(false), decision(0) {}
 
     Block(bool delivered, int8_t decision):
+        frost(false),
         qc(new QuorumCertDummy()),
         hash(salticidae::get_hash(*this)),
         qc_ref(nullptr),
