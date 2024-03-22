@@ -129,6 +129,8 @@ class BoxObj: public _BoxObj<T, D> {
     BoxObj(BoxObj<T_, D_> &&other): base_t(std::move(other)) {}
 
     T *operator->() const { return base_t::obj; }
+
+    bool frost;
 };
 
 template<typename T, typename D>

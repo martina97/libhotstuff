@@ -202,6 +202,11 @@ get_hashes(const std::vector<Hashable> &plist) {
 
 class Block {
     friend HotStuffCore;
+
+
+    //secp256k1_frost_nonce_commitment list_commitment[4];
+
+    public:
     bool frost{};
     std::vector<uint256_t> parent_hashes;
     std::vector<uint256_t> cmds;
@@ -218,10 +223,6 @@ class Block {
     bool delivered;
     int8_t decision;
     std::unordered_set<ReplicaID> voted;
-
-    //secp256k1_frost_nonce_commitment list_commitment[4];
-
-    public:
     Block():
         frost(false),
         qc(nullptr),

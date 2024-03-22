@@ -76,29 +76,80 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f91c2701-4032-4eac-8cd6-68353351d8a4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/cache-v2-30ec6a1533225092246a.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/cmakeFiles-v1-10fa2dae4c671167cf8a.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/codemodel-v2-62cc254087175426f62c.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/directory-.-Release-f5ebdc15457944623624.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/directory-examples-Release-1c8b83b621b6ef38a245.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/directory-salticidae-Release-fe37042d2aba867027cb.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/directory-secp256k1-frost-Release-7e38c998400d48e5cc41.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/directory-secp256k1-frost.examples-Release-3401fa06b9eccee7fe0f.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/directory-secp256k1-frost.src-Release-3027ab489b39bc9eb369.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/directory-test-Release-451c0598f41488bb20b9.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/index-2024-03-16T14-46-50-0424.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-Continuous-Release-7621103305742952e842.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-ContinuousBuild-Release-0ef44b49de863480ff77.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-ContinuousConfigure-Release-e6a1a4488d8f5aa48f90.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-ContinuousCoverage-Release-86954fa33c56036742e9.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-ContinuousMemCheck-Release-412a478b3eba6f19d18c.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-ContinuousStart-Release-366cec10f2f493459ace.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-ContinuousSubmit-Release-0b9a178bb2787a1f58d2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-ContinuousTest-Release-67e1bb0b51b5d4a1fe4f.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-ContinuousUpdate-Release-958f90ecaa504946b068.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-Experimental-Release-71c52722cb758387e138.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-ExperimentalBuild-Release-ec16193f9b1033116cb8.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-ExperimentalConfigure-Release-c3fe561edaea7d8a6309.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-ExperimentalCoverage-Release-441f37f16c3f190c5996.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-ExperimentalMemCheck-Release-5bd14dfa1b08126748f9.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-ExperimentalStart-Release-e8c6774d8cd00a185bae.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-ExperimentalSubmit-Release-8208ea711c36a5064114.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-ExperimentalTest-Release-6c93fcc3af137818a88a.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-ExperimentalUpdate-Release-8247a791ae412a06f08c.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-Nightly-Release-048c250f2577e23ca5e6.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-NightlyBuild-Release-d19fcc4584b264489846.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-NightlyConfigure-Release-eed98239783ef047a873.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-NightlyCoverage-Release-79e38655f0b163ee3932.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-NightlyMemCheck-Release-5c690c97cfb98caf9a68.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-NightlyMemoryCheck-Release-94b6cd75ada06e002803.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-NightlyStart-Release-744b616cfadf7490b332.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-NightlySubmit-Release-5c859f966a2eba386311.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-NightlyTest-Release-e237aa0198fab8cba304.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-NightlyUpdate-Release-7c682d46b7b21903f302.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-bench-Release-6fa24715379a03acef7e.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-bench_ecmult-Release-eb6bc9cc9773980972b9.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-bench_internal-Release-61f9ce39cca14a5e251b.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-check-Release-0919def6a7f844335899.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-ecdh_example-Release-2c43dd45cd8d8d064fc1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-ecdsa_example-Release-a5a92f62edae94ae9268.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-exhaustive_tests-Release-30e505b71170277ad2bc.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-frost-app-Release-8b0a91395da9a8bb4723.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-frost-tls-keygen-Release-7b33b180b84fbbec940b.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-frost_example-Release-c9feca7eab5e6dc3e69a.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-frost_example2-Release-9bd4400fbfba81ae2aa6.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff-Release-9bf40e0933787423ff5a.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff-app-Release-97973fa19d884775ccec.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff-client-Release-e10a6eca09f8d2ebdf19.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff-keygen-Release-f7b2526e860b2d0dcf5d.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff-tls-keygen-Release-64b48f6c890577564909.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-hotstuff_shared-Release-901f8bef91117029ad69.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-libsecp256k1-Release-4714f311738c515a9a98.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-noverify_tests-Release-7e24644ca36a755e9bab.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-salticidae-Release-f0d05ce1ae417945c21f.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-schnorr_example-Release-25257dd5688ffe759c74.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-secp256k1-Release-0326f19e7b0d18cc67e2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-secp256k1_precomputed-Release-25a0a63e39936e648579.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-test_secp256k1-Release-0c1b02b07fa0693607b4.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/target-tests-Release-1ffc5a2e5cae51073be1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cmake/api/v1/reply/toolchains-v1-7096c62e23c342eb06a8.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/Temporary/LastTest.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/frost-app" beforeDir="false" afterPath="$PROJECT_DIR$/examples/frost-app" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frost-tls-keygen" beforeDir="false" afterPath="$PROJECT_DIR$/frost-tls-keygen" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/hotstuff/consensus.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/hotstuff/consensus.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/hotstuff/crypto.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/hotstuff/crypto.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/hotstuff/entity.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/hotstuff/entity.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log0_frost" beforeDir="false" afterPath="$PROJECT_DIR$/log0_frost" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log1_frost" beforeDir="false" afterPath="$PROJECT_DIR$/log1_frost" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log2_frost" beforeDir="false" afterPath="$PROJECT_DIR$/log2_frost" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log3_frost" beforeDir="false" afterPath="$PROJECT_DIR$/log3_frost" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-frost" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/secp256k1-frost/examples/frost.c" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/examples/frost.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/secp256k1-frost/include/secp256k1.h" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/include/secp256k1.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/secp256k1-frost/src/eckey_impl.h" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/src/eckey_impl.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/secp256k1-frost/src/modules/frost/main_impl.h" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/src/modules/frost/main_impl.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/secp256k1-frost/src/modules/frost/tests_impl.h" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/src/modules/frost/tests_impl.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/secp256k1-frost/src/modules/schnorrsig/tests_exhaustive_impl.h" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/src/modules/schnorrsig/tests_exhaustive_impl.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/secp256k1-frost/src/modules/schnorrsig/tests_impl.h" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/src/modules/schnorrsig/tests_impl.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/secp256k1-frost/src/secp256k1.c" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/src/secp256k1.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/secp256k1-frost/src/tests.c" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/src/tests.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/secp256k1-frost/src/tests_exhaustive.c" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/src/tests_exhaustive.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/secp256k1-frost/src/util.h" beforeDir="false" afterPath="$PROJECT_DIR$/secp256k1-frost/src/util.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/consensus.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/consensus.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,31 +192,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "C/C++ File.frost_keygen.c.executor": "Run",
-    "C/C++ File.frost_keygen.cpp.executor": "Run",
-    "CMake Application.frost-tls-keygen.executor": "Run",
-    "CMake Application.hotstuff-app.executor": "Debug",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/martina/CLionProjects/frosthotstuff/src",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "editor.preferences.completion",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;C/C++ File.frost_keygen.c.executor&quot;: &quot;Run&quot;,
+    &quot;C/C++ File.frost_keygen.cpp.executor&quot;: &quot;Run&quot;,
+    &quot;CMake Application.frost-tls-keygen.executor&quot;: &quot;Run&quot;,
+    &quot;CMake Application.hotstuff-app.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/martina/CLionProjects/frosthotstuff&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.completion&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
@@ -179,11 +230,6 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.hotstuff-app">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Continuous" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hotstuff" TARGET_NAME="Continuous" CONFIG_NAME="Release">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -930,6 +976,11 @@
       <workItem from="1710431786790" duration="20541000" />
       <workItem from="1710599060445" duration="480000" />
       <workItem from="1710599927196" duration="58962000" />
+      <workItem from="1711035011244" duration="8128000" />
+      <workItem from="1711044722673" duration="287000" />
+      <workItem from="1711046796254" duration="17000" />
+      <workItem from="1711099815378" duration="8186000" />
+      <workItem from="1711112717112" duration="9195000" />
     </task>
     <servers />
   </component>

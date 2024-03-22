@@ -209,7 +209,8 @@ struct Proposal: public Serializable {
 
     void unserialize(DataStream &s) override {
         std::cout << "---- STO IN unserialize riga 194 DENTRO consensus.h package:include->hotstuff---- " << std::endl;
-
+        std::cout << "s = " << s.get_hex() << std::endl;
+        
         assert(hsc != nullptr);
         s >> proposer;
         Block _blk;
@@ -217,6 +218,8 @@ struct Proposal: public Serializable {
         std::cout << "hsc->get_config().nmajority = " << hsc->get_config().nmajority << std::endl;
 
         blk = hsc->storage->add_blk(std::move(_blk), hsc->get_config());
+        std::cout << "BLOCCO FROST == " << blk->frost << std::endl;
+        
     }
 
     operator std::string () const {
