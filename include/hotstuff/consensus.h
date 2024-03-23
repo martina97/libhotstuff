@@ -207,15 +207,13 @@ struct Proposal: public Serializable {
         std::cout << "---- STO IN serialize riga 204 DENTRO consensus.h package:include->hotstuff---- " << std::endl;
         std::cout << "s == " << s.get_hex() << std::endl;
         s<<frost;
-        s << proposer
-          << *blk;
-
-        // Serialize the size of the commitment_list
+        s << proposer;
 
 
-        if (blk->frost == 1) {
-            uint32_t num_commitments = 4;
-            s << htole(num_commitments);
+        if (frost == 1) {
+            // Serialize the size of the commitment_list
+            uint32_t commitmentListSize = commitment_list ? commitment_list->size() : 0;
+            s << commitmentListSize;
 
 
             // Serialize each commitment in the list
@@ -232,6 +230,14 @@ struct Proposal: public Serializable {
             }
         }
 
+        s  << *blk;
+
+        // Serialize the size of the commitment_list
+
+
+
+        std::cout << "s == " << s.get_hex() << std::endl;
+
     }
 
     void unserialize(DataStream &s) override {
@@ -243,22 +249,21 @@ struct Proposal: public Serializable {
         std::cout << "frost == "  << frost << std::endl;
 
         s >> proposer;
-        Block _blk;
-        _blk.unserialize(s, hsc);
-        std::cout << "hsc->get_config().nmajority = " << hsc->get_config().nmajority << std::endl;
+        // Deserialize the number of commitments in the list
 
-        blk = hsc->storage->add_blk(std::move(_blk), hsc->get_config());
-        std::cout << "BLOCCO FROST == " << blk->frost << std::endl;
-        std::cout << "s = " << s.get_hex() << std::endl;
-
-        /*
-        if (blk->frost == 1) {
+        if (frost == 1) {
+            uint32_t num_commitments;
+            s >> num_commitments;
+            std::cout << "dopo num comm --> s == " << s.get_hex() << std::endl;
             // vuol dire che il blocco avrà i commitment list
             // Deserialize each commitment in the list
             commitment_list = new std::list<secp256k1_frost_nonce_commitment>();
-            for (uint32_t i = 0; i < 4; ++i) {
+            for (uint32_t i = 0; i < num_commitments; ++i) {
+                std::cout << "i == " << i << std::endl;
+                
                 secp256k1_frost_nonce_commitment commitment;
                 s >> commitment.index; // Deserialize the index
+                std::cout << "s == " << s.get_hex() << std::endl;
                 for (int j = 0; j < 64; ++j) {
                     s >> commitment.hiding[j]; // Deserialize hiding array
                 }
@@ -268,7 +273,18 @@ struct Proposal: public Serializable {
                 commitment_list->push_back(commitment);
             }
 
-        }*/
+        }
+
+        Block _blk;
+        _blk.unserialize(s, hsc);
+        std::cout << "hsc->get_config().nmajority = " << hsc->get_config().nmajority << std::endl;
+
+        blk = hsc->storage->add_blk(std::move(_blk), hsc->get_config());
+        std::cout << "BLOCCO FROST == " << blk->frost << std::endl;
+        std::cout << "s = " << s.get_hex() << std::endl;
+
+
+
         
     }
 

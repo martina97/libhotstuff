@@ -183,13 +183,34 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds, const std::
     if (parents.empty())
         throw std::runtime_error("empty parents");
     for (const auto &_: parents) tails.erase(_);
+    std::cout << "ALL INIZIO DI ON PROPOSE MAP SIZE = "  << commitment_map.size() << std::endl;
 
+
+        for (const auto& pair : commitment_map) {
+            std::cout << "size list = " << pair.second.size() << std::endl;
+            std::cout << "blk = " << pair.first<< std::endl;
+            std::cout << "-----------" << std::endl;
+        }
+        if (!commitment_map.empty()) {
+            // Get an iterator to the first element of the map
+            auto it = commitment_map.begin();
+            std::cout << "element list num = " << it->second.size() << std::endl;
+        }
+
+
+
+
+        
     std::cout << "parents[0]->get_hash().to_hex() = " << parents[0]->get_hash().to_hex() << std::endl;
     bool frost = true;
-    if (commitment_map.empty() or commitment_map.size() < 3) {
-        std::cout << "NIENTE FROST!!!!!!!! " << std::endl;
-        frost = false;
-    }
+
+
+        if (commitment_map.empty() or commitment_map.begin()->second.size() < 4) {
+            //if (commitment_map.empty() or commitment_map.size() < 3) {
+            std::cout << "NIENTE FROST!!!!!!!! " << std::endl;
+            frost = false;
+        }
+
 
     /* create the new block */
     block_t bnew = storage->add_blk(
@@ -221,6 +242,7 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds, const std::
         std::cout << "FROST ABILITATO DENTRO ON PROPOSE !!!!" << std::endl;
         // Whenever you access commitment_map, lock the mutex first
         {
+
             std::lock_guard<std::mutex> lock(map_mutex);
             auto first_element = commitment_map.begin();
             prop.commitment_list = new std::list<secp256k1_frost_nonce_commitment>();
@@ -328,19 +350,20 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
          * size != 0 --> prendi il primo elemento nella lista di nonce, vedi se nonce non è usato, e lo inserisci nel msg voto
          */
 
-        if (bnew->frost == false) {
+        if (!bnew->frost) {
 
             if (!fill_random(binding_seed, sizeof(binding_seed))) {
-                throw ("Failed to generate binding_seed\n");
+                throw HotStuffError("Failed to generate binding_seed\n");
 
             }
             if (!fill_random(hiding_seed, sizeof(hiding_seed))) {
-                throw ("Failed to generate hiding_seed\n");
+                throw HotStuffError("Failed to generate hiding_seed\n");
 
             }
             secp256k1_frost_nonce *nonce = secp256k1_frost_nonce_create(sign_verify_ctx, key_pair, binding_seed, hiding_seed);
             {
                 std::lock_guard<std::mutex> lock(nonce_list_mutex);
+
                 nonce_list.push_back(nonce);
                 std::cout << "NONCE LIST SIZE = " << nonce_list.size() << std::endl;
 
@@ -364,7 +387,7 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
                 std::cout << "BLOCCOOOOO = === = = =" << bnew->get_hash().to_hex() << std::endl;
 
                 do_vote(prop.proposer, vote);
-                nonce_list.erase(nonce_list.begin());
+                //nonce_list.erase(nonce_list.begin()); non l'ho usato per firmare --> non devo cancellarlo
             }
 
         } else{
@@ -380,11 +403,11 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
             std::cout << std::endl;
              */
             if (!fill_random(binding_seed, sizeof(binding_seed))) {
-                throw ("Failed to generate binding_seed\n");
+                throw HotStuffError("Failed to generate binding_seed\n");
 
             }
             if (!fill_random(hiding_seed, sizeof(hiding_seed))) {
-                throw ("Failed to generate hiding_seed\n");
+                throw HotStuffError("Failed to generate hiding_seed\n");
 
             }
             /** CREO NUOVA COPPIA NONCE-COMM DA USARE PER IL PROX BLOCCO */
@@ -392,13 +415,42 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
             {
                 std::lock_guard<std::mutex> lock(nonce_list_mutex);
                 nonce_list.push_back(nonce);
+                std::cout << "prop.commitment_list->size() = " << prop.commitment_list->size() << std::endl;
+
                 /** METTO COMMITMENT DENTRO VOTE MSG */
                 secp256k1_frost_nonce_commitment signing_commitments[4];
+                int i = 0;
+                for (const auto& commitment : *prop.commitment_list) {
+                    signing_commitments[i++] = commitment;
+                }
+                
+                /** stampo hiding del mio commitment, e mi stampo anche la lista di hiding nel signing commitments */
+                for (unsigned char i : nonce_list[0]->commitments.hiding) {
+                    std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(i);
+                }
+                std::cout << std::endl;
 
-                //std::copy(std::begin(bnew->list_commitment), std::end(bnew->list_commitment), std::begin(signing_commitments));
+                std::cout << "STAMPO COMMITMENT NELLA LISTA" << std::endl;
+                
+                for (const auto& commitment : signing_commitments) {
+                    for (unsigned char i : commitment.hiding) {
+                        std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(i);
+                    }
+                    std::cout << std::endl;
+
+                }
+                std::cout << "----" << std::endl;
+                
+                
+
+                          //std::copy(std::begin(bnew->list_commitment), std::end(bnew->list_commitment), std::begin(signing_commitments));
                 std::cout << "nonce_list_size = " << nonce_list.size() << std::endl;
                 /** CREO PART CERT CON I COMMITMENT PRESI NEL MSG PROPOSE ! --> if blk.frost = true !!! */
 
+                hotstuff::PartCertFrost frost_cert = hotstuff::PartCertFrost(bnew->get_hash(),
+                                                                             3, key_pair, nonce_list[0],signing_commitments);
+
+                nonce_list.erase(nonce_list.begin());
                 // TODO: SCOMMENTA
                 /*
                 hotstuff::PartCertFrost frost_cert = hotstuff::PartCertFrost(bnew->get_hash(),

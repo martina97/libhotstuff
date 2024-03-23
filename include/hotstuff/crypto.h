@@ -432,7 +432,11 @@ public:
                                        signing_commitments);
         std::cout << "res = " << res << std::endl;
         if (res != 1) {
-            throw std::runtime_error("Failed to create signature share!");
+            const std::basic_string<char, std::char_traits<char>, std::allocator<char>> &s =
+                    "Failed to create signature share for " + msg_hash.to_hex();
+            //throw std::runtime_error(s);
+            HOTSTUFF_LOG_WARN("Failed to create signature share!");
+
         }
 
     }
