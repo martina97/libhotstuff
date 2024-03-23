@@ -428,7 +428,7 @@ public:
         (unsigned char *) &*msg.begin();
         signature_share.reset(new secp256k1_frost_signature_share);
 
-        int res = secp256k1_frost_sign(signature_share.get(), (unsigned char *) &*msg.begin(), 3, keypair, nonce,
+        int res = secp256k1_frost_sign(signature_share.get(), (unsigned char *) &*msg.begin(), num_signers, keypair, nonce,
                                        signing_commitments);
         std::cout << "res = " << res << std::endl;
         if (res != 1) {

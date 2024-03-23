@@ -195,6 +195,10 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds, const std::
             // Get an iterator to the first element of the map
             auto it = commitment_map.begin();
             std::cout << "element list num = " << it->second.size() << std::endl;
+            for (const auto& pair : commitment_map) {
+                const std::string& key = pair.first;
+                std::cout << "Key: " << key << std::endl;
+            }
         }
 
 
@@ -361,8 +365,8 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
 
             }
             secp256k1_frost_nonce *nonce = secp256k1_frost_nonce_create(sign_verify_ctx, key_pair, binding_seed, hiding_seed);
-            {
-                std::lock_guard<std::mutex> lock(nonce_list_mutex);
+            //{
+                //std::lock_guard<std::mutex> lock(nonce_list_mutex);
 
                 nonce_list.push_back(nonce);
                 std::cout << "NONCE LIST SIZE = " << nonce_list.size() << std::endl;
@@ -388,7 +392,7 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
 
                 do_vote(prop.proposer, vote);
                 //nonce_list.erase(nonce_list.begin()); non l'ho usato per firmare --> non devo cancellarlo
-            }
+           // }
 
         } else{
             std::cout << "CREO VOTO FROST !!!! " << std::endl;
@@ -412,9 +416,13 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
             }
             /** CREO NUOVA COPPIA NONCE-COMM DA USARE PER IL PROX BLOCCO */
             secp256k1_frost_nonce *nonce = secp256k1_frost_nonce_create(sign_verify_ctx, key_pair, binding_seed, hiding_seed);
-            {
-                std::lock_guard<std::mutex> lock(nonce_list_mutex);
+            
                 nonce_list.push_back(nonce);
+                std::cout << "0x";
+                for (unsigned char i : nonce->commitments.hiding) {
+                    std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(i);
+                }
+                std::cout << std::dec << std::endl; // Reset to decimal format
                 std::cout << "prop.commitment_list->size() = " << prop.commitment_list->size() << std::endl;
 
                 /** METTO COMMITMENT DENTRO VOTE MSG */
@@ -440,15 +448,25 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
 
                 }
                 std::cout << "----" << std::endl;
-                
-                
+                std::cout << "bloccoooooo ======  " << bnew->get_hash().to_hex() << std::endl;
+
+                bool found = false;
+                for (auto & signing_commitment : signing_commitments) {
+                    if (memcmp(nonce_list[0]->commitments.hiding, signing_commitment.hiding, 64) == 0) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    throw std::runtime_error("NONCE IS NOT IN LIST");
+                }
 
                           //std::copy(std::begin(bnew->list_commitment), std::end(bnew->list_commitment), std::begin(signing_commitments));
                 std::cout << "nonce_list_size = " << nonce_list.size() << std::endl;
                 /** CREO PART CERT CON I COMMITMENT PRESI NEL MSG PROPOSE ! --> if blk.frost = true !!! */
 
                 hotstuff::PartCertFrost frost_cert = hotstuff::PartCertFrost(bnew->get_hash(),
-                                                                             3, key_pair, nonce_list[0],signing_commitments);
+                                                                             4, key_pair, nonce_list[0],signing_commitments);
 
                 nonce_list.erase(nonce_list.begin());
                 // TODO: SCOMMENTA
@@ -472,7 +490,7 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
 
                 //vote.frost=true;
                 do_vote(prop.proposer, vote);
-            }
+
         }
     }
 }
@@ -517,16 +535,23 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
     /**  ORA DEVO METTERE IL COMMITMENT NELLA MAPPA !!!! */
 
     std::string key = get_hex10(vote.blk_hash);
-    // Check if the key already exists in the map
-    auto it = commitment_map.find(key);
-    if (it != commitment_map.end()) {
-        // If the key exists, append the commitment to the associated list
-        it->second.push_back(*vote.commitment);
-    } else {
-        // If the key doesn't exist, create a new list and insert the commitment
-        std::list<secp256k1_frost_nonce_commitment> newCommitmentList;
-        newCommitmentList.push_back(*vote.commitment);
-        commitment_map[key] = newCommitmentList;
+    std::mutex commitment_map_mutex;
+    {
+        // Create a scoped lock to lock the mutex
+        std::lock_guard<std::mutex> lock(commitment_map_mutex);
+        // Check if the key already exists in the vector
+        auto it = std::find_if(commitment_map.begin(), commitment_map.end(),
+                               [&key](const auto& pair) { return pair.first == key; });
+
+        if (it != commitment_map.end()) {
+            // If the key exists, append the commitment to the associated list
+            it->second.push_back(*vote.commitment);
+        } else {
+            // If the key doesn't exist, create a new pair and insert it into the vector
+            std::list<secp256k1_frost_nonce_commitment> newCommitmentList;
+            newCommitmentList.push_back(*vote.commitment);
+            commitment_map.emplace_back(key, std::move(newCommitmentList));
+        }
     }
 
 

@@ -55,7 +55,8 @@ class HotStuffCore {
     promise_t receive_proposal_waiting;
     promise_t hqc_update_waiting;
     secp256k1_frost_keypair *key_pair;
-    std::map<std::string, std::list<secp256k1_frost_nonce_commitment>> commitment_map;
+    //std::map<std::string, std::list<secp256k1_frost_nonce_commitment>> commitment_map;
+    std::vector<std::pair<std::string, std::list<secp256k1_frost_nonce_commitment>>> commitment_map;
     // Define a mutex to protect access to commitment_map
     std::mutex map_mutex;
     //secp256k1_frost_signature_share *signature_share;
