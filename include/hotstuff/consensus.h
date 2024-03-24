@@ -308,12 +308,12 @@ struct Vote: public Serializable {
     uint256_t blk_hash;
     /** proof of validity for the vote */
     part_cert_bt cert;
-
+    hotstuff::PartCertFrost  *cert_frost;
     secp256k1_frost_nonce_commitment *commitment{}; //il voto trasporta i commitment generati dal voter
     /** handle of the core object to allow polymorphism */
     HotStuffCore *hsc;
 
-   // PartCertFrost *cert_frost;
+
 
     Vote(): cert(nullptr), hsc(nullptr) {}
 
@@ -324,14 +324,17 @@ struct Vote: public Serializable {
         blk_hash(blk_hash),
         cert(std::move(cert)), commitment(commitment),hsc(hsc) {}
 
-        /*
-    Vote(ReplicaID voter,
-         const uint256_t &blk_hash,
-         hotstuff::PartCertFrost &cert, secp256k1_frost_nonce_commitment *commitment,
+
+    Vote(bool frost,ReplicaID voter,const uint256_t &blk_hash,
+         hotstuff::PartCertFrost *cert, secp256k1_frost_nonce_commitment *commitment,
          HotStuffCore *hsc):
+            frost(frost),
             voter(voter),
             blk_hash(blk_hash),
-            cert_frost(&cert), commitment(commitment), hsc(hsc) {}*/
+            commitment(commitment), hsc(hsc)  {
+        cert_frost = new hotstuff::PartCertFrost(*cert);
+    }
+
     Vote(bool frost, ReplicaID voter,
          const uint256_t &blk_hash, secp256k1_frost_nonce_commitment *commitment,
          HotStuffCore *hsc):
@@ -370,7 +373,19 @@ struct Vote: public Serializable {
         }
         // Assuming commitment is not nullptr, serialize it
         //s << *commitment;
-        s << *cert;
+        if (frost == 0 ) {
+            s << *cert;
+        } else {
+            s<<*cert_frost;
+        }
+
+        /*
+        if (frost == 0 ) {
+            s << *cert;
+        } else {
+
+        }*/
+
 
     }
 
@@ -418,14 +433,22 @@ struct Vote: public Serializable {
          */
 
         // Deserialize commitment fields individually
-        for (int i = 0; i < 64; ++i) {
-            s >> commitment->hiding[i];
+        for (unsigned char & i : commitment->hiding) {
+            s >> i;
         }
-        for (int i = 0; i < 64; ++i) {
-            s >> commitment->binding[i];
+        for (unsigned char & i : commitment->binding) {
+            s >> i;
         }
         //s << discard1 << discard1;
-        cert = hsc->parse_part_cert(s);
+        if (frost == 0) {
+            cert = hsc->parse_part_cert(s);
+        } else {
+            // UNSERIALIZE cert_frost
+            // Deserialize cert_frost
+            cert_frost = new PartCertFrost();
+            s >> *cert_frost;
+        }
+
 
 
     }

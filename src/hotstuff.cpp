@@ -508,9 +508,12 @@ void HotStuffBase::do_vote(ReplicaID last_proposer, const Vote &vote) {
     
     std::cout << "STO IN DO_VOTE PROVO A STAMPARE CAMPI VOTO" << std::endl;
     std::cout << "vote.commitment->index " << vote.commitment->index << std::endl;
+    if (vote.frost == 1)
+        std::cout << "vote.cert_frost->obj_hash.to_hex() = " << vote.cert_frost->obj_hash.to_hex() << std::endl;
+    
         
     pmaker->beat_resp(last_proposer)
-            .then([this, vote](ReplicaID proposer) {
+            .then([this, &vote](ReplicaID proposer) {
                 
         if (proposer == get_id())
         {

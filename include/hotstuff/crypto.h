@@ -420,6 +420,8 @@ public:
                   const secp256k1_frost_keypair *keypair,
                   secp256k1_frost_nonce *nonce,
                   secp256k1_frost_nonce_commitment *signing_commitments) {
+        std::cout << "sto in PartCertFrost" << std::endl;
+        
         obj_hash = msg_hash;
         // Convert uint256_t to unsigned char array
         //const unsigned char *msg_data = reinterpret_cast<const unsigned char*>(msg_hash_.data());
@@ -442,20 +444,40 @@ public:
     }
 
     void serialize(DataStream &s) const override {
-        std::cout << "---- STO IN serialize riga 451 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+        std::cout << "---- STO IN serialize riga 444 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
 
         s << obj_hash;
-        //this->SigSecp256k1::serialize(s);
+        // Serialize signature_share if it exists
+        bool has_signature_share = (signature_share != nullptr);
+        s << has_signature_share;
+        if (has_signature_share) {
+            // Serialize index
+            s << signature_share->index;
+            // Serialize response
+            s << bytearray_t(signature_share->response, signature_share->response + sizeof(signature_share->response));
+        }
+        std::cout << "s = " << s.get_hex() << std::endl;
+        
     }
 
     void unserialize(DataStream &s) override {
-            std::cout << "---- STO IN unserialize riga 447 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
-
-            s >> obj_hash;
-            //this->SigSecp256k1::unserialize(s);
+        std::cout << "---- STO IN unserialize riga 451 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+        std::cout << "s = " << s.get_hex() << std::endl;
+        s >> obj_hash;
+        bool has_signature_share;
+        s >> has_signature_share;
+        if (has_signature_share) {
+            signature_share.reset(new secp256k1_frost_signature_share);
+            // Unserialize index
+            s >> signature_share->index;
+            // Unserialize response
+            for (unsigned char & i : signature_share->response) {
+                s >> i;
+            }
+        } else {
+            signature_share.reset();
+        }
     }
-
-
 };
 
 
@@ -772,7 +794,10 @@ class QuorumCertFrost: public QuorumCert {
     }
 
     void add_part(ReplicaID rid, const PartCertFrost &pc) override {
-        std::cout << "---- STO IN add_part riga QuorumCertFrost 746 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+        std::cout << "---- STO IN add_part riga QuorumCertFrost 784 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+
+        std::cout << "pc.obj_hash.to_hex() = " << pc.obj_hash.to_hex() << std::endl;
+        std::cout << "obj_hash.to_hex() = " << obj_hash.to_hex() << std::endl;
 
         if (pc.obj_hash != obj_hash)
             throw std::invalid_argument("PartCertFrost does match the block hash");
@@ -804,8 +829,26 @@ class QuorumCertFrost: public QuorumCert {
         s  << obj_hash << rids<<frost;
         std::cout << "obj_hash == " << obj_hash.to_hex() << std::endl;
         std::cout << "frost == " << frost << std::endl;
-        for (size_t i = 0; i < rids.size(); i++)
-            if (rids.get(i)) s << sigs.at(i);
+        std::cout << "rids.size() = " << rids.size() << std::endl;
+        std::cout << "sigs_frost.size() = " << sigs_frost.size() << std::endl;
+        std::cout << "sigs.size() = " << sigs.size() << std::endl;
+
+        if (!frost) {
+            for (size_t i = 0; i < rids.size(); i++)
+                if (rids.get(i)) s << sigs.at(i);
+        }
+        else {
+            // Serialize for frost case
+            size_t num_elements = sigs_frost.size();
+            s << num_elements;
+            for (const auto &entry : sigs_frost) {
+                s << entry.first << entry.second.index;
+                for (unsigned char c : entry.second.response) {
+                    s << c;
+                }
+            }
+        }
+
     }
 
     void unserialize(DataStream &s) override {
@@ -815,8 +858,25 @@ class QuorumCertFrost: public QuorumCert {
         s >> obj_hash >> rids>>frost;
         std::cout << "obj_hash == " << obj_hash.to_hex() << std::endl;
         std::cout << "frost == " << frost << std::endl;
-        for (size_t i = 0; i < rids.size(); i++)
-            if (rids.get(i)) s >> sigs[i];
+
+        if (!frost) {
+            for (size_t i = 0; i < rids.size(); i++)
+                if (rids.get(i)) s >> sigs[i];
+        } else {
+            // Unserialize for frost case
+            ReplicaID rid;
+            secp256k1_frost_signature_share share;
+            size_t num_elements;
+            s >> num_elements;
+            for (size_t i = 0; i < num_elements; ++i) {
+                s >> rid >> share.index;
+                for (unsigned char & j : share.response) {
+                    s >> j;
+                }
+                sigs_frost.emplace(rid, share);
+            }
+        }
+
 
 
     }

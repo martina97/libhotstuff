@@ -465,28 +465,25 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
                 std::cout << "nonce_list_size = " << nonce_list.size() << std::endl;
                 /** CREO PART CERT CON I COMMITMENT PRESI NEL MSG PROPOSE ! --> if blk.frost = true !!! */
 
-                hotstuff::PartCertFrost frost_cert = hotstuff::PartCertFrost(bnew->get_hash(),
+                hotstuff::PartCertFrost *frost_cert = new hotstuff::PartCertFrost(bnew->get_hash(),
                                                                              4, key_pair, nonce_list[0],signing_commitments);
 
                 nonce_list.erase(nonce_list.begin());
-                // TODO: SCOMMENTA
-                /*
-                hotstuff::PartCertFrost frost_cert = hotstuff::PartCertFrost(bnew->get_hash(),
-                                                                             3, key_pair, nonce_list[0],signing_commitments);
-                nonce_list.erase(nonce_list.begin());
-                std::cout << "nonce_list_size = " << nonce_list.size() << std::endl;
-
                 std::cout << "signature_share->response"<< std::endl;
-                for (unsigned char i : frost_cert.signature_share->response) {
+                for (unsigned char i : frost_cert->signature_share->response) {
                     std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(i);
                 }
                 std::cout << std::endl;
-                 */
 
+
+                //const Vote vote = Vote(bnew->frost,id, bnew->get_hash(), create_part_cert(*priv_key, bnew->get_hash()), &nonce->commitments,this);
 
                 //Vote vote = Vote(id, bnew->get_hash(), frost_cert ,&nonce->commitments, this);
                 //const Vote vote = Vote(id, bnew->get_hash() ,&nonce->commitments, this);  todo scommenta
-                const Vote vote = Vote(true,id, bnew->get_hash(), create_part_cert(*priv_key, bnew->get_hash()), &nonce->commitments,this);
+
+                const Vote vote = Vote(true,id, bnew->get_hash(), frost_cert, &nonce->commitments,this);
+                std::cout << "cert frost blk hash = " << frost_cert->obj_hash.to_hex() << std::endl;
+                
 
                 //vote.frost=true;
                 do_vote(prop.proposer, vote);
@@ -530,7 +527,8 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
     if (vote.frost == 0) {
         assert(vote.cert);
     } else {
-        //assert(vote.cert_frost->signature_share);
+        assert(vote.cert_frost);
+        assert(vote.cert_frost->signature_share);
     }
     /**  ORA DEVO METTERE IL COMMITMENT NELLA MAPPA !!!! */
 
@@ -576,8 +574,28 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
         qc = create_quorum_cert(blk->get_hash(), vote.frost);
     }
     std::cout << "PRIMA DI ADD_PART!!!" << std::endl;
-    
-    qc->add_part(vote.voter, *vote.cert);
+
+    //qc->add_part(vote.voter, *vote.cert);
+
+    if (vote.frost == 0) {
+        std::cout << "ADD PART CLASSICO" << std::endl;
+        std::cout << " vote.cert->to_hex() = " << vote.cert->to_hex() << std::endl;
+        qc->add_part(vote.voter, *vote.cert);
+    }  else {
+        //ADD PART FROST TODO
+        std::cout << "PROVO A STAMPARE CERT FROST ! " << std::endl;
+        std::cout << "vote.cert_frost = " << vote.cert_frost->to_hex() << std::endl;
+        
+        std::cout << " vote.cert_frost->obj_hash.to_hex() = " << vote.cert_frost->obj_hash.to_hex() << std::endl;
+        std::cout << "vote.cert_frost->signature_share->response = " << std::endl;
+        for (unsigned char i : vote.cert_frost->signature_share->response) {
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(i);
+        }
+        std::cout << std::endl;
+        qc->add_part(vote.voter, *vote.cert_frost);
+    }
+
+
     if (qsize + 1 == config.nmajority)
     {
         std::cout << "qsize + 1 == config.nmajority" << std::endl;
