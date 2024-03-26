@@ -23,6 +23,7 @@
 #include <string>
 #include <cstddef>
 #include <ios>
+#include <set>
 
 #include "salticidae/netaddr.h"
 #include "salticidae/ref.h"
@@ -222,7 +223,8 @@ class Block {
     uint32_t height;
     bool delivered;
     int8_t decision;
-    std::unordered_set<ReplicaID> voted;
+    //std::unordered_set<ReplicaID> voted;
+    std::set<ReplicaID> voted;
     Block():
         frost(false),
         qc(nullptr),

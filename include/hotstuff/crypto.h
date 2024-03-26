@@ -20,6 +20,8 @@
 #include <openssl/rand.h>
 #include <iostream>
 #include <iomanip>
+#include <map>
+#include <utility>
 
 #include "secp256k1.h"
 #include "secp256k1_frost.h"
@@ -28,7 +30,6 @@
 #include "hotstuff/task.h"
 #include "eckey_impl.h"
 //#include "../secp256k1-frost/src/modules/frost/main_impl.h"
-
 namespace hotstuff {
 
 using salticidae::SHA256;
@@ -66,6 +67,10 @@ class QuorumCert: public Serializable, public Cloneable {
     virtual ~QuorumCert() = default;
     virtual void add_part(ReplicaID replica, const PartCert &pc) = 0;
     virtual void add_part(ReplicaID replica, const PartCertFrost &pc) = 0;
+    virtual salticidae::Bits getRids() = 0;
+    virtual std::map<ReplicaID, secp256k1_frost_signature_share> get_sigs_frost() = 0;
+    virtual std::list<ReplicaID> get_index_voters()=0;
+    virtual void compute(const uint256_t msg_hash, const secp256k1_frost_keypair *keypair, secp256k1_frost_pubkey *public_keys, std::list<secp256k1_frost_nonce_commitment> commit_list) = 0;
     virtual void compute() = 0;
     virtual promise_t verify(const ReplicaConfig &config, VeriPool &vpool) = 0;
     virtual bool verify(const ReplicaConfig &config) = 0;
@@ -159,6 +164,10 @@ class QuorumCertDummy: public QuorumCert {
 
     void add_part(ReplicaID, const PartCert &) override {}
     void add_part(ReplicaID, const PartCertFrost &) override {}
+    salticidae::Bits getRids() override {}
+    std::map<ReplicaID, secp256k1_frost_signature_share> get_sigs_frost() override {}
+    std::list<ReplicaID> get_index_voters() override {}
+    void compute(const uint256_t blob, const secp256k1_frost_keypair *keypair,secp256k1_frost_pubkey *public_keys,std::list<secp256k1_frost_nonce_commitment> commit_list) override {}
     void compute() override {}
     bool verify(const ReplicaConfig &) override { return true; }
     promise_t verify(const ReplicaConfig &, VeriPool &) override {
@@ -411,6 +420,15 @@ public:
     std::unique_ptr<secp256k1_frost_signature_share> signature_share;
     uint256_t obj_hash;
     PartCertFrost() = default;
+
+    // Constructor to create a null or empty PartCertFrost
+    PartCertFrost(const uint256_t &msg_hash, bool is_null = false) : obj_hash(msg_hash) {
+        if (!is_null) {
+            // If not null, initialize the signature_share
+            signature_share.reset(new secp256k1_frost_signature_share);
+        }
+    }
+
     PartCertFrost(const PartCertFrost &other) {
         obj_hash = other.obj_hash;
         signature_share.reset(new secp256k1_frost_signature_share(*other.signature_share));
@@ -438,6 +456,7 @@ public:
                     "Failed to create signature share for " + msg_hash.to_hex();
             //throw std::runtime_error(s);
             HOTSTUFF_LOG_WARN("Failed to create signature share!");
+            //signature_share.reset();
 
         }
 
@@ -518,7 +537,7 @@ public:
 
     }
     // Member function to serialize the public key and group public key
-    std::pair<std::vector<unsigned char>, std::vector<unsigned char>> serializePubKeys() {
+    const std::pair<std::vector<unsigned char>, std::vector<unsigned char>> serializePubKeys() {
         secp256k1_frost_pubkey* pubkey = data.get();
         std::vector<unsigned char> pubkey33(33);
         std::vector<unsigned char> group_pubkey33(33);
@@ -770,19 +789,53 @@ class PartCertSecp256k1: public SigSecp256k1, public PartCert {
 };
 
 class QuorumCertFrost: public QuorumCert {
+
+    public:
     uint256_t obj_hash;
     salticidae::Bits rids;
     bool frost{};
     std::unordered_map<ReplicaID, SigSecp256k1> sigs;
-    std::unordered_map<ReplicaID, secp256k1_frost_signature_share> sigs_frost;
-
-    public:
-
+    std::map<ReplicaID, secp256k1_frost_signature_share> sigs_frost;
+    unsigned char signature[64];    // firma aggregata
     QuorumCertFrost() = default;
     QuorumCertFrost(const ReplicaConfig &config, const uint256_t &obj_hash, bool frost);
+    QuorumCertFrost(uint256_t obj_hash,salticidae::Bits rids, std::map<ReplicaID, secp256k1_frost_signature_share>  sigs_frost) {
+        this->sigs_frost =std::move(sigs_frost);
+        this->obj_hash = std::move(obj_hash);
+    }
+
+    salticidae::Bits getRids() {
+        return rids;
+    }
+
+    void aggrego(secp256k1_context *sign_verify_ctx, unsigned char *signature, unsigned char *msg,
+                                  secp256k1_frost_keypair *key_pair, secp256k1_frost_pubkey *pk,
+                                  secp256k1_frost_nonce_commitment *commitments_vec,
+                                  const secp256k1_frost_signature_share *signature_shares_vec,
+                                  int i) {
+        std::cout << "sto in aggregoooooo" << std::endl;
+        
+        int res = secp256k1_frost_aggregate(sign_verify_ctx, signature,msg,
+                                                   key_pair, pk, commitments_vec,
+                                                   signature_shares_vec, 3);
+
+        std::cout << "res = " << res << std::endl;
+        for (uint32_t j = 0; j < 3; ++j) {
+            std::cout << "Index at position " << j << ": " << signature_shares_vec[j].index << std::endl;
+        }
+        std::cout << ".----" << std::endl;
+        
+        for (uint32_t j = 0; j < 3; ++j) {
+            std::cout << "Index at position " << j << ": " << commitments_vec[j].index << std::endl;
+        }
+        
+    }
 
 
 
+    std::map<ReplicaID, secp256k1_frost_signature_share> get_sigs_frost() {
+        return sigs_frost;
+    }
     void add_part(ReplicaID rid, const PartCert &pc) override {
         std::cout << "---- STO IN add_part riga 736 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
 
@@ -805,11 +858,53 @@ class QuorumCertFrost: public QuorumCert {
         // Insert the signature share into the map
         sigs_frost.emplace(rid, *pc.signature_share);
         rids.set(rid);
+        // DEVO AGGIUNGERE ANCHE LA CHIAVE PUB DEL VOTER ALLA LISTA PERCHE MI SERVE PER AGGREGAZIONE
     }
 
-    // TODO: FARE VERIFY
-    void compute() override {std::cout << "---- STO IN compute riga 746 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+    std::list<ReplicaID> get_index_voters() {
+        std::list<ReplicaID> replica_ids;
+        for (const auto& entry : sigs_frost) {
+            replica_ids.push_back(entry.first);
+        }
+        return replica_ids;
     }
+
+
+
+
+    // TODO: FARE VERIFY
+    void compute(const uint256_t msg_hash, const secp256k1_frost_keypair *keypair,secp256k1_frost_pubkey *public_keys,
+                 std::list<secp256k1_frost_nonce_commitment> commit_list) override {
+        std::cout << "COMPUTE BLOCCO " << msg_hash.to_hex() << std::endl;
+        secp256k1_frost_signature_share signature_shares[4];
+
+        std::cout << "---- STO IN compute riga 746 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+        if (sigs_frost.size() == 3) {
+            std::cout << "AGGREGOOOOO" << std::endl;
+            secp256k1_context *sign_verify_ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
+            //provo a stampare chiavi pub partecipanti
+            for (auto & i : sigs_frost) {
+                std::cout << "i = " <<i.first << std::endl;
+            }
+            std::vector<const secp256k1_frost_signature_share*> signature_shares_vec;
+            signature_shares_vec.reserve(sigs_frost.size());
+            for (const auto& pair : sigs_frost) {
+                signature_shares_vec.push_back(&pair.second);
+            }
+            const bytearray_t &msg = msg_hash.to_bytes();
+            size_t num_commitments = commit_list.size();
+            std::vector<secp256k1_frost_nonce_commitment> commitments_vec(commit_list.begin(), commit_list.end());
+
+            /*
+            int return_val = secp256k1_frost_aggregate(sign_verify_ctx, signature, (unsigned char *) &*msg.begin(),
+                                                       keypair, public_keys, commitments_vec.data(),
+                                                       *signature_shares_vec.data(), 3);
+            assert(return_val == 1);
+             */
+        }
+
+   }
+    void compute() override {};
 
     bool verify(const ReplicaConfig &config) override;
     promise_t verify(const ReplicaConfig &config, VeriPool &vpool) override;
@@ -880,13 +975,18 @@ class QuorumCertFrost: public QuorumCert {
 
 
     }
+
+    const salticidae::Bits &getRids() const;
+
+    void setRids(const salticidae::Bits &rids);
+
 };
 
 class QuorumCertSecp256k1: public QuorumCert {
     uint256_t obj_hash;
     salticidae::Bits rids;
     std::unordered_map<ReplicaID, SigSecp256k1> sigs;
-    std::unordered_map<ReplicaID, secp256k1_frost_signature_share> sigs_frost;
+    std::map<ReplicaID, secp256k1_frost_signature_share> sigs_frost;
 
     public:
     QuorumCertSecp256k1() = default;
@@ -902,13 +1002,20 @@ class QuorumCertSecp256k1: public QuorumCert {
         rids.set(rid);
     }
 
+    salticidae::Bits getRids() override {}
+    std::map<ReplicaID, secp256k1_frost_signature_share> get_sigs_frost() override {}
+
     void add_part(ReplicaID rid, const PartCertFrost &pc) override {
         std::cout << "---- STO IN add_part riga QuorumCertFrost 746 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
 
     }
-    void compute() override {std::cout << "---- STO IN compute riga 486 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
+    std::list<ReplicaID> get_index_voters() override {}
+    void compute(const uint256_t blob, const secp256k1_frost_keypair *keypair,secp256k1_frost_pubkey *public_keys,
+                 std::list<secp256k1_frost_nonce_commitment> commit_list) override {
+        std::cout << "---- STO IN compute riga 486 DENTRO crypto.h package:include->hotstuff---- " << std::endl;
     }
 
+    void compute() override {};
     bool verify(const ReplicaConfig &config) override;
     promise_t verify(const ReplicaConfig &config, VeriPool &vpool) override;
 

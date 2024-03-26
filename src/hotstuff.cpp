@@ -213,8 +213,14 @@ promise_t HotStuffBase::async_deliver_blk(const uint256_t &blk_hash,
         assert(qc);
         if (blk == get_genesis())
             pms.push_back(promise_t([](promise_t &pm){ pm.resolve(true); }));
-        else    //verify !!!!!!!!!!!!!!!!!!!!
-            pms.push_back(blk->verify(this, vpool));
+        else {
+            if (blk->frost == 0) {
+                //verify !!!!!!!!!!!!!!!!!!!!
+                pms.push_back(blk->verify(this, vpool));
+            } else {
+                pms.push_back(promise_t([](promise_t &pm){ pm.resolve(true); }));
+            }
+        }
         pms.push_back(async_fetch_blk(qc->get_obj_hash(), &replica));
         /* the parents should be delivered */
         for (const auto &phash: blk->get_parent_hashes())
@@ -585,6 +591,8 @@ void HotStuffBase::start_frost( std::vector<std::tuple<NetAddr, hotstuff::PubKey
          */
         std::cout << "prima add_replica_frost" << std::endl;
 
+
+
         HotStuffCore::add_replica_frost(i, peer, std::get<1>(replicas[i]));
         HotStuffCore::add_replica(i, peer, std::move(pubkeyVector[i]));
         if (i == id) {
@@ -594,8 +602,13 @@ void HotStuffBase::start_frost( std::vector<std::tuple<NetAddr, hotstuff::PubKey
         std::cout << "dopo add_replica_frost" << std::endl;
         std::cout << "listen_addr.operator std::string() = "<< listen_addr.operator std::string() << std::endl;
 
+        std::cout << "PROVO A METTERE LE CHIAVI IN UN ARRAY CHE USERO' IN AGGREGATE" << std::endl;
+
+
+
 
         std::vector<unsigned char> pub = std::get<1>(replicas[i]).serializePubKeys().first;
+
         size_t publicKeySize = sizeof(pub);
         // Create a PubKeySecp256k1 object using the public key data
         PubKeySecp256k1 pubKeySecp256k1(pub);

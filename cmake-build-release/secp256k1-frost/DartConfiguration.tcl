@@ -4,8 +4,8 @@
 
 
 # Configuration directories and files
-SourceDirectory: /home/martina/CLionProjects/libhotstuff/secp256k1-frost
-BuildDirectory: /home/martina/CLionProjects/libhotstuff/cmake-build-release/secp256k1-frost
+SourceDirectory: /home/martina/CLionProjects/frosthotstuff/secp256k1-frost
+BuildDirectory: /home/martina/CLionProjects/frosthotstuff/cmake-build-release/secp256k1-frost
 
 # Where to place the cost data store
 CostDataFile: 
@@ -27,7 +27,7 @@ SubmitInactivityTimeout:
 NightlyStartTime: 00:00:00 EDT
 
 # Commands for the build/test/submit cycle
-ConfigureCommand: "/snap/clion/265/bin/cmake/linux/x64/bin/cmake" "/home/martina/CLionProjects/libhotstuff/secp256k1-frost"
+ConfigureCommand: "/snap/clion/265/bin/cmake/linux/x64/bin/cmake" "/home/martina/CLionProjects/frosthotstuff/secp256k1-frost"
 MakeCommand: /snap/clion/265/bin/cmake/linux/x64/bin/cmake --build . --config "${CTEST_CONFIGURATION_TYPE}"
 DefaultCTestConfigurationType: Release
 
@@ -76,7 +76,7 @@ CudaSanitizerCommand:
 CudaSanitizerCommandOptions: 
 MemoryCheckType: 
 MemoryCheckSanitizerOptions: 
-MemoryCheckCommand: MEMORYCHECK_COMMAND-NOTFOUND
+MemoryCheckCommand: /snap/bin/valgrind
 MemoryCheckCommandOptions: 
 MemoryCheckSuppressionFile: 
 

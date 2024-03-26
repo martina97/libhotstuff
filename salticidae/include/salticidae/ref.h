@@ -27,6 +27,7 @@
 
 #include <atomic>
 #include <functional>
+#include "secp256k1_frost.h"
 
 namespace salticidae {
 
@@ -131,6 +132,8 @@ class BoxObj: public _BoxObj<T, D> {
     T *operator->() const { return base_t::obj; }
 
     bool frost;
+
+
 };
 
 template<typename T, typename D>

@@ -12,3 +12,13 @@ ridurre l'overhead della computazione crittografica usando uno schema di thresho
     aggregare per formare un quorum certificate per il blocco proposto.
 
 cmake -DSECP256K1_ENABLE_MODULE_FROST=ON -DSECP256K1_EXPERIMENTAL=ON -DSECP256K1_ENABLE_MODULE_SCHNORRSIG=ON -DSECP256K1_BUILD_EXAMPLES=ON  -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED=ON -DHOTSTUFF_PROTO_LOG=ON
+
+    const unsigned char *p1 = (const unsigned char*)s1, *p2 = (const unsigned char*) s2;    size_t i;
+
+
+
+piu lento!! perche può capitare che ricevo un nuovo comando dal client prima di aver ricevuto i voti del blocco precedente, quindi
+non ho i commitment che mi servono
+1. aspetto i commitment
+2. senza frost
+ALL INIZIO DI ON PROPOSE MAP SIZE = 1

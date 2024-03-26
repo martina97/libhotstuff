@@ -23,13 +23,15 @@
 #include "hotstuff/util.h"
 #include "hotstuff/consensus.h"
 #include "secp256k1_frost.h"
+#include <secp256k1_frost.h>
 #include "secp256k1-frost/examples/examples_util.h"
-
+#include <random>
+#include <algorithm>
 #define LOG_INFO HOTSTUFF_LOG_INFO
 #define LOG_DEBUG HOTSTUFF_LOG_DEBUG
 #define LOG_WARN HOTSTUFF_LOG_WARN
 #define LOG_PROTO HOTSTUFF_LOG_PROTO
-
+#define EXAMPLE_MAX_PARTICIPANTS 4
 namespace hotstuff {
 
 /* The core logic of HotStuff, is fairly simple :). */
@@ -173,6 +175,11 @@ void HotStuffCore::update(const block_t &nblk) {
     }
     b_exec = blk;
 }
+
+    bool indexComparator(const secp256k1_frost_nonce_commitment& a, const secp256k1_frost_nonce_commitment& b) {
+        return a.index < b.index;
+    }
+
 /**
 Chiamata per inviare nuovi comandi da decidere (eseguire).
 "parents" deve contenere almeno un blocco e il primo blocco è il genitore effettivo, mentre gli altri sono uncles/aunts.
@@ -186,20 +193,16 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds, const std::
     std::cout << "ALL INIZIO DI ON PROPOSE MAP SIZE = "  << commitment_map.size() << std::endl;
 
 
+
+    if (!commitment_map.empty()) {
+        // Get an iterator to the first element of the map
+        auto it = commitment_map.begin();
+        std::cout << "element list num = " << it->second.size() << std::endl;
         for (const auto& pair : commitment_map) {
-            std::cout << "size list = " << pair.second.size() << std::endl;
-            std::cout << "blk = " << pair.first<< std::endl;
-            std::cout << "-----------" << std::endl;
+            const std::string& key = pair.first;
+            std::cout << "Key: " << key << "\tnum element = " << pair.second.size() << std::endl;
         }
-        if (!commitment_map.empty()) {
-            // Get an iterator to the first element of the map
-            auto it = commitment_map.begin();
-            std::cout << "element list num = " << it->second.size() << std::endl;
-            for (const auto& pair : commitment_map) {
-                const std::string& key = pair.first;
-                std::cout << "Key: " << key << std::endl;
-            }
-        }
+    }
 
 
 
@@ -209,12 +212,11 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds, const std::
     bool frost = true;
 
 
-        if (commitment_map.empty() or commitment_map.begin()->second.size() < 4) {
-            //if (commitment_map.empty() or commitment_map.size() < 3) {
-            std::cout << "NIENTE FROST!!!!!!!! " << std::endl;
-            frost = false;
-        }
-
+    if (commitment_map.empty() or commitment_map.begin()->second.size() < config.nmajority) {
+        //if (commitment_map.empty() or commitment_map.size() < 3) {
+        std::cout << "NIENTE FROST!!!!!!!! " << std::endl;
+        frost = false;
+    }
 
     /* create the new block */
     block_t bnew = storage->add_blk(
@@ -224,6 +226,8 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds, const std::
             hqc.first,
             nullptr
         ));
+
+    std::cout << "parents[0]->get_hash().to_hex() = " << bnew->parents[0]->get_hash().to_hex() << std::endl;
    // bnew->frost = frost;
     const uint256_t bnew_hash = bnew->get_hash();
 
@@ -246,6 +250,8 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds, const std::
         std::cout << "FROST ABILITATO DENTRO ON PROPOSE !!!!" << std::endl;
         // Whenever you access commitment_map, lock the mutex first
         {
+            /**ORA DEVO SCEGLIERE QUALI SARANNO I FIRMATARI !!! GENERO RANDOMICAMENTE config.nmajority INDICI
+             * DA 0 A config.nreplicas */
 
             std::lock_guard<std::mutex> lock(map_mutex);
             auto first_element = commitment_map.begin();
@@ -255,7 +261,10 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds, const std::
             for (const auto& commitment : first_element->second) {
                 prop.commitment_list->push_back(commitment);
             }
-
+            std::string key = get_hex10(bnew_hash);
+            prop.commitment_list->sort(indexComparator);
+            commitment_map_aggregation.emplace_back(key, *prop.commitment_list);
+            
             // Iterate over the list and print each element
             std::cout << "Printing commitment list:" << std::endl;
             std::cout << "Commitment list SIZE = "  << prop.commitment_list->size()<< std::endl;
@@ -365,14 +374,14 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
 
             }
             secp256k1_frost_nonce *nonce = secp256k1_frost_nonce_create(sign_verify_ctx, key_pair, binding_seed, hiding_seed);
-            //{
+            {
                 //std::lock_guard<std::mutex> lock(nonce_list_mutex);
 
                 nonce_list.push_back(nonce);
                 std::cout << "NONCE LIST SIZE = " << nonce_list.size() << std::endl;
 
 
-                const Vote vote = Vote(bnew->frost,id, bnew->get_hash(), create_part_cert(*priv_key, bnew->get_hash()), &nonce->commitments,this);
+                const Vote vote = Vote(bnew->frost,true,id,bnew->get_hash(), create_part_cert(*priv_key, bnew->get_hash()), &nonce->commitments,this);
                 std::cout << "dopo aver creato il vote!!" << std::endl;
                 std::cout <<"msg.vote.commitment->index = " <<vote.commitment->index << std::endl;
                 std::cout <<"msg.vote.commitment->hiding = " <<std::endl;
@@ -392,7 +401,7 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
 
                 do_vote(prop.proposer, vote);
                 //nonce_list.erase(nonce_list.begin()); non l'ho usato per firmare --> non devo cancellarlo
-           // }
+            }
 
         } else{
             std::cout << "CREO VOTO FROST !!!! " << std::endl;
@@ -426,10 +435,9 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
                 std::cout << "prop.commitment_list->size() = " << prop.commitment_list->size() << std::endl;
 
                 /** METTO COMMITMENT DENTRO VOTE MSG */
-                secp256k1_frost_nonce_commitment signing_commitments[4];
-                int i = 0;
+                std::vector<secp256k1_frost_nonce_commitment> signing_commitments;
                 for (const auto& commitment : *prop.commitment_list) {
-                    signing_commitments[i++] = commitment;
+                    signing_commitments.push_back(commitment);
                 }
                 
                 /** stampo hiding del mio commitment, e mi stampo anche la lista di hiding nel signing commitments */
@@ -457,23 +465,44 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
                         break;
                     }
                 }
+                std::cout << "PROVO A STAMPARE KEY PAIR MAX PARTECIPANTS " << std::endl;
+                std::cout << "key_pair->public_keys.max_participants = " << key_pair->public_keys.max_participants << std::endl;
+                
+                
                 if (!found) {
-                    throw std::runtime_error("NONCE IS NOT IN LIST");
+                    // se il mio commitment non c'è nella lista --> NON VOTO!! CREO CERTIFICATO NORMALE !
+                    HOTSTUFF_LOG_WARN("commitment not in list");
+                    //auto *frost_cert = new hotstuff::PartCertFrost(bnew->get_hash(), true);
+                    auto *frost_cert = new hotstuff::PartCertFrost(bnew->get_hash(),
+                                                                   3, key_pair, nonce_list[0],signing_commitments.data());
+                    if (frost_cert->signature_share == nullptr) {
+                        std::cout << "CERTIFICATO NULLO ! "  << std::endl;
+                    }
+                    const Vote vote = Vote(true,false, id, bnew->get_hash(), frost_cert, &nonce->commitments,this);
+                    nonce_list.erase(nonce_list.begin());
+                    do_vote(prop.proposer, vote);
+
+                } else {
+                    auto *frost_cert = new hotstuff::PartCertFrost(bnew->get_hash(),
+                                                                   3, key_pair, nonce_list[0],signing_commitments.data());
+                    std::cout << "signature_share->response"<< std::endl;
+                    for (unsigned char i : frost_cert->signature_share->response) {
+                        std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(i);
+                    }
+                    std::cout << std::endl;
+                    const Vote vote = Vote(true,true,id, bnew->get_hash(), frost_cert, &nonce->commitments,this);
+                    std::cout << "cert frost blk hash = " << frost_cert->obj_hash.to_hex() << std::endl;
+                    //std::copy(std::begin(bnew->list_commitment), std::end(bnew->list_commitment), std::begin(signing_commitments));
+                    std::cout << "nonce_list_size = " << nonce_list.size() << std::endl;
+                    /** CREO PART CERT CON I COMMITMENT PRESI NEL MSG PROPOSE ! --> if blk.frost = true !!! */
+
+                    nonce_list.erase(nonce_list.begin());
+                    do_vote(prop.proposer, vote);
+
                 }
 
-                          //std::copy(std::begin(bnew->list_commitment), std::end(bnew->list_commitment), std::begin(signing_commitments));
-                std::cout << "nonce_list_size = " << nonce_list.size() << std::endl;
-                /** CREO PART CERT CON I COMMITMENT PRESI NEL MSG PROPOSE ! --> if blk.frost = true !!! */
 
-                hotstuff::PartCertFrost *frost_cert = new hotstuff::PartCertFrost(bnew->get_hash(),
-                                                                             4, key_pair, nonce_list[0],signing_commitments);
 
-                nonce_list.erase(nonce_list.begin());
-                std::cout << "signature_share->response"<< std::endl;
-                for (unsigned char i : frost_cert->signature_share->response) {
-                    std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(i);
-                }
-                std::cout << std::endl;
 
 
                 //const Vote vote = Vote(bnew->frost,id, bnew->get_hash(), create_part_cert(*priv_key, bnew->get_hash()), &nonce->commitments,this);
@@ -481,12 +510,11 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
                 //Vote vote = Vote(id, bnew->get_hash(), frost_cert ,&nonce->commitments, this);
                 //const Vote vote = Vote(id, bnew->get_hash() ,&nonce->commitments, this);  todo scommenta
 
-                const Vote vote = Vote(true,id, bnew->get_hash(), frost_cert, &nonce->commitments,this);
-                std::cout << "cert frost blk hash = " << frost_cert->obj_hash.to_hex() << std::endl;
+
                 
 
                 //vote.frost=true;
-                do_vote(prop.proposer, vote);
+
 
         }
     }
@@ -495,6 +523,7 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
 
 void HotStuffCore::on_receive_vote(const Vote &vote) {
     std::cout << "---- STO IN on_receive_vote riga 272 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
+
 
     /** CI ENTRA SOLO IL LEADER --> POSSO PRENDERMI I COMMITMENT */
     LOG_PROTO("got %s", std::string(vote).c_str());
@@ -526,14 +555,46 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
     block_t blk = get_delivered_blk(vote.blk_hash);
     if (vote.frost == 0) {
         assert(vote.cert);
-    } else {
+    } else if (vote.frost == 1 and vote.is_valid == 1) {
+        std::cout << "vote.frost == 1 and vote.is_valid == 1" << std::endl;
         assert(vote.cert_frost);
         assert(vote.cert_frost->signature_share);
     }
+
+
+
+    size_t qsize = blk->voted.size();
+    std::cout << "config.nmajority = " << config.nmajority << std::endl;
+    std::cout << "qsize = " << blk->voted.size() << std::endl;
+
+    if (qsize >= config.nmajority) {
+        std::cout << "qsize >= config.nmajority" << std::endl;
+        return;
+    }
+    if (vote.is_valid != 0) {   // lo inserisco solo se voto è valido!
+        if (!blk->voted.insert(vote.voter).second)
+        {
+            LOG_WARN("duplicate vote for %s from %d", get_hex10(vote.blk_hash).c_str(), vote.voter);
+            return;
+        }
+    }
+
+    std::cout << "qsize = " << blk->voted.size() << std::endl;
+    auto &qc = blk->self_qc;
+    if (qc == nullptr)
+    {
+        LOG_WARN("vote for block not proposed by itself");
+        qc = create_quorum_cert(blk->get_hash(), vote.frost);
+    }
+    std::cout << "PRIMA DI ADD_PART!!!" << std::endl;
+
+    //qc->add_part(vote.voter, *vote.cert);
     /**  ORA DEVO METTERE IL COMMITMENT NELLA MAPPA !!!! */
 
     std::string key = get_hex10(vote.blk_hash);
     std::mutex commitment_map_mutex;
+    // se gia ne ho messi 3, quindi ho gia 3 voti, non li metto
+
     {
         // Create a scoped lock to lock the mutex
         std::lock_guard<std::mutex> lock(commitment_map_mutex);
@@ -551,37 +612,12 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
             commitment_map.emplace_back(key, std::move(newCommitmentList));
         }
     }
-
-
-    size_t qsize = blk->voted.size();
-    std::cout << "config.nmajority = " << config.nmajority << std::endl;
-    std::cout << "qsize = " << blk->voted.size() << std::endl;
-
-    if (qsize >= config.nmajority) {
-        std::cout << "qsize >= config.nmajority" << std::endl;
-        return;
-    }
-    if (!blk->voted.insert(vote.voter).second)
-    {
-        LOG_WARN("duplicate vote for %s from %d", get_hex10(vote.blk_hash).c_str(), vote.voter);
-        return;
-    }
-    std::cout << "qsize = " << blk->voted.size() << std::endl;
-    auto &qc = blk->self_qc;
-    if (qc == nullptr)
-    {
-        LOG_WARN("vote for block not proposed by itself");
-        qc = create_quorum_cert(blk->get_hash(), vote.frost);
-    }
-    std::cout << "PRIMA DI ADD_PART!!!" << std::endl;
-
-    //qc->add_part(vote.voter, *vote.cert);
-
     if (vote.frost == 0) {
+
         std::cout << "ADD PART CLASSICO" << std::endl;
         std::cout << " vote.cert->to_hex() = " << vote.cert->to_hex() << std::endl;
         qc->add_part(vote.voter, *vote.cert);
-    }  else {
+    }  else if (vote.frost == 1 and vote.is_valid == 1) {
         //ADD PART FROST TODO
         std::cout << "PROVO A STAMPARE CERT FROST ! " << std::endl;
         std::cout << "vote.cert_frost = " << vote.cert_frost->to_hex() << std::endl;
@@ -596,16 +632,110 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
     }
 
 
-    if (qsize + 1 == config.nmajority)
+    //if (qsize + 1 == config.nmajority)
+    if (blk->voted.size() == config.nmajority)
     {
         std::cout << "qsize + 1 == config.nmajority" << std::endl;
+        std::cout << "----------------------- CHIAMO COMPUTEEEEEEE -------------------------" << std::endl;
         
-        qc->compute();
-        update_hqc(blk, qc);
-        on_qc_finish(blk);
+        if (blk->frost == 1) {
+            secp256k1_frost_pubkey pk[EXAMPLE_MAX_PARTICIPANTS];
+            for (const ReplicaID& id : blk->voted) {
+                std::cout << "id = " << id << std::endl;
+
+                pk[id] = public_keys[id];
+                secp256k1_frost_pubkey &boh = public_keys[id];
+                std::cout << "STAMPO CHIAVE PUB" << std::endl;
+                for (size_t i = 0; i < 33; i++) {
+                    std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(boh.public_key[i]);
+                }
+                std::cout << std::dec << std::endl;
+
+                std::cout << "STAMPO CHIAVE PUB GRUPPO" << std::endl;
+                for (size_t i = 0; i < 33; i++) {
+                    std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(boh.group_public_key[i]);
+                }
+                std::cout << std::dec << std::endl;
+
+            }
+            auto it = std::find_if(commitment_map_aggregation.begin(), commitment_map_aggregation.end(),
+                                   [&](const auto& pair) { return pair.first == key; });
+            // If key is found, print commitments
+            if (it != commitment_map_aggregation.end()) {
+                std::cout << "Commitments for key: " << key << std::endl;
+                for (const auto& commitment : it->second) {
+                    std::cout << "Index: " << commitment.index << std::endl;
+                    std::cout << "Hiding: ";
+                    for (size_t i = 0; i < sizeof(commitment.hiding); ++i) {
+                        std::cout << std::hex << std::setw(2) << std::setfill('0')
+                                  << static_cast<int>(commitment.hiding[i]);
+                    }
+                    std::cout << std::dec << std::endl;
+                }
+            } else {
+                std::cout << "Key not found: " << key << std::endl;
+            }
+            //qc->compute(blk->get_hash(), key_pair, pk, it->second);
+            const salticidae::Bits &rids = qc->getRids();
+            auto sigs_frost = qc->get_sigs_frost();
+            std::cout << "stampo i sigs frost fuori compute" << std::endl;
+            if (sigs_frost.size() == 3) {
+                for (auto &i: sigs_frost) {
+                    std::cout << "i = " << i.first << std::endl;
+                    std::cout << "i.index = " << i.second.index << std::endl;
+                }
+                std::cout << "AGGREGOOOOO" << std::endl;
+                unsigned char signature[64];
+                secp256k1_context *sign_verify_ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
+                //provo a stampare chiavi pub partecipanti
+                for (auto & i : sigs_frost) {
+                    std::cout << "i = " <<i.first << std::endl;
+                }
+                std::vector<secp256k1_frost_signature_share> signature_shares_vec;
+                signature_shares_vec.reserve(sigs_frost.size());
+                for (const auto& pair : sigs_frost) {
+                    std::cout << "indici sig frost = " <<pair.first << std::endl;
+                    //secp256k1_frost_signature_share *sig = &pair.second;
+                   // sig->index = pair.first;
+
+                    signature_shares_vec.push_back(pair.second);
+                }
+                const bytearray_t &msg = blk->get_hash().to_bytes();
+                size_t num_commitments = it->second.size();
+                std::vector<secp256k1_frost_nonce_commitment> commitments_vec(it->second.begin(), it->second.end());
+
+                for (int i = 0; i < 4; ++i) {
+                    public_keys[i].index = i;
+                    std::cout << "Index: " << public_keys[i].index << std::endl;
+                }
+
+
+                auto *qc2 = new QuorumCertFrost(blk->get_hash(), rids, sigs_frost);
+                std::cout << "provaa " << qc2->obj_hash.to_hex() << std::endl;
+
+                for (const auto& pair : signature_shares_vec) {
+                    std::cout << "pair->index = " << pair.index << std::endl;
+
+                }
+                qc2->aggrego(sign_verify_ctx, signature, (unsigned char *) &*msg.begin(),
+                            key_pair, pk, commitments_vec.data(),
+                            signature_shares_vec.data(), 3);
+                /*
+                int return_val = secp256k1_frost_aggregate(sign_verify_ctx, signature, (unsigned char *) &*msg.begin(),
+                                                           key_pair, pk, commitments_vec.data(),
+                                                           *signature_shares_vec.data(), 3);
+                assert(return_val == 1);
+                 */
+                }
+
+
+            }
+
+            update_hqc(blk, qc);
+            on_qc_finish(blk);
+        }
     }
-}
-/*** end HotStuff protocol logic ***/
+    /*** end HotStuff protocol logic ***/
 void HotStuffCore::on_init(uint32_t nfaulty) {
     std::cout << "---- STO IN on_init riga 301 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;
     config.nmajority = config.nreplicas - nfaulty;
@@ -702,6 +832,20 @@ void HotStuffCore::add_replica_frost(ReplicaID rid, const PeerId &peer_id, hotst
     config.add_replica(rid,ReplicaInfoFrost(rid, peer_id, pub_key));
 
     b0->voted.insert(rid);
+
+    secp256k1_frost_pubkey pub_key_to_insert;
+    std::copy(serializedKeys.first.begin(), serializedKeys.first.end(), pub_key_to_insert.public_key);
+    std::copy(serializedKeys.second.begin(), serializedKeys.second.end(), pub_key_to_insert.group_public_key);
+    pub_key_to_insert.index = rid;
+    std::cout << "config.nreplicas = " << config.nreplicas << std::endl;
+
+    pub_key_to_insert.max_participants = EXAMPLE_MAX_PARTICIPANTS;
+    // Insert pub_key_to_insert into public_keys array
+    public_keys[rid] = pub_key_to_insert;
+
+
+
+
 }
     void HotStuffCore::add_keypair_frost(ReplicaID rid, hotstuff::PubKeyFrost &pub_key) {
     std::cout << "----- STO IN add_keypair_frost ------" << std::endl;
@@ -721,6 +865,9 @@ void HotStuffCore::add_replica_frost(ReplicaID rid, const PeerId &peer_id, hotst
         std::copy(pubkey.first.begin(), pubkey.first.end(), key_pair->public_keys.public_key);
         std::copy(pubkey.second.begin(), pubkey.second.end(), key_pair->public_keys.group_public_key);
         key_pair->public_keys.index = rid;
+        std::cout << "config.nreplicas = " << config.nreplicas << std::endl;
+        
+        key_pair->public_keys.max_participants = EXAMPLE_MAX_PARTICIPANTS;
 
 
         std::cout << "DOPO ADD KEY PAIR PROVO A STAMPARE" << std::endl;
@@ -747,6 +894,8 @@ void HotStuffCore::add_replica_frost(ReplicaID rid, const PeerId &peer_id, hotst
         
 
     }
+
+
 
 promise_t HotStuffCore::async_qc_finish(const block_t &blk) {
     std::cout << "---- STO IN async_qc_finish riga 356 DENTRO consensus.cpp package:salticidae->include->src---- " << std::endl;

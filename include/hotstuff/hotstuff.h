@@ -391,6 +391,8 @@ class HotStuff: public HotStuffBase {
             hotstuff::PubKeyFrost frost_key = hotstuff::PubKeyFrost(pubkey, group_pubkey, index, replicas.size());
             std::cout << frost_key.data->index << std::endl;
 
+
+
             reps.push_back(
                     std::make_tuple(
                             std::get<0>(r),

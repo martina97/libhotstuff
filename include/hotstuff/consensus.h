@@ -28,6 +28,7 @@
 #include "hotstuff/entity.h"
 #include "hotstuff/crypto.h"
 #include "secp256k1_frost.h"
+#include "crypto.h"
 
 #define EXAMPLE_MAX_PARTICIPANTS 4
 namespace hotstuff {
@@ -55,8 +56,10 @@ class HotStuffCore {
     promise_t receive_proposal_waiting;
     promise_t hqc_update_waiting;
     secp256k1_frost_keypair *key_pair;
+    secp256k1_frost_pubkey public_keys[EXAMPLE_MAX_PARTICIPANTS];
     //std::map<std::string, std::list<secp256k1_frost_nonce_commitment>> commitment_map;
     std::vector<std::pair<std::string, std::list<secp256k1_frost_nonce_commitment>>> commitment_map;
+    std::vector<std::pair<std::string, std::list<secp256k1_frost_nonce_commitment>>> commitment_map_aggregation;
     // Define a mutex to protect access to commitment_map
     std::mutex map_mutex;
     //secp256k1_frost_signature_share *signature_share;
@@ -303,6 +306,7 @@ struct Proposal: public Serializable {
 /** Abstraction for vote messages. */
 struct Vote: public Serializable {
     bool frost{};
+    bool is_valid{};
     ReplicaID voter{};
     /** block being voted */
     uint256_t blk_hash;
@@ -317,18 +321,20 @@ struct Vote: public Serializable {
 
     Vote(): cert(nullptr), hsc(nullptr) {}
 
-    Vote(bool frost, ReplicaID voter, const uint256_t &blk_hash, part_cert_bt &&cert,
+    Vote(bool frost, bool is_valid, ReplicaID voter, const uint256_t &blk_hash, part_cert_bt &&cert,
          secp256k1_frost_nonce_commitment *commitment, HotStuffCore *hsc):
         frost(frost),
+        is_valid(is_valid),
         voter(voter),
         blk_hash(blk_hash),
         cert(std::move(cert)), commitment(commitment),hsc(hsc) {}
 
 
-    Vote(bool frost,ReplicaID voter,const uint256_t &blk_hash,
+    Vote(bool frost,bool is_valid, ReplicaID voter,const uint256_t &blk_hash,
          hotstuff::PartCertFrost *cert, secp256k1_frost_nonce_commitment *commitment,
          HotStuffCore *hsc):
             frost(frost),
+            is_valid(is_valid),
             voter(voter),
             blk_hash(blk_hash),
             commitment(commitment), hsc(hsc)  {
@@ -345,17 +351,18 @@ struct Vote: public Serializable {
 
     Vote(const Vote &other):
         frost(other.frost),
+        is_valid(other.is_valid),
         voter(other.voter),
         blk_hash(other.blk_hash),
         cert(other.cert ? other.cert->clone() : nullptr),
-        hsc(other.hsc),
-        commitment(other.commitment) {}
+        commitment(other.commitment),
+        hsc(other.hsc) {}
 
     Vote(Vote &&other) = default;
     
     void serialize(DataStream &s) const override {
         std::cout << "---- STO IN serialize riga 244 DENTRO consensus.h package:include->hotstuff---- " << std::endl;
-        s << frost;
+        s << frost << is_valid;
         s << voter << blk_hash ;
 
         // Serialize cert_frost and commitment if frost is true
@@ -375,7 +382,7 @@ struct Vote: public Serializable {
         //s << *commitment;
         if (frost == 0 ) {
             s << *cert;
-        } else {
+        } else if (frost == 1 and is_valid == 1 ){
             s<<*cert_frost;
         }
 
@@ -393,7 +400,7 @@ struct Vote: public Serializable {
         std::cout << "---- STO IN unserialize riga 250 DENTRO consensus.h package:include->hotstuff---- " << std::endl;
 
         std::cout << s.get_hex() << std::endl;
-        s >> frost;
+        s >> frost >> is_valid;
         assert(hsc != nullptr);
         s >> voter >> blk_hash;
 
@@ -442,7 +449,7 @@ struct Vote: public Serializable {
         //s << discard1 << discard1;
         if (frost == 0) {
             cert = hsc->parse_part_cert(s);
-        } else {
+        } else if (frost == 1 and is_valid == 1 ){
             // UNSERIALIZE cert_frost
             // Deserialize cert_frost
             cert_frost = new PartCertFrost();
