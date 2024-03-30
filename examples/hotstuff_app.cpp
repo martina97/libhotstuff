@@ -56,8 +56,8 @@ using hotstuff::promise_t;
 #include "secp256k1_frost.h"
 #include "../src/util.h"
 #include "../secp256k1-frost/examples/examples_util.h"
-#define EXAMPLE_MAX_PARTICIPANTS 4
-#define EXAMPLE_MIN_PARTICIPANTS 3
+//#define EXAMPLE_MAX_PARTICIPANTS 4
+//#define EXAMPLE_MIN_PARTICIPANTS 3
 using HotStuff = hotstuff::HotStuffSecp256k1;
 
 class HotStuffApp: public HotStuff {

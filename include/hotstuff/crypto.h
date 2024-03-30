@@ -812,12 +812,12 @@ class QuorumCertFrost: public QuorumCert {
                                   secp256k1_frost_keypair *key_pair, secp256k1_frost_pubkey *pk,
                                   secp256k1_frost_nonce_commitment *commitments_vec,
                                   const secp256k1_frost_signature_share *signature_shares_vec,
-                                  int i) {
+                                  int num_signers) {
         std::cout << "sto in aggregoooooo" << std::endl;
         
         int res = secp256k1_frost_aggregate(sign_verify_ctx, signature,msg,
                                                    key_pair, pk, commitments_vec,
-                                                   signature_shares_vec, 3);
+                                                   signature_shares_vec, num_signers);
 
         std::cout << "res = " << res << std::endl;
         for (uint32_t j = 0; j < 3; ++j) {

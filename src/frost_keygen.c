@@ -33,7 +33,7 @@ int main(void) {
     /* This example uses a centralized trusted dealer to generate keys. Alternatively,
      * FROST provides functions to run distributed key generation. See modules/frost/tests_impl.h */
     secp256k1_frost_vss_commitments *dealer_commitments;
-    secp256k1_frost_keygen_secret_share shares_by_participant[3];
+    secp256k1_frost_keygen_secret_share shares_by_participant[EXAMPLE_MIN_PARTICIPANTS];
     /* keypairs stores private and public keys for each participant */
     secp256k1_frost_keypair keypairs[EXAMPLE_MAX_PARTICIPANTS];
     /* public_keys stores only public keys for each participant (this info can/should be shared among signers) */

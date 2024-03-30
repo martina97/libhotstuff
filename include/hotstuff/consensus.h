@@ -30,7 +30,8 @@
 #include "secp256k1_frost.h"
 #include "crypto.h"
 
-#define EXAMPLE_MAX_PARTICIPANTS 4
+#define EXAMPLE_MAX_PARTICIPANTS 8
+#define EXAMPLE_MIN_PARTICIPANTS 6
 namespace hotstuff {
 
 struct Proposal;

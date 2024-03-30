@@ -31,7 +31,7 @@
 #define LOG_DEBUG HOTSTUFF_LOG_DEBUG
 #define LOG_WARN HOTSTUFF_LOG_WARN
 #define LOG_PROTO HOTSTUFF_LOG_PROTO
-#define EXAMPLE_MAX_PARTICIPANTS 4
+//#define EXAMPLE_MAX_PARTICIPANTS 4
 namespace hotstuff {
 
 /* The core logic of HotStuff, is fairly simple :). */
@@ -474,7 +474,7 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
                     HOTSTUFF_LOG_WARN("commitment not in list");
                     //auto *frost_cert = new hotstuff::PartCertFrost(bnew->get_hash(), true);
                     auto *frost_cert = new hotstuff::PartCertFrost(bnew->get_hash(),
-                                                                   3, key_pair, nonce_list[0],signing_commitments.data());
+                                                                   EXAMPLE_MIN_PARTICIPANTS, key_pair, nonce_list[0],signing_commitments.data());
                     if (frost_cert->signature_share == nullptr) {
                         std::cout << "CERTIFICATO NULLO ! "  << std::endl;
                     }
@@ -484,7 +484,7 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
 
                 } else {
                     auto *frost_cert = new hotstuff::PartCertFrost(bnew->get_hash(),
-                                                                   3, key_pair, nonce_list[0],signing_commitments.data());
+                                                                   EXAMPLE_MIN_PARTICIPANTS, key_pair, nonce_list[0],signing_commitments.data());
                     std::cout << "signature_share->response"<< std::endl;
                     for (unsigned char i : frost_cert->signature_share->response) {
                         std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(i);
@@ -679,7 +679,7 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
             const salticidae::Bits &rids = qc->getRids();
             auto sigs_frost = qc->get_sigs_frost();
             std::cout << "stampo i sigs frost fuori compute" << std::endl;
-            if (sigs_frost.size() == 3) {
+            if (sigs_frost.size() == EXAMPLE_MIN_PARTICIPANTS) {
                 for (auto &i: sigs_frost) {
                     std::cout << "i = " << i.first << std::endl;
                     std::cout << "i.index = " << i.second.index << std::endl;
@@ -704,7 +704,7 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
                 size_t num_commitments = it->second.size();
                 std::vector<secp256k1_frost_nonce_commitment> commitments_vec(it->second.begin(), it->second.end());
 
-                for (int i = 0; i < 4; ++i) {
+                for (int i = 0; i < EXAMPLE_MAX_PARTICIPANTS; ++i) {
                     public_keys[i].index = i;
                     std::cout << "Index: " << public_keys[i].index << std::endl;
                 }
@@ -719,7 +719,7 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
                 }
                 qc2->aggrego(sign_verify_ctx, signature, (unsigned char *) &*msg.begin(),
                             key_pair, pk, commitments_vec.data(),
-                            signature_shares_vec.data(), 3);
+                            signature_shares_vec.data(), EXAMPLE_MIN_PARTICIPANTS);
                 /*
                 int return_val = secp256k1_frost_aggregate(sign_verify_ctx, signature, (unsigned char *) &*msg.begin(),
                                                            key_pair, pk, commitments_vec.data(),
